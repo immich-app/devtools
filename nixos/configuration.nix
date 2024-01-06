@@ -23,8 +23,17 @@
     neededForBoot = true;
   };
 
-  networking.hostName = "mich"; # Define your hostname.
-  networking.hostId = "e3e9d999";
+  networking = {
+    hostName = "mich";
+    hostId = "e3e9d999";
+
+    interfaces.eth0.ipv4.addresses = [ {
+      address = "162.55.86.82";
+      prefixLength = 26;
+    } ];
+
+    defaultGateway = "162.55.86.65";
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
