@@ -11,7 +11,6 @@
               name = "boot";
               start = "0";
               end = "1MiB";
-              part-type = "primary";
             };
             esp = {
               name = "ESP";
@@ -44,7 +43,6 @@
               name = "boot";
               start = "0";
               end = "1MiB";
-              part-type = "primary";
             };
             esp = {
               name = "ESP";
