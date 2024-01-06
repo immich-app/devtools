@@ -13,7 +13,7 @@
               end = "1MiB";
               part-type = "primary";
               flags = ["bios_grub"];
-            }
+            };
             esp = {
               name = "ESP";
               start = "1MiB";
@@ -24,14 +24,14 @@
                 format = "vfat";
                 mountpoint = "/boot";
               };
-            }
+            };
             zfs = {
               size = "100%";
               content = {
                 type = "zfs";
                 pool = "zpool";
               };
-            }
+            };
           };
         };
       };
@@ -47,7 +47,7 @@
               end = "1MiB";
               part-type = "primary";
               flags = ["bios_grub"];
-            }
+            };
             esp = {
               name = "ESP";
               start = "1MiB";
@@ -57,14 +57,14 @@
                 type = "filesystem";
                 format = "vfat";
               };
-            }
+            };
             zfs = {
               size = "100%";
               content = {
                 type = "zfs";
                 pool = "zpool";
               };
-            }
+            };
           };
         };
       };
