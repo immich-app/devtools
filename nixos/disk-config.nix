@@ -11,11 +11,13 @@
               name = "boot";
               start = "0";
               end = "1MiB";
+              type = "EF02";
             };
             esp = {
               name = "ESP";
               start = "1MiB";
               end = "385MiB";
+              type = "EF00";
               content = {
                 type = "filesystem";
                 format = "vfat";
@@ -42,11 +44,13 @@
               name = "boot";
               start = "0";
               end = "1MiB";
+              type = "EF02";
             };
             esp = {
               name = "ESP";
               start = "1MiB";
               end = "385MiB";
+              type = "EF00";
               content = {
                 type = "filesystem";
                 format = "vfat";
