@@ -12,7 +12,6 @@
               start = "0";
               end = "1MiB";
               part-type = "primary";
-              flags = ["bios_grub"];
             };
             esp = {
               name = "ESP";
@@ -46,7 +45,6 @@
               start = "0";
               end = "1MiB";
               part-type = "primary";
-              flags = ["bios_grub"];
             };
             esp = {
               name = "ESP";
