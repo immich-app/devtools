@@ -1,42 +1,75 @@
-{ lib, disks ? [ "/dev/disk/by-id/nvme-SAMSUNG_MZQLB1T9HAJR-00007_S439NC0R300444" "/dev/disk/by-id/nvme-SAMSUNG_MZQLB1T9HAJR-00007_S439NC0R303530" ], ... }: {
+{
   disko.devices = {
-    disk = lib.genAttrs disks (dev: {
-      device = dev;
-      type = "disk";
-      content = {
-        type = "table";
-        format = "gpt";
-        partitions = [
-          {
-            name = "boot";
-            start = "0";
-            end = "1MiB";
-            part-type = "primary";
-            flags = ["bios_grub"];
-          }
-          {
-            name = "ESP";
-            start = "1MiB";
-            end = "385MiB";
-            bootable = true;
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = if dev == "/dev/disk/by-id/nvme-SAMSUNG_MZQLB1T9HAJR-00007_S439NC0R300444" then "/boot" else null;
-            };
-          }
-          {
-            name = "zpool";
-            start = "385MiB";
-            end = "100%";
-            content = {
-              type = "zfs";
-              pool = "zpool";
-            };
-          }
-        ];
+    disk = {
+      disk1 = {
+        device = "/dev/disk/by-id/nvme-SAMSUNG_MZQLB1T9HAJR-00007_S439NC0R300444";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            boot = {
+              name = "boot";
+              start = "0";
+              end = "1MiB";
+              part-type = "primary";
+              flags = ["bios_grub"];
+            }
+            esp = {
+              name = "ESP";
+              start = "1MiB";
+              end = "385MiB";
+              bootable = true;
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+              };
+            }
+            zfs = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "zpool";
+              };
+            }
+          };
+        };
       };
-    });
+      disk2 = {
+        device = "/dev/disk/by-id/nvme-SAMSUNG_MZQLB1T9HAJR-00007_S439NC0R303530";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            boot = {
+              name = "boot";
+              start = "0";
+              end = "1MiB";
+              part-type = "primary";
+              flags = ["bios_grub"];
+            }
+            esp = {
+              name = "ESP";
+              start = "1MiB";
+              end = "385MiB";
+              bootable = true;
+              content = {
+                type = "filesystem";
+                format = "vfat";
+              };
+            }
+            zfs = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "zpool";
+              };
+            }
+          };
+        };
+      };
+    };
+    
     zpool = {
       zpool = {
         type = "zpool";
