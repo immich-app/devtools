@@ -72,16 +72,6 @@
           ashift = "12";
           autotrim = "on";
         };
-        rootFsOptions = {
-          mountpoint = "none";
-          acltype = "posixacl";
-          canmount = "off";
-          compression = "zstd";
-          dnodesize = "auto";
-          normalization = "formD";
-          relatime = "on";
-          xattr = "sa";
-        };
 
         datasets = {
           root = {
