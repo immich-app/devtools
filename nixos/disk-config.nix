@@ -10,13 +10,13 @@
             boot = {
               name = "boot";
               start = "0";
-              end = "1MiB";
+              end = "1M";
               type = "EF02";
             };
             esp = {
               name = "ESP";
-              start = "1MiB";
-              end = "385MiB";
+              start = "1M";
+              end = "385M";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -43,13 +43,13 @@
             boot = {
               name = "boot";
               start = "0";
-              end = "1MiB";
+              end = "1M";
               type = "EF02";
             };
             esp = {
               name = "ESP";
-              start = "1MiB";
-              end = "385MiB";
+              start = "1M";
+              end = "385M";
               type = "EF00";
               content = {
                 type = "filesystem";
