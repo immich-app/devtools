@@ -16,7 +16,6 @@
               name = "ESP";
               start = "1MiB";
               end = "385MiB";
-              bootable = true;
               content = {
                 type = "filesystem";
                 format = "vfat";
@@ -48,7 +47,6 @@
               name = "ESP";
               start = "1MiB";
               end = "385MiB";
-              bootable = true;
               content = {
                 type = "filesystem";
                 format = "vfat";
