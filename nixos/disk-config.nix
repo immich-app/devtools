@@ -9,14 +9,12 @@
           partitions = {
             boot = {
               name = "boot";
-              start = "0";
-              end = "1M";
+              size = "1M";
               type = "EF02";
             };
             esp = {
               name = "ESP";
-              start = "1M";
-              end = "385M";
+              size = "385M";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -42,14 +40,12 @@
           partitions = {
             boot = {
               name = "boot";
-              start = "0";
-              end = "1M";
+              size = "1M";
               type = "EF02";
             };
             esp = {
               name = "ESP";
-              start = "1M";
-              end = "385M";
+              size = "385M";
               type = "EF00";
               content = {
                 type = "filesystem";
