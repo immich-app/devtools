@@ -11,13 +11,17 @@
       ./disk-config.nix
     ];
 
+  boot.initrd.availableKernelModules = [ "nvme" ];
   boot.loader.grub = {
-    # no need to set devices, disko will add all devices that have a EF02 partition to the list already
-    # devices = [ ];
+    devices = [ "/dev/disk/by-id/nvme-SAMSUNG_MZQLB1T9HAJR-00007_S439NC0R300444" "/dev/disk/by-id/nvme-SAMSUNG_MZQLB1T9HAJR-00007_S439NC0R303530" ];
     efiSupport = true;
     efiInstallAsRemovable = true;
   };
-  boot.supportedFilesystems = [ "zfs" ];
+  fileSystems."/" = {
+    device = "zpool/root";
+    fsType = "zfs";
+    neededForBoot = true;
+  };
 
   networking.hostName = "mich"; # Define your hostname.
   networking.hostId = "e3e9d999";

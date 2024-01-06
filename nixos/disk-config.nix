@@ -1,82 +1,75 @@
-{
-  disko.devices = {
-    disk = {
-      disk1 = {
-        type = "disk";
-        device = "/dev/disk/by-id/nvme-SAMSUNG_MZQLB1T9HAJR-00007_S439NC0R300444";
-        content = {
-          type = "gpt";
-          partitions = {
-            boot = {
-              name = "boot";
-              size = "1M";
-              type = "EF02";
-            };
-            esp = {
-              name = "ESP";
-              size = "500M";
-              type = "EF00";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-              };
-            };
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "zpool";
-              };
-            };
+{ lib, disks ? [ "/dev/disk/by-id/nvme-SAMSUNG_MZQLB1T9HAJR-00007_S439NC0R300444" "/dev/disk/by-id/nvme-SAMSUNG_MZQLB1T9HAJR-00007_S439NC0R303530" ], ... }: {
+  disk = lib.genAttrs disks (dev: {
+    device = dev;
+    type = "disk";
+    content = {
+      type = "table";
+      format = "gpt";
+      partitions = [
+        {
+          name = "boot";
+          start = "0";
+          end = "1MiB";
+          part-type = "primary";
+          flags = ["bios_grub"];
+        }
+        {
+          name = "ESP";
+          start = "1MiB";
+          end = "385MiB";
+          bootable = true;
+          content = {
+            type = "filesystem";
+            format = "vfat";
+            mountpoint = if dev == "/dev/disk/by-id/nvme-SAMSUNG_MZQLB1T9HAJR-00007_S439NC0R300444" then "/boot" else null;
           };
-        };
-      };
-      disk2 = {
-        type = "disk";
-        device = "/dev/disk/by-id/nvme-SAMSUNG_MZQLB1T9HAJR-00007_S439NC0R303530";
-        content = {
-          type = "gpt";
-          partitions = {
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "zpool";
-              };
-            };
+        }
+        {
+          name = "zpool";
+          start = "385MiB";
+          end = "100%";
+          content = {
+            type = "zfs";
+            pool = "zpool";
           };
-        };
-      };
+        }
+      ];
     };
+  });
+  zpool = {
     zpool = {
-      zpool = {
-        type = "zpool";
-        mode = "mirror";
-        rootFsOptions = {
-          compression = "zstd";
-          "com.sun:auto-snapshot" = "false";
-          canmount = "off";
-        };
+      type = "zpool";
+      mode = "mirror";
+      options = {
+        ashift = "12";
+        autotrim = "on";
+      };
+      rootFsOptions = {
+        mountpoint = "none";
+        acltype = "posixacl";
+        canmount = "off";
+        compression = "zstd";
+        dnodesize = "auto";
+        normalization = "formD";
+        relatime = "on";
+        xattr = "sa";
+      };
 
-        datasets = {
-          root = {
-            type = "zfs_fs";
-            mountpoint = "/";
-            options.mountpoint = "legacy";
-            postCreateHook = "zfs snapshot zpool/root@blank";
-          };
-          nix = {
-            type = "zfs_fs";
-            mountpoint = "/nix";
-            options.mountpoint = "legacy";
-          };
-          home = {
-            type = "zfs_fs";
-            options.mountpoint = "legacy";
-            mountpoint = "/home";
-            postCreateHook = "zfs snapshot zpool/home@blank";
-          };
+      datasets = {
+        root = {
+          type = "zfs_fs";
+          options.mountpoint = "legacy";
+          mountpoint = "/";
+        };
+        nix = {
+          type = "zfs_fs";
+          options.mountpoint = "legacy";
+          mountpoint = "/nix";
+        };
+        home = {
+          type = "zfs_fs";
+          options.mountpoint = "legacy";
+          mountpoint = "/home";
         };
       };
     };
