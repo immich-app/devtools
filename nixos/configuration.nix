@@ -13,7 +13,10 @@
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/disk/by-id/nvme-SAMSUNG_MZQLB1T9HAJR-00007_S439NC0R300444";
+  boot.loader.grub.devices = [
+    "/dev/disk/by-id/nvme-SAMSUNG_MZQLB1T9HAJR-00007_S439NC0R300444"
+    "/dev/disk/by-id/nvme-SAMSUNG_MZQLB1T9HAJR-00007_S439NC0R303530"
+  ];
   boot.supportedFilesystems = [ "zfs" ];
 
   networking.hostName = "mich"; # Define your hostname.
