@@ -23,8 +23,23 @@ sed -i '' s/127.0.0.1/mich.immich.cloud/g ~/.kube/mich.kubeconfig
 cp ~/.kube/config ~/.kube/config.bak && KUBECONFIG=~/.kube/config:~/.kube/mich.kubeconfig kubectl config view --flatten > /tmp/config && mv /tmp/config ~/.kube/config
 ```
 
-6. Bootstrap flux: `kubectl apply --kustomize ./bootstrap`
-7. Apply the cluster config: `kubectl apply --kustomize ./flux/config`
+6. Bootstrap the onepassword operator (See [secrets bootstrapping](#secrets-bootstrapping))
+7. Bootstrap flux: `kubectl apply --kustomize ./bootstrap`
+8. Apply the cluster config: `kubectl apply --kustomize ./flux/config`
+
+### Secrets bootstrapping
+
+This cluster uses the 1password operator for secrets management. To bootstrap:
+
+1. Download the 1password-credentials.json file from 1password to a temporary folder
+2. Copy the 1password connect access token from the vault
+3. Create the namespace and secret:
+
+```
+kubectl create namespace secrets
+kubectl create secret generic -n secrets onepassword-api --from-file=1password-credentials.json --from-literal=token="<ACCESSTOKEN>"
+rm 1password-credentials.json
+```
 
 ## Manual setup
 
