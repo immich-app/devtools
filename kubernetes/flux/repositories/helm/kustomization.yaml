@@ -5,3 +5,5 @@ resources:
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
   - ./1password.yaml
+  - ./piraeus.yaml
+  - ./democratic-csi.yaml
