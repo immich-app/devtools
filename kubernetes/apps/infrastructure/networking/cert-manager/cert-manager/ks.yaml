@@ -2,13 +2,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-ingress-nginx
+  name: cluster-apps-cert-manager
   namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
 spec:
-  dependsOn:
-    - name: cluster-apps-cert-manager
-    - name: cluster-apps-cert-manager-issuers
-  path: ./kubernetes/apps/networking/ingress-nginx/app
+  path: ./kubernetes/apps/infrastructure/networking/cert-manager/cert-manager/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -16,8 +15,8 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: ingress-nginx
-      namespace: networking
+      name: cert-manager
+      namespace: cert-manager
   interval: 30m
   retryInterval: 1m
   timeout: 3m
@@ -25,12 +24,14 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: ingress-cloud-to-app-redirect
+  name: cluster-apps-cert-manager-issuers
   namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
 spec:
   dependsOn:
-    - name: cluster-apps-ingress-nginx
-  path: ./kubernetes/apps/networking/ingress-nginx/redirect
+    - name: cluster-apps-cert-manager
+  path: ./kubernetes/apps/infrastructure/networking/cert-manager/cert-manager/issuers
   prune: true
   sourceRef:
     kind: GitRepository
