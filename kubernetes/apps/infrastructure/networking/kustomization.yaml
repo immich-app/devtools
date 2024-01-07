@@ -5,4 +5,3 @@ resources:
   - ./namespace.yaml
   - ./ingress-nginx/ks.yaml
   - ./cert-manager
-  - ./storage
