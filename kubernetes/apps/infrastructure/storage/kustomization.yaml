@@ -3,6 +3,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./namespace.yaml
-  - ./ingress-nginx/ks.yaml
-  - ./cert-manager
-  - ./storage
+  - ./democratic-csi/ks.yaml
+  - ./snapshot-controller/ks.yaml
