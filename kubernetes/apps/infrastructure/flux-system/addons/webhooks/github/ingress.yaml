@@ -12,7 +12,7 @@ spec:
     - host: &host "mich.immich.cloud"
       http:
         paths:
-          - path: /flux-webhook/
+          - path: /hook/
             pathType: Prefix
             backend:
               service:
