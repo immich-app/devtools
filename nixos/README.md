@@ -1,7 +1,9 @@
 # Nixos
 
-This folder holds the nixos configuration used to bootstrap the dedicated server used by the maintainer team.
+This folder holds the nixos configuration intended to bootstrap the dedicated server used by the maintainer team.
 All the management of containers and such is done via Kubernetes on top of this.
+
+I couldn't get this config to come up successfully, so it's not actually used right now.
 
 ### Bootstrap
 
