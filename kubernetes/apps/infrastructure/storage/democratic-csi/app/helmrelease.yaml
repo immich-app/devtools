@@ -68,10 +68,10 @@ spec:
 
     storageClasses:
       - name: zfs
-        defaultClass: false
+        defaultClass: true
         reclaimPolicy: Delete
         volumeBindingMode: WaitForFirstConsumer
-        allowVolumeExpansion: false
+        allowVolumeExpansion: true
         parameters:
           fsType: zfs
 
