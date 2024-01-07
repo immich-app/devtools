@@ -37,7 +37,7 @@ This cluster uses the 1password operator for secrets management. To bootstrap:
 
 ```
 kubectl create namespace secrets
-kubectl create secret generic -n secrets onepassword-api --from-file=1password-credentials.json --from-literal=token="<ACCESSTOKEN>"
+kubectl create secret generic -n secrets onepassword-api --from-literal=session="$(base64 1password-credentials.json)" --from-literal=token="<ACCESSTOKEN>"
 rm 1password-credentials.json
 ```
 
