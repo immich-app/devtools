@@ -48,3 +48,12 @@ The following things have been set up manually on the debian host.
 Installed packages:
 
 - unattended-upgrades
+
+Commands:
+
+- Created zfs volumes for kubernetes storage
+  ```
+  zfs create rpool/k8s
+  zfs create rpool/k8s/volumes
+  zfs create rpool/k8s/snapshots
+  ```
