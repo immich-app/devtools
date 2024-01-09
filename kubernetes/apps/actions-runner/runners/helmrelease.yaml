@@ -30,3 +30,6 @@ spec:
     minRunners: 1
     maxRunners: 3
     githubConfigSecret: actions-controller-github-auth
+    controllerServiceAccount:
+      namespace: actions-controller
+      name: actions-runner-controller-gha-rs-controller
