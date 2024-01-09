@@ -22,6 +22,7 @@ jobs:
         with:
           path: "./kubernetes"
           resource: "${{ matrix.resource }}"
+          skip-crds: "false"
 
       - if: ${{ steps.diff.outputs.diff != '' }}
         name: Add comment
