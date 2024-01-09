@@ -7,3 +7,4 @@ resources:
   - ./1password.yaml
   - ./piraeus.yaml
   - ./democratic-csi.yaml
+  - ./actions-runner-controller.yaml
