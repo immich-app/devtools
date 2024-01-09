@@ -5,5 +5,10 @@ metadata:
 data:
   daemon.json: |
     {
-      "mtu": 1450
+      "mtu": 1450,
+      "default-network-opts": {
+        "bridge": {
+          "com.docker.network.driver.mtu": "1450"
+        }
+      }
     }
