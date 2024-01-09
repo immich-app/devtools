@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./secret.yaml
+  - ./docker-config.yaml

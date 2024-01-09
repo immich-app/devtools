@@ -30,15 +30,64 @@ spec:
     minRunners: 1
     maxRunners: 3
     githubConfigSecret: actions-controller-github-auth
-    containerMode:
-      type: dind
     template:
       spec:
+        initContainers:
+        - name: init-dind-externals
+          image: ghcr.io/immich-app/actions-runner:main
+          command: ["cp"]
+          args: ["-r", "-v", "/home/runner/externals/.", "/home/runner/tmpDir/"]
+          volumeMounts:
+            - name: dind-externals
+              mountPath: /home/runner/tmpDir
         containers:
-          - name: runner
-            image: ghcr.io/immich-app/actions-runner:main
-            imagePullPolicy: Always
-            command: ["/home/runner/run.sh"]
+        - name: runner
+          image: ghcr.io/immich-app/actions-runner:main
+          imagePullPolicy: Always
+          command: ["/home/runner/run.sh"]
+          env:
+            - name: DOCKER_HOST
+              value: unix:///run/docker/docker.sock
+            - name: RUNNER_WAIT_FOR_DOCKER_IN_SECONDS
+              value: '120'
+          volumeMounts:
+            - name: work
+              mountPath: /home/runner/_work
+            - name: dind-sock
+              mountPath: /run/docker
+              readOnly: true
+        - name: dind
+          image: docker:dind
+          args:
+            - dockerd
+            - --host=unix:///run/docker/docker.sock
+            - --group=$(DOCKER_GROUP_GID)
+          env:
+            - name: DOCKER_GROUP_GID
+              value: "123"
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: work
+              mountPath: /home/runner/_work
+            - name: dind-sock
+              mountPath: /run/docker
+            - name: dind-externals
+              mountPath: /home/runner/externals
+            - name: daemon-json
+              mountPath: /etc/docker/daemon.json
+              readOnly: true
+              subPath: daemon.json
+        volumes:
+        - name: work
+          emptyDir: {}
+        - name: dind-sock
+          emptyDir: {}
+        - name: dind-externals
+          emptyDir: {}
+        - name: daemon-json
+          configMap:
+            name: docker-daemon-config  
     controllerServiceAccount:
       namespace: actions-controller
       name: actions-runner-controller-gha-rs-controller
