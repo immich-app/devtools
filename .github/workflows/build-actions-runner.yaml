@@ -1,0 +1,51 @@
+name: Build and Push actions-runner Image
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  packages: write
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3.0.0
+        if: ${{ !github.event.pull_request.head.repo.fork }}
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate docker image tags
+        id: metadata
+        uses: docker/metadata-action@v5
+        with:
+          flavor: |
+            # Disable latest tag
+            latest=false
+          images: |
+            name=ghcr.io/${{ github.repository_owner }}/actions-runner
+
+      - name: Build and push image
+        uses: docker/build-push-action@v5.1.0
+        with:
+          context: ./containers/actions-runner
+          platforms: linux/amd64
+          push: ${{ !github.event.pull_request.head.repo.fork && steps.metadata.outputs.tags != '' }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
