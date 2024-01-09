@@ -30,6 +30,8 @@ spec:
     minRunners: 1
     maxRunners: 3
     githubConfigSecret: actions-controller-github-auth
+    containerMode:
+      type: dind
     template:
       spec:
         containers:
