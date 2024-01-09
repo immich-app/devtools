@@ -3,8 +3,10 @@ name: Build and Push actions-runner Image
 on:
   push:
     branches: [main]
+    paths: ["containers/actions-runner/**"]
   pull_request:
     branches: [main]
+    paths: ["containers/actions-runner/**"]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
