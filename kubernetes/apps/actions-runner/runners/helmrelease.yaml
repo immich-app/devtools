@@ -34,7 +34,7 @@ spec:
       spec:
         initContainers:
         - name: init-dind-externals
-          image: ghcr.io/actions/actions-runner:latest
+          image: ghcr.io/immich-app/actions-runner:main
           command: ["cp"]
           args: ["-r", "-v", "/home/runner/externals/.", "/home/runner/tmpDir/"]
           volumeMounts:
@@ -48,6 +48,8 @@ spec:
           env:
             - name: DOCKER_HOST
               value: unix:///run/docker/docker.sock
+            - name: RUNNER_WAIT_FOR_DOCKER_IN_SECONDS
+              value: '120'
           volumeMounts:
             - name: work
               mountPath: /home/runner/_work
@@ -60,11 +62,6 @@ spec:
             - dockerd
             - --host=unix:///run/docker/docker.sock
             - --group=$(DOCKER_GROUP_GID)
-          resources:
-            requests:
-              memory: 4Gi
-            limits:
-              memory: 16Gi
           env:
             - name: DOCKER_GROUP_GID
               value: "123"
