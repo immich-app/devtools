@@ -32,6 +32,10 @@ RUN \
 RUN curl -SL https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose \
     && chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash \
+    && nvm install v20.10.0 \
+    && nvm use v20.10.0
+
 USER runner
 
 RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
