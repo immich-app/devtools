@@ -74,17 +74,23 @@ spec:
               mountPath: /run/docker
             - name: dind-externals
               mountPath: /home/runner/externals
+            - name: varlibdocker
+              mountPath: /var/lib/docker
             - name: daemon-json
               mountPath: /etc/docker/daemon.json
               readOnly: true
               subPath: daemon.json
         volumes:
         - name: work
-          emptyDir: {}
+          emptyDir:
+            medium: "Memory"
         - name: dind-sock
           emptyDir: {}
         - name: dind-externals
           emptyDir: {}
+        - name: varlibdocker
+          emptyDir:
+            medium: "Memory"
         - name: daemon-json
           configMap:
             name: docker-daemon-config  
