@@ -34,7 +34,7 @@ spec:
       spec:
         initContainers:
         - name: init-dind-externals
-          image: ghcr.io/immich-app/actions-runner:main
+          image: ghcr.io/immich-app/actions-runner:sha-a3bc8e9
           command: ["cp"]
           args: ["-r", "-v", "/home/runner/externals/.", "/home/runner/tmpDir/"]
           volumeMounts:
@@ -42,7 +42,7 @@ spec:
               mountPath: /home/runner/tmpDir
         containers:
         - name: runner
-          image: ghcr.io/immich-app/actions-runner:main
+          image: ghcr.io/immich-app/actions-runner:sha-a3bc8e9
           imagePullPolicy: Always
           command: ["/home/runner/run.sh"]
           env:
