@@ -1,6 +1,7 @@
 name: Build and Push actions-runner Image
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths: ["containers/actions-runner/**"]
@@ -40,6 +41,8 @@ jobs:
             latest=false
           images: |
             name=ghcr.io/${{ github.repository_owner }}/actions-runner
+          tags: |
+            type=sha
 
       - name: Build and push image
         uses: docker/build-push-action@v5.1.0
