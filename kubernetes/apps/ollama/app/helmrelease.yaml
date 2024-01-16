@@ -27,7 +27,15 @@ spec:
   values:
     controllers:
       main:
-        type: deployment
+        type: statefulset
+        statefulset:
+          volumeClaimTemplates:
+            - name: data
+              globalMounts:
+                - path: /app/backend/data
+              accessMode: "ReadWriteOnce"
+              storageClass: zfs
+              size: 10Gi
         containers:
           main:
             image:
