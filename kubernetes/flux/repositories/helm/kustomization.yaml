@@ -8,3 +8,4 @@ resources:
   - ./piraeus.yaml
   - ./democratic-csi.yaml
   - ./actions-runner-controller.yaml
+  - ./bjw-s.yaml
