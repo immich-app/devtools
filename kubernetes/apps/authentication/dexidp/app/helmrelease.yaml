@@ -25,6 +25,8 @@ spec:
     envFrom:
       - secretRef:
           name: github-oauth-client
+      - secretRef:
+          name: hedgedoc-oauth
     ingress:
       enabled: true
       className: nginx
