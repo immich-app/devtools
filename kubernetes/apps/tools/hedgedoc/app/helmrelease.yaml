@@ -49,7 +49,7 @@ spec:
               CMD_ALLOW_EMAIL_REGISTER: false
               CMD_DOMAIN: md.immich.cloud
               CMD_PROTOCOL_USESSL: true
-              CMD_ALLOW_ANONYMOUS: false
+              CMD_ALLOW_ANONYMOUS: true
               CMD_OAUTH2_PROVIDERNAME: Immich
               CMD_OAUTH2_CLIENT_ID: hedgedoc
               CMD_OAUTH2_SCOPE: openid email groups profile
