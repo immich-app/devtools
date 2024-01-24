@@ -89,7 +89,7 @@ spec:
       staticClients:
         - id: hedgedoc
           name: hedgedoc
-          secret: $CMD_OAUTH2_CLIENT_SECRET
+          secretEnv: CMD_OAUTH2_CLIENT_SECRET
           redirectURIs:
             - "https://md.immich.cloud/auth/oauth2/callback"
 
