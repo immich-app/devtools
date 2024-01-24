@@ -59,10 +59,9 @@ spec:
               CMD_OAUTH2_USER_PROFILE_URL: https://auth.immich.cloud/userinfo
               CMD_OAUTH2_TOKEN_URL: https://auth.immich.cloud/token
               CMD_OAUTH2_AUTHORIZATION_URL: https://auth.immich.cloud/auth
-              CMD_OAUTH2_CLIENT_SECRET: plaintext
-            # envFrom:
-            #   - secretRef:
-            #       name: hedgedoc-oauth
+            envFrom:
+              - secretRef:
+                  name: hedgedoc-oauth
     persistence:
       data:
         enabled: true
