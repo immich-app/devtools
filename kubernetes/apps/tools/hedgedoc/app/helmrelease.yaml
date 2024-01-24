@@ -57,6 +57,7 @@ spec:
         enabled: true
         storageClass: zfs
         size: 5Gi
+        accessMode: ReadWriteOnce
     service:
       main:
         ports:
