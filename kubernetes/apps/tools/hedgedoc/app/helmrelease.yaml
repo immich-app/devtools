@@ -36,6 +36,8 @@ spec:
               pullPolicy: IfNotPresent
               tag: 1.9.9
             env:
+              PUID: 1000
+              PGID: 1000
               CMD_DB_URL: "sqlite:/data/hedgedoc.sqlite"
               CMD_EMAIL: false
               CMD_ALLOW_EMAIL_REGISTER: false
