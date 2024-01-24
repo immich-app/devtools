@@ -85,11 +85,11 @@ spec:
               - name: immich-app
 
       staticClients: []
-        # - id: grafana
-        #   name: grafana
-        #   secret: ${DEX_GRAFANA_AUTHENTICATOR_CLIENT_SECRET}
-        #   redirectURIs:
-        #     - "https://grafana.${SECRET_DOMAIN}/login/generic_oauth"
+        - id: hedgedoc
+          name: hedgedoc
+          secret: $CMD_OAUTH2_CLIENT_SECRET
+          redirectURIs:
+            - "https://md.immich.cloud/auth/oauth2/callback"
 
     resources:
       requests:
