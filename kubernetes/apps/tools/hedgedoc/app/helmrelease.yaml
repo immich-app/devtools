@@ -87,3 +87,4 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: hedgedoc-tls
