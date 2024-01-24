@@ -9,3 +9,4 @@ resources:
   - ./democratic-csi.yaml
   - ./actions-runner-controller.yaml
   - ./bjw-s.yaml
+  - ./dex.yaml
