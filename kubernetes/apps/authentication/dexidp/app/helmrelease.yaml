@@ -84,7 +84,7 @@ spec:
             orgs:
               - name: immich-app
 
-      staticClients: []
+      staticClients:
         - id: hedgedoc
           name: hedgedoc
           secret: $CMD_OAUTH2_CLIENT_SECRET
