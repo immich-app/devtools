@@ -20,7 +20,7 @@ spec:
       serviceAccountName: podbump
       containers:
         - name: podbump
-          image: ghcr.io/bo0tzz/podbump:v0.1.3
+          image: ghcr.io/bo0tzz/podbump:v0.1.4
           imagePullPolicy: Always
           env:
             - name: PODBUMP_SCHEDULE
