@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podbump
+  namespace: tools
+  labels:
+    app: podbump
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: podbump
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: podbump
+    spec:
+      serviceAccountName: podbump
+      containers:
+        - name: podbump
+          image: ghcr.io/bo0tzz/podbump:v0.1.3
+          imagePullPolicy: Always
+          env:
+            - name: PODBUMP_SCHEDULE
+              value: "@minutely"
+          resources:
+            requests:
+              cpu: 20m
+              memory: 200M
