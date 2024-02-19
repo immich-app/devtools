@@ -68,6 +68,13 @@ spec:
         storageClass: zfs
         size: 5Gi
         accessMode: ReadWriteOnce
+      uploads:
+        enabled: true
+        storageClass: zfs
+        size: 5Gi
+        accessMode: ReadWriteOnce
+        globalMounts:
+          - path: /hedgedoc/public/uploads
     service:
       main:
         ports:
