@@ -6,7 +6,7 @@ It manages services such as the demo instance and preview environments.
 ### Bootstrap
 
 1. Boot the Hetzner server into the recovery image and connect via SSH
-2. Install debian 12 through https://github.com/terem42/zfs-hetzner-vm
+2. Install debian 12 through https://github.com/terem42/zfs-hetzner-vm ([note this issue comment](https://github.com/terem42/zfs-hetzner-vm/issues/69#issuecomment-1879991824))
 3. Ssh into the new install
 4. Install k3s with this command:
 
