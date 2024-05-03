@@ -10,4 +10,14 @@ plugins:
   scorecard.sdk.operatorframework.io/v2: {}
 projectName: preview-operator
 repo: github.com/immich-app/devtools/tools/preview-operator
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: immich.app
+  group: devtools
+  kind: Preview
+  path: github.com/immich-app/devtools/tools/preview-operator/api/v1alpha1
+  version: v1alpha1
 version: "3"
