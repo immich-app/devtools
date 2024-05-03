@@ -35,7 +35,11 @@ var _ = Describe("Preview Controller", func() {
 						Name:      resourceName,
 						Namespace: "default",
 					},
-					// TODO(user): Specify other spec details if needed.
+					Spec: devtoolsv1alpha1.PreviewSpec{
+						Immich: &devtoolsv1alpha1.ImmichConfiguration{
+							Tag: "main",
+						},
+					},
 				}
 				Expect(k8sClient.Create(ctx, resource)).To(Succeed())
 			}

@@ -73,6 +73,8 @@ func (c *ComponentController) Reconcile(ctx context.Context, r *PreviewReconcile
 		log.Error(err, "Failed to update Preview status")
 		return ctrl.Result{}, err
 	}
+
+	return ctrl.Result{}, err
 }
 
 func (c *ComponentController) name(preview *devtoolsv1alpha1.Preview) string {
