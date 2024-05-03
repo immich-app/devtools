@@ -70,7 +70,7 @@ spec:
         - /manager
         args:
         - --leader-elect
-        image: controller:latest
+        image: ghcr.io/immich-app/preview-operator:0.0.1
         name: manager
         securityContext:
           allowPrivilegeEscalation: false
