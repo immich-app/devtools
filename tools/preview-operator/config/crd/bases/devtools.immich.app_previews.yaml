@@ -49,6 +49,13 @@ spec:
                 type: object
               immich:
                 properties:
+                  server:
+                    properties:
+                      replicas:
+                        default: 1
+                        format: int32
+                        type: integer
+                    type: object
                   tag:
                     type: string
                 required:

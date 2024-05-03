@@ -4,8 +4,15 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+type ImmichServerConfiguration struct {
+	// +kubebuilder:default:=1
+	// +optional
+	Replicas int32 `json:"replicas,omitempty"`
+}
+
 type ImmichConfiguration struct {
-	Tag string `json:"tag"`
+	Tag    string                     `json:"tag"`
+	Server *ImmichServerConfiguration `json:"server,omitempty"`
 }
 
 type DatabaseInitType string
