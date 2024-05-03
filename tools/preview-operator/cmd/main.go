@@ -7,6 +7,7 @@ import (
 
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
 	// to ensure that exec-entrypoint and run can make use of them.
+	"go.uber.org/zap/zapcore"
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
 	"k8s.io/apimachinery/pkg/runtime"
@@ -52,6 +53,7 @@ func main() {
 		"If set, HTTP/2 will be enabled for the metrics and webhook servers")
 	opts := zap.Options{
 		Development: true,
+		Level:       zapcore.DebugLevel,
 	}
 	opts.BindFlags(flag.CommandLine)
 	flag.Parse()
@@ -74,9 +76,11 @@ func main() {
 		tlsOpts = append(tlsOpts, disableHTTP2)
 	}
 
+	setupLog.Info("starting webhook server")
 	webhookServer := webhook.NewServer(webhook.Options{
 		TLSOpts: tlsOpts,
 	})
+	setupLog.Info("webhook server started")
 
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme: scheme,
@@ -105,6 +109,7 @@ func main() {
 		setupLog.Error(err, "unable to start manager")
 		os.Exit(1)
 	}
+	setupLog.Info("manager created")
 
 	if err = (&controller.PreviewReconciler{
 		Client: mgr.GetClient(),
@@ -113,6 +118,7 @@ func main() {
 		setupLog.Error(err, "unable to create controller", "controller", "Preview")
 		os.Exit(1)
 	}
+	setupLog.Info("reconciler setup completed")
 	//+kubebuilder:scaffold:builder
 
 	if err := mgr.AddHealthzCheck("healthz", healthz.Ping); err != nil {
