@@ -1,0 +1,46 @@
+name: Build and Push preview-operator Image
+
+on:
+  push:
+    branches: [main]
+    paths: ["tools/preview-operator/**"]
+  pull_request:
+    branches: [main]
+    paths: ["tools/preview-operator/**"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  packages: write
+
+defaults:
+  run:
+    working-directory: tools/preview-operator
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3.1.0
+        if: ${{ !github.event.pull_request.head.repo.fork }}
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Test
+        run: make test
+
+      - name: Build
+        run: make docker-build
+      
+      - name: Push
+        if: ${{ !github.event.pull_request }}
+        run: make docker-push
