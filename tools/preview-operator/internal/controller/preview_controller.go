@@ -7,6 +7,7 @@ import (
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
+	"slices"
 
 	appsv1 "k8s.io/api/apps/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
@@ -126,15 +127,27 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 
 	//TODO: Library volume
 
-	//TODO: Redis
+	redisController := &ComponentController{
+		ComponentName: "redis",
+		Image:         "redis",
+		Port:          6379,
+	}
+
+	err = redisController.Reconcile(ctx, r, preview)
+	if err != nil {
+		log.Error(err, "Failed to reconcile Redis")
+		return ctrl.Result{}, err
+	}
+
+	infraEnv := slices.Concat(redisConnectionEnv(redisController, preview), databaseConnectionEnv(database))
 
 	serverController := &ComponentController{
 		ComponentName: "immich-server",
 		Image:         "ghcr.io/immich-app/immich-server",
 		Port:          3001,
 		Args:          []string{"start.sh", "immich"},
-		Env:           databaseConnectionEnv(database),
-	} //TODO: Redis connection
+		Env:           infraEnv,
+	}
 
 	err = serverController.Reconcile(ctx, r, preview)
 	if err != nil {
@@ -159,6 +172,16 @@ func (r *PreviewReconciler) SetupWithManager(mgr ctrl.Manager) error {
 
 func clusterName(preview *devtoolsv1alpha1.Preview) string {
 	return preview.Name + "-database"
+}
+
+func redisConnectionEnv(redis *ComponentController, preview *devtoolsv1alpha1.Preview) []v1.EnvVar {
+	svcName := redis.name(preview)
+	return []v1.EnvVar{
+		{
+			Name:  "REDIS_HOSTNAME",
+			Value: svcName,
+		},
+	}
 }
 
 func databaseConnectionEnv(cluster *cnpg.Cluster) []v1.EnvVar {
