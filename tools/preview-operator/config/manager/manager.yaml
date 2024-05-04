@@ -70,7 +70,8 @@ spec:
         - /manager
         args:
         - --leader-elect
-        image: ghcr.io/immich-app/preview-operator:0.0.5
+        image: ghcr.io/immich-app/preview-operator:0.0.6
+        imagePullPolicy: Always
         name: manager
         securityContext:
           allowPrivilegeEscalation: false
