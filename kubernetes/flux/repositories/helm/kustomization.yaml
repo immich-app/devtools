@@ -10,3 +10,4 @@ resources:
   - ./actions-runner-controller.yaml
   - ./bjw-s.yaml
   - ./dex.yaml
+  - ./cnpg.yaml
