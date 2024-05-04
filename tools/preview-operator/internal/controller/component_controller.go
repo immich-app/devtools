@@ -23,6 +23,7 @@ type ComponentController struct {
 	Image         string
 	Port          int32
 	Args          []string
+	Env           []corev1.EnvVar
 }
 
 func (c *ComponentController) Reconcile(ctx context.Context, r *PreviewReconciler, preview *devtoolsv1alpha1.Preview) (ctrl.Result, error) {
@@ -130,7 +131,8 @@ func (c *ComponentController) deployment(r *PreviewReconciler, preview *devtools
 							Name:          "http",
 						}},
 						Args: c.Args,
-						//TODO: env, volume
+						Env:  c.Env,
+						//TODO: volume
 					}},
 				},
 			},

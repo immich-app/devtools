@@ -3,8 +3,7 @@ package controller
 import (
 	"context"
 	"fmt"
-	"time"
-
+	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
@@ -118,7 +117,7 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 		// Cluster created successfully
 		// We will requeue the reconciliation so that we can ensure the state
 		// and move forward for the next operations
-		return ctrl.Result{RequeueAfter: time.Minute}, nil
+		return ctrl.Result{Requeue: true}, nil
 	} else if err != nil {
 		log.Error(err, "Failed to get Cluster")
 		// Let's return the error for the reconciliation be re-trigged again
@@ -130,6 +129,7 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 		Image:         "ghcr.io/immich-app/immich-server",
 		Port:          3001,
 		Args:          []string{"start.sh", "immich"},
+		Env:           databaseConnectionEnv(database),
 	}
 
 	res, err := serverController.Reconcile(ctx, r, preview)
@@ -151,4 +151,40 @@ func (r *PreviewReconciler) SetupWithManager(mgr ctrl.Manager) error {
 
 func clusterName(preview *devtoolsv1alpha1.Preview) string {
 	return preview.Name + "-database"
+}
+
+func databaseConnectionEnv(cluster *cnpg.Cluster) []v1.EnvVar {
+	secret := cluster.GetSuperuserSecretName()
+	return []v1.EnvVar{
+		{
+			Name: "DB_USERNAME",
+			ValueFrom: &v1.EnvVarSource{
+				SecretKeyRef: &v1.SecretKeySelector{
+					LocalObjectReference: v1.LocalObjectReference{
+						Name: secret,
+					},
+					Key: "username",
+				},
+			},
+		},
+		{
+			Name: "DB_PASSWORD",
+			ValueFrom: &v1.EnvVarSource{
+				SecretKeyRef: &v1.SecretKeySelector{
+					LocalObjectReference: v1.LocalObjectReference{
+						Name: secret,
+					},
+					Key: "password",
+				},
+			},
+		},
+		{
+			Name:  "DB_DATABASE_NAME",
+			Value: cluster.GetApplicationDatabaseName(),
+		},
+		{
+			Name:  "DB_HOSTNAME",
+			Value: cluster.GetServiceReadWriteName(),
+		},
+	}
 }
