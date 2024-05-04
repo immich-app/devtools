@@ -124,21 +124,29 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 		return ctrl.Result{}, err
 	}
 
+	//TODO: Library volume
+
+	//TODO: Redis
+
 	serverController := &ComponentController{
 		ComponentName: "immich-server",
 		Image:         "ghcr.io/immich-app/immich-server",
 		Port:          3001,
 		Args:          []string{"start.sh", "immich"},
 		Env:           databaseConnectionEnv(database),
+	} //TODO: Redis connection
+
+	err = serverController.Reconcile(ctx, r, preview)
+	if err != nil {
+		return ctrl.Result{}, err
 	}
 
-	res, err := serverController.Reconcile(ctx, r, preview)
-	if err != nil {
-		return res, err
-	}
+	//TODO: Microservices
+
+	//TODO: ML
 
 	//TODO: Figure out the details of what Result needs to be returned when
-	return res, err
+	return ctrl.Result{}, err
 }
 
 // SetupWithManager sets up the controller with the Manager.
