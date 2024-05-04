@@ -176,6 +176,10 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 			ObjectMeta: metav1.ObjectMeta{
 				Name:      preview.Name,
 				Namespace: preview.Namespace,
+				Annotations: map[string]string{
+					"cert-manager.io/cluster-issuer":              "letsencrypt-production",
+					"nginx.ingress.kubernetes.io/proxy-body-size": "0",
+				},
 			},
 			Spec: v1beta1.IngressSpec{
 				IngressClassName: &ingressClass,
