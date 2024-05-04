@@ -77,7 +77,7 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 				Namespace: preview.Namespace,
 			},
 			Spec: cnpg.ClusterSpec{
-				ImageName:             "ghcr.io/tensorchord/cloudnative-pgvecto.rs:14.11-v0.2.0",
+				ImageName:             "ghcr.io/tensorchord/cloudnative-pgvecto.rs:14.11-v0.2.1",
 				PrimaryUpdateStrategy: cnpg.PrimaryUpdateStrategyUnsupervised,
 				Instances:             1,
 				PostgresConfiguration: cnpg.PostgresConfiguration{
