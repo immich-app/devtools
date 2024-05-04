@@ -3,8 +3,6 @@ package controller
 import (
 	"context"
 	"fmt"
-	"k8s.io/api/extensions/v1beta1"
-	"k8s.io/apimachinery/pkg/util/intstr"
 	"slices"
 
 	v1 "k8s.io/api/core/v1"
@@ -13,6 +11,7 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 
 	appsv1 "k8s.io/api/apps/v1"
+	networking "k8s.io/api/networking/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -164,15 +163,15 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 
 	//TODO: ML
 
-	ingress := &v1beta1.Ingress{}
+	ingress := &networking.Ingress{}
 	err = r.Get(ctx, types.NamespacedName{Name: preview.Name, Namespace: preview.Namespace}, ingress)
 	if err != nil && apierrors.IsNotFound(err) {
 		log.Info("Creating ingress")
 		ingressClass := "nginx"
 		host := preview.Name + ".dev.immich.cloud"
-		pathType := v1beta1.PathTypePrefix
+		pathType := networking.PathTypePrefix
 
-		ing := &v1beta1.Ingress{
+		ing := &networking.Ingress{
 			ObjectMeta: metav1.ObjectMeta{
 				Name:      preview.Name,
 				Namespace: preview.Namespace,
@@ -181,22 +180,23 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 					"nginx.ingress.kubernetes.io/proxy-body-size": "0",
 				},
 			},
-			Spec: v1beta1.IngressSpec{
+			Spec: networking.IngressSpec{
 				IngressClassName: &ingressClass,
-				Rules: []v1beta1.IngressRule{
+				Rules: []networking.IngressRule{
 					{
 						Host: host,
-						IngressRuleValue: v1beta1.IngressRuleValue{
-							HTTP: &v1beta1.HTTPIngressRuleValue{
-								Paths: []v1beta1.HTTPIngressPath{
+						IngressRuleValue: networking.IngressRuleValue{
+							HTTP: &networking.HTTPIngressRuleValue{
+								Paths: []networking.HTTPIngressPath{
 									{
 										Path:     "/",
 										PathType: &pathType,
-										Backend: v1beta1.IngressBackend{
-											ServiceName: serverController.name(preview),
-											ServicePort: intstr.IntOrString{
-												Type:   intstr.String,
-												StrVal: "http",
+										Backend: networking.IngressBackend{
+											Service: &networking.IngressServiceBackend{
+												Name: serverController.name(preview),
+												Port: networking.ServiceBackendPort{
+													Name: "http",
+												},
 											},
 										},
 									},
@@ -205,7 +205,7 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 						},
 					},
 				},
-				TLS: []v1beta1.IngressTLS{
+				TLS: []networking.IngressTLS{
 					{
 						Hosts:      []string{host},
 						SecretName: preview.Name + "-tls",
