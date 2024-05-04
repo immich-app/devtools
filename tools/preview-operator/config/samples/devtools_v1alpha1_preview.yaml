@@ -8,6 +8,7 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/created-by: preview-operator
   name: preview-sample
+  namespace: testing
 spec:
   immich:
     tag: main

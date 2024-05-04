@@ -68,7 +68,7 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 	err = r.Get(ctx, types.NamespacedName{Name: clusterName(preview), Namespace: preview.Namespace}, database)
 	if err != nil && apierrors.IsNotFound(err) {
 		log.Info("Creating database cluster")
-		storageClass := "local-path"
+		storageClass := "zfs"
 		cluster := &cnpg.Cluster{
 			ObjectMeta: metav1.ObjectMeta{
 				Name:      clusterName(preview),

@@ -78,7 +78,7 @@ func (c *ComponentController) Reconcile(ctx context.Context, r *PreviewReconcile
 }
 
 func (c *ComponentController) name(preview *devtoolsv1alpha1.Preview) string {
-	return preview.Name + c.ComponentName
+	return preview.Name + "-" + c.ComponentName
 }
 
 func (c *ComponentController) labels(preview *devtoolsv1alpha1.Preview) map[string]string {
