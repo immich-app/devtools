@@ -3,10 +3,11 @@ package controller
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
-	"time"
 
 	appsv1 "k8s.io/api/apps/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
@@ -76,6 +77,7 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 			Spec: cnpg.ClusterSpec{
 				ImageName:             "ghcr.io/tensorchord/cloudnative-pgvecto.rs:14.11-v0.2.0",
 				PrimaryUpdateStrategy: cnpg.PrimaryUpdateStrategyUnsupervised,
+				Instances:             1,
 				PostgresConfiguration: cnpg.PostgresConfiguration{
 					AdditionalLibraries: []string{"vectors.so"},
 				},

@@ -19,6 +19,8 @@ import (
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
 
+	cnpg "github.com/cloudnative-pg/cloudnative-pg/api/v1"
+
 	devtoolsv1alpha1 "github.com/immich-app/devtools/tools/preview-operator/api/v1alpha1"
 	"github.com/immich-app/devtools/tools/preview-operator/internal/controller"
 	//+kubebuilder:scaffold:imports
@@ -31,7 +33,7 @@ var (
 
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
-
+	utilruntime.Must(cnpg.AddToScheme(scheme))
 	utilruntime.Must(devtoolsv1alpha1.AddToScheme(scheme))
 	//+kubebuilder:scaffold:scheme
 }
