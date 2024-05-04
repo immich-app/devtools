@@ -132,6 +132,7 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 	redisController := &ComponentController{
 		ComponentName: "redis",
 		Image:         "redis",
+		Tag:           "latest",
 		Port:          6379,
 	}
 
@@ -146,6 +147,7 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 	serverController := &ComponentController{
 		ComponentName: "immich-server",
 		Image:         "ghcr.io/immich-app/immich-server",
+		Tag:           preview.Spec.Immich.Tag,
 		Port:          3001,
 		Args:          []string{"start.sh", "immich"},
 		Env:           infraEnv,

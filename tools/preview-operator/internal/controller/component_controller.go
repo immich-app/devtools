@@ -20,6 +20,7 @@ import (
 type ComponentController struct {
 	ComponentName string
 	Image         string
+	Tag           string
 	Port          int32
 	Args          []string
 	Env           []corev1.EnvVar
@@ -130,7 +131,7 @@ func (c *ComponentController) selectorLabels(preview *devtoolsv1alpha1.Preview) 
 
 func (c *ComponentController) labels(preview *devtoolsv1alpha1.Preview) map[string]string {
 	var imageTag string
-	image := c.image(preview)
+	image := c.image()
 	imageTag = strings.Split(image, ":")[1]
 
 	labels := map[string]string{
@@ -142,14 +143,13 @@ func (c *ComponentController) labels(preview *devtoolsv1alpha1.Preview) map[stri
 	return labels
 }
 
-func (c *ComponentController) image(preview *devtoolsv1alpha1.Preview) string {
-	tag := preview.Spec.Immich.Tag
-	return c.Image + ":" + tag
+func (c *ComponentController) image() string {
+	return c.Image + ":" + c.Tag
 }
 
 func (c *ComponentController) deployment(r *PreviewReconciler, preview *devtoolsv1alpha1.Preview) (*appsv1.Deployment, error) {
 	ls := c.labels(preview)
-	image := c.image(preview)
+	image := c.image()
 
 	replicas := int32(1)
 
