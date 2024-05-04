@@ -3,6 +3,8 @@ package controller
 import (
 	"context"
 	"fmt"
+	"k8s.io/api/extensions/v1beta1"
+	"k8s.io/apimachinery/pkg/util/intstr"
 	"slices"
 
 	v1 "k8s.io/api/core/v1"
@@ -162,6 +164,74 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 
 	//TODO: ML
 
+	ingress := &v1beta1.Ingress{}
+	err = r.Get(ctx, types.NamespacedName{Name: preview.Name, Namespace: preview.Namespace}, ingress)
+	if err != nil && apierrors.IsNotFound(err) {
+		log.Info("Creating ingress")
+		ingressClass := "nginx"
+		host := preview.Name + ".dev.immich.cloud"
+		pathType := v1beta1.PathTypePrefix
+
+		ing := &v1beta1.Ingress{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      preview.Name,
+				Namespace: preview.Namespace,
+			},
+			Spec: v1beta1.IngressSpec{
+				IngressClassName: &ingressClass,
+				Rules: []v1beta1.IngressRule{
+					{
+						Host: host,
+						IngressRuleValue: v1beta1.IngressRuleValue{
+							HTTP: &v1beta1.HTTPIngressRuleValue{
+								Paths: []v1beta1.HTTPIngressPath{
+									{
+										Path:     "/",
+										PathType: &pathType,
+										Backend: v1beta1.IngressBackend{
+											ServiceName: serverController.name(preview),
+											ServicePort: intstr.IntOrString{
+												Type:   intstr.String,
+												StrVal: "http",
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+				TLS: []v1beta1.IngressTLS{
+					{
+						Hosts:      []string{host},
+						SecretName: preview.Name + "-tls",
+					},
+				},
+			},
+		}
+
+		if err := ctrl.SetControllerReference(preview, ing, r.Scheme); err != nil {
+			log.Error(err, "Failed to define new ingress resource for "+preview.Name)
+
+			return ctrl.Result{}, err
+		}
+
+		log.Info("Creating a new ingress",
+			"Ingress.Namespace", ing.Namespace, "Ingress.Name", ing.Name)
+		if err = r.Create(ctx, ing); err != nil {
+			log.Error(err, "Failed to create new Ingress",
+				"Ingress.Namespace", ing.Namespace, "Ingress.Name", ing.Name)
+			return ctrl.Result{}, err
+		}
+
+		return ctrl.Result{Requeue: true}, nil
+	} else if err != nil {
+		log.Error(err, "Failed to get Ingress")
+		// Let's return the error for the reconciliation be re-trigged again
+		return ctrl.Result{}, err
+	}
+
+	//TODO: Proper statusconditions
 	//TODO: Figure out the details of what Result needs to be returned when
 	return ctrl.Result{}, err
 }
