@@ -2,6 +2,8 @@ module github.com/immich-app/devtools/tools/preview-operator
 
 go 1.22
 
+toolchain go1.22.2
+
 require (
 	github.com/cloudnative-pg/cloudnative-pg v1.23.1
 	github.com/onsi/ginkgo/v2 v2.17.1
