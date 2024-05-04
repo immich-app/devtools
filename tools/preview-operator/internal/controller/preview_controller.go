@@ -2,6 +2,11 @@ package controller
 
 import (
 	"context"
+	"fmt"
+	"k8s.io/apimachinery/pkg/api/meta"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
+	"time"
 
 	appsv1 "k8s.io/api/apps/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
@@ -9,6 +14,8 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
+
+	cnpg "github.com/cloudnative-pg/cloudnative-pg/api/v1"
 
 	devtoolsv1alpha1 "github.com/immich-app/devtools/tools/preview-operator/api/v1alpha1"
 )
@@ -54,6 +61,66 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 		return ctrl.Result{}, err
 	}
 
+	database := &cnpg.Cluster{}
+	err = r.Get(ctx, types.NamespacedName{Name: clusterName(preview), Namespace: preview.Namespace}, database)
+	if err != nil && apierrors.IsNotFound(err) {
+		log.Info("Creating database cluster")
+		storageClass := "local-path"
+		cluster := &cnpg.Cluster{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      clusterName(preview),
+				Namespace: preview.Namespace,
+			},
+			Spec: cnpg.ClusterSpec{
+				ImageName:             "ghcr.io/tensorchord/cloudnative-pgvecto.rs:14.11-v0.2.0",
+				PrimaryUpdateStrategy: cnpg.PrimaryUpdateStrategyUnsupervised,
+				PostgresConfiguration: cnpg.PostgresConfiguration{
+					AdditionalLibraries: []string{"vectors.so"},
+				},
+				StorageConfiguration: cnpg.StorageConfiguration{
+					Size:         "1Gi",
+					StorageClass: &storageClass,
+				},
+				Bootstrap: &cnpg.BootstrapConfiguration{
+					InitDB: &cnpg.BootstrapInitDB{},
+				},
+			},
+		}
+
+		if err := ctrl.SetControllerReference(preview, cluster, r.Scheme); err != nil {
+			log.Error(err, "Failed to define new Cluster resource for "+preview.Name)
+
+			// The following implementation will update the status
+			meta.SetStatusCondition(&preview.Status.Conditions, metav1.Condition{Type: typeAvailableDeployment,
+				Status: metav1.ConditionFalse, Reason: "Reconciling",
+				Message: fmt.Sprintf("Failed to create Cluster for the custom resource (%s): (%s)", preview.Name, err)})
+
+			if err := r.Status().Update(ctx, preview); err != nil {
+				log.Error(err, "Failed to update Preview status")
+				return ctrl.Result{}, err
+			}
+
+			return ctrl.Result{}, err
+		}
+
+		log.Info("Creating a new Cluster",
+			"Cluster.Namespace", cluster.Namespace, "Cluster.Name", cluster.Name)
+		if err = r.Create(ctx, cluster); err != nil {
+			log.Error(err, "Failed to create new Cluster",
+				"Cluster.Namespace", cluster.Namespace, "Cluster.Name", cluster.Name)
+			return ctrl.Result{}, err
+		}
+
+		// Cluster created successfully
+		// We will requeue the reconciliation so that we can ensure the state
+		// and move forward for the next operations
+		return ctrl.Result{RequeueAfter: time.Minute}, nil
+	} else if err != nil {
+		log.Error(err, "Failed to get Cluster")
+		// Let's return the error for the reconciliation be re-trigged again
+		return ctrl.Result{}, err
+	}
+
 	serverController := &ComponentController{
 		ComponentName: "immich-server",
 		Image:         "ghcr.io/immich-app/immich-server",
@@ -76,4 +143,8 @@ func (r *PreviewReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		For(&devtoolsv1alpha1.Preview{}).
 		Owns(&appsv1.Deployment{}).
 		Complete(r)
+}
+
+func clusterName(preview *devtoolsv1alpha1.Preview) string {
+	return preview.Name + "-database"
 }
