@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 	"fmt"
+	"k8s.io/apimachinery/pkg/api/resource"
 	"slices"
 
 	v1 "k8s.io/api/core/v1"
@@ -40,6 +41,8 @@ type PreviewReconciler struct {
 //+kubebuilder:rbac:groups=postgresql.cnpg.io,resources=clusters,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups="",resources=services,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=networking.k8s.io,resources=ingresses,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups="",resources=services,verbs=get;list;watch;create;update;patch;delete
+//TODO: regenerate rbac
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
@@ -129,7 +132,42 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 		return ctrl.Result{}, err
 	}
 
-	//TODO: Library volume
+	libraryName := preview.Name + "-library"
+	library := &v1.PersistentVolumeClaim{}
+	err = r.Get(ctx, types.NamespacedName{Name: libraryName, Namespace: preview.Namespace}, library)
+	if err != nil && apierrors.IsNotFound(err) {
+		log.Info("Creating a new PVC")
+		storageClass := "zfs"
+		pvc := &v1.PersistentVolumeClaim{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      libraryName,
+				Namespace: preview.Namespace,
+			},
+			Spec: v1.PersistentVolumeClaimSpec{
+				StorageClassName: &storageClass,
+				AccessModes:      []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
+				Resources: v1.VolumeResourceRequirements{
+					Requests: v1.ResourceList{
+						v1.ResourceStorage: resource.MustParse("50Gi"),
+					},
+				},
+			},
+		}
+
+		if err := ctrl.SetControllerReference(preview, library, r.Scheme); err != nil {
+			log.Error(err, "Failed to set Controller Reference")
+			return ctrl.Result{}, err
+		}
+
+		log.Info("Creating a new PVC", "PVC.Name", pvc.Name)
+		if err := r.Create(ctx, pvc); err != nil {
+			log.Error(err, "Failed to create new PVC")
+			return ctrl.Result{}, err
+		}
+	} else if err != nil {
+		log.Error(err, "Failed to get PVC")
+		return ctrl.Result{}, err
+	}
 
 	redisController := &ComponentController{
 		ComponentName: "redis",
@@ -146,6 +184,11 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 
 	infraEnv := slices.Concat(redisConnectionEnv(redisController, preview), databaseConnectionEnv(database))
 
+	libraryVolumeSpec := &ComponentVolumeSpec{
+		Name:      "library",
+		MountPath: "/usr/src/app/upload",
+		PVCName:   library.GetName(),
+	}
 	serverController := &ComponentController{
 		ComponentName: "immich-server",
 		Image:         "ghcr.io/immich-app/immich-server",
@@ -153,6 +196,7 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 		Port:          3001,
 		Args:          []string{"start.sh", "immich"},
 		Env:           infraEnv,
+		Volumes:       libraryVolumeSpec,
 	}
 
 	err = serverController.Reconcile(ctx, r, preview)

@@ -18,6 +18,12 @@ import (
 	devtoolsv1alpha1 "github.com/immich-app/devtools/tools/preview-operator/api/v1alpha1"
 )
 
+type ComponentVolumeSpec struct {
+	Name      string
+	MountPath string
+	PVCName   string
+}
+
 type ComponentController struct {
 	ComponentName string
 	Image         string
@@ -25,6 +31,7 @@ type ComponentController struct {
 	Port          int32
 	Args          []string
 	Env           []corev1.EnvVar
+	Volumes       *ComponentVolumeSpec
 }
 
 func (c *ComponentController) Reconcile(ctx context.Context, r *PreviewReconciler, preview *devtoolsv1alpha1.Preview) error {
@@ -150,9 +157,22 @@ func (c *ComponentController) image() string {
 
 func (c *ComponentController) deployment(r *PreviewReconciler, preview *devtoolsv1alpha1.Preview) (*appsv1.Deployment, error) {
 	ls := c.labels(preview)
-	image := c.image()
 
 	replicas := int32(1)
+
+	var volumes []corev1.Volume
+	if c.Volumes != nil {
+		volumes = append(volumes, corev1.Volume{
+			Name: c.Volumes.Name,
+			VolumeSource: corev1.VolumeSource{
+				PersistentVolumeClaim: &corev1.PersistentVolumeClaimVolumeSource{
+					ClaimName: c.Volumes.PVCName,
+				},
+			},
+		})
+	}
+
+	containerSpec := c.containerSpec()
 
 	dep := &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
@@ -169,18 +189,8 @@ func (c *ComponentController) deployment(r *PreviewReconciler, preview *devtools
 					Labels: ls,
 				},
 				Spec: corev1.PodSpec{
-					Containers: []corev1.Container{{
-						Image:           image,
-						Name:            c.ComponentName,
-						ImagePullPolicy: corev1.PullAlways,
-						Ports: []corev1.ContainerPort{{
-							ContainerPort: c.Port,
-							Name:          "http",
-						}},
-						Args: c.Args,
-						Env:  c.Env,
-						//TODO: volume
-					}},
+					Containers: []corev1.Container{containerSpec},
+					Volumes:    volumes,
 				},
 			},
 		},
@@ -190,6 +200,33 @@ func (c *ComponentController) deployment(r *PreviewReconciler, preview *devtools
 		return nil, err
 	}
 	return dep, nil
+}
+
+func (c *ComponentController) containerSpec() corev1.Container {
+	image := c.image()
+
+	var volumeMounts []corev1.VolumeMount
+	if c.Volumes != nil {
+		volumeMounts = append(volumeMounts, corev1.VolumeMount{
+			Name:      c.Volumes.Name,
+			MountPath: c.Volumes.MountPath,
+		})
+	}
+
+	containerSpec := corev1.Container{
+		Image:           image,
+		Name:            c.ComponentName,
+		ImagePullPolicy: corev1.PullAlways,
+		Ports: []corev1.ContainerPort{{
+			ContainerPort: c.Port,
+			Name:          "http",
+		}},
+		Args:         c.Args,
+		Env:          c.Env,
+		VolumeMounts: volumeMounts,
+	}
+
+	return containerSpec
 }
 
 func (c *ComponentController) service(r *PreviewReconciler, preview *devtoolsv1alpha1.Preview) (*corev1.Service, error) {
