@@ -71,6 +71,8 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 		return ctrl.Result{}, err
 	}
 
+	//TODO: Finalizer for library PVC deletion
+
 	database := &cnpg.Cluster{}
 	err = r.Get(ctx, types.NamespacedName{Name: clusterName(preview), Namespace: preview.Namespace}, database)
 	if err != nil && apierrors.IsNotFound(err) {
@@ -152,11 +154,6 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 					},
 				},
 			},
-		}
-
-		if err := ctrl.SetControllerReference(preview, library, r.Scheme); err != nil {
-			log.Error(err, "Failed to set Controller Reference")
-			return ctrl.Result{}, err
 		}
 
 		log.Info("Creating a new PVC", "PVC.Name", pvc.Name)
