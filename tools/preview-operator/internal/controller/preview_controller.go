@@ -204,7 +204,20 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 		return ctrl.Result{}, err
 	}
 
-	//TODO: Microservices
+	microservicesController := &ComponentController{
+		ComponentName: "immich-microservices",
+		Image:         "ghcr.io/immich-app/immich-server",
+		Tag:           preview.Spec.Immich.Tag,
+		Port:          3001,
+		Args:          []string{"start.sh", "microservices"},
+		Env:           infraEnv,
+		Volumes:       libraryVolumeSpec,
+	}
+
+	err = microservicesController.Reconcile(ctx, r, preview)
+	if err != nil {
+		return ctrl.Result{}, err
+	}
 
 	//TODO: ML
 
