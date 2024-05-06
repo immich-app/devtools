@@ -161,6 +161,9 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 			log.Error(err, "Failed to create new PVC")
 			return ctrl.Result{}, err
 		}
+
+		//TODO: Return for a new reconcile loop after creating PVC
+
 	} else if err != nil {
 		log.Error(err, "Failed to get PVC")
 		return ctrl.Result{}, err
@@ -289,6 +292,8 @@ func (r *PreviewReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 		// Let's return the error for the reconciliation be re-trigged again
 		return ctrl.Result{}, err
 	}
+
+	//TODO: Expose ingress address and other relevant info in Preview.Status
 
 	//TODO: Proper statusconditions
 	//TODO: Figure out the details of what Result needs to be returned when
