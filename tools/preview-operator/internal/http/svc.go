@@ -6,6 +6,7 @@ import (
 	"github.com/immich-app/devtools/tools/preview-operator/api/v1alpha1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 )
@@ -45,7 +46,7 @@ func (svc *PreviewService) GetPreview(ctx context.Context, name string) (*v1alph
 	log.Info("Handling preview get request", "Preview Name", name)
 
 	preview := v1alpha1.Preview{}
-	err := svc.client.Get(ctx, client.ObjectKey{Name: name, Namespace: previewsNamespace}, &preview)
+	err := svc.client.Get(ctx, types.NamespacedName{Name: name, Namespace: previewsNamespace}, &preview)
 	if err != nil && apierrors.IsNotFound(err) {
 		log.Error(err, "Preview not found")
 		return nil, err
