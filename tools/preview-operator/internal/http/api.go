@@ -71,9 +71,15 @@ func (previewApi *PreviewApi) getPreview(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
+	resp := PreviewDTO{
+		Name:   preview.Name,
+		Spec:   preview.Spec,
+		Status: preview.Status,
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	err = json.NewEncoder(w).Encode(preview)
+	err = json.NewEncoder(w).Encode(resp)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
