@@ -3,7 +3,6 @@ package main
 import (
 	"crypto/tls"
 	"flag"
-	"github.com/immich-app/devtools/tools/preview-operator/http"
 	"os"
 
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
@@ -24,6 +23,7 @@ import (
 
 	devtoolsv1alpha1 "github.com/immich-app/devtools/tools/preview-operator/api/v1alpha1"
 	"github.com/immich-app/devtools/tools/preview-operator/internal/controller"
+	"github.com/immich-app/devtools/tools/preview-operator/internal/http"
 	//+kubebuilder:scaffold:imports
 )
 
