@@ -1,0 +1,13 @@
+**/node_modules/**
+
+.DS_Store
+.vscode/*
+!.vscode/launch.json
+.idea
+
+docker/upload
+docker/library
+uploads
+coverage
+
+open-api/typescript-sdk/build
