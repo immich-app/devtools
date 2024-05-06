@@ -73,6 +73,9 @@ spec:
         image: ghcr.io/immich-app/preview-operator:0.0.12
         imagePullPolicy: Always
         name: manager
+        ports:
+          - containerPort: 8088
+            name: api
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
