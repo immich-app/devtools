@@ -59,7 +59,7 @@ func (previewApi *PreviewApi) listPreviews(w http.ResponseWriter, r *http.Reques
 }
 
 func (previewApi *PreviewApi) getPreview(w http.ResponseWriter, r *http.Request) {
-	name := r.PathValue("id")
+	name := r.PathValue("name")
 	preview, err := previewApi.svc.GetPreview(r.Context(), name)
 	if err != nil {
 		if apierrors.IsNotFound(err) {
