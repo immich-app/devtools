@@ -81,7 +81,7 @@ func (svc *PreviewService) CreatePreview(ctx context.Context, request previewCre
 			return nil, err
 		}
 
-		log.Info("Created preview", "Name", preview.Name)
+		log.Info("Created preview", "Name", pvw.Name)
 		return &pvw, nil
 	} else if err != nil {
 		log.Error(err, "Failed to get preview")
