@@ -40,9 +40,18 @@ func (previewApi *PreviewApi) listPreviews(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
+	var resp []PreviewDTO
+	for _, preview := range previews {
+		resp = append(resp, PreviewDTO{
+			Name:   preview.Name,
+			Spec:   preview.Spec,
+			Status: preview.Status,
+		})
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	err = json.NewEncoder(w).Encode(previews)
+	err = json.NewEncoder(w).Encode(resp)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
