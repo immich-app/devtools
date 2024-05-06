@@ -32,7 +32,7 @@ func (svc *PreviewService) ListPreviews(ctx context.Context) ([]v1alpha1.Preview
 	log := log.FromContext(ctx)
 
 	previewList := &v1alpha1.PreviewList{}
-	err := svc.client.List(ctx, previewList)
+	err := svc.client.List(ctx, previewList, client.InNamespace(previewsNamespace))
 	if err != nil {
 		log.Error(err, "Error listing Previews")
 		return nil, err

@@ -29,6 +29,7 @@ func Serve(c client.Client) error {
 	mux.HandleFunc("GET /api/preview/", handler.listPreviews)
 	mux.HandleFunc("POST /api/preview", handler.createPreview)
 	mux.HandleFunc("GET /api/preview/{name}", handler.getPreview)
+	//TODO: DELETE /api/preview/{name}
 
 	return http.ListenAndServe(":8088", mux)
 }
