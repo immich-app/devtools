@@ -2,5 +2,23 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
-  ]
+  ],
+  "helm-values": {
+    "fileMatch": [
+      "\\.yaml$"
+    ],
+    "includePaths:" [ "kubernetes/apps/" ]
+  },
+  "kubernetes": {
+    "fileMatch": [
+      "\\.yaml$"
+    ],
+    "includePaths:" [ "kubernetes/apps/" ]
+  },
+  "flux": {
+    "fileMatch": [
+      "\\.yaml$"
+    ],
+    "includePaths:" [ "kubernetes/apps/" ]
+  },
 }
