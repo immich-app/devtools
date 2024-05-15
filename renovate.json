@@ -7,18 +7,18 @@
     "fileMatch": [
       "\\.yaml$"
     ],
-    "includePaths:" [ "kubernetes/apps/" ]
+    "includePaths": [ "kubernetes/apps/" ]
   },
   "kubernetes": {
     "fileMatch": [
       "\\.yaml$"
     ],
-    "includePaths:" [ "kubernetes/apps/" ]
+    "includePaths": [ "kubernetes/apps/" ]
   },
   "flux": {
     "fileMatch": [
       "\\.yaml$"
     ],
-    "includePaths:" [ "kubernetes/apps/" ]
+    "includePaths": [ "kubernetes/apps/" ]
   }
 }
