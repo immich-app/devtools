@@ -1,0 +1,15 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: tf-state-storage
+  namespace: terraform
+spec:
+  bootstrap:
+    initdb:
+      database: tf_state
+      owner: terraform
+      secret:
+        name: tf-state-storage-user
+  storage:
+    size: 10Gi
+    storageClass: zfs
