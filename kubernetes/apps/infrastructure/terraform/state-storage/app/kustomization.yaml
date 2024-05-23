@@ -5,3 +5,5 @@ kind: Kustomization
 namespace: terraform
 resources:
   - ./secret.yaml
+  - ./database.yaml
+  - ./service.yaml
