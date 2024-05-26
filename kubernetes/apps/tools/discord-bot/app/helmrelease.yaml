@@ -41,6 +41,13 @@ spec:
             envFrom:
             - secretRef:
                 name: discord-bot
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
     service:
       main:
         ports:
