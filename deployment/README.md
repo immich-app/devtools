@@ -1,5 +1,5 @@
 # Terragrunt Deployment
-This folder contains the Terragrunt configuration for deploying the [OpenTofu modules](../modules/).
+This folder contains the Terragrunt configuration for deploying the [OpenTofu modules](./modules/).
 
 ## Quick start
 To deploy the OpenTofu modules, follow these steps:
