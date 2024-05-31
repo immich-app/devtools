@@ -38,6 +38,7 @@ jobs:
           tg_command: 'run-all fmt -diff -check'
   plan:
     runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
     steps:
       - name: 'Checkout'
         uses: actions/checkout@main
