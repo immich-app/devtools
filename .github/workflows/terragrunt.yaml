@@ -2,8 +2,12 @@ name: 'Terragrunt'
 on:
   pull_request:
     branches: ["main"]
+    paths:
+      - "deployment/**"
   push:
     branches: ["main"]
+    paths:
+      - "deployment/**"
 
 env:
   tofu_version: '1.7.1'
