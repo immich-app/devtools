@@ -8,7 +8,7 @@ on:
 env:
   tofu_version: '1.7.1'
   tg_version: '0.58.12'
-  working_dir: 'deployment/modules/cloudflare'
+  working_dir: 'deployment'
 
 jobs:
   check:
@@ -50,6 +50,10 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           TF_STATE_POSTGRES_CONN_STR: ${{ secrets.TF_STATE_POSTGRES_CONN_STR }}
+          GITHUB_APP_INSTALLATION_ID: ${{ secrets.TF_APP_INSTALLATION_ID }}
+          GITHUB_APP_ID: ${{ secrets.TF_APP_ID }}
+          GITHUB_APP_PEM_FILE: ${{ secrets.TF_APP_PEM_FILE }}
+          GITHUB_OWNER: ${{ secrets.TF_APP_GITHUB_OWNER }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tofu_version: ${{ env.tofu_version }}
@@ -71,6 +75,10 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           TF_STATE_POSTGRES_CONN_STR: ${{ secrets.TF_STATE_POSTGRES_CONN_STR }}
+          GITHUB_APP_INSTALLATION_ID: ${{ secrets.TF_APP_INSTALLATION_ID }}
+          GITHUB_APP_ID: ${{ secrets.TF_APP_ID }}
+          GITHUB_APP_PEM_FILE: ${{ secrets.TF_APP_PEM_FILE }}
+          GITHUB_OWNER: ${{ secrets.TF_APP_GITHUB_OWNER }}
         with:
           tofu_version: ${{ env.tofu_version }}
           tg_version: ${{ env.tg_version }}
