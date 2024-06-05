@@ -76,5 +76,3 @@ jobs:
           tg_version: ${{ env.tg_version }}
           tg_dir: ${{ env.working_dir }}
           tg_command: 'run-all apply'
-
-

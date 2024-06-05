@@ -4,6 +4,6 @@ locals {
 }
 
 inputs = {
-  cloudflare_account_id      = local.cloudflare_account_id
-  cloudflare_api_token       = local.cloudflare_api_token
+  cloudflare_account_id = local.cloudflare_account_id
+  cloudflare_api_token  = local.cloudflare_api_token
 }
