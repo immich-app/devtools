@@ -21,6 +21,6 @@ resource "cloudflare_record" "immich_cloud_a_mich" {
   proxied = false
   ttl     = 1
   type    = "A"
-  value   = "162.55.86.82"
+  value   = local.mich_ip
   zone_id = cloudflare_zone.immich_cloud.id
 }

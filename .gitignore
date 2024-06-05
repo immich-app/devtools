@@ -1,3 +1,6 @@
+### Project gitignore
+.env
+
 ### VisualStudioCode template
 .vscode/*
 !.vscode/settings.json
