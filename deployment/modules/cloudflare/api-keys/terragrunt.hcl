@@ -6,6 +6,10 @@ terraform {
   }
 }
 
-include {
-  path = find_in_parent_folders("state.hcl")
+include "cloudflare" {
+  path = find_in_parent_folders("cloudflare.hcl")
+}
+
+include "root" {
+  path = find_in_parent_folders("root.hcl")
 }
