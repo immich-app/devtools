@@ -1,7 +1,7 @@
 data "cloudflare_api_token_permission_groups" "all" {}
 
 resource "cloudflare_api_token" "terraform_cloudflare_account" {
-  name = "terraform"
+  name = "terraform_cloudflare_account"
   policy {
     permission_groups = [
       data.cloudflare_api_token_permission_groups.all.account["Pages Write"],
@@ -22,7 +22,7 @@ output "terraform_key_cloudflare_account" {
 }
 
 resource "cloudflare_api_token" "terraform_cloudflare_docs" {
-  name = "terraform"
+  name = "terraform_cloudflare_docs"
   policy {
     permission_groups = [
       data.cloudflare_api_token_permission_groups.all.account["Pages Write"],
@@ -39,9 +39,8 @@ output "terraform_key_cloudflare_docs" {
   sensitive = true
 }
 
-
 resource "cloudflare_api_token" "terraform_cloudflare_pages_upload" {
-  name = "terraform"
+  name = "terraform_cloudflare_pages_upload"
   policy {
     permission_groups = [
       data.cloudflare_api_token_permission_groups.all.account["Pages Write"],
