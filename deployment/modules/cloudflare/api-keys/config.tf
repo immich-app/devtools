@@ -9,5 +9,9 @@ terraform {
       source  = "cloudflare/cloudflare"
       version = "4.34.0"
     }
+    onepassword = {
+      source  = "1Password/onepassword"
+      version = "~> 2.0"
+    }
   }
 }
