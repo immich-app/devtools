@@ -7,33 +7,6 @@ resource "cloudflare_record" "immich_app_a_demo" {
   zone_id = cloudflare_zone.immich_app.id
 }
 
-resource "cloudflare_record" "immich_app_a_star_dot_preview" {
-  name    = "*.preview"
-  proxied = false
-  ttl     = 1
-  type    = "A"
-  value   = "141.144.207.87"
-  zone_id = cloudflare_zone.immich_app.id
-}
-
-resource "cloudflare_record" "immich_app_a_preview" {
-  name    = "preview"
-  proxied = false
-  ttl     = 1
-  type    = "A"
-  value   = "141.144.207.87"
-  zone_id = cloudflare_zone.immich_app.id
-}
-
-resource "cloudflare_record" "immich_app_a_testing" {
-  name    = "testing"
-  proxied = true
-  ttl     = 1
-  type    = "A"
-  value   = "143.198.72.84"
-  zone_id = cloudflare_zone.immich_app.id
-}
-
 resource "cloudflare_record" "immich_app_aaaa_docs" {
   name    = "docs"
   proxied = true
