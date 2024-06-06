@@ -61,6 +61,7 @@ jobs:
           GITHUB_APP_ID: ${{ secrets.TF_APP_ID }}
           GITHUB_APP_PEM_FILE: ${{ secrets.TF_APP_PEM_FILE }}
           GITHUB_OWNER: ${{ secrets.TF_APP_GITHUB_OWNER }}
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tofu_version: ${{ env.tofu_version }}
@@ -86,6 +87,7 @@ jobs:
           GITHUB_APP_ID: ${{ secrets.TF_APP_ID }}
           GITHUB_APP_PEM_FILE: ${{ secrets.TF_APP_PEM_FILE }}
           GITHUB_OWNER: ${{ secrets.TF_APP_GITHUB_OWNER }}
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
         with:
           tofu_version: ${{ env.tofu_version }}
           tg_version: ${{ env.tg_version }}
