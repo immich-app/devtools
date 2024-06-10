@@ -34,42 +34,59 @@ resource "cloudflare_record" "immich_app_cname__domainconnect" {
   zone_id = cloudflare_zone.immich_app.id
 }
 
-resource "cloudflare_record" "immich_app_mx_root_35" {
+resource "cloudflare_record" "immich_app_mx_root_10" {
   name     = "immich.app"
-  priority = 35
+  priority = 10
   proxied  = false
   ttl      = 1
   type     = "MX"
-  value    = "route1.mx.cloudflare.net"
+  value    = "in1-smtp.messagingengine.com"
   zone_id  = cloudflare_zone.immich_app.id
 }
 
-resource "cloudflare_record" "immich_app_mx_root_54" {
+resource "cloudflare_record" "immich_app_mx_root_20" {
   name     = "immich.app"
-  priority = 54
+  priority = 20
   proxied  = false
   ttl      = 1
   type     = "MX"
-  value    = "route3.mx.cloudflare.net"
+  value    = "in2-smtp.messagingengine.com"
   zone_id  = cloudflare_zone.immich_app.id
 }
 
-resource "cloudflare_record" "immich_app_mx_root_73" {
-  name     = "immich.app"
-  priority = 73
-  proxied  = false
-  ttl      = 1
-  type     = "MX"
-  value    = "route2.mx.cloudflare.net"
-  zone_id  = cloudflare_zone.immich_app.id
+resource "cloudflare_record" "immich_app_cname_dkim_fm1" {
+  name    = "fm1._domainkey"
+  proxied = false
+  ttl     = 1
+  type    = "CNAME"
+  value   = "fm1.immich.app.dkim.fmhosted.com"
+  zone_id = cloudflare_zone.immich_app.id
 }
 
-resource "cloudflare_record" "immich_app_txt_root_cloudflare_mx" {
-  name    = "immich.app"
+resource "cloudflare_record" "immich_app_cname_dkim_fm2" {
+  name    = "fm2._domainkey"
+  proxied = false
+  ttl     = 1
+  type    = "CNAME"
+  value   = "fm2.immich.app.dkim.fmhosted.com"
+  zone_id = cloudflare_zone.immich_app.id
+}
+
+resource "cloudflare_record" "immich_app_cname_dkim_fm3" {
+  name    = "fm3._domainkey"
+  proxied = false
+  ttl     = 1
+  type    = "CNAME"
+  value   = "fm3.immich.app.dkim.fmhosted.com"
+  zone_id = cloudflare_zone.immich_app.id
+}
+
+resource "cloudflare_record" "immich_app_txt_root_fastmail_mx" {
+  name    = "@"
   proxied = false
   ttl     = 1
   type    = "TXT"
-  value   = "\"v=spf1 include:_spf.mx.cloudflare.net ~all\""
+  value   = "\"v=spf1 include:_spf.messagingengine.com ?all\""
   zone_id = cloudflare_zone.immich_app.id
 }
 
