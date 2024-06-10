@@ -4,10 +4,12 @@ on:
     branches: [ "main" ]
     paths:
       - "deployment/**"
+      - ".github/workflows/terragrunt.yaml"
   push:
     branches: [ "main" ]
     paths:
       - "deployment/**"
+      - ".github/workflows/terragrunt.yaml"
 
 env:
   tofu_version: '1.7.1'
@@ -92,8 +94,22 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@main
 
+      - name: Install 1Password CLI
+        uses: 1password/install-cli-action@v1
+
+      - name: Install Terragrunt
+        uses: eLco/setup-terragrunt@v1
+        with:
+          terragrunt_version: ${{ env.tg_version }}
+
+      - name: 'Install OpenTofu'
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: ${{ env.tofu_version }}
+          tofu_wrapper: false
+
       - name: Deploy All
-        uses: gruntwork-io/terragrunt-action@v2
+        working-directory: ${{ env.working_dir }}
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -103,8 +119,4 @@ jobs:
           GITHUB_APP_PEM_FILE: ${{ secrets.TF_APP_PEM_FILE }}
           GITHUB_OWNER: ${{ secrets.TF_APP_GITHUB_OWNER }}
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-        with:
-          tofu_version: ${{ env.tofu_version }}
-          tg_version: ${{ env.tg_version }}
-          tg_dir: ${{ env.working_dir }}
-          tg_command: 'run-all apply'
+        run: terragrunt run-all apply --terragrunt-non-interactive
