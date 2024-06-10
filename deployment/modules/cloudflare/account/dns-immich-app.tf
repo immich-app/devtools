@@ -86,7 +86,7 @@ resource "cloudflare_record" "immich_app_txt_root_fastmail_mx" {
   proxied = false
   ttl     = 1
   type    = "TXT"
-  value   = "\"v=spf1 include:_spf.messagingengine.com ?all\""
+  value   = "v=spf1 include:spf.messagingengine.com ?all"
   zone_id = cloudflare_zone.immich_app.id
 }
 
@@ -95,6 +95,6 @@ resource "cloudflare_record" "immich_app_txt_1password_verification" {
   proxied = false
   ttl     = 1
   type    = "TXT"
-  value   = "\"1password-site-verification=GPHHHHLRXZHQFKUCAEYLDTI4TM\""
+  value   = "1password-site-verification=GPHHHHLRXZHQFKUCAEYLDTI4TM"
   zone_id = cloudflare_zone.immich_app.id
 }
