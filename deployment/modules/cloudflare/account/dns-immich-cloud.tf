@@ -21,7 +21,7 @@ resource "cloudflare_record" "immich_cloud_cname_star_dot_root" {
   proxied = false
   ttl     = 1
   type    = "CNAME"
-  value   = "immich.cloud"
+  value   = "mich.immich.cloud"
   zone_id = cloudflare_zone.immich_cloud.id
 }
 
