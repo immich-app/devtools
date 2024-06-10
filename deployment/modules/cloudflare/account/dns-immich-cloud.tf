@@ -1,9 +1,18 @@
-resource "cloudflare_record" "immich_cloud_cname_root" {
+resource "cloudflare_record" "immich_cloud_aaaa_root" {
   name    = "immich.cloud"
-  proxied = false
+  proxied = true
   ttl     = 1
-  type    = "CNAME"
-  value   = "mich.immich.cloud"
+  type    = "AAAA"
+  value   = "100::"
+  zone_id = cloudflare_zone.immich_cloud.id
+}
+
+resource "cloudflare_record" "immich_app_aaaa_www" {
+  name    = "www"
+  proxied = true
+  ttl     = 1
+  type    = "AAAA"
+  value   = "100::"
   zone_id = cloudflare_zone.immich_cloud.id
 }
 
