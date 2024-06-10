@@ -1,11 +1,11 @@
 name: 'Terragrunt'
 on:
   pull_request:
-    branches: ["main"]
+    branches: [ "main" ]
     paths:
       - "deployment/**"
   push:
-    branches: ["main"]
+    branches: [ "main" ]
     paths:
       - "deployment/**"
 
@@ -47,9 +47,22 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@main
 
+      - name: Install 1Password CLI
+        uses: 1password/install-cli-action@v1
+
+      - name: Install Terragrunt
+        uses: eLco/setup-terragrunt@v1
+        with:
+          terragrunt_version: ${{ env.tg_version }}
+
+      - name: 'Install OpenTofu'
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: ${{ env.tofu_version }}
+          tofu_wrapper: false
+
       - name: Plan All
-        id: plan
-        uses: gruntwork-io/terragrunt-action@v2
+        working-directory: ${{ env.working_dir }}
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -58,13 +71,19 @@ jobs:
           GITHUB_APP_ID: ${{ secrets.TF_APP_ID }}
           GITHUB_APP_PEM_FILE: ${{ secrets.TF_APP_PEM_FILE }}
           GITHUB_OWNER: ${{ secrets.TF_APP_GITHUB_OWNER }}
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tofu_version: ${{ env.tofu_version }}
-          tg_version: ${{ env.tg_version }}
-          tg_dir: ${{ env.working_dir }}
-          tg_command: 'run-all plan'
-          tg_comment: 1
+        run: terragrunt run-all plan -no-color 2>&1 | tee "${{github.workspace}}/plan_output.txt";
+
+#      - name: 'List files'
+#        run: 'ls -la ${{ github.workspace }}'
+
+#      - name: Comment Terraform Plan on PR
+#        uses: blinqas/tf-plan-pr-comment@v1
+#        with:
+#          output_file: "${{ github.workspace }}/plan_output.txt"
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -83,6 +102,7 @@ jobs:
           GITHUB_APP_ID: ${{ secrets.TF_APP_ID }}
           GITHUB_APP_PEM_FILE: ${{ secrets.TF_APP_PEM_FILE }}
           GITHUB_OWNER: ${{ secrets.TF_APP_GITHUB_OWNER }}
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
         with:
           tofu_version: ${{ env.tofu_version }}
           tg_version: ${{ env.tg_version }}

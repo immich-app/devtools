@@ -2,6 +2,12 @@ resource "cloudflare_pages_project" "immich_app" {
   account_id        = var.cloudflare_account_id
   name              = "immich-app"
   production_branch = "we-will-never-use-this"
+
+  lifecycle {
+    ignore_changes = [
+      build_config,
+    ]
+  }
 }
 
 output "immich_app_pages_project_name" {

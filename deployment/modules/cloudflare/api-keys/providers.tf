@@ -1,1 +1,3 @@
 provider "cloudflare" {}
+
+provider "onepassword" {}
