@@ -22,6 +22,30 @@ resource "cloudflare_ruleset" "immich_app_redirects" {
   }
 }
 
+resource "cloudflare_ruleset" "discord_immich_app_redirects" {
+  zone_id     = cloudflare_zone.immich_app.id
+  name        = "discord.immich.app redirect"
+  description = "Redirects from discord.immich.app to our discord server"
+  kind        = "zone"
+  phase       = "http_request_dynamic_redirect"
+
+  rules {
+    action = "redirect"
+    action_parameters {
+      from_value {
+        status_code = 307
+        target_url {
+          value = "https://discord.gg/cHD2af9DbA"
+        }
+        preserve_query_string = true
+      }
+    }
+    expression  = "(http.host eq \"discord.immich.app\")"
+    description = "Redirect visitors to discord"
+    enabled     = true
+  }
+}
+
 resource "cloudflare_ruleset" "immich_cloud_redirects" {
   zone_id     = cloudflare_zone.immich_cloud.id
   name        = "Immich.cloud to immich.app redirects"
