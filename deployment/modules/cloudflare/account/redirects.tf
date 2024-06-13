@@ -20,14 +20,6 @@ resource "cloudflare_ruleset" "immich_app_redirects" {
     description = "Redirect visitors going to docs"
     enabled     = true
   }
-}
-
-resource "cloudflare_ruleset" "discord_immich_app_redirects" {
-  zone_id     = cloudflare_zone.immich_app.id
-  name        = "discord.immich.app redirect"
-  description = "Redirects from discord.immich.app to our discord server"
-  kind        = "zone"
-  phase       = "http_request_dynamic_redirect"
 
   rules {
     action = "redirect"
@@ -41,7 +33,7 @@ resource "cloudflare_ruleset" "discord_immich_app_redirects" {
       }
     }
     expression  = "(http.host eq \"discord.immich.app\")"
-    description = "Redirect visitors to discord"
+    description = "Redirect discord.immich.app to discord"
     enabled     = true
   }
 }
