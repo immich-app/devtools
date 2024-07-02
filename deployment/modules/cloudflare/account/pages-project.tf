@@ -46,3 +46,17 @@ output "immich_app_preview_pages_project_name" {
 output "immich_app_preview_pages_project_subdomain" {
   value = cloudflare_pages_project.immich_app_preview.subdomain
 }
+
+resource "cloudflare_pages_project" "my_immich_app" {
+  account_id        = var.cloudflare_account_id
+  name              = "my-immich-app"
+  production_branch = "main"
+}
+
+output "my_immich_app_pages_project_name" {
+  value = cloudflare_pages_project.my_immich_app.name
+}
+
+output "my_immich_app_pages_project_subdomain" {
+  value = cloudflare_pages_project.my_immich_app.subdomain
+}
