@@ -100,7 +100,7 @@ resource "github_repository_ruleset" "main_ruleset" {
     }
     required_linear_history = true
     required_signatures     = false
-    update                  = true
+    update                  = false
   }
 }
 
