@@ -52,6 +52,10 @@ resource "github_repository" "repositories" {
 
   lifecycle {
     ignore_changes = [
+      # Provider bug when merge commit is disabled, it can't update these
+      merge_commit_message,
+      merge_commit_title,
+      # Pages will be managed manually for now
       pages
     ]
   }
