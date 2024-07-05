@@ -44,7 +44,7 @@ resource "github_repository" "repositories" {
   has_wiki                  = false
   vulnerability_alerts      = true
   homepage_url              = "https://immich.app"
-  squash_merge_commit_title = "COMMIT_OR_PR_TITLE"
+  squash_merge_commit_title = "PR_TITLE"
 
   lifecycle {
     ignore_changes = [
