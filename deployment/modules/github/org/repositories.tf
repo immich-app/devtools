@@ -21,11 +21,7 @@ variable "repositories" {
     { name = "discord-bot", description = "A Discord bot for the official @immich-app Discord" },
     { name = "demo", description = "This repo contains the setup for the demo instance at https://demo.immich.app/" },
     { name = "test-assets", description = "Test assets used for testing Immich. Contains various formats and codecs" },
-    { name = ".github", description = ".github folder for the organisation level", issues = false },
-    {
-      name        = "CLI", archived = true,
-      description = "CLI utilities for Immich to help with upload images and videos from a location on a desktop machine or a server to the Immich's server",
-    }
+    { name = ".github", description = ".github folder for the organisation level", issues = false }
   ]
 }
 
