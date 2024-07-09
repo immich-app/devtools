@@ -13,3 +13,18 @@ spec:
   storage:
     size: 10Gi
     storageClass: zfs
+
+  backup:
+    retentionPolicy: "14d"
+    barmanObjectStore:
+      destinationPath: s3://${bucket-name}
+      endpointURL: ${api-endpoint}
+      wal:
+        compression: bzip2
+      s3Credentials:
+        accessKeyId:
+          name: tf-state-backup-secret
+          key: id
+        secretAccessKey:
+          name: tf-state-backup-secret
+          key: secret
