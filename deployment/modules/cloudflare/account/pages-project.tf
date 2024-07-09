@@ -42,9 +42,14 @@ output "immich_app_preview_pages_project_subdomain" {
   value = cloudflare_pages_project.immich_app_preview.subdomain
 }
 
-resource "cloudflare_pages_project" "my_immich_app" {
+locals {
+  static_pages = ["my.immich.app", "buy.immich.app"]
+}
+
+resource "cloudflare_pages_project" "static_pages" {
+  for_each          = { for page in local.static_pages : page => page }
   account_id        = var.cloudflare_account_id
-  name              = "my-immich-app"
+  name              = "${split(".", each.value)[0]}-immich-app"
   production_branch = "main"
 
   lifecycle {
@@ -56,10 +61,15 @@ resource "cloudflare_pages_project" "my_immich_app" {
   }
 }
 
-output "my_immich_app_pages_project_name" {
-  value = cloudflare_pages_project.my_immich_app.name
+moved {
+  from = cloudflare_pages_project.my_immich_app
+  to   = cloudflare_pages_project.static_pages["my.immich.app"]
 }
 
-output "my_immich_app_pages_project_subdomain" {
-  value = cloudflare_pages_project.my_immich_app.subdomain
+output "static_pages_project_names" {
+  value = { for page in local.static_pages : page => cloudflare_pages_project.static_pages[page].name }
+}
+
+output "static_pages_project_subdomains" {
+  value = { for page in local.static_pages : page => cloudflare_pages_project.static_pages[page].subdomain }
 }
