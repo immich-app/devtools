@@ -1,0 +1,16 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: geocoding-database
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/pipelines/geocoding/database/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: immich-kubernetes
+  dependsOn:
+    - name: database-cloudnative-pg
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
