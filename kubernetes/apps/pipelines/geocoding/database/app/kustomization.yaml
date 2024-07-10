@@ -4,3 +4,4 @@ namespace: geocoding
 resources:
   - ./secret.yaml
   - ./database.yaml
+  - ./service.yaml
