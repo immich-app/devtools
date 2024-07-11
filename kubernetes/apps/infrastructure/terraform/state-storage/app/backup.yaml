@@ -1,0 +1,9 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: tf-state-daily-backup
+  namespace: terraform
+spec:
+  schedule: "@daily"
+  cluster:
+    name: tf-state-storage
