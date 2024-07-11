@@ -9,7 +9,7 @@ data "onepassword_vault" "kubernetes" {
 resource "onepassword_item" "mich_cloudflare_r2_token" {
   vault    = data.onepassword_vault.kubernetes.uuid
   title    = "mich-cloudflare-r2-token"
-  category = "password"
+  category = "secure_note"
   section {
     label = "Cloudflare R2 Token"
 
@@ -22,7 +22,7 @@ resource "onepassword_item" "mich_cloudflare_r2_token" {
     field {
       label = "secret"
       type  = "STRING"
-      value = cloudflare_api_token.mich_cloudflare_r2_token.value
+      value = sha256(cloudflare_api_token.mich_cloudflare_r2_token.value)
     }
   }
 }
