@@ -14,7 +14,7 @@ variable "repositories" {
     },
     { name = "devtools", description = "Various tooling used by the Immich maintainer team" },
     {
-      name = "my.immich.app", description = "Redirect urls to personal, hosted, instances of Immich.",
+      name = "static-pages", description = "Redirect urls to personal, hosted, instances of Immich.",
     },
     { name = "base-images", description = "Base images for Immich containers" },
     { name = "immich-charts", description = "Helm chart implementation of Immich" },
@@ -100,6 +100,11 @@ resource "github_repository_ruleset" "main_ruleset" {
   }
 }
 
+moved {
+  from = github_repository_ruleset.main_ruleset["my.immich.app"]
+  to   = github_repository_ruleset.main_ruleset["static-pages"]
+}
+
 resource "github_repository_file" "default_files" {
   for_each = {
     for combination in flatten([
@@ -128,10 +133,9 @@ resource "github_repository_file" "default_files" {
   }
 }
 
-
 import {
-  to = github_repository_file.default_files["immich/${each.value}"]
-  id = "immich/${each.value}"
+  to = github_repository_file.default_files["static-pages/${each.value}"]
+  id = "static-pages/${each.value}"
   for_each = {
     for file in fileset("${path.module}/repo-files", "**") : file => file
     if !contains([".terragrunt-source-manifest", ".terragrunt-module-manifest"], file)
