@@ -28,7 +28,8 @@ resource "cloudflare_notification_policy" "r2_storage_usage_alert" {
   }
 
   webhooks_integration {
-    id = cloudflare_notification_policy_webhooks.discord_leadership_alerts.id
+    id   = cloudflare_notification_policy_webhooks.discord_leadership_alert.id
+    name = cloudflare_notification_policy_webhooks.discord_leadership_alert.name
   }
 }
 
@@ -49,7 +50,8 @@ resource "cloudflare_notification_policy" "r2_class_a_operations_alert" {
   }
 
   webhooks_integration {
-    id = cloudflare_notification_policy_webhooks.discord_leadership_alerts.id
+    id   = cloudflare_notification_policy_webhooks.discord_leadership_alert.id
+    name = cloudflare_notification_policy_webhooks.discord_leadership_alert.name
   }
 }
 
@@ -70,13 +72,14 @@ resource "cloudflare_notification_policy" "r2_class_b_operations_alert" {
   }
 
   webhooks_integration {
-    id = cloudflare_notification_policy_webhooks.discord_leadership_alerts.id
+    id   = cloudflare_notification_policy_webhooks.discord_leadership_alert.id
+    name = cloudflare_notification_policy_webhooks.discord_leadership_alert.name
   }
 }
 
-resource "cloudflare_notification_policy_webhooks" "discord_leadership_alerts" {
+resource "cloudflare_notification_policy_webhooks" "discord_leadership_alert" {
   account_id = var.cloudflare_account_id
-  name       = "Webhooks destination"
-  url        = data.onepassword_item.discord_leadership_alerts.credential
-  secret     = ""
+  name       = "Discord Leadership Alerts"
+  url        = data.onepassword_item.discord_leadership_alerts.hostname
+  secret     = data.onepassword_item.discord_leadership_alerts.credential
 }
