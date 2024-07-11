@@ -14,13 +14,13 @@ resource "onepassword_item" "mich_cloudflare_r2_tf_state_database_backups_bucket
     label = "Cloudflare R2 Token"
 
     field {
-      label = "bucket-name"
+      label = "bucket_name"
       type  = "STRING"
       value = cloudflare_r2_bucket.tf_state_database_backups.name
     }
 
     field {
-      label = "api-endpoint"
+      label = "api_endpoint"
       type  = "STRING"
       value = "https://${cloudflare_r2_bucket.tf_state_database_backups.account_id}.r2.cloudflarestorage.com"
     }
