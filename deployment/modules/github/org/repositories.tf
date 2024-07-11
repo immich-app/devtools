@@ -141,3 +141,13 @@ import {
     if !contains([".terragrunt-source-manifest", ".terragrunt-module-manifest"], file)
   }
 }
+
+output "repositories" {
+  value = {
+    for repo in github_repository.repositories : repo.name => {
+      name        = repo.name
+      url         = repo.http_clone_url
+      description = repo.description
+    }
+  }
+}

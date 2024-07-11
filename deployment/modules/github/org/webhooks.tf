@@ -1,7 +1,3 @@
-data "onepassword_vault" "opentofu_vault" {
-  name = "OpenTofu"
-}
-
 data "onepassword_item" "discord_discussions_and_issues" {
   title = "discord-issues-and-discussions-webhook"
   vault = data.onepassword_vault.opentofu_vault.name

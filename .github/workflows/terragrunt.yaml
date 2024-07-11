@@ -36,6 +36,7 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          FUTO_GITLAB_TOKEN: ${{ secrets.FUTO_GITLAB_TOKEN }}
           TF_STATE_POSTGRES_CONN_STR: ${{ secrets.TF_STATE_POSTGRES_CONN_STR }}
         with:
           tofu_version: ${{ env.tofu_version }}
@@ -75,6 +76,7 @@ jobs:
           GITHUB_OWNER: ${{ secrets.TF_APP_GITHUB_OWNER }}
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FUTO_GITLAB_TOKEN: ${{ secrets.FUTO_GITLAB_TOKEN }}
         run: terragrunt run-all plan -no-color 2>&1 | tee "${{github.workspace}}/plan_output.txt";
 
 #      - name: 'List files'
@@ -119,4 +121,5 @@ jobs:
           GITHUB_APP_PEM_FILE: ${{ secrets.TF_APP_PEM_FILE }}
           GITHUB_OWNER: ${{ secrets.TF_APP_GITHUB_OWNER }}
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          FUTO_GITLAB_TOKEN: ${{ secrets.FUTO_GITLAB_TOKEN }}
         run: terragrunt run-all apply --terragrunt-non-interactive
