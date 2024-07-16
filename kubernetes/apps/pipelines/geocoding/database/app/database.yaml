@@ -17,14 +17,17 @@ spec:
         - CREATE EXTENSION postgis_tiger_geocoder;
   postgresql:
     parameters:
-      shared_buffers: "1GB"
+      shared_buffers: "2GB"
       work_mem: "50MB"
       maintenance_work_mem: "10GB"
-      checkpoint_timeout: "300min"
+      autovacuum_work_mem: "2GB"
+      effective_cache_size: "24GB"
+      synchronous_commit: "off"
+      checkpoint_timeout: "10min"
       max_wal_senders: "0"
-      max_wal_size: "10GB"
+      max_wal_size: "1GB"
       checkpoint_completion_target: "0.9"
       random_page_cost: "1.0"
   storage:
-    size: 250Gi
+    size: 1250Gi
     storageClass: zfs
