@@ -1,0 +1,9 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: discord-bot-db
+  namespace: tools
+spec:
+  storage:
+    size: 10Gi
+    storageClass: zfs
