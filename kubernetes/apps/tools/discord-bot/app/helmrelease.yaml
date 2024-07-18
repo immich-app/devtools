@@ -38,6 +38,8 @@ spec:
               repository: ghcr.io/immich-app/discord-bot
               pullPolicy: Always
               tag: main
+            env:
+              DATA_DIR: /data
             envFrom:
             - secretRef:
                 name: discord-bot
@@ -48,6 +50,12 @@ spec:
                 enabled: false
               startup:
                 enabled: false
+    persistence:
+      data:
+        enabled: true
+        storageClass: zfs
+        size: 5Gi
+        accessMode: ReadWriteOnce
     service:
       main:
         ports:
