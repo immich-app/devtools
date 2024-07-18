@@ -3,22 +3,16 @@
   "extends": [
     "config:recommended"
   ],
+  "flux": {
+    "fileMatch": ["(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"]
+  },
   "helm-values": {
-    "fileMatch": [
-      "\\.yaml$"
-    ],
-    "includePaths": [ "kubernetes/apps/" ]
+    "fileMatch": ["(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"]
   },
   "kubernetes": {
-    "fileMatch": [
-      "\\.yaml$"
-    ],
-    "includePaths": [ "kubernetes/apps/" ]
+    "fileMatch": ["(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"]
   },
-  "flux": {
-    "fileMatch": [
-      "\\.yaml$"
-    ],
-    "includePaths": [ "kubernetes/apps/" ]
-  }
+  "kustomize": {
+    "fileMatch": ["(^|/)kustomization\\.ya?ml(?:\\.j2)?$"]
+  },
 }
