@@ -29,7 +29,7 @@ spec:
   values:
     defaultPodOptions:
       labels:
-        podbump.bo0tzz.me/enabled: "true"
+        podbump.bo0tzz.me/enabled: 'true'
     controllers:
       main:
         containers:
@@ -39,10 +39,10 @@ spec:
               pullPolicy: Always
               tag: main
             envFrom:
-            - secretRef:
-                name: discord-bot
-            - secretRef:
-                name: discord-bot-db-app
+              - secretRef:
+                  name: discord-bot
+              - secretRef:
+                  name: discord-bot-db-app
             probes:
               liveness:
                 enabled: false
@@ -62,7 +62,13 @@ spec:
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
         hosts:
-          - host: &host discord-webhooks.immich.cloud
+          - host: &host1 api.immich.app
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+          - host: &host2 discord-webhooks.immich.cloud
             paths:
               - path: /
                 service:
@@ -70,5 +76,6 @@ spec:
                   port: http
         tls:
           - hosts:
-              - *host
+              - *host1
+              - *host2
             secretName: discord-webhooks-tls
