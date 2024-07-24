@@ -11,6 +11,10 @@ on:
       - "deployment/**"
       - ".github/workflows/terragrunt.yaml"
 
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 env:
   tofu_version: '1.7.1'
   tg_version: '0.58.12'
