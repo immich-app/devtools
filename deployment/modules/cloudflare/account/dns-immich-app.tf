@@ -49,7 +49,7 @@ resource "cloudflare_record" "immich_app_cname_api" {
   ttl     = 1
   type    = "CNAME"
   value   = "mich.immich.cloud"
-  zone_id = cloudflare_zone.immich_cloud.id
+  zone_id = cloudflare_zone.immich_app.id
 }
 
 resource "cloudflare_record" "immich_app_mx_root_10" {
