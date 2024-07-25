@@ -27,6 +27,8 @@ spec:
           name: github-oauth-client
       - secretRef:
           name: hedgedoc-oauth
+      - secretRef:
+          name: containerssh-oauth
     ingress:
       enabled: true
       className: nginx
@@ -92,6 +94,9 @@ spec:
           secretEnv: CMD_OAUTH2_CLIENT_SECRET
           redirectURIs:
             - "https://md.immich.cloud/auth/oauth2/callback"
+        - id: containerssh
+          name: containerssh
+          secretEnv: CONTAINERSSH_OAUTH_SECRET
 
     resources:
       requests:

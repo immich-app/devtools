@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: containerssh-config
+  namespace: tools
+data:
+  config.yaml: |
+    log:
+      level: debug
+    ssh:
+      hostkeys:
+        - /etc/containerssh/host.key
+    auth:
+      keyboardInteractive:
+        method: oauth2
+        oauth2:
+          clientId: "containerssh"
+          clientSecret: "${CONTAINERSSH_OAUTH_SECRET}"
+          provider: oidc
+          oidc:
+            url: https://auth.immich.cloud
+            deviceFlow: true
+            authorizationCodeFlow: true
+    backend: kubernetes
+    kubernetes:
+      connection:
+        host: kubernetes.default.svc
+        cacertFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+      pod:
+        metadata:
+          namespace: containerssh-guests
+        spec:
+          containers:
+            - name: shell
+              image: containerssh/containerssh-guest-image
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1000
+              resources:
+               limits:
+                 memory: "80Gi"
