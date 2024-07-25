@@ -35,7 +35,7 @@ spec:
               mountPath: /config
       containers:
         - name: containerssh
-          image: containerssh/containerssh:0.5.1
+          image: containerssh/containerssh:v0.5.1
           args:
             - "--config"
             - "/config/config.yaml"
@@ -51,7 +51,7 @@ spec:
             - name: shared
               mountPath: /config
         - name: containerssh-authconfig
-          image: containerssh/containerssh-test-authconfig:0.5.1
+          image: containerssh/containerssh-test-authconfig:v0.5.1
           securityContext:
             readOnlyRootFilesystem: true
             runAsNonRoot: true
