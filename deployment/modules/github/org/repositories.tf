@@ -57,12 +57,6 @@ resource "github_repository" "repositories" {
   }
 }
 
-import {
-  to       = github_repository.repositories[each.value.name]
-  id       = each.value.name
-  for_each = { for repo in var.repositories : repo.name => repo }
-}
-
 resource "github_repository_ruleset" "main_ruleset" {
   for_each    = { for repo in var.repositories : repo.name => repo }
   repository  = each.value.name
@@ -98,11 +92,6 @@ resource "github_repository_ruleset" "main_ruleset" {
     required_signatures     = false
     update                  = false
   }
-}
-
-moved {
-  from = github_repository_ruleset.main_ruleset["my.immich.app"]
-  to   = github_repository_ruleset.main_ruleset["static-pages"]
 }
 
 resource "github_repository_file" "default_files" {
