@@ -6,6 +6,7 @@ metadata:
 spec:
   selector:
     app: containerssh
+  type: NodePort
   ports:
     - port: 2222
       nodePort: 30022
