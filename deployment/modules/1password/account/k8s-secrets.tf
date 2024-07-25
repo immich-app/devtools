@@ -15,7 +15,7 @@ resource "random_password" "containerssh_oauth_secret" {
 resource "onepassword_item" "containerssh_oauth" {
   vault    = data.onepassword_vault.kubernetes.uuid
   title    = "containerssh-oauth"
-  category = "password"
+  category = "secure_note"
 
   section {
     label = ""
@@ -35,7 +35,7 @@ resource "tls_private_key" "containerssh_host_key" {
 resource "onepassword_item" "containerssh_host_key" {
   vault    = data.onepassword_vault.kubernetes.uuid
   title    = "containerssh-host-key"
-  category = "password"
+  category = "secure_note"
 
   section {
     label = ""
