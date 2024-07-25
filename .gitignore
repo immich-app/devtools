@@ -138,3 +138,9 @@ terraform.rc
 # See: https://terragrunt.gruntwork.io/docs/reference/cli-options/#terragrunt-debug
 terragrunt-debug.tfvars.json
 
+/.idea/.gitignore
+/.idea/devtools.iml
+/.idea/git_toolbox_prj.xml
+/.idea/modules.xml
+/.idea/terraform.xml
+/.idea/vcs.xml
