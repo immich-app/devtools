@@ -15,7 +15,7 @@ data:
         method: oauth2
         oauth2:
           clientId: "containerssh"
-          clientSecret: ""
+          clientSecret: "ignored"
           provider: oidc
           oidc:
             url: http://dex.authentication:5556/
