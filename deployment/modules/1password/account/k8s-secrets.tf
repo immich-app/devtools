@@ -39,3 +39,23 @@ resource "onepassword_item" "example_k8s_password_gen" {
     }
   }
 }
+
+resource "tls_private_key" "containerssh_host_key" {
+  algorithm = "ED25519"
+}
+
+resource "onepassword_item" "containerssh_host_key" {
+  vault = data.onepassword_vault.kubernetes.uuid
+  title = "containerssh-host-key"
+  category = "password"
+
+  section {
+    label = ""
+
+    field {
+      label = "host.key"
+      type = "CONCEALED"
+      value = tls_private_key.containerssh_host_key.private_key_openssh
+    }
+  }
+}
