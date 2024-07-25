@@ -11,7 +11,9 @@ resource "cloudflare_api_token" "terraform_cloudflare_account" {
       data.cloudflare_api_token_permission_groups.all.zone["Dynamic URL Redirects Write"],
       data.cloudflare_api_token_permission_groups.all.account["Workers R2 Storage Write"],
       data.cloudflare_api_token_permission_groups.all.account["Notifications Read"],
-      data.cloudflare_api_token_permission_groups.all.account["Notifications Write"]
+      data.cloudflare_api_token_permission_groups.all.account["Notifications Write"],
+      data.cloudflare_api_token_permission_groups.all.account["Workers Scripts Write"],
+      data.cloudflare_api_token_permission_groups.all.account["Workers Scripts Read"]
     ]
     resources = {
       "com.cloudflare.api.account.*" = "*"
