@@ -18,7 +18,7 @@ resource "onepassword_item" "containerssh_oauth" {
   category = "secure_note"
 
   section {
-    label = ""
+    label = "oauth secret"
 
     field {
       label = "CONTAINERSSH_OAUTH_SECRET"
@@ -38,7 +38,7 @@ resource "onepassword_item" "containerssh_host_key" {
   category = "secure_note"
 
   section {
-    label = ""
+    label = "ssh host key"
 
     field {
       label = "host.key"
