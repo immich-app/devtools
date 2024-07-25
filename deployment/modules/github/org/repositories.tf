@@ -21,7 +21,8 @@ variable "repositories" {
     { name = "discord-bot", description = "A Discord bot for the official @immich-app Discord" },
     { name = "demo", description = "This repo contains the setup for the demo instance at https://demo.immich.app/" },
     { name = "test-assets", description = "Test assets used for testing Immich. Contains various formats and codecs" },
-    { name = ".github", description = ".github folder for the organisation level", issues = false }
+    { name = ".github", description = ".github folder for the organisation level", issues = false },
+    { name = "geoshenanigans", description = "Geospatial shenanigans, reverse geocoding, map tiling, and maybe more..." }
   ]
 }
 
@@ -55,12 +56,6 @@ resource "github_repository" "repositories" {
       pages
     ]
   }
-}
-
-import {
-  to       = github_repository.repositories[each.value.name]
-  id       = each.value.name
-  for_each = { for repo in var.repositories : repo.name => repo }
 }
 
 resource "github_repository_ruleset" "main_ruleset" {
@@ -98,11 +93,6 @@ resource "github_repository_ruleset" "main_ruleset" {
     required_signatures     = false
     update                  = false
   }
-}
-
-moved {
-  from = github_repository_ruleset.main_ruleset["my.immich.app"]
-  to   = github_repository_ruleset.main_ruleset["static-pages"]
 }
 
 resource "github_repository_file" "default_files" {
