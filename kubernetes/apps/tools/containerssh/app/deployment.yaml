@@ -59,7 +59,7 @@ spec:
       volumes:
         - name: hostkey
           secret:
-            secretName: containerssh-hostkey
+            secretName: containerssh-host-key
         - name: configmap
           configMap:
             name: containerssh-config
