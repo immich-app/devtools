@@ -54,8 +54,7 @@ spec:
           image: containerssh/containerssh-test-authconfig:0.5.1
           securityContext:
             readOnlyRootFilesystem: true
-      securityContext:
-        runAsNonRoot: true
+            runAsNonRoot: true
       volumes:
         - name: hostkey
           secret:
