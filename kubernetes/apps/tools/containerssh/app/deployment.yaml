@@ -16,29 +16,9 @@ spec:
         app: containerssh
     spec:
       serviceAccountName: containerssh
-      initContainers:
-        - name: envsubst
-          image: ghcr.io/dmfrey/bash:5.2.26-alpine3.20
-          command:
-            - "/bin/sh"
-            - "-c"
-            - "envsubst < /tmp/config.yaml > /config/config.yaml"
-          envFrom:
-            - secretRef:
-                name: containerssh-oauth
-          volumeMounts:
-            - name: configmap
-              mountPath: /tmp/config.yaml
-              subPath: config.yaml
-              readOnly: true
-            - name: shared
-              mountPath: /config
       containers:
         - name: containerssh
           image: containerssh/containerssh:v0.5.1
-          args:
-            - "--config"
-            - "/config/config.yaml"
           securityContext:
             readOnlyRootFilesystem: true
             runAsNonRoot: true
@@ -49,14 +29,14 @@ spec:
               mountPath: /etc/containerssh/host.key
               subPath: host.key
               readOnly: true
-            - name: shared
-              mountPath: /config
+            - name: config
+              mountPath: /etc/containerssh/config.yaml
+              subPath: config.yaml
+              readOnly: true
       volumes:
         - name: hostkey
           secret:
             secretName: containerssh-host-key
-        - name: configmap
+        - name: config
           configMap:
             name: containerssh-config
-        - name: shared
-          emptyDir: {}
