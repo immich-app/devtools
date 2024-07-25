@@ -18,9 +18,8 @@ data:
           clientSecret: "${CONTAINERSSH_OAUTH_SECRET}"
           provider: oidc
           oidc:
-            url: https://auth.immich.cloud
+            url: https://auth.immich.cloud/
             deviceFlow: true
-            authorizationCodeFlow: true
     backend: kubernetes
     kubernetes:
       connection:
