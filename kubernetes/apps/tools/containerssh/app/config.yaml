@@ -15,7 +15,7 @@ data:
         method: oauth2
         oauth2:
           clientId: "containerssh"
-          clientSecret: ""
+          clientSecret: "ignored"
           provider: oidc
           oidc:
             url: http://dex.authentication:5556/
@@ -33,9 +33,10 @@ data:
           containers:
             - name: shell
               image: containerssh/containerssh-guest-image
-              securityContext:
-                runAsNonRoot: true
-                runAsUser: 1000
               resources:
                limits:
                  memory: "80Gi"
+#    TODO: custom image with tools installed + nonroot true
+#              securityContext:
+#                runAsNonRoot: true
+#                runAsUser: 1000
