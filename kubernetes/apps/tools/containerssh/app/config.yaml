@@ -33,9 +33,6 @@ data:
           containers:
             - name: shell
               image: containerssh/containerssh-guest-image
-              resources:
-               limits:
-                 memory: "80Gi"
 #    TODO: custom image with tools installed + nonroot true
 #              securityContext:
 #                runAsNonRoot: true
