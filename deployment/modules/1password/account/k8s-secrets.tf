@@ -45,8 +45,8 @@ resource "tls_private_key" "containerssh_host_key" {
 }
 
 resource "onepassword_item" "containerssh_host_key" {
-  vault = data.onepassword_vault.kubernetes.uuid
-  title = "containerssh-host-key"
+  vault    = data.onepassword_vault.kubernetes.uuid
+  title    = "containerssh-host-key"
   category = "password"
 
   section {
@@ -54,7 +54,7 @@ resource "onepassword_item" "containerssh_host_key" {
 
     field {
       label = "host.key"
-      type = "CONCEALED"
+      type  = "CONCEALED"
       value = tls_private_key.containerssh_host_key.private_key_openssh
     }
   }
