@@ -18,9 +18,9 @@ spec:
       serviceAccountName: containerssh
       initContainers:
         - name: envsubst
-          image: ghcr.io/onedr0p/alpine:3.19.1@sha256:3fbc581cb0fe29830376161ae026e2a765dcc11e1747477fe9ebf155720b8638
+          image: ghcr.io/dmfrey/bash:5.2.26-alpine3.20
           command:
-            - "/bin/bash"
+            - "/bin/sh"
             - "-c"
             - "envsubst < /tmp/config.yaml > /config/config.yaml"
           envFrom:
