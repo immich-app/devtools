@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: containerssh
+  namespace: tools
+  labels:
+    app: containerssh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: containerssh
+  template:
+    metadata:
+      labels:
+        app: containerssh
+    spec:
+      serviceAccountName: containerssh
+      initContainers:
+        - name: envsubst
+          image: ghcr.io/onedr0p/alpine:3.19.1@sha256:3fbc581cb0fe29830376161ae026e2a765dcc11e1747477fe9ebf155720b8638
+          command:
+            - "/bin/bash"
+            - "-c"
+            - "envsubst < /tmp/config.yaml > /config/config.yaml"
+          envFrom:
+            - secretRef:
+                name: containerssh-oauth
+          volumeMounts:
+            - name: configmap
+              mountPath: /tmp/config.yaml
+              subPath: config.yaml
+              readOnly: true
+            - name: shared
+              mountPath: /config
+      containers:
+        - name: containerssh
+          image: containerssh/containerssh:0.5.1
+          args:
+            - "--config"
+            - "/config/config.yaml"
+          securityContext:
+            readOnlyRootFilesystem: true
+          ports:
+            - containerPort: 2222
+          volumeMounts:
+            - name: hostkey
+              mountPath: /etc/containerssh/host.key
+              subPath: host.key
+              readOnly: true
+            - name: shared
+              mountPath: /config
+        - name: containerssh-authconfig
+          image: containerssh/containerssh-test-authconfig:0.5.1
+          securityContext:
+            readOnlyRootFilesystem: true
+      securityContext:
+        runAsNonRoot: true
+      volumes:
+        - name: hostkey
+          secret:
+            secretName: containerssh-hostkey
+        - name: configmap
+          configMap:
+            name: containerssh-config
+        - name: shared
+          emptyDir: {}
