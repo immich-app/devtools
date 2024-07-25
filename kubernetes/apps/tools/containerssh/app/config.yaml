@@ -15,12 +15,11 @@ data:
         method: oauth2
         oauth2:
           clientId: "containerssh"
-          clientSecret: "${CONTAINERSSH_OAUTH_SECRET}"
+          clientSecret: ""
           provider: oidc
           oidc:
-            url: https://auth.immich.cloud
+            url: http://dex.authentication:5556/
             deviceFlow: true
-            authorizationCodeFlow: true
     backend: kubernetes
     kubernetes:
       connection:

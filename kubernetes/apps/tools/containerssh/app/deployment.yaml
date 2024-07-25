@@ -18,9 +18,9 @@ spec:
       serviceAccountName: containerssh
       initContainers:
         - name: envsubst
-          image: ghcr.io/onedr0p/alpine:3.19.1@sha256:3fbc581cb0fe29830376161ae026e2a765dcc11e1747477fe9ebf155720b8638
+          image: ghcr.io/dmfrey/bash:5.2.26-alpine3.20
           command:
-            - "/bin/bash"
+            - "/bin/sh"
             - "-c"
             - "envsubst < /tmp/config.yaml > /config/config.yaml"
           envFrom:
@@ -35,12 +35,13 @@ spec:
               mountPath: /config
       containers:
         - name: containerssh
-          image: containerssh/containerssh:0.5.1
+          image: containerssh/containerssh:v0.5.1
           args:
             - "--config"
             - "/config/config.yaml"
           securityContext:
             readOnlyRootFilesystem: true
+            runAsNonRoot: true
           ports:
             - containerPort: 2222
           volumeMounts:
@@ -50,16 +51,10 @@ spec:
               readOnly: true
             - name: shared
               mountPath: /config
-        - name: containerssh-authconfig
-          image: containerssh/containerssh-test-authconfig:0.5.1
-          securityContext:
-            readOnlyRootFilesystem: true
-      securityContext:
-        runAsNonRoot: true
       volumes:
         - name: hostkey
           secret:
-            secretName: containerssh-hostkey
+            secretName: containerssh-host-key
         - name: configmap
           configMap:
             name: containerssh-config

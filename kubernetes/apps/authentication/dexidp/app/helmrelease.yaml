@@ -96,7 +96,9 @@ spec:
             - "https://md.immich.cloud/auth/oauth2/callback"
         - id: containerssh
           name: containerssh
-          secretEnv: CONTAINERSSH_OAUTH_SECRET
+          public: true
+          redirectURIs:
+            - "/device/callback"
 
     resources:
       requests:
