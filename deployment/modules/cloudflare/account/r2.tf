@@ -61,3 +61,12 @@ resource "terraform_data" "r2_static_custom_domain" {
     EOT
   }
 }
+
+resource "cloudflare_page_rule" "static_cache_all" {
+  zone_id = cloudflare_zone.immich_cloud.id
+  target  = "static.immich.cloud/*"
+  actions {
+    cache_level       = "cache_everything"
+    browser_cache_ttl = 2678400 # 31 days
+  }
+}
