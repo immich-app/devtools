@@ -13,7 +13,9 @@ resource "cloudflare_api_token" "terraform_cloudflare_account" {
       data.cloudflare_api_token_permission_groups.all.account["Notifications Read"],
       data.cloudflare_api_token_permission_groups.all.account["Notifications Write"],
       data.cloudflare_api_token_permission_groups.all.account["Workers Scripts Write"],
-      data.cloudflare_api_token_permission_groups.all.account["Workers Scripts Read"]
+      data.cloudflare_api_token_permission_groups.all.account["Workers Scripts Read"],
+      data.cloudflare_api_token_permission_groups.all.account["Workers KV Storage Write"],
+      data.cloudflare_api_token_permission_groups.all.account["Workers KV Storage Read"],
     ]
     resources = {
       "com.cloudflare.api.account.*" = "*"
