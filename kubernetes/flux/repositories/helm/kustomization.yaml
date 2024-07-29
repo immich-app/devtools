@@ -11,3 +11,5 @@ resources:
   - ./bjw-s.yaml
   - ./dex.yaml
   - ./cnpg.yaml
+  - ./grafana-operator.yaml
+  - ./victoria-metrics.yaml
