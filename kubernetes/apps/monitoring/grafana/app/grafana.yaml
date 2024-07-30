@@ -6,20 +6,7 @@ metadata:
   labels:
     dashboards: "grafana"
 spec:
-  config:
-    security:
-      admin_user: ${GRAFANA_ADMIN_USER}
-      admin_password: ${GRAFANA_ADMIN_PASSWORD}
   # TODO: Oauth login
-  deployment:
-    spec:
-      template:
-        spec:
-          containers:
-            - name: grafana
-              envFrom:
-                - secretRef:
-                    name: grafana-admin-user
   ingress:
     metadata:
       annotations:
