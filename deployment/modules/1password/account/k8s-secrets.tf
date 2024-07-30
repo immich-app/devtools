@@ -36,12 +36,6 @@ resource "onepassword_item" "grafana_admin_user" {
   vault    = data.onepassword_vault.kubernetes.uuid
   title    = "grafana-admin-user"
   category = "password"
-  password_recipe {
-    length  = 40
-    symbols = true
-    letters = true
-    digits  = true
-  }
 
   section {
     label = "Grafana admin user"
