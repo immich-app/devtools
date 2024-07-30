@@ -35,7 +35,7 @@ resource "random_password" "grafana_admin_user" {
 resource "onepassword_item" "grafana_admin_user" {
   vault    = data.onepassword_vault.kubernetes.uuid
   title    = "grafana-admin-user"
-  category = "password"
+  category = "secure_note"
 
   section {
     label = "Grafana admin user"
