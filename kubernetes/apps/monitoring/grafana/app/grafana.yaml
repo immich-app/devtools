@@ -1,0 +1,43 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: grafana
+  namespace: monitoring
+  labels:
+    dashboards: "grafana"
+spec:
+  config:
+    security:
+      admin_user: ${GRAFANA_ADMIN_USER}
+      admin_password: ${GRAFANA_ADMIN_PASSWORD}
+  # TODO: Oauth login
+  deployment:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: grafana
+              envFrom:
+                - secretRef:
+                    name: grafana-admin-user
+  ingress:
+    metadata:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+    spec:
+      ingressClassName: nginx
+      rules:
+        - host: &host grafana.immich.cloud
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: grafana-service
+                    port:
+                      number: 3000
+                path: /
+                pathType: Prefix
+      tls:
+        - hosts:
+            - *host
+          secretName: grafana-tls-secret

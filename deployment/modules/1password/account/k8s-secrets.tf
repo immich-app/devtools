@@ -25,3 +25,31 @@ resource "onepassword_item" "containerssh_host_key" {
     }
   }
 }
+
+resource "random_password" "grafana_admin_user" {
+  length           = 40
+  special          = true
+  override_special = "!@#$%^&*()_+"
+}
+
+resource "onepassword_item" "grafana_admin_user" {
+  vault    = data.onepassword_vault.kubernetes.uuid
+  title    = "grafana-admin-user"
+  category = "password"
+
+  section {
+    label = "Grafana admin user"
+
+    field {
+      label = "GRAFANA_ADMIN_USER"
+      type  = "STRING"
+      value = "admin"
+    }
+
+    field {
+      label = "GRAFANA_ADMIN_PASSWORD"
+      type  = "CONCEALED"
+      value = random_password.grafana_admin_user.result
+    }
+  }
+}
