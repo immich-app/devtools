@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: read
       pull-requests: write
     strategy:
       matrix:
@@ -18,7 +19,7 @@ jobs:
     steps:
       - name: Setup Flux CLI
         uses: fluxcd/flux2/action@main
-        
+
       - name: Diff Resources
         uses: allenporter/flux-local/action/diff@5409e974ef566c0ed5bf95c4f87ca7932e512bee # 5.4.0
         id: diff
