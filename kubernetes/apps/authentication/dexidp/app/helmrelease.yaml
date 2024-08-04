@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: ghcr.io/dexidp/dex
-      tag: v2.40.0
+      tag: v2.41.0@sha256:db32d2a158490e39761eb4b77fbced7a404d6c4350bc4597eecfa83b30172661
     env:
       KUBERNETES_POD_NAMESPACE: authentication
     envFrom:
