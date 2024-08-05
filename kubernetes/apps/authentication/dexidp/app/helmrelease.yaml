@@ -27,8 +27,6 @@ spec:
           name: github-oauth-client
       - secretRef:
           name: hedgedoc-oauth
-      - secretRef:
-          name: containerssh-oauth
     ingress:
       enabled: true
       className: nginx
