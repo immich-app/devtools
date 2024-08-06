@@ -2,6 +2,7 @@ apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMAuth
 metadata:
   name: cf-workers-metrics-ingress
+  namespace: monitoring
 spec:
   userSelector: {}
   userNamespaceSelector: {}
