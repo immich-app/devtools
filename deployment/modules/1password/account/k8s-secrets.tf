@@ -53,3 +53,25 @@ resource "onepassword_item" "grafana_admin_credentials" {
     }
   }
 }
+
+resource "random_password" "cf_workers_metrics_token" {
+  length           = 40
+  special          = true
+  override_special = "!@#$%^&*()_+"
+}
+
+resource "onepassword_item" "cf_workers_metrics_token" {
+  vault    = data.onepassword_vault.kubernetes.uuid
+  title    = "cf-workers-metrics-token"
+  category = "secure_note"
+
+  section {
+    label = "Cloudflare workers metrics write token"
+
+    field {
+      label = "token"
+      type  = "CONCEALED"
+      value = random_password.cf_workers_metrics_token.result
+    }
+  }
+}

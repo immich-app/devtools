@@ -1,0 +1,15 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMUser
+metadata:
+  name: cf-workers
+  namespace: monitoring
+spec:
+  tokenRef:
+    name: cf-workers-metrics-token
+    key: token
+  targetRefs:
+    - crd:
+        kind: VMSingle
+        name: vmetrics
+        namespace: monitoring
+      paths: ["/write"]
