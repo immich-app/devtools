@@ -55,9 +55,8 @@ resource "onepassword_item" "grafana_admin_credentials" {
 }
 
 resource "random_password" "cf_workers_metrics_token" {
-  length           = 40
-  special          = true
-  override_special = "!@#$%^&*()_+"
+  length  = 40
+  special = false
 }
 
 resource "onepassword_item" "cf_workers_metrics_token" {
