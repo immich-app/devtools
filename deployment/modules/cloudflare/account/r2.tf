@@ -68,5 +68,6 @@ resource "cloudflare_page_rule" "static_cache_all" {
   actions {
     cache_level       = "cache_everything"
     browser_cache_ttl = 2678400 # 31 days
+    edge_cache_ttl    = 2678400 # 31 days
   }
 }
