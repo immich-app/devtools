@@ -39,3 +39,6 @@ spec:
       enabled: false
     kubeEtcd:
       enabled: false
+    vmsingle:
+      spec:
+        resources: {}
