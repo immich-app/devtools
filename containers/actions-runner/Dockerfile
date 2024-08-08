@@ -1,6 +1,6 @@
 # Based on the image by onedr0p
 # https://github.com/onedr0p/containers/blob/main/apps/actions-runner/Dockerfile
-FROM ghcr.io/actions/actions-runner:2.318.0
+FROM ghcr.io/actions/actions-runner:2.319.0@sha256:3bee2ec62f586beb76013d462df84d3dafc7dff94fe4ac731bcf3157c3a324f3
 
 ENV HOMEBREW_NO_ANALYTICS=1 \
     HOMEBREW_NO_ENV_HINTS=1 \
