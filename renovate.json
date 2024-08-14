@@ -17,4 +17,7 @@
   "kustomize": {
     "fileMatch": ["(^|/)kustomization\\.ya?ml(?:\\.j2)?$"]
   },
+  "ignorePaths": [
+    "tools/preview-operator/**"
+  ]
 }
