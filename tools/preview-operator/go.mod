@@ -2,7 +2,7 @@ module github.com/immich-app/devtools/tools/preview-operator
 
 go 1.22
 
-toolchain go1.22.2
+toolchain go1.23.0
 
 require (
 	github.com/cloudnative-pg/cloudnative-pg v1.23.1
