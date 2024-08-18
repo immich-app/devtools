@@ -79,7 +79,7 @@ jobs:
           GITHUB_OWNER: ${{ secrets.TF_APP_GITHUB_OWNER }}
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: terragrunt run-all plan -no-color 2>&1 | tee "${{github.workspace}}/plan_output.txt";
+        run: terragrunt run-all plan -no-color 2>&1 | tee "${{github.workspace}}/plan_output.txt" && exit ${PIPESTATUS[0]};
 
 #      - name: 'List files'
 #        run: 'ls -la ${{ github.workspace }}'
