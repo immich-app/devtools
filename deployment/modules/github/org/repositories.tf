@@ -103,7 +103,8 @@ resource "github_repository_file" "default_files" {
           repo = repo
           file = file
         }
-        if !contains([".terragrunt-source-manifest", ".terragrunt-module-manifest"], file)
+        # FIXME find a better solution
+        if !contains([".terragrunt-source-manifest", ".terragrunt-module-manifest", ".github/.terragrunt-source-manifest", ".github/.terragrunt-module-manifest"], file)
       ]
     ]) : "${combination.repo.name}/${combination.file}" => combination
   }
@@ -123,11 +124,12 @@ resource "github_repository_file" "default_files" {
   }
 }
 
-import {
-  to = github_repository_file.default_files["static-pages/${each.value}"]
-  id = "static-pages/${each.value}"
-  for_each = {
-    for file in fileset("${path.module}/repo-files", "**") : file => file
-    if !contains([".terragrunt-source-manifest", ".terragrunt-module-manifest"], file)
-  }
-}
+# import {
+#   to = github_repository_file.default_files["static-pages/${each.value}"]
+#   id = "static-pages/${each.value}"
+#   for_each = {
+#     for file in fileset("${path.module}/repo-files", "**") : file => file
+#     # FIXME find a better solution
+#     if !contains([".terragrunt-source-manifest", ".terragrunt-module-manifest", ".github/.terragrunt-source-manifest", ".github/.terragrunt-module-manifest"], file)
+#   }
+# }
