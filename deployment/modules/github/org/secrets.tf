@@ -1,3 +1,7 @@
+data "onepassword_vault" "github" {
+  name = "Github"
+}
+
 resource "github_actions_organization_secret" "cloudflare_api_token_pages_upload" {
   secret_name     = "CLOUDFLARE_API_TOKEN_PAGES_UPLOAD"
   plaintext_value = data.terraform_remote_state.api_keys_state.outputs.terraform_key_cloudflare_pages_upload
@@ -22,3 +26,32 @@ resource "github_actions_organization_secret" "tiles_r2_kv_token_hashed_value" {
   visibility      = "all"
 }
 
+data "onepassword_item" "push_o_matic_app" {
+  title = "push-o-matic-app"
+  vault = data.onepassword_vault.github.name
+}
+
+locals {
+  push_o_matic_fields = {
+    app_id          = [for field in data.onepassword_item.push_o_matic_app.section[0].field : field.value if field.label == "app_id"][0]
+    installation_id = [for field in data.onepassword_item.push_o_matic_app.section[0].field : field.value if field.label == "installation_id"][0]
+  }
+}
+
+resource "github_actions_organization_secret" "push_o_matic_app_id" {
+  secret_name     = "PUSH_O_MATIC_APP_ID"
+  plaintext_value = local.push_o_matic_fields.app_id
+  visibility      = "all"
+}
+
+resource "github_actions_organization_secret" "push_o_matic_app_installation_id" {
+  secret_name     = "PUSH_O_MATIC_APP_INSTALLATION_ID"
+  plaintext_value = local.push_o_matic_fields.installation_id
+  visibility      = "all"
+}
+
+resource "github_actions_organization_secret" "push_o_matic_app_key" {
+  secret_name     = "PUSH_O_MATIC_APP_KEY"
+  plaintext_value = data.onepassword_item.push_o_matic_app.private_key
+  visibility      = "all"
+}
