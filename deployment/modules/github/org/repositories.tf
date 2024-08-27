@@ -101,6 +101,40 @@ resource "github_repository_ruleset" "main_ruleset" {
   }
 }
 
+resource "github_repository_ruleset" "custom_rules" {
+  for_each    = { for repo in var.repositories : repo.name => repo }
+  repository  = each.value.name
+  name        = "Custom Rules"
+  target      = "branch"
+  enforcement = "active"
+
+  conditions {
+    ref_name {
+      include = ["~DEFAULT_BRANCH"]
+      exclude = []
+    }
+  }
+
+  bypass_actors {
+    actor_id    = 912027 # Immich Tofu Integration App
+    actor_type  = "Integration"
+    bypass_mode = "always"
+  }
+
+  bypass_actors {
+    actor_id    = 977022 # Immich Push-o-Matic Integration App
+    actor_type  = "Integration"
+    bypass_mode = "always"
+  }
+
+  rules {}
+
+  lifecycle {
+    ignore_changes = [rules]
+  }
+}
+
+
 resource "github_repository_file" "default_files" {
   for_each = {
     for combination in flatten([
