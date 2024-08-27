@@ -78,6 +78,12 @@ resource "github_repository_ruleset" "main_ruleset" {
     bypass_mode = "always"
   }
 
+  bypass_actors {
+    actor_id    = 977022 # Immich Push-o-Matic Integration App
+    actor_type  = "Integration"
+    bypass_mode = "always"
+  }
+
   rules {
     creation         = true
     deletion         = true
