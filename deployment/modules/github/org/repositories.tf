@@ -6,6 +6,7 @@ variable "repositories" {
     projects    = optional(bool)
     issues      = optional(bool)
     archived    = optional(bool)
+    fork        = optional(bool)
   }))
   default = [
     {
@@ -146,6 +147,7 @@ resource "github_repository_file" "default_files" {
         # Ignore all .terragrunt files in any child directory
         if !can(regex(".*terragrunt.*", file))
       ]
+      if !coalesce(repo.fork, false)
     ]) : "${combination.repo.name}/${combination.file}" => combination
   }
   repository          = each.value.repo.name
