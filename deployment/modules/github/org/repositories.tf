@@ -6,6 +6,7 @@ variable "repositories" {
     projects    = optional(bool)
     issues      = optional(bool)
     archived    = optional(bool)
+    fork        = optional(bool)
   }))
   default = [
     {
@@ -22,7 +23,8 @@ variable "repositories" {
     { name = "demo", description = "This repo contains the setup for the demo instance at https://demo.immich.app/" },
     { name = "test-assets", description = "Test assets used for testing Immich. Contains various formats and codecs" },
     { name = ".github", description = ".github folder for the organisation level", issues = false },
-    { name = "geoshenanigans", description = "Geospatial shenanigans, reverse geocoding, map tiling, and maybe more..." }
+    { name = "geoshenanigans", description = "Geospatial shenanigans, reverse geocoding, map tiling, and maybe more..." },
+    { name = "native_video_player", description = "A Flutter widget to play videos on iOS and Android using a native implementation.", fork = true }
   ]
 }
 
@@ -143,9 +145,10 @@ resource "github_repository_file" "default_files" {
           repo = repo
           file = file
         }
-        # FIXME find a better solution
-        if !contains([".terragrunt-source-manifest", ".terragrunt-module-manifest", ".github/.terragrunt-source-manifest", ".github/.terragrunt-module-manifest"], file)
+        # Ignore all .terragrunt files in any child directory
+        if !can(regex(".*terragrunt.*", file))
       ]
+      if !coalesce(repo.fork, false)
     ]) : "${combination.repo.name}/${combination.file}" => combination
   }
   repository          = each.value.repo.name
@@ -162,6 +165,11 @@ resource "github_repository_file" "default_files" {
       overwrite_on_create
     ]
   }
+}
+
+import {
+  to = github_repository.repositories["native_video_player"]
+  id = "native_video_player"
 }
 
 # import {
