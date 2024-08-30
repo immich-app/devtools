@@ -143,8 +143,8 @@ resource "github_repository_file" "default_files" {
           repo = repo
           file = file
         }
-        # FIXME find a better solution
-        if !contains([".terragrunt-source-manifest", ".terragrunt-module-manifest", ".github/.terragrunt-source-manifest", ".github/.terragrunt-module-manifest"], file)
+        # Ignore all .terragrunt files in any child directory
+        if !can(regex(".*terragrunt.*", file))
       ]
     ]) : "${combination.repo.name}/${combination.file}" => combination
   }
