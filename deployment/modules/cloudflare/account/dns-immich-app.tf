@@ -108,6 +108,15 @@ resource "cloudflare_record" "immich_app_txt_root_fastmail_mx" {
   zone_id = cloudflare_zone.immich_app.id
 }
 
+resource "cloudflare_record" "immich_app_txt_dmarc_immich_app" {
+  name    = "_dmarc"
+  proxied = false
+  ttl     = 1
+  type    = "TXT"
+  value   = "\"v=DMARC1; p=reject; rua=mailto:bc1ea48ac6824cc6a02bd773ff10ca78@dmarc-reports.cloudflare.net\""
+  zone_id = cloudflare_zone.immich_app.id
+}
+
 resource "cloudflare_record" "immich_app_txt_1password_verification" {
   name    = "immich.app"
   proxied = false
