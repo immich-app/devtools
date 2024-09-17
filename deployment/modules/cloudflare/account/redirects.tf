@@ -16,7 +16,7 @@ resource "cloudflare_ruleset" "immich_app_redirects" {
         preserve_query_string = true
       }
     }
-    expression  = "(http.host eq \"docs.immich.app\") or (http.host eq \"documentation.immich.app\")"
+    expression  = "(http.host eq \"docs.immich.app\") or (http.host eq \"documentation.immich.app\") or (http.host eq \"www.immich.app\")"
     description = "Redirect visitors going to docs"
     enabled     = true
   }
