@@ -7,7 +7,7 @@ resource "cloudflare_record" "immich_cloud_aaaa_root" {
   zone_id = cloudflare_zone.immich_cloud.id
 }
 
-resource "cloudflare_record" "immich_app_aaaa_www" {
+resource "cloudflare_record" "immich_cloud_aaaa_www" {
   name    = "www"
   proxied = true
   ttl     = 1

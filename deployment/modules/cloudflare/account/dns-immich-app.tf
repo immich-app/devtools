@@ -25,6 +25,15 @@ resource "cloudflare_record" "immich_app_aaaa_documentation" {
   zone_id = cloudflare_zone.immich_app.id
 }
 
+resource "cloudflare_record" "immich_app_aaaa_www" {
+  name    = "www"
+  proxied = true
+  ttl     = 1
+  type    = "AAAA"
+  value   = "100::"
+  zone_id = cloudflare_zone.immich_app.id
+}
+
 resource "cloudflare_record" "immich_app_aaaa_discord" {
   name    = "discord"
   proxied = true
