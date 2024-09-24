@@ -1,0 +1,19 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: victoriametrics-backup
+  namespace: monitoring
+spec:
+  sourcePVC: vmsingle-vmetrics
+  trigger:
+    schedule: 0 18 * * *
+  restic:
+    pruneIntervalDays: 14
+    repository: victoriametrics-backup-secret
+    retain:
+      daily: 5
+      weekly: 1
+      monthly: 2
+    copyMethod: Direct
+    cacheStorageClassName: zfs
+    cacheAccessModes: ["ReadWriteOnce"]
