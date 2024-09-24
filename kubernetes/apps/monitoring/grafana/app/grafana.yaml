@@ -17,7 +17,12 @@ spec:
   deployment:
     spec:
       template:
+        metadata:
+          labels:
+            dashboards: grafana
         spec:
+          securityContext:
+            fsGroup: 472
           volumes:
             - name: grafana-data
               persistentVolumeClaim:
