@@ -4,6 +4,12 @@ resource "cloudflare_r2_bucket" "tf_state_database_backups" {
   location   = "WEUR"
 }
 
+resource "cloudflare_r2_bucket" "victoriametrics_backups" {
+  account_id = var.cloudflare_account_id
+  name       = "victoriametrics-backups"
+  location   = "WEUR"
+}
+
 resource "cloudflare_r2_bucket" "static" {
   account_id = var.cloudflare_account_id
   name       = "static"
