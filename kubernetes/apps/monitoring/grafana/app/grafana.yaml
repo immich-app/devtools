@@ -14,6 +14,14 @@ spec:
       resources:
         requests:
           storage: 20Gi
+  deployment:
+    spec:
+      template:
+        spec:
+          volumes:
+            - name: grafana-data
+              persistentVolumeClaim:
+                claimName: grafana-pvc
   ingress:
     metadata:
       annotations:
