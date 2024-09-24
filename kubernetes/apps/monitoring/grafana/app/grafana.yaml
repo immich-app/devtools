@@ -7,6 +7,13 @@ metadata:
     dashboards: "grafana"
 spec:
   # TODO: Oauth login
+  persistentVolumeClaim:
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 20Gi
   ingress:
     metadata:
       annotations:
