@@ -13,3 +13,4 @@ resources:
   - ./cnpg.yaml
   - ./grafana-operator.yaml
   - ./victoria-metrics.yaml
+  - ./backube.yaml

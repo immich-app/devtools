@@ -1,0 +1,7 @@
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: victoriametrics-backup-bucket
+  namespace: flux-system
+spec:
+  itemPath: "vaults/Kubernetes/items/mich-cloudflare-r2-victoriametrics-backup-bucket"
