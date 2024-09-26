@@ -42,6 +42,10 @@ spec:
               - secretRef:
                   name: discord-bot
               - secretRef:
+                  name: github-webhook-bot
+              - secretRef:
+                  name: zulip-bot
+              - secretRef:
                   name: discord-bot-db-app
             probes:
               liveness:

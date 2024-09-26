@@ -74,3 +74,24 @@ resource "onepassword_item" "cf_workers_metrics_token" {
     }
   }
 }
+
+resource "random_password" "bot_github_webhook_slug" {
+  length  = 40
+  special = false
+}
+
+resource "onepassword_item" "bot_github_webhook_slug" {
+  vault    = data.onepassword_vault.kubernetes.uuid
+  title    = "bot-github-webhook-slug"
+  category = "secure_note"
+
+  section {
+    label = "Github webhook slug for the bot"
+
+    field {
+      label = "GITHUB_SLUG"
+      type  = "CONCEALED"
+      value = random_password.bot_github_webhook_slug.result
+    }
+  }
+}

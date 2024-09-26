@@ -13,5 +13,5 @@ include "root" {
 }
 
 dependencies {
-  paths = ["../../cloudflare/api-keys"]
+  paths = ["../../cloudflare/api-keys", "../../1password/account"]
 }
