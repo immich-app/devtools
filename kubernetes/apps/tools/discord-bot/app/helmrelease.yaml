@@ -42,7 +42,7 @@ spec:
               - secretRef:
                   name: discord-bot
               - secretRef:
-                  name: github-webhook-bot
+                  name: bot-github-webhook-slug
               - secretRef:
                   name: zulip-bot
               - secretRef:
