@@ -63,7 +63,7 @@ resource "github_repository" "repositories" {
 
 resource "github_repository_ruleset" "main_ruleset" {
   for_each    = { for repo in var.repositories : repo.name => repo }
-  repository  = each.value.name
+  repository  = github_repository.repositories[each.value.name].name
   name        = "Main Protection"
   target      = "branch"
   enforcement = "active"
@@ -106,7 +106,7 @@ resource "github_repository_ruleset" "main_ruleset" {
 
 resource "github_repository_ruleset" "custom_rules" {
   for_each    = { for repo in var.repositories : repo.name => repo }
-  repository  = each.value.name
+  repository  = github_repository.repositories[each.value.name].name
   name        = "Custom Rules"
   target      = "branch"
   enforcement = "active"
