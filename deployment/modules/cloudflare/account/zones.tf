@@ -12,6 +12,11 @@ resource "cloudflare_zone_settings_override" "immich_app" {
     tls_1_3          = "zrt"
     always_use_https = "on"
     ssl              = "strict"
+    brotli           = "on"
+    fonts            = "on"
+    early_hints      = "on"
+    rocket_loader    = "on"
+    speed_brain      = "on"
   }
 }
 
