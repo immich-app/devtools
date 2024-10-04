@@ -16,6 +16,8 @@ resource "cloudflare_api_token" "terraform_cloudflare_account" {
       data.cloudflare_api_token_permission_groups.all.account["Workers Scripts Read"],
       data.cloudflare_api_token_permission_groups.all.account["Workers KV Storage Write"],
       data.cloudflare_api_token_permission_groups.all.account["Workers KV Storage Read"],
+      data.cloudflare_api_token_permission_groups.all.zone["Workers Routes Read"],
+      data.cloudflare_api_token_permission_groups.all.zone["Workers Routes Write"],
     ]
     resources = {
       "com.cloudflare.api.account.*" = "*"
