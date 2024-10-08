@@ -27,6 +27,8 @@ spec:
           name: github-oauth-client
       - secretRef:
           name: hedgedoc-oauth
+      - secretRef:
+          name: grafana-oauth
     ingress:
       enabled: true
       className: nginx
@@ -97,6 +99,11 @@ spec:
           public: true
           redirectURIs:
             - "/device/callback"
+        - id: grafana
+          name: grafana
+          secretEnv: GRAFANA_OAUTH_CLIENT_SECRET
+          redirectURIs:
+            - "https://monitoring.immich.cloud/login/generic_oauth"
 
     resources:
       requests:
