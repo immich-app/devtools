@@ -41,3 +41,7 @@ spec:
     - name: grafana-operator
     - name: victoria-metrics
     - name: grafana-secrets
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: grafana-oauth
