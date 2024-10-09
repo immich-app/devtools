@@ -6,7 +6,15 @@ metadata:
   labels:
     dashboards: "grafana"
 spec:
-  # TODO: Oauth login
+  config:
+    auth.generic_oauth:
+        enabled: "true"
+        client_id: grafana
+        client_secret: ${GRAFANA_OAUTH_CLIENT_SECRET}
+        scopes: openid email profile groups offline_access
+        auth_url: https://auth.immich.cloud/auth
+        token_url: https://auth.immich.cloud/token
+        api_url: https://auth.immich.cloud/userinfo
   persistentVolumeClaim:
     spec:
       accessModes:

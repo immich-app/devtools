@@ -116,3 +116,24 @@ resource "onepassword_item" "hedgedoc_oauth_secret" {
     }
   }
 }
+
+resource "random_password" "grafana_oauth_client_secret" {
+  length  = 40
+  special = false
+}
+
+resource "onepassword_item" "grafana_oauth_client_secret" {
+  vault    = data.onepassword_vault.kubernetes.uuid
+  title    = "grafana-oauth-client-secret"
+  category = "secure_note"
+
+  section {
+    label = "OAuth secret for grafana"
+
+    field {
+      label = "GRAFANA_OAUTH_CLIENT_SECRET"
+      type  = "CONCEALED"
+      value = random_password.grafana_oauth_client_secret.result
+    }
+  }
+}
