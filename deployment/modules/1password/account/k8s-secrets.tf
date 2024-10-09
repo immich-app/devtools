@@ -21,6 +21,8 @@ resource "onepassword_item" "containerssh_host_key" {
     field {
       label = "host.key"
       type  = "CONCEALED"
+[12:50]
+
       value = tls_private_key.containerssh_host_key.private_key_openssh
     }
   }
@@ -92,6 +94,27 @@ resource "onepassword_item" "bot_github_webhook_slug" {
       label = "GITHUB_SLUG"
       type  = "CONCEALED"
       value = random_password.bot_github_webhook_slug.result
+    }
+  }
+}
+
+resource "random_password" "hedgedoc_oauth_secret" {
+  length  = 40
+  special = false
+}
+
+resource "onepassword_item" "hedgedoc_oauth_secret" {
+  vault    = data.onepassword_vault.kubernetes.uuid
+  title    = "hedgedoc-oauth"
+  category = "secure_note"
+
+  section {
+    label = "OAuth secret for hedgedoc"
+
+    field {
+      label = "CMD_OAUTH2_CLIENT_SECRET"
+      type  = "CONCEALED"
+      value = random_password.hedgedoc_oauth_secret.result
     }
   }
 }
