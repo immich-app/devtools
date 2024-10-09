@@ -21,8 +21,6 @@ resource "onepassword_item" "containerssh_host_key" {
     field {
       label = "host.key"
       type  = "CONCEALED"
-[12:50]
-
       value = tls_private_key.containerssh_host_key.private_key_openssh
     }
   }
