@@ -17,6 +17,9 @@ spec:
       auth_url: https://auth.immich.cloud/auth
       token_url: https://auth.immich.cloud/token
       api_url: https://auth.immich.cloud/userinfo
+      role_attribute_path: contains(groups[*], 'immich-app:Admins') && 'GrafanaAdmin' || 'Viewer'
+      allow_assign_grafana_admin: "true"
+      auto_login: "true"
   persistentVolumeClaim:
     spec:
       accessModes:
