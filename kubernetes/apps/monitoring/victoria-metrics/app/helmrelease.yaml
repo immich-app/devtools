@@ -29,8 +29,9 @@ spec:
     keepHistory: false
   values:
     fullnameOverride: vmetrics
-    grafanaOperatorDashboardsFormat:
-      enabled: true
+    defaultDashboards:
+      grafanaOperator:
+        enabled: true
     alertmanager:
       enabled: false
     vmalert:
