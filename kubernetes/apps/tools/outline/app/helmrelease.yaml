@@ -33,6 +33,7 @@ spec:
               tag: 0.80.2@sha256:fde16562c9b8c67bc7855c71d8a1203125d63fcefc7ebb4e649de35a9281e6df
             env:
               URL: "https://outline.immich.cloud"
+              REDIS_URL: redis://valkey-outline:6379
               ENABLE_UPDATES: false
               FILE_STORAGE: local
               # TODO: volume
@@ -52,12 +53,22 @@ spec:
               # TODO: database
 #              - secretRef:
 #                  name: outline-db-secret
+      valkey:
+        containers:
+          app:
+            image: valkey/valkey
+            tag: 8.0.1
     service:
       app:
         controller: outline
         ports:
           http:
             port: 3000
+      valkey:
+        controller: valkey
+        ports:
+          main:
+            port: 6379
     ingress:
       app:
         className: nginx
