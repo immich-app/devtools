@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: victoria-metrics-k8s-stack
-      version: 0.27.0
+      version: 0.27.2
       interval: 15m
       sourceRef:
         kind: HelmRepository
@@ -29,8 +29,9 @@ spec:
     keepHistory: false
   values:
     fullnameOverride: vmetrics
-    grafanaOperatorDashboardsFormat:
-      enabled: true
+    defaultDashboards:
+      grafanaOperator:
+        enabled: true
     alertmanager:
       enabled: false
     vmalert:
