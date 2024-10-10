@@ -39,17 +39,15 @@ spec:
               # TODO: volume
               FILE_STORAGE_UPLOAD_MAX_SIZE: "26214400"
               FILE_STORAGE_IMPORT_MAX_SIZE: "26214400"
-              # TODO: oauth
-#              OIDC_CLIENT_ID: outline
-#              OIDC_SCOPES: "openid profile email"
-#              OIDC_AUTH_URI: "https://authelia.${SECRET_DOMAIN}/api/oidc/authorization"
-#              OIDC_TOKEN_URI: "https://authelia.${SECRET_DOMAIN}/api/oidc/token"
-#              OIDC_USERINFO_URI: "https://authelia.${SECRET_DOMAIN}/api/oidc/userinfo"
+              OIDC_CLIENT_ID: outline
+              OIDC_SCOPES: "openid profile email"
+              OIDC_AUTH_URI: "https://auth.immich.cloud/auth"
+              OIDC_TOKEN_URI: "https://auth.immich.cloud/token"
+              OIDC_USERINFO_URI: "https://auth.immich.cloud/userinfo"
               WEB_CONCURRENCY: 10
             envFrom:
-              # TODO: SECRET_KEY, UTILS_SECRET
-#              - secretRef:
-#                  name: outline-secret
+              - secretRef:
+                  name: outline-secret
               # TODO: database
 #              - secretRef:
 #                  name: outline-db-secret
