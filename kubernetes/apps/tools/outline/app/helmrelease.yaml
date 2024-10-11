@@ -32,11 +32,12 @@ spec:
               repository: docker.io/outlinewiki/outline
               tag: 0.80.2@sha256:fde16562c9b8c67bc7855c71d8a1203125d63fcefc7ebb4e649de35a9281e6df
             env:
+              #ref https://github.com/outline/outline/blob/d3c8224839f09fbff601e4a3e7fd8ff1a6b2ba08/.env.sample
               URL: "https://outline.immich.cloud"
               REDIS_URL: redis://valkey-outline:6379
               ENABLE_UPDATES: false
               FILE_STORAGE: local
-              # TODO: volume
+              FILE_STORAGE_LOCAL_ROOT_DIR: /data
               FILE_STORAGE_UPLOAD_MAX_SIZE: "26214400"
               FILE_STORAGE_IMPORT_MAX_SIZE: "26214400"
               OIDC_CLIENT_ID: outline
@@ -56,6 +57,10 @@ spec:
           app:
             image: valkey/valkey
             tag: 8.0.1
+    persistence:
+      data:
+        enabled: true
+        existingClaim: outline
     service:
       app:
         controller: outline
