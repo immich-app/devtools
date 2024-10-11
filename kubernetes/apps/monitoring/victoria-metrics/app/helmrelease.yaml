@@ -42,4 +42,6 @@ spec:
       enabled: false
     vmsingle:
       spec:
+        extraArgs:
+          search.maxUniqueTimeseries: 600000
         resources: {}
