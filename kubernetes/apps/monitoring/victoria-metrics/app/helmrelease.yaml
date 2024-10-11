@@ -43,5 +43,5 @@ spec:
     vmsingle:
       spec:
         extraArgs:
-          search.maxUniqueTimeseries: 600000
+          search.maxUniqueTimeseries: "600000"
         resources: {}
