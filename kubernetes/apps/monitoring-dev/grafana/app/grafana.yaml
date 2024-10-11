@@ -1,0 +1,63 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: grafana
+  namespace: monitoring-dev
+  labels:
+    dashboards: "grafana"
+spec:
+  config:
+    server:
+      root_url: https://monitoring.dev.immich.cloud/
+    auth.generic_oauth:
+      enabled: "true"
+      client_id: grafana
+      client_secret: ${GRAFANA_OAUTH_CLIENT_SECRET}
+      scopes: openid email profile groups offline_access
+      auth_url: https://auth.immich.cloud/auth
+      token_url: https://auth.immich.cloud/token
+      api_url: https://auth.immich.cloud/userinfo
+      role_attribute_path: contains(groups[*], 'immich-app:Admins') && 'GrafanaAdmin' || 'Viewer'
+      allow_assign_grafana_admin: "true"
+      auto_login: "true"
+  persistentVolumeClaim:
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 20Gi
+  deployment:
+    spec:
+      template:
+        metadata:
+          labels:
+            dashboards: grafana
+        spec:
+          securityContext:
+            fsGroup: 472
+          volumes:
+            - name: grafana-data
+              persistentVolumeClaim:
+                claimName: grafana-pvc
+  ingress:
+    metadata:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+    spec:
+      ingressClassName: nginx
+      rules:
+        - host: &host monitoring.dev.immich.cloud
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: grafana-service
+                    port:
+                      number: 3000
+                path: /
+                pathType: Prefix
+      tls:
+        - hosts:
+            - *host
+          secretName: grafana-tls-secret
