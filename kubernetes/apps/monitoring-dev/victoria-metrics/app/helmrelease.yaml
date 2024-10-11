@@ -1,0 +1,65 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: victoria-metrics-dev
+  namespace: monitoring-dev
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: victoria-metrics-k8s-stack
+      version: 0.27.3
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: victoria-metrics
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    fullnameOverride: vmetrics-dev
+    # Disable all the scrapes, we don't need them for dev
+    crds:
+      enabled: false
+    defaultDashboards:
+      enabled: false
+    defaultRules:
+      create: false
+    victoria-metrics-operator:
+      enabled: false
+    prometheus-node-exporter:
+      enabled: false
+    kube-state-metrics:
+      enabled: false
+    kubelet:
+      enabled: false
+    coreDns:
+      enabled: false
+    kubeControllerManager:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    alertmanager:
+      enabled: false
+    vmalert:
+      enabled: false
+    grafana:
+      enabled: false
+    kubeEtcd:
+      enabled: false
+    vmsingle:
+      spec:
+        extraArgs:
+          search.maxUniqueTimeseries: "600000"
+        resources: {}

@@ -104,6 +104,7 @@ spec:
           secretEnv: GRAFANA_OAUTH_CLIENT_SECRET
           redirectURIs:
             - "https://monitoring.immich.cloud/login/generic_oauth"
+            - "https://monitoring.dev.immich.cloud/login/generic_oauth"
 
     resources:
       requests:
