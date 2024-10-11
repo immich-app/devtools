@@ -1,0 +1,16 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAuth
+metadata:
+  name: cf-workers-metrics-ingress
+  namespace: monitoring-dev
+spec:
+  userSelector: {}
+  userNamespaceSelector: {}
+  selectAllByDefault: true
+  ingress:
+    tlsSecretName: cf-workers-metrics-tls
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    class_name: nginx
+    tlsHosts:
+      - cf-workers.monitoring.dev.immich.cloud
