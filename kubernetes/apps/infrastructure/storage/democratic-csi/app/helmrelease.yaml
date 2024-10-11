@@ -30,6 +30,9 @@ spec:
     controller:
       enabled: true
       strategy: node
+      externalAttacher:
+        enabled: false
+        
       externalProvisioner:
         extraArgs:
           - --leader-election=false
@@ -54,6 +57,7 @@ spec:
       name: "org.democratic-csi.zfs-local-dataset"
       storageCapacity: false
       fsGroupPolicy: File
+      attachRequired: false
 
     driver:
       config:
