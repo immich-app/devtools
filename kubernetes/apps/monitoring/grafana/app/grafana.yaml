@@ -20,6 +20,8 @@ spec:
       role_attribute_path: contains(groups[*], 'immich-app:Admins') && 'GrafanaAdmin' || 'Viewer'
       allow_assign_grafana_admin: "true"
       auto_login: "true"
+    users:
+      viewers_can_edit: "true"
   persistentVolumeClaim:
     spec:
       accessModes:
