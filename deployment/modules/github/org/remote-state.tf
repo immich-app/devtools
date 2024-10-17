@@ -7,6 +7,15 @@ data "terraform_remote_state" "api_keys_state" {
   }
 }
 
+data "terraform_remote_state" "docker_org_state" {
+  backend = "pg"
+
+  config = {
+    conn_str    = var.tf_state_postgres_conn_str
+    schema_name = "prod_docker_org"
+  }
+}
+
 data "onepassword_vault" "opentofu_vault" {
   name = "OpenTofu"
 }
