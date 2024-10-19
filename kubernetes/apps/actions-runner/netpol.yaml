@@ -21,6 +21,16 @@ spec:
         - port: 53
           protocol: TCP
     - to:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: registry-cache
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/name: registry
+      ports:
+        - port: 5000
+          protocol: TCP
+    - to:
       - ipBlock:
           cidr: 0.0.0.0/0
           except:
