@@ -93,7 +93,7 @@ spec:
             medium: "Memory"
         - name: daemon-json
           configMap:
-            name: docker-daemon-config  
+            name: docker-daemon-config
     controllerServiceAccount:
       namespace: actions-controller
       name: actions-runner-controller-gha-rs-controller
