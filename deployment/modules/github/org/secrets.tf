@@ -51,3 +51,25 @@ resource "github_actions_organization_secret" "push_o_matic_app_key" {
   plaintext_value = data.onepassword_item.push_o_matic_app.private_key
   visibility      = "all"
 }
+
+data "onepassword_item" "npm_read_token" {
+  title = "npm-read-token"
+  vault = data.onepassword_vault.github.name
+}
+
+resource "github_actions_organization_secret" "npm_read_token" {
+  secret_name     = "NPM_READ_TOKEN"
+  plaintext_value = data.onepassword_item.npm_read_token
+  visibility      = "all"
+}
+
+data "onepassword_item" "npm_write_token" {
+  title = "npm-write-token"
+  vault = data.onepassword_vault.github.name
+}
+
+resource "github_actions_organization_secret" "npm_write_token" {
+  secret_name     = "NPM_TOKEN"
+  plaintext_value = data.onepassword_item.npm_write_token
+  visibility      = "all"
+}
