@@ -51,3 +51,15 @@ resource "github_actions_organization_secret" "push_o_matic_app_key" {
   plaintext_value = data.onepassword_item.push_o_matic_app.private_key
   visibility      = "all"
 }
+
+resource "github_actions_organization_secret" "docker_hub_read_token" {
+  secret_name     = "DOCKER_HUB_READ_TOKEN"
+  plaintext_value = data.terraform_remote_state.docker_org_state.outputs.read_token
+  visibility      = "all"
+}
+
+resource "github_actions_organization_secret" "docker_hub_write_token" {
+  secret_name     = "DOCKER_HUB_WRITE_TOKEN"
+  plaintext_value = data.terraform_remote_state.docker_org_state.outputs.write_token
+  visibility      = "all"
+}

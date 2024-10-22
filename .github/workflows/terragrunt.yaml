@@ -79,6 +79,8 @@ jobs:
           GITHUB_OWNER: ${{ secrets.TF_APP_GITHUB_OWNER }}
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: terragrunt run-all plan -no-color 2>&1 | tee "${{github.workspace}}/plan_output.txt" && exit ${PIPESTATUS[0]};
 
 #      - name: 'List files'
@@ -123,4 +125,6 @@ jobs:
           GITHUB_APP_PEM_FILE: ${{ secrets.TF_APP_PEM_FILE }}
           GITHUB_OWNER: ${{ secrets.TF_APP_GITHUB_OWNER }}
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: terragrunt run-all apply --terragrunt-non-interactive
