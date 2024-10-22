@@ -45,3 +45,9 @@ spec:
         extraArgs:
           search.maxUniqueTimeseries: "600000"
         resources: {}
+    vmagent:
+      spec:
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 1Gi
