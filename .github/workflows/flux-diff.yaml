@@ -3,6 +3,7 @@ name: "Flux Diff"
 
 on:
   pull_request:
+    paths: ["kubernetes/**", "templates/kubernetes/**"]
 
 jobs:
   flux-diff:
