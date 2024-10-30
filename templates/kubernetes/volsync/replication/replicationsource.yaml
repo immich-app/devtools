@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/volsync.backube/replicationsource_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: ${APP}
+spec:
+  sourcePVC: "${VOLSYNC_CLAIM:-${APP}}"
+  trigger:
+    schedule: "0 4 * * *"
+  restic:
+    copyMethod: Snapshot
+    repository: "${VOLSYNC_REPO_SECRET}"
+    cacheStorageClassName: "zfs"
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-1Gi}"
+    storageClassName: "zfs"
+    volumeSnapshotClassName: "zfs"
+    pruneIntervalDays: 7
+    retain:
+      hourly: 12
+      daily: 7
+      weekly: 4
