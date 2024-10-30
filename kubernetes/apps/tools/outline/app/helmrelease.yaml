@@ -34,7 +34,7 @@ spec:
             env:
               #ref https://github.com/outline/outline/blob/d3c8224839f09fbff601e4a3e7fd8ff1a6b2ba08/.env.sample
               URL: "https://outline.immich.cloud"
-              REDIS_URL: redis://valkey-outline:6379
+              REDIS_URL: "redis://outline-valkey:6379"
               ENABLE_UPDATES: false
               FILE_STORAGE: local
               FILE_STORAGE_LOCAL_ROOT_DIR: /data
@@ -55,8 +55,9 @@ spec:
       valkey:
         containers:
           app:
-            image: valkey/valkey
-            tag: 8.0.1
+            image:
+              repository: valkey/valkey
+              tag: 8.0.1
     persistence:
       data:
         enabled: true
