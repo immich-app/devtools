@@ -46,12 +46,14 @@ spec:
               OIDC_TOKEN_URI: "https://auth.immich.cloud/token"
               OIDC_USERINFO_URI: "https://auth.immich.cloud/userinfo"
               WEB_CONCURRENCY: 10
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: outline-db-app
+                    key: uri
             envFrom:
               - secretRef:
                   name: outline-secret
-              # TODO: database
-#              - secretRef:
-#                  name: outline-db-secret
       valkey:
         containers:
           app:

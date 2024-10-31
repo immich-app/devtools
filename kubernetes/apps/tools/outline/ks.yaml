@@ -1,6 +1,28 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: &app outline-secrets
+  namespace: flux-system
+spec:
+  targetNamespace: tools
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: cluster-apps-onepassword
+  path: ./kubernetes/apps/tools/outline/secrets
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: immich-kubernetes
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: &app outline
   namespace: flux-system
 spec:
@@ -10,7 +32,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: dexidp
-    - name: cluster-apps-onepassword
+    - name: outline-secrets
   path: ./kubernetes/apps/tools/outline/app
   prune: true
   sourceRef:
@@ -21,6 +43,9 @@ spec:
   retryInterval: 1m
   timeout: 5m
   postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: outline-database-backup
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 20Gi
