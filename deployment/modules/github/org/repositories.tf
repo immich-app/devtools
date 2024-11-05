@@ -25,6 +25,7 @@ variable "repositories" {
     { name = ".github", description = ".github folder for the organisation level", issues = false },
     { name = "geoshenanigans", description = "Geospatial shenanigans, reverse geocoding, map tiling, and maybe more..." },
     { name = "data.immich.app", description = "Graphs and charts for Immich data" },
+    { name = "ui", description = "Svelte web components for Immich" },
     { name = "native_video_player", description = "A Flutter widget to play videos on iOS and Android using a native implementation.", fork = true }
   ]
 }
