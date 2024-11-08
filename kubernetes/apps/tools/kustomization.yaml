@@ -7,3 +7,4 @@ resources:
   - ./hedgedoc/ks.yaml
   - ./discord-bot/ks.yaml
   - ./containerssh/ks.yaml
+  - ./ollama/ks.yaml
