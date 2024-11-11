@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/volsync.backube/replicationdestination_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: "${APP}-bootstrap"
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    copyMethod: Snapshot
+    repository: "${VOLSYNC_REPO_SECRET}"
+    cacheStorageClassName: "zfs"
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-1Gi}"
+    storageClassName: "zfs"
+    volumeSnapshotClassName: "zfs"
+    accessModes:
+      - "${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"
+    capacity: "${VOLSYNC_CAPACITY:-1Gi}"
