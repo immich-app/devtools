@@ -9,7 +9,7 @@ spec:
   trigger:
     schedule: "${VOLSYNC_SCHEDULE:-0 4 * * *}"
   restic:
-    copyMethod: Snapshot
+    copyMethod: Clone
     repository: "${VOLSYNC_REPO_SECRET}"
     cacheStorageClassName: "zfs"
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-1Gi}"
