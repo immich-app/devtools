@@ -76,7 +76,7 @@ resource "onepassword_item" "mich_cloudflare_r2_outline_volsync_backup" {
 
     field {
       label = "RESTIC_REPOSITORY"
-      type = "string"
+      type  = "string"
       value = "s3:https://${cloudflare_r2_bucket.outline_volsync_backups.account_id}.r2.cloudflarestorage.com/${cloudflare_r2_bucket.outline_volsync_backups.name}"
     }
 
