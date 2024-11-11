@@ -54,6 +54,8 @@ spec:
             envFrom:
               - secretRef:
                   name: outline-secret
+            securityContext:
+              fsGroup: 1001
       valkey:
         containers:
           app:
