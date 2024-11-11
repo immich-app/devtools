@@ -38,8 +38,8 @@ spec:
               ENABLE_UPDATES: false
               FILE_STORAGE: local
               FILE_STORAGE_LOCAL_ROOT_DIR: /data
-              FILE_STORAGE_UPLOAD_MAX_SIZE: "26214400"
-              FILE_STORAGE_IMPORT_MAX_SIZE: "26214400"
+              FILE_STORAGE_UPLOAD_MAX_SIZE: &upload-limit "26214400"
+              FILE_STORAGE_IMPORT_MAX_SIZE: *upload-limit
               OIDC_CLIENT_ID: outline
               OIDC_SCOPES: "openid profile email"
               OIDC_AUTH_URI: "https://auth.immich.cloud/auth"
@@ -80,6 +80,7 @@ spec:
         className: nginx
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
+          nginx.ingress.kubernetes.io/proxy-body-size: *upload-limit
         hosts:
           - host: &host "outline.immich.cloud"
             paths:
