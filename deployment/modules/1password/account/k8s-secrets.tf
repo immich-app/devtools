@@ -139,7 +139,7 @@ resource "onepassword_item" "grafana_oauth_client_secret" {
 }
 
 resource "random_bytes" "outline_secret_key" {
-  length  = 32
+  length = 32
 }
 
 resource "random_password" "outline_utils_secret" {
@@ -163,7 +163,7 @@ resource "onepassword_item" "outline_secret" {
     field {
       label = "SECRET_KEY"
       type  = "CONCEALED"
-      value = random_password.outline_secret_key.hex
+      value = random_bytes.outline_secret_key.hex
     }
 
     field {
