@@ -4,6 +4,6 @@ metadata:
   name: outline-db-daily-backup
   namespace: tools
 spec:
-  schedule: "0 4 * * *"
+  schedule: "0 17 * * *"
   cluster:
     name: outline-db

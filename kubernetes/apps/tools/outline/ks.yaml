@@ -49,4 +49,5 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 20Gi
+      VOLSYNC_SCHEDULE: "0 17 * * *"
       VOLSYNC_REPO_SECRET: mich-cloudflare-r2-outline-volsync-backup
