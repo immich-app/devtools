@@ -4,7 +4,6 @@ metadata:
   name: &app outline-secrets
   namespace: flux-system
 spec:
-  targetNamespace: tools
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
