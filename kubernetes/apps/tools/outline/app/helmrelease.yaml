@@ -64,6 +64,10 @@ spec:
       data:
         enabled: true
         existingClaim: outline
+        advancedMounts:
+          outline:
+            app:
+              - path: /data
     service:
       app:
         controller: outline
