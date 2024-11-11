@@ -1,0 +1,93 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: outline
+  namespace: tools
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      outline:
+        containers:
+          app:
+            image:
+              repository: docker.io/outlinewiki/outline
+              tag: 0.80.2@sha256:fde16562c9b8c67bc7855c71d8a1203125d63fcefc7ebb4e649de35a9281e6df
+            env:
+              #ref https://github.com/outline/outline/blob/d3c8224839f09fbff601e4a3e7fd8ff1a6b2ba08/.env.sample
+              URL: "https://outline.immich.cloud"
+              REDIS_URL: "redis://outline-valkey:6379"
+              ENABLE_UPDATES: false
+              FILE_STORAGE: local
+              FILE_STORAGE_LOCAL_ROOT_DIR: /data
+              FILE_STORAGE_UPLOAD_MAX_SIZE: "26214400"
+              FILE_STORAGE_IMPORT_MAX_SIZE: "26214400"
+              OIDC_CLIENT_ID: outline
+              OIDC_SCOPES: "openid profile email"
+              OIDC_AUTH_URI: "https://auth.immich.cloud/auth"
+              OIDC_TOKEN_URI: "https://auth.immich.cloud/token"
+              OIDC_USERINFO_URI: "https://auth.immich.cloud/userinfo"
+              WEB_CONCURRENCY: 10
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: outline-db-app
+                    key: uri
+            envFrom:
+              - secretRef:
+                  name: outline-secret
+      valkey:
+        containers:
+          app:
+            image:
+              repository: valkey/valkey
+              tag: 8.0.1
+    persistence:
+      data:
+        enabled: true
+        existingClaim: outline
+    service:
+      app:
+        controller: outline
+        ports:
+          http:
+            port: 3000
+      valkey:
+        controller: valkey
+        ports:
+          main:
+            port: 6379
+    ingress:
+      app:
+        className: nginx
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+        hosts:
+          - host: &host "outline.immich.cloud"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: outline-tls

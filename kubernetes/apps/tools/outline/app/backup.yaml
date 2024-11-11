@@ -1,0 +1,9 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: outline-db-daily-backup
+  namespace: tools
+spec:
+  schedule: "0 17 * * *"
+  cluster:
+    name: outline-db

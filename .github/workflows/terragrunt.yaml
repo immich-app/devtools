@@ -19,6 +19,7 @@ env:
   tofu_version: '1.7.1'
   tg_version: '0.58.12'
   working_dir: 'deployment'
+  TERRAGRUNT_PARALLELISM: 1
 
 jobs:
   check:

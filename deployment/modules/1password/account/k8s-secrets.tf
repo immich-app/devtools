@@ -137,3 +137,46 @@ resource "onepassword_item" "grafana_oauth_client_secret" {
     }
   }
 }
+
+resource "random_password" "outline_secret_key" {
+  length  = 40
+  special = false
+}
+
+resource "random_password" "outline_utils_secret" {
+  length  = 40
+  special = false
+}
+
+resource "random_password" "outline_oauth_client_secret" {
+  length  = 40
+  special = false
+}
+
+resource "onepassword_item" "outline_secret" {
+  vault    = data.onepassword_vault.kubernetes.uuid
+  title    = "outline-secret"
+  category = "secure_note"
+
+  section {
+    label = "Outline secret"
+
+    field {
+      label = "SECRET_KEY"
+      type  = "CONCEALED"
+      value = random_password.outline_secret_key.result
+    }
+
+    field {
+      label = "UTILS_SECRET"
+      type  = "CONCEALED"
+      value = random_password.outline_utils_secret.result
+    }
+
+    field {
+      label = "OIDC_CLIENT_SECRET"
+      type  = "CONCEALED"
+      value = random_password.outline_oauth_client_secret.result
+    }
+  }
+}

@@ -60,3 +60,63 @@ resource "onepassword_item" "mich_cloudflare_r2_victoriametrics_backups_bucket" 
     }
   }
 }
+
+resource "random_password" "outline_backups_restic_secret" {
+  length           = 40
+  special          = true
+  override_special = "!@#$%^&*()_+"
+}
+
+resource "onepassword_item" "mich_cloudflare_r2_outline_volsync_backup" {
+  vault    = data.onepassword_vault.kubernetes.uuid
+  title    = "mich-cloudflare-r2-outline-volsync-backup"
+  category = "secure_note"
+  section {
+    label = "Cloudflare R2 Bucket"
+
+    field {
+      label = "RESTIC_REPOSITORY"
+      type  = "string"
+      value = "s3:https://${cloudflare_r2_bucket.outline_volsync_backups.account_id}.r2.cloudflarestorage.com/${cloudflare_r2_bucket.outline_volsync_backups.name}"
+    }
+
+    field {
+      label = "RESTIC_PASSWORD"
+      type  = "CONCEALED"
+      value = random_password.outline_backups_restic_secret.result
+    }
+
+    field {
+      label = "AWS_ACCESS_KEY_ID"
+      type  = "CONCEALED"
+      value = data.terraform_remote_state.api_keys_state.outputs.mich_cloudflare_r2_token_id
+    }
+
+    field {
+      label = "AWS_SECRET_ACCESS_KEY"
+      type  = "CONCEALED"
+      value = sha256(data.terraform_remote_state.api_keys_state.outputs.mich_cloudflare_r2_token_value)
+    }
+  }
+}
+
+resource "onepassword_item" "mich_cloudflare_r2_outline_database_backups_bucket" {
+  vault    = data.onepassword_vault.kubernetes.uuid
+  title    = "mich-cloudflare-r2-outline-database-backup-bucket"
+  category = "secure_note"
+  section {
+    label = "Cloudflare R2 Bucket"
+
+    field {
+      label = "bucket_name"
+      type  = "STRING"
+      value = cloudflare_r2_bucket.outline_database_backups.name
+    }
+
+    field {
+      label = "api_endpoint"
+      type  = "STRING"
+      value = "https://${cloudflare_r2_bucket.outline_database_backups.account_id}.r2.cloudflarestorage.com"
+    }
+  }
+}
