@@ -139,7 +139,7 @@ resource "onepassword_item" "grafana_oauth_client_secret" {
 }
 
 resource "random_password" "outline_secret_key" {
-  length  = 40
+  length  = 64
   special = false
 }
 

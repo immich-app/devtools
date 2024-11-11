@@ -29,6 +29,8 @@ spec:
           name: hedgedoc-oauth
       - secretRef:
           name: grafana-oauth
+      - secretRef:
+          name: outline-oauth
     ingress:
       enabled: true
       className: nginx
