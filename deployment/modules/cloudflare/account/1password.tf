@@ -95,7 +95,7 @@ resource "onepassword_item" "mich_cloudflare_r2_outline_volsync_backup" {
     field {
       label = "AWS_SECRET_ACCESS_KEY"
       type  = "STRING"
-      value = sha256(data.terraform_remote_state.api_keys_state.outputs.mich_cloudflare_r2_token)
+      value = sha256(data.terraform_remote_state.api_keys_state.outputs.mich_cloudflare_r2_token_value)
     }
   }
 }
