@@ -17,7 +17,7 @@ spec:
       s3Credentials:
         accessKeyId:
           name: outline-database-backup-secret
-          key: AWS_ACCESS_KEY_ID
+          key: id
         secretAccessKey:
           name: outline-database-backup-secret
-          key: AWS_SECRET_ACCESS_KEY
+          key: secret
