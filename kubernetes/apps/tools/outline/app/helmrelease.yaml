@@ -79,7 +79,7 @@ spec:
       app:
         className: nginx
         annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-production
+          cert-manager.io/cluster-issuer: letsencrypt-staging
         hosts:
           - host: &host "outline.immich.cloud"
             paths:
