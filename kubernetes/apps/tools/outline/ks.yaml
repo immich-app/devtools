@@ -45,9 +45,8 @@ spec:
   postBuild:
     substituteFrom:
       - kind: Secret
-        name: outline-database-backup
+        name: outline-database-backup-bucket
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 20Gi
-      # TODO: Create bucket and secret in 1password
-      VOLSYNC_REPO_SECRET: outline-volsync
+      VOLSYNC_REPO_SECRET: mich-cloudflare-r2-outline-volsync-backup

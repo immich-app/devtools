@@ -10,6 +10,18 @@ resource "cloudflare_r2_bucket" "victoriametrics_backups" {
   location   = "WEUR"
 }
 
+resource "cloudflare_r2_bucket" "outline_database_backups" {
+  account_id = var.cloudflare_account_id
+  name       = "outline-database-backups"
+  location   = "WEUR"
+}
+
+resource "cloudflare_r2_bucket" "outline_volsync_backups" {
+  account_id = var.cloudflare_account_id
+  name       = "outline-volsync-backups"
+  location   = "WEUR"
+}
+
 resource "cloudflare_r2_bucket" "static" {
   account_id = var.cloudflare_account_id
   name       = "static"

@@ -10,15 +10,14 @@ spec:
   backup:
     retentionPolicy: "14d"
     barmanObjectStore:
-      # TODO: Adjust to tofu/1pw secret contents
       destinationPath: s3://${bucket_name}
       endpointURL: ${api_endpoint}
       wal:
         compression: bzip2
       s3Credentials:
         accessKeyId:
-          name: outline-database-backup
+          name: outline-database-backup-secret
           key: AWS_ACCESS_KEY_ID
         secretAccessKey:
-          name: outline-database-backup
+          name: outline-database-backup-secret
           key: AWS_SECRET_ACCESS_KEY
