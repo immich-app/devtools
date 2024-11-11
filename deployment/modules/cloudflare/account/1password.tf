@@ -88,13 +88,13 @@ resource "onepassword_item" "mich_cloudflare_r2_outline_volsync_backup" {
 
     field {
       label = "AWS_ACCESS_KEY_ID"
-      type  = "STRING"
+      type  = "CONCEALED"
       value = data.terraform_remote_state.api_keys_state.outputs.mich_cloudflare_r2_token_id
     }
 
     field {
       label = "AWS_SECRET_ACCESS_KEY"
-      type  = "STRING"
+      type  = "CONCEALED"
       value = sha256(data.terraform_remote_state.api_keys_state.outputs.mich_cloudflare_r2_token_value)
     }
   }
@@ -117,12 +117,6 @@ resource "onepassword_item" "mich_cloudflare_r2_outline_database_backups_bucket"
       label = "api_endpoint"
       type  = "STRING"
       value = "https://${cloudflare_r2_bucket.outline_database_backups.account_id}.r2.cloudflarestorage.com"
-    }
-
-    field {
-      label = "restic_secret"
-      type  = "CONCEALED"
-      value = random_password.outline_backups_restic_secret.result
     }
   }
 }
