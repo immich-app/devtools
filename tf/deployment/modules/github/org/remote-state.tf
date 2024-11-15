@@ -16,10 +16,6 @@ data "terraform_remote_state" "docker_org_state" {
   }
 }
 
-data "onepassword_vault" "opentofu_vault" {
-  name = "OpenTofu"
-}
-
 data "onepassword_vault" "kubernetes" {
   name = "Kubernetes"
 }

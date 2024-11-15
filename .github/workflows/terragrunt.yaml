@@ -28,6 +28,20 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@main
 
+      - name: Install 1Password CLI
+        uses: 1password/install-cli-action@v1
+
+      - name: Install Terragrunt
+        uses: eLco/setup-terragrunt@v1
+        with:
+          terragrunt_version: ${{ env.tg_version }}
+
+      - name: 'Install OpenTofu'
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: ${{ env.tofu_version }}
+          tofu_wrapper: false
+
       - name: Check Formatting
         uses: gruntwork-io/terragrunt-action@v2
         with:
@@ -37,16 +51,10 @@ jobs:
           tg_command: 'hclfmt --terragrunt-check --terragrunt-diff'
 
       - name: Check terraform fmt
-        uses: gruntwork-io/terragrunt-action@v2
+        working-directory: ${{ env.working_dir }}
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          TF_STATE_POSTGRES_CONN_STR: ${{ secrets.TF_STATE_POSTGRES_CONN_STR }}
-        with:
-          tofu_version: ${{ env.tofu_version }}
-          tg_version: ${{ env.tg_version }}
-          tg_dir: ${{ env.working_dir }}
-          tg_command: 'run-all fmt -diff -check'
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
+        run: op run --env-file=".env" -- terragrunt run-all fmt -diff -check
   plan:
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
@@ -71,18 +79,8 @@ jobs:
       - name: Plan All
         working-directory: ${{ env.working_dir }}
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          TF_STATE_POSTGRES_CONN_STR: ${{ secrets.TF_STATE_POSTGRES_CONN_STR }}
-          GITHUB_APP_INSTALLATION_ID: ${{ secrets.TF_APP_INSTALLATION_ID }}
-          GITHUB_APP_ID: ${{ secrets.TF_APP_ID }}
-          GITHUB_APP_PEM_FILE: ${{ secrets.TF_APP_PEM_FILE }}
-          GITHUB_OWNER: ${{ secrets.TF_APP_GITHUB_OWNER }}
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: terragrunt run-all plan -no-color 2>&1 | tee "${{github.workspace}}/plan_output.txt" && exit ${PIPESTATUS[0]};
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
+        run: op run --env-file=".env" -- terragrunt run-all plan -no-color 2>&1 | tee "${{github.workspace}}/plan_output.txt" && exit ${PIPESTATUS[0]};
 
 #      - name: 'List files'
 #        run: 'ls -la ${{ github.workspace }}'
@@ -118,14 +116,5 @@ jobs:
       - name: Deploy All
         working-directory: ${{ env.working_dir }}
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          TF_STATE_POSTGRES_CONN_STR: ${{ secrets.TF_STATE_POSTGRES_CONN_STR }}
-          GITHUB_APP_INSTALLATION_ID: ${{ secrets.TF_APP_INSTALLATION_ID }}
-          GITHUB_APP_ID: ${{ secrets.TF_APP_ID }}
-          GITHUB_APP_PEM_FILE: ${{ secrets.TF_APP_PEM_FILE }}
-          GITHUB_OWNER: ${{ secrets.TF_APP_GITHUB_OWNER }}
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: terragrunt run-all apply --terragrunt-non-interactive
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
+        run: op run --env-file=".env" -- terragrunt run-all apply --terragrunt-non-interactive
