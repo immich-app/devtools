@@ -27,9 +27,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    args:
-      leaderElection: true
-      httpEndpoint: ":8080"
-      enableDistributedSnapshotting: true
-
-    
+    controller:
+      args:
+        leaderElection: true
+        httpEndpoint: ":8080"
+        enableDistributedSnapshotting: true
