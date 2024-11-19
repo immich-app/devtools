@@ -1,5 +1,4 @@
 ### Project gitignore
-.env
 
 ### VisualStudioCode template
 .vscode/*
