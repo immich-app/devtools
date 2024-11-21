@@ -6,6 +6,14 @@ data "onepassword_vault" "kubernetes" {
   name = "Kubernetes"
 }
 
+data "onepassword_vault" "tf_dev" {
+  name = "tf_dev"
+}
+
+data "onepassword_vault" "tf_prod" {
+  name = "tf_prod"
+}
+
 resource "tls_private_key" "containerssh_host_key" {
   algorithm = "ED25519"
 }
@@ -54,23 +62,29 @@ resource "onepassword_item" "grafana_admin_credentials" {
   }
 }
 
-resource "random_password" "cf_workers_metrics_token" {
+resource "random_password" "vmetrics_write_token" {
   length  = 40
   special = false
 }
 
-resource "onepassword_item" "cf_workers_metrics_token" {
-  vault    = data.onepassword_vault.kubernetes.uuid
-  title    = "cf-workers-metrics-token"
+moved {
+  to   = random_password.vmetrics_write_token
+  from = random_password.cf_workers_metrics_token
+}
+
+resource "onepassword_item" "vmetrics_write_token" {
+  for_each = { for vault in [data.onepassword_vault.kubernetes, data.onepassword_vault.tf_dev, data.onepassword_vault.tf_prod] : vault.name => vault }
+  vault    = each.value.uuid
+  title    = "vmetrics_write_token"
   category = "secure_note"
 
   section {
-    label = "Cloudflare workers metrics write token"
+    label = "Victoria Metrics write token"
 
     field {
       label = "token"
       type  = "CONCEALED"
-      value = random_password.cf_workers_metrics_token.result
+      value = random_password.vmetrics_write_token.result
     }
   }
 }
