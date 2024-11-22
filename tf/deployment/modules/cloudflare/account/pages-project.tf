@@ -73,3 +73,12 @@ output "static_pages_project_names" {
 output "static_pages_project_subdomains" {
   value = { for page in local.static_pages : page => cloudflare_pages_project.static_pages[page].subdomain }
 }
+
+output "pages_projects" {
+  value = { for page in local.static_pages : page =>
+    {
+      name : cloudflare_pages_project.static_pages[page].name,
+      subdomain : cloudflare_pages_project.static_pages[page].subdomain
+    }
+  }
+}
