@@ -50,7 +50,7 @@ resource "cloudflare_pages_project" "static_pages" {
   for_each          = { for page in local.static_pages : page => page }
   account_id        = var.cloudflare_account_id
   name              = "${split(".", each.value)[0]}-immich-app"
-  production_branch = "main"
+  production_branch = "prod"
 
   lifecycle {
     ignore_changes = [
