@@ -3,7 +3,7 @@ variable "env" {
   default = "prod"
 }
 variable "stage" {
-  default = "main"
+  default = ""
 }
 variable "domain" {
   default = "immich.app"
