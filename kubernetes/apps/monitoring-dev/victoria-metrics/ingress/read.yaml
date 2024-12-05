@@ -1,0 +1,42 @@
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: vmetrics-read-token
+  namespace: monitoring-dev
+spec:
+  itemPath: "vaults/Kubernetes/items/vmetrics_read_token"
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMUser
+metadata:
+  name: read
+  namespace: monitoring-dev
+  labels:
+    vm-user: "read"
+spec:
+  tokenRef:
+    name: vmetrics-read-token
+    key: token
+  targetRefs:
+    - crd:
+        kind: VMSingle
+        name: vmetrics-dev
+        namespace: monitoring-dev
+      paths: ["/targets/api/v1","/targets","/metrics"]
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAuth
+metadata:
+  name: vmetrics-read-ingress
+  namespace: monitoring-dev
+spec:
+  userSelector:
+    matchLabels:
+      vm-user: "read"
+  ingress:
+    tlsSecretName: vmetrics-read-tls
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    class_name: nginx
+    tlsHosts:
+      - read.monitoring.dev.immich.cloud
