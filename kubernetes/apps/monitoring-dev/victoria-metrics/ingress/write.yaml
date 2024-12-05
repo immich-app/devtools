@@ -1,0 +1,40 @@
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: cf-workers-metrics-token
+  namespace: monitoring-dev
+spec:
+  itemPath: "vaults/Kubernetes/items/vmetrics_write_token"
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMUser
+metadata:
+  name: cf-workers
+  namespace: monitoring-dev
+spec:
+  tokenRef:
+    name: cf-workers-metrics-token
+    key: token
+  targetRefs:
+    - crd:
+        kind: VMSingle
+        name: vmetrics-dev
+        namespace: monitoring-dev
+      paths: ["/write"]
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAuth
+metadata:
+  name: cf-workers-metrics-ingress
+  namespace: monitoring-dev
+spec:
+  userSelector: {}
+  userNamespaceSelector: {}
+  selectAllByDefault: true
+  ingress:
+    tlsSecretName: cf-workers-metrics-tls
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    class_name: nginx
+    tlsHosts:
+      - cf-workers.monitoring.dev.immich.cloud
