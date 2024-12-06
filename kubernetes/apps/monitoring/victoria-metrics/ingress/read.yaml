@@ -22,7 +22,7 @@ spec:
         kind: VMSingle
         name: vmetrics
         namespace: monitoring
-      paths: ["/targets/api/v1","/targets","/metrics"]
+      paths: ["/api/v1/query","/api/v1/query_range","/api/v1/series","/api/v1/labels"]
 ---
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMAuth
