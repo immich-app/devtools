@@ -11,8 +11,6 @@ kind: VMUser
 metadata:
   name: read
   namespace: monitoring
-  labels:
-    vm-user: "read"
 spec:
   tokenRef:
     name: vmetrics-read-token
@@ -23,20 +21,4 @@ spec:
         name: vmetrics
         namespace: monitoring
       paths: ["/api/v1/query","/api/v1/query_range","/api/v1/series","/api/v1/labels"]
----
-apiVersion: operator.victoriametrics.com/v1beta1
-kind: VMAuth
-metadata:
-  name: vmetrics-read-ingress
-  namespace: monitoring
-spec:
-  userSelector:
-    matchLabels:
-      vm-user: "read"
-  ingress:
-    tlsSecretName: vmetrics-read-tls
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-production
-    class_name: nginx
-    tlsHosts:
-      - read.monitoring.immich.cloud
+
