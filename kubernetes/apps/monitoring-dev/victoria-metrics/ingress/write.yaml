@@ -11,8 +11,6 @@ kind: VMUser
 metadata:
   name: write
   namespace: monitoring-dev
-  labels:
-    vm-user: "write"
 spec:
   tokenRef:
     name: vmetrics-write-token
@@ -23,21 +21,3 @@ spec:
         name: vmetrics-dev
         namespace: monitoring-dev
       paths: ["/write"]
----
-apiVersion: operator.victoriametrics.com/v1beta1
-kind: VMAuth
-metadata:
-  name: vmetrics-write-ingress
-  namespace: monitoring-dev
-spec:
-  userSelector:
-    matchLabels:
-      vm-user: "write"
-  ingress:
-    tlsSecretName: vmetrics-write-tls
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-production
-    class_name: nginx
-    tlsHosts:
-      - write.monitoring.dev.immich.cloud
-      - cf-workers.monitoring.dev.immich.cloud
