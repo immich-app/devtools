@@ -5,7 +5,9 @@ metadata:
   namespace: monitoring
 spec:
   userSelector: {}
-  userNamespaceSelector: {}
+  userNamespaceSelector:
+    matchLabels:
+      kubernetes.io/metadata.name: monitoring
   selectAllByDefault: true
   ingress:
     tlsSecretName: vmetrics-tls
