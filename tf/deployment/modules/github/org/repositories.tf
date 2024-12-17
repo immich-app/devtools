@@ -2,6 +2,7 @@ variable "repositories" {
   type = list(object({
     name        = string
     description = string
+    url         = optional(string)
     discussions = optional(bool)
     projects    = optional(bool)
     issues      = optional(bool)
@@ -13,20 +14,60 @@ variable "repositories" {
       name        = "immich", description = "High performance self-hosted photo and video management solution.",
       discussions = true, projects = true
     },
-    { name = "devtools", description = "Various tooling used by the Immich maintainer team" },
     {
-      name = "static-pages", description = "Redirect urls to personal, hosted, instances of Immich.",
+      name        = "devtools",
+      description = "Various tooling used by the Immich maintainer team"
     },
-    { name = "base-images", description = "Base images for Immich containers" },
-    { name = "immich-charts", description = "Helm chart implementation of Immich" },
-    { name = "discord-bot", description = "A Discord bot for the official @immich-app Discord" },
-    { name = "demo", description = "This repo contains the setup for the demo instance at https://demo.immich.app/" },
-    { name = "test-assets", description = "Test assets used for testing Immich. Contains various formats and codecs" },
-    { name = ".github", description = ".github folder for the organisation level", issues = false },
-    { name = "geoshenanigans", description = "Geospatial shenanigans, reverse geocoding, map tiling, and maybe more..." },
-    { name = "data.immich.app", description = "Graphs and charts for Immich data" },
-    { name = "ui", description = "Svelte web components for Immich" },
-    { name = "native_video_player", description = "A Flutter widget to play videos on iOS and Android using a native implementation.", fork = true }
+    {
+      name        = "static-pages",
+      description = "Redirect urls to personal, hosted, instances of Immich.",
+      url         = "https://buy.immich.app",
+    },
+    {
+      name        = "base-images",
+      description = "Base images for Immich containers"
+    },
+    {
+      name        = "immich-charts",
+      description = "Helm chart implementation of Immich"
+    },
+    {
+      name        = "discord-bot",
+      description = "A Discord bot for the official @immich-app Discord"
+    },
+    {
+      name        = "demo",
+      description = "This repo contains the setup for the demo instance at https://demo.immich.app/"
+      url         = "https://demo.immich.app",
+    },
+    {
+      name        = "test-assets",
+      description = "Test assets used for testing Immich. Contains various formats and codecs"
+    },
+    {
+      name        = ".github",
+      description = ".github folder for the organisation level",
+      issues      = false
+    },
+    {
+      name        = "geoshenanigans",
+      description = "Geospatial shenanigans, reverse geocoding, map tiling, and maybe more..."
+    },
+    {
+      name        = "data.immich.app",
+      description = "Graphs and charts for Immich data"
+      url         = "https://data.immich.app",
+    },
+    {
+      name        = "ui",
+      description = "Svelte components for Immich"
+      url         = "https://ui.immich.app",
+    },
+    {
+      name        = "native_video_player",
+      description = "A Flutter widget to play videos on iOS and Android using a native implementation.",
+      fork        = true
+    }
   ]
 }
 
@@ -48,7 +89,7 @@ resource "github_repository" "repositories" {
   has_projects              = coalesce(each.value.projects, false)
   has_wiki                  = false
   vulnerability_alerts      = true
-  homepage_url              = "https://immich.app"
+  homepage_url              = coalesce(each.value.url, "https://immich.app")
   squash_merge_commit_title = "PR_TITLE"
 
   lifecycle {
