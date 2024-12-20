@@ -62,6 +62,28 @@ resource "onepassword_item" "grafana_admin_credentials" {
   }
 }
 
+resource "random_password" "vmetrics_admin_token" {
+  length  = 40
+  special = false
+}
+
+resource "onepassword_item" "vmetrics_admin_token" {
+  for_each = { for vault in [data.onepassword_vault.kubernetes, data.onepassword_vault.tf_dev, data.onepassword_vault.tf_prod] : vault.name => vault }
+  vault    = each.value.uuid
+  title    = "vmetrics_admin_token"
+  category = "secure_note"
+
+  section {
+    label = "Victoria Metrics admin token"
+
+    field {
+      label = "token"
+      type  = "CONCEALED"
+      value = random_password.vmetrics_admin_token.result
+    }
+  }
+}
+
 resource "random_password" "vmetrics_write_token" {
   length  = 40
   special = false
