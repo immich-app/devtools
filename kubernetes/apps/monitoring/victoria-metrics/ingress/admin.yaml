@@ -22,4 +22,4 @@ spec:
         kind: VMSingle
         name: vmetrics
         namespace: monitoring
-      paths: ["/api/v1/admin"]
+      paths: ["/api/v1/admin.*"]
