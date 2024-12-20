@@ -1,0 +1,25 @@
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: vmetrics-admin-token
+  namespace: monitoring
+spec:
+  itemPath: "vaults/Kubernetes/items/vmetrics_admin_token"
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMUser
+metadata:
+  name: admin
+  namespace: monitoring
+  labels:
+    vm-user: "admin"
+spec:
+  tokenRef:
+    name: vmetrics-admin-token
+    key: token
+  targetRefs:
+    - crd:
+        kind: VMSingle
+        name: vmetrics
+        namespace: monitoring
+      paths: ["/api/v1/admin"]
