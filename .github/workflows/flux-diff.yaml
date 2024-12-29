@@ -3,7 +3,7 @@ name: "Flux Diff"
 
 on:
   pull_request:
-    paths: ["kubernetes/**", "templates/kubernetes/**"]
+    paths: ["kubernetes/**", "templates/kubernetes/**", ".github/workflows/flux-diff.yaml"]
 
 jobs:
   flux-diff:
