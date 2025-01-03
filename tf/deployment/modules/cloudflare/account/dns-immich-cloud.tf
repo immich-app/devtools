@@ -3,7 +3,7 @@ resource "cloudflare_record" "immich_cloud_aaaa_root" {
   proxied = true
   ttl     = 1
   type    = "AAAA"
-  value   = "100::"
+  content = "100::"
   zone_id = cloudflare_zone.immich_cloud.id
 }
 
@@ -12,7 +12,7 @@ resource "cloudflare_record" "immich_cloud_aaaa_www" {
   proxied = true
   ttl     = 1
   type    = "AAAA"
-  value   = "100::"
+  content = "100::"
   zone_id = cloudflare_zone.immich_cloud.id
 }
 
@@ -21,7 +21,7 @@ resource "cloudflare_record" "immich_cloud_cname_star_dot_root" {
   proxied = false
   ttl     = 1
   type    = "CNAME"
-  value   = "mich.immich.cloud"
+  content = "mich.immich.cloud"
   zone_id = cloudflare_zone.immich_cloud.id
 }
 
@@ -30,6 +30,6 @@ resource "cloudflare_record" "immich_cloud_a_mich" {
   proxied = false
   ttl     = 1
   type    = "A"
-  value   = local.mich_ip
+  content = local.mich_ip
   zone_id = cloudflare_zone.immich_cloud.id
 }
