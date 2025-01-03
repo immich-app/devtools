@@ -96,7 +96,7 @@ resource "cloudflare_ruleset" "immich_app_redirects" {
         preserve_query_string = false
       }
     }
-    expression  = "(http.request.full_uri wildcard \"https://get*.immich.app/fdroid\" and http.user_agent wildcard r\"*Android*\")"
+    expression  = "(http.request.full_uri wildcard \"https://get*.immich.app/\" and http.user_agent wildcard r\"*Android*\")"
     description = "Redirect get.immich.app android users to the Play Store"
     enabled     = true
   }
