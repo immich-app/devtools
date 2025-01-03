@@ -3,7 +3,7 @@ resource "cloudflare_record" "immich_app_a_demo" {
   proxied = false
   ttl     = 1
   type    = "A"
-  value   = "158.101.217.188"
+  content = "158.101.217.188"
   zone_id = cloudflare_zone.immich_app.id
 }
 
@@ -12,7 +12,7 @@ resource "cloudflare_record" "immich_app_aaaa_docs" {
   proxied = true
   ttl     = 1
   type    = "AAAA"
-  value   = "100::"
+  content = "100::"
   zone_id = cloudflare_zone.immich_app.id
 }
 
@@ -21,7 +21,7 @@ resource "cloudflare_record" "immich_app_aaaa_documentation" {
   proxied = true
   ttl     = 1
   type    = "AAAA"
-  value   = "100::"
+  content = "100::"
   zone_id = cloudflare_zone.immich_app.id
 }
 
@@ -30,7 +30,7 @@ resource "cloudflare_record" "immich_app_aaaa_get" {
   proxied = true
   ttl     = 1
   type    = "AAAA"
-  value   = "100::"
+  content = "100::"
   zone_id = cloudflare_zone.immich_app.id
 }
 
@@ -39,7 +39,7 @@ resource "cloudflare_record" "immich_app_aaaa_www" {
   proxied = true
   ttl     = 1
   type    = "AAAA"
-  value   = "100::"
+  content = "100::"
   zone_id = cloudflare_zone.immich_app.id
 }
 
@@ -48,7 +48,7 @@ resource "cloudflare_record" "immich_app_aaaa_discord" {
   proxied = true
   ttl     = 1
   type    = "AAAA"
-  value   = "100::"
+  content = "100::"
   zone_id = cloudflare_zone.immich_app.id
 }
 
@@ -57,7 +57,7 @@ resource "cloudflare_record" "immich_app_cname__domainconnect" {
   proxied = true
   ttl     = 1
   type    = "CNAME"
-  value   = "connect.domains.google.com"
+  content = "connect.domains.google.com"
   zone_id = cloudflare_zone.immich_app.id
 }
 
@@ -66,7 +66,7 @@ resource "cloudflare_record" "immich_app_cname_api" {
   proxied = false
   ttl     = 1
   type    = "CNAME"
-  value   = "mich.immich.cloud"
+  content = "mich.immich.cloud"
   zone_id = cloudflare_zone.immich_app.id
 }
 
@@ -76,7 +76,7 @@ resource "cloudflare_record" "immich_app_mx_root_10" {
   proxied  = false
   ttl      = 1
   type     = "MX"
-  value    = "in1-smtp.messagingengine.com"
+  content  = "in1-smtp.messagingengine.com"
   zone_id  = cloudflare_zone.immich_app.id
 }
 
@@ -86,7 +86,7 @@ resource "cloudflare_record" "immich_app_mx_root_20" {
   proxied  = false
   ttl      = 1
   type     = "MX"
-  value    = "in2-smtp.messagingengine.com"
+  content  = "in2-smtp.messagingengine.com"
   zone_id  = cloudflare_zone.immich_app.id
 }
 
@@ -95,7 +95,7 @@ resource "cloudflare_record" "immich_app_cname_dkim_fm1" {
   proxied = false
   ttl     = 1
   type    = "CNAME"
-  value   = "fm1.immich.app.dkim.fmhosted.com"
+  content = "fm1.immich.app.dkim.fmhosted.com"
   zone_id = cloudflare_zone.immich_app.id
 }
 
@@ -104,7 +104,7 @@ resource "cloudflare_record" "immich_app_cname_dkim_fm2" {
   proxied = false
   ttl     = 1
   type    = "CNAME"
-  value   = "fm2.immich.app.dkim.fmhosted.com"
+  content = "fm2.immich.app.dkim.fmhosted.com"
   zone_id = cloudflare_zone.immich_app.id
 }
 
@@ -113,7 +113,7 @@ resource "cloudflare_record" "immich_app_cname_dkim_fm3" {
   proxied = false
   ttl     = 1
   type    = "CNAME"
-  value   = "fm3.immich.app.dkim.fmhosted.com"
+  content = "fm3.immich.app.dkim.fmhosted.com"
   zone_id = cloudflare_zone.immich_app.id
 }
 
@@ -122,7 +122,7 @@ resource "cloudflare_record" "immich_app_txt_root_fastmail_mx" {
   proxied = false
   ttl     = 1
   type    = "TXT"
-  value   = "\"v=spf1 include:spf.messagingengine.com -all\""
+  content = "\"v=spf1 include:spf.messagingengine.com -all\""
   zone_id = cloudflare_zone.immich_app.id
 }
 
@@ -131,7 +131,7 @@ resource "cloudflare_record" "immich_app_txt_dmarc_immich_app" {
   proxied = false
   ttl     = 1
   type    = "TXT"
-  value   = "\"v=DMARC1; p=reject; rua=mailto:bc1ea48ac6824cc6a02bd773ff10ca78@dmarc-reports.cloudflare.net\""
+  content = "\"v=DMARC1; p=reject; rua=mailto:bc1ea48ac6824cc6a02bd773ff10ca78@dmarc-reports.cloudflare.net\""
   zone_id = cloudflare_zone.immich_app.id
 }
 
@@ -140,6 +140,6 @@ resource "cloudflare_record" "immich_app_txt_1password_verification" {
   proxied = false
   ttl     = 1
   type    = "TXT"
-  value   = "1password-site-verification=GPHHHHLRXZHQFKUCAEYLDTI4TM"
+  content = "1password-site-verification=GPHHHHLRXZHQFKUCAEYLDTI4TM"
   zone_id = cloudflare_zone.immich_app.id
 }
