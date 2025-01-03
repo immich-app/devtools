@@ -48,7 +48,7 @@ resource "cloudflare_ruleset" "immich_app_redirects" {
         preserve_query_string = false
       }
     }
-    expression  = "(http.host wildcard \"get.immich.app\" and http.user_agent wildcard r\"*Android*\")"
+    expression  = "(http.host wildcard \"get.immich.app\" and http.request.uri.path matches \"^/$\" and http.user_agent wildcard r\"*Android*\")"
     description = "Redirect get.immich.app android users to the Play Store"
     enabled     = true
   }
@@ -64,7 +64,7 @@ resource "cloudflare_ruleset" "immich_app_redirects" {
         preserve_query_string = false
       }
     }
-    expression  = "(http.host wildcard \"get.immich.app\")"
+    expression  = "(http.host wildcard \"get.immich.app\" and http.request.uri.path matches \"^/$\")"
     description = "Redirect get.immich.app iPhone users to the App Store"
     enabled     = true
   }
