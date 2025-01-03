@@ -48,7 +48,7 @@ resource "cloudflare_ruleset" "immich_app_redirects" {
         preserve_query_string = false
       }
     }
-    expression  = "(http.host wildcard \"get.immich.app\" and http.request.uri.path matches \"^/android$\")"
+    expression  = "(http.request.full_uri wildcard \"https://get*.immich.app/android\")"
     description = "Redirect get.immich.app/android to the Play Store"
     enabled     = true
   }
@@ -64,7 +64,7 @@ resource "cloudflare_ruleset" "immich_app_redirects" {
         preserve_query_string = false
       }
     }
-    expression  = "(http.host wildcard \"get.immich.app\" and http.request.uri.path matches \"^/ios$\")"
+    expression  = "(http.request.full_uri wildcard \"https://get*.immich.app/ios\")"
     description = "Redirect get.immich.app/ios to the App Store"
     enabled     = true
   }
@@ -80,7 +80,7 @@ resource "cloudflare_ruleset" "immich_app_redirects" {
         preserve_query_string = false
       }
     }
-    expression  = "(http.host wildcard \"get.immich.app\" and http.request.uri.path matches \"^/fdroid$\")"
+    expression  = "(http.request.full_uri wildcard \"https://get*.immich.app/fdroid\")"
     description = "Redirect get.immich.app/fdroid to the F-Droid"
     enabled     = true
   }
@@ -96,7 +96,7 @@ resource "cloudflare_ruleset" "immich_app_redirects" {
         preserve_query_string = false
       }
     }
-    expression  = "(http.host wildcard \"get.immich.app\" and http.request.uri.path matches \"^/$\" and http.user_agent wildcard r\"*Android*\")"
+    expression  = "(http.request.full_uri wildcard \"https://get*.immich.app/fdroid\" and http.user_agent wildcard r\"*Android*\")"
     description = "Redirect get.immich.app android users to the Play Store"
     enabled     = true
   }
@@ -112,7 +112,7 @@ resource "cloudflare_ruleset" "immich_app_redirects" {
         preserve_query_string = false
       }
     }
-    expression  = "(http.host wildcard \"get.immich.app\" and http.request.uri.path matches \"^/$\")"
+    expression  = "(http.request.full_uri wildcard \"https://get*.immich.app/\")"
     description = "Redirect get.immich.app iPhone users to the App Store"
     enabled     = true
   }
