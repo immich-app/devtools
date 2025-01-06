@@ -43,38 +43,6 @@ resource "cloudflare_ruleset" "immich_app_redirects" {
       from_value {
         status_code = 307
         target_url {
-          value = "https://play.google.com/store/apps/details?id=app.alextran.immich"
-        }
-        preserve_query_string = false
-      }
-    }
-    expression  = "(http.request.full_uri wildcard \"https://get*.immich.app/android\")"
-    description = "Redirect get.immich.app/android to the Play Store"
-    enabled     = true
-  }
-
-  rules {
-    action = "redirect"
-    action_parameters {
-      from_value {
-        status_code = 307
-        target_url {
-          value = "https://apps.apple.com/us/app/immich/id1613945652"
-        }
-        preserve_query_string = false
-      }
-    }
-    expression  = "(http.request.full_uri wildcard \"https://get*.immich.app/ios\")"
-    description = "Redirect get.immich.app/ios to the App Store"
-    enabled     = true
-  }
-
-  rules {
-    action = "redirect"
-    action_parameters {
-      from_value {
-        status_code = 307
-        target_url {
           value = "https://f-droid.org/en/packages/app.alextran.immich/"
         }
         preserve_query_string = false
@@ -91,13 +59,13 @@ resource "cloudflare_ruleset" "immich_app_redirects" {
       from_value {
         status_code = 307
         target_url {
-          value = "https://play.google.com/store/apps/details?id=app.alextran.immich"
+          value = "https://apps.apple.com/us/app/immich/id1613945652"
         }
         preserve_query_string = false
       }
     }
-    expression  = "(http.request.full_uri wildcard \"https://get*.immich.app/\" and http.user_agent wildcard r\"*Android*\")"
-    description = "Redirect get.immich.app android users to the Play Store"
+    expression  = "(http.request.full_uri wildcard \"https://get*.immich.app/\" and (http.user_agent wildcard r\"*iPhone*\" or http.user_agent wildcard r\"*iPad*\") and http.cookie ne \"immich_no_redirect=true\" or http.request.full_uri wildcard \"https://get*.immich.app/ios\")"
+    description = "Redirect get.immich.app iPhone or iPad users to the App Store"
     enabled     = true
   }
 
@@ -107,13 +75,13 @@ resource "cloudflare_ruleset" "immich_app_redirects" {
       from_value {
         status_code = 307
         target_url {
-          value = "https://apps.apple.com/us/app/immich/id1613945652"
+          value = "https://play.google.com/store/apps/details?id=app.alextran.immich"
         }
         preserve_query_string = false
       }
     }
-    expression  = "(http.request.full_uri wildcard \"https://get*.immich.app/\")"
-    description = "Redirect get.immich.app iPhone users to the App Store"
+    expression  = "(http.request.full_uri wildcard \"https://get.*immich.app/\" and http.user_agent wildcard r\"*Android*\" and http.cookie ne \"immich_no_redirect=true\" or http.request.full_uri wildcard \"https://get*.immich.app/android\")"
+    description = "Redirect get.immich.app android users to the Play Store"
     enabled     = true
   }
 }
