@@ -3,10 +3,10 @@ name: Build and Push preview-operator Image
 on:
   push:
     branches: [main]
-    paths: ["tools/preview-operator/**"]
+    paths: ["tools/preview-operator/**", ".github/workflows/build-preview-operator.yaml"]
   pull_request:
     branches: [main]
-    paths: ["tools/preview-operator/**"]
+    paths: ["tools/preview-operator/**", ".github/workflows/build-preview-operator.yaml"]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

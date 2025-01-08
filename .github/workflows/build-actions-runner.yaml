@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["containers/actions-runner/**"]
+    paths: ["containers/actions-runner/**", ".github/workflows/build-actions-runner.yaml"]
   pull_request:
     branches: [main]
-    paths: ["containers/actions-runner/**"]
+    paths: ["containers/actions-runner/**", ".github/workflows/build-actions-runner.yaml"]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
