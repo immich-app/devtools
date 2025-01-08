@@ -67,6 +67,10 @@ variable "repositories" {
       name        = "native_video_player",
       description = "A Flutter widget to play videos on iOS and Android using a native implementation.",
       fork        = true
+    },
+    {
+      name        = "justified-layout-wasm",
+      description = "Rust+WASM based NPM package for calculating justified layout geometries."
     }
   ]
 }
