@@ -69,7 +69,7 @@ variable "repositories" {
       fork        = true
     },
     {
-      name        = "justified-layout-wasm",
+      name        = "justified-layout",
       description = "A blazingly fast implementation of justified layout, a gallery view popularized by Flickr, written in rust and exported to WASM."
     }
   ]
