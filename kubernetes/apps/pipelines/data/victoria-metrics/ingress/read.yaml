@@ -1,0 +1,23 @@
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: data-read-token
+  namespace: data
+spec:
+  itemPath: "vaults/Kubernetes/items/vmetrics_data_read_token"
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMUser
+metadata:
+  name: read
+  namespace: data
+spec:
+  tokenRef:
+    name: data-read-token
+    key: token
+  targetRefs:
+    - crd:
+        kind: VMSingle
+        name: vmetrics-data
+        namespace: data
+      paths: ["/api/v1/query","/api/v1/query_range","/api/v1/series","/api/v1/labels"]

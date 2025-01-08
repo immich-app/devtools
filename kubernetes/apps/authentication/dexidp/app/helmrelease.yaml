@@ -107,6 +107,7 @@ spec:
           redirectURIs:
             - "https://monitoring.immich.cloud/login/generic_oauth"
             - "https://monitoring.dev.immich.cloud/login/generic_oauth"
+            - "https://grafana.data.immich.cloud/login/generic_oauth"
         - id: outline
           name: outline
           secretEnv: OIDC_CLIENT_SECRET

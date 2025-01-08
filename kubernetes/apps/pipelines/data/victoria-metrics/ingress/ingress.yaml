@@ -1,0 +1,18 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAuth
+metadata:
+  name: data-ingress
+  namespace: data
+spec:
+  userSelector: {}
+  userNamespaceSelector:
+    matchLabels:
+      kubernetes.io/metadata.name: data
+  selectAllByDefault: true
+  ingress:
+    tlsSecretName: vmetrics-tls
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    class_name: nginx
+    tlsHosts:
+      - data.immich.cloud
