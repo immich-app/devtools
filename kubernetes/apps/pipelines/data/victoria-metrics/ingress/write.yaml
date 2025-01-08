@@ -1,0 +1,23 @@
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: data-write-token
+  namespace: data
+spec:
+  itemPath: "vaults/Kubernetes/items/vmetrics_data_write_token"
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMUser
+metadata:
+  name: write
+  namespace: data
+spec:
+  tokenRef:
+    name: data-write-token
+    key: token
+  targetRefs:
+    - crd:
+        kind: VMSingle
+        name: vmetrics-data
+        namespace: data
+      paths: ["/write"]
