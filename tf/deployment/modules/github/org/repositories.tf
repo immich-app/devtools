@@ -70,7 +70,8 @@ variable "repositories" {
     },
     {
       name        = "justified-layout-wasm",
-      description = "Rust+WASM based NPM package for calculating justified layout geometries."
+      description = "
+A blazingly fast implementation of justified layout, a gallery view popularized by Flickr, written in rust and exported to WASM."
     }
   ]
 }
