@@ -1,0 +1,19 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: data-pipeline-vmetrics-backup
+  namespace: data
+spec:
+  sourcePVC: vmsingle-vmetrics-data
+  trigger:
+    schedule: 0 18 * * *
+  restic:
+    pruneIntervalDays: 14
+    repository: data-pipeline-vmetrics-backup-secret
+    retain:
+      daily: 5
+      weekly: 1
+      monthly: 2
+    copyMethod: Direct
+    cacheStorageClassName: zfs
+    cacheAccessModes: ["ReadWriteOnce"]
