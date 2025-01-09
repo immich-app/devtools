@@ -46,6 +46,8 @@ spec:
       enabled: false
     coreDns:
       enabled: false
+    kubeApiServer:
+      enabled: false
     kubeControllerManager:
       enabled: false
     kubeScheduler:

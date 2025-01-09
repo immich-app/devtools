@@ -10,6 +10,12 @@ resource "cloudflare_r2_bucket" "victoriametrics_backups" {
   location   = "WEUR"
 }
 
+resource "cloudflare_r2_bucket" "data_pipeline_vmetrics_backups" {
+  account_id = var.cloudflare_account_id
+  name       = "data-pipeline-vmetrics-backups"
+  location   = "WEUR"
+}
+
 resource "cloudflare_r2_bucket" "outline_database_backups" {
   account_id = var.cloudflare_account_id
   name       = "outline-database-backups"

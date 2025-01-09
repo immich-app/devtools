@@ -61,6 +61,40 @@ resource "onepassword_item" "mich_cloudflare_r2_victoriametrics_backups_bucket" 
   }
 }
 
+resource "random_password" "data_pipeline_vmetrics_backups_restic_secret" {
+  length           = 40
+  special          = true
+  override_special = "!@#$%^&*()_+"
+}
+
+
+resource "onepassword_item" "mich_cloudflare_r2_data_pipeline_vmetrics_backups_bucket" {
+  vault    = data.onepassword_vault.kubernetes.uuid
+  title    = "mich-cloudflare-r2-data-pipeline-vmetrics-backup-bucket"
+  category = "secure_note"
+  section {
+    label = "Cloudflare R2 Token"
+
+    field {
+      label = "bucket_name"
+      type  = "STRING"
+      value = cloudflare_r2_bucket.data_pipeline_vmetrics_backups.name
+    }
+
+    field {
+      label = "api_endpoint"
+      type  = "STRING"
+      value = "https://${cloudflare_r2_bucket.data_pipeline_vmetrics_backups.account_id}.r2.cloudflarestorage.com"
+    }
+
+    field {
+      label = "restic_secret"
+      type  = "CONCEALED"
+      value = random_password.data_pipeline_vmetrics_backups_restic_secret.result
+    }
+  }
+}
+
 resource "random_password" "outline_backups_restic_secret" {
   length           = 40
   special          = true
