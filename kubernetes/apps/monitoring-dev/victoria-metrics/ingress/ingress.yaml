@@ -13,6 +13,7 @@ spec:
     tlsSecretName: vmetrics-tls
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-production
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
     class_name: nginx
     tlsHosts:
       - api.monitoring.dev.immich.cloud
