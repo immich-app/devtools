@@ -43,7 +43,7 @@ jobs:
             name=ghcr.io/${{ github.repository_owner }}/actions-runner
 
       - name: Build and push image
-        uses: docker/build-push-action@v6.10.0
+        uses: docker/build-push-action@v6.11.0
         with:
           context: ./containers/actions-runner
           platforms: linux/amd64
