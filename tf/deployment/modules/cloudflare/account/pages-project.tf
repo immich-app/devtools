@@ -43,7 +43,7 @@ output "immich_app_preview_pages_project_subdomain" {
 }
 
 locals {
-  static_pages = ["my.immich.app", "buy.immich.app", "get.immich.app", "data.immich.app"]
+  static_pages = ["my.immich.app", "buy.immich.app", "get.immich.app", "data.immich.app", "next.immich.app"]
 }
 
 resource "cloudflare_pages_project" "static_pages" {
