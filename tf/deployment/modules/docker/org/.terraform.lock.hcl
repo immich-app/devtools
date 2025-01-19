@@ -26,21 +26,21 @@ provider "registry.opentofu.org/1password/onepassword" {
 }
 
 provider "registry.terraform.io/docker/docker" {
-  version     = "0.4.0"
-  constraints = "0.4.0"
+  version     = "0.4.1"
+  constraints = "0.4.1"
   hashes = [
-    "h1:7fD7cs0AAkICtNbgpkmTfH9NoKu7RZ1fK7BEBd/4i2o=",
-    "h1:C4X7gFkUQP9MGspuS/pzkuNf5jsQbjDC8kKDeKgWql0=",
-    "h1:M8n/2D1XwSUYnbBNoPyE2EelO16C2wsZzFG7H1M0/PM=",
-    "h1:gnwLmEMoeD0vOJjI0ESrJgr8g2NMR0r3nmIv3vuG6GA=",
-    "h1:gyHafTtUGopkPw6Cp0LWlnxHhr5zeVfkHP58CrRQano=",
-    "h1:tKewC7p5smOhH+hW+Nihg/T1miPEii4Yhaof6ah9R4s=",
-    "zh:53a041772a8c3efe594113eff37b8fb85e4e50d20c96611d1a9e16d7784aa498",
-    "zh:7ec49c6d01afa1e613eeae2022de2c9c7f4e721d04fce958ddcd3c758392bad5",
-    "zh:90450f532a11537c9dff09993fb1cbcb10b379a4c758c176cb3b4ea624bc57f9",
-    "zh:9b6925b3c0d0ff5ee6deb8521bdb1553e4e9e480b8babb28bfe6e8bbec3a3438",
-    "zh:da14ff0f17078ebf77537cf226ca0922f95845d9dac702db73501c8ff8fe816d",
-    "zh:ef7071bd6f3cfe81b433a8546b71dc6627122501c802ed273e4cabcc7eacaac7",
+    "h1:5CHNvUa8qRnMQf9KA9So6xfSFZp7HodYESlnFMKT3Ac=",
+    "h1:CbGsC8KQcebbldgTR52Fvi6eqkbFyFEL8bFFSN9ze9I=",
+    "h1:X5Q0kQWwpCBhCWaU2rPXhF4s62rS4Z4twFa8i9AuWWg=",
+    "h1:kfVn30bsxtkUJuuizEggSsKVRc51PZu7uCPjVSqnigk=",
+    "h1:pdVU/u1eaz7SQ1I368K9XoKTkFZfOjk11Clf3RI++Go=",
+    "h1:tJKZbMNJ8jPJSmqwFRJd8bXxaBMZb7QHnxq/xp91BaY=",
+    "zh:0e24df9bf1a2c603e013b8530495fb3f1ca0f9a47bf1fcdafa2b21b8e479dc2e",
+    "zh:114fd3696d534eb7714bbe4451712316e4ceee5345f026ff88ecfbcff589da61",
+    "zh:6a6aca5f3af47a0c1119bbb75ada4db636d6fa02f74980449c4fc2bf1b5ff251",
+    "zh:6ddf3563245800d7a580485d6f3395a0dd568545cc22369aed5ba4cd1dd56e60",
+    "zh:d1c800ad01f1e2ded8f65955bc3e58c2bbe6f17e6f756079cabbdc314049e31b",
     "zh:f26e0763dbe6a6b2195c94b44696f2110f7f55433dc142839be16b9697fa5597",
+    "zh:fb150a77d2bf80a16af8e68cd563c0af27e7749e6690f7003c3083e0b5a68507",
   ]
 }
