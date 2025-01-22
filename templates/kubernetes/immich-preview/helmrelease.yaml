@@ -1,0 +1,79 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ${NAME}
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: immich
+      version: 0.9.0
+      sourceRef:
+        kind: HelmRepository
+        name: immich-charts
+        namespace: flux-system
+      interval: 1m
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    postgres:
+      enabled: false
+
+    redis:
+      enabled: true
+
+    immich:
+      persistence:
+        library:
+          existingClaim: ${NAME}-library
+
+    env:
+      DB_HOSTNAME:
+        valueFrom:
+          secretKeyRef:
+            name: ${NAME}-superuser
+            key: host
+      DB_USERNAME:
+        valueFrom:
+          secretKeyRef:
+            name: ${NAME}-superuser
+            key: user
+      DB_PASSWORD:
+        valueFrom:
+          secretKeyRef:
+            name: ${NAME}-superuser
+            key: password
+      DB_DATABASE_NAME:
+        valueFrom:
+          secretKeyRef:
+            name: ${NAME}-app
+            key: dbname
+      LOG_LEVEL: verbose
+
+    image:
+      tag: main
+
+    server:
+      image:
+        pullPolicy: Always
+      ingress:
+        main:
+          enabled: true
+          className: nginx
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-staging
+            nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          hosts:
+            - host: ${HOST}
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls:
+            - hosts:
+                - ${HOST}
+              secretName: ${NAME}-tls
+
+    machine-learning:
+      image:
+        pullPolicy: Always
