@@ -52,7 +52,7 @@ spec:
       LOG_LEVEL: verbose
 
     image:
-      tag: main
+      tag: ${TAG}
 
     server:
       image:
@@ -62,7 +62,7 @@ spec:
           enabled: true
           className: nginx
           annotations:
-            cert-manager.io/cluster-issuer: letsencrypt-staging
+            cert-manager.io/cluster-issuer: letsencrypt-production
             nginx.ingress.kubernetes.io/proxy-body-size: "0"
           hosts:
             - host: ${HOST}
