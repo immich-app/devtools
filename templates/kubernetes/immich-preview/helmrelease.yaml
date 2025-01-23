@@ -57,6 +57,11 @@ spec:
     server:
       image:
         pullPolicy: Always
+      persistence:
+        external:
+          enabled: true
+          mountPath: /external
+          existingClaim: ${NAME}-external
       ingress:
         main:
           enabled: true

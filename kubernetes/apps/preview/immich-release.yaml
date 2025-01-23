@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/preview/immich-release/app
+  path: ./templates/kubernetes/immich-preview
   prune: true
   sourceRef:
     kind: GitRepository
