@@ -27,6 +27,22 @@ resource "cloudflare_ruleset" "immich_app_redirects" {
       from_value {
         status_code = 307
         target_url {
+          value = "https://immich.store"
+        }
+        preserve_query_string = true
+      }
+    }
+    expression  = "(http.host eq \"store.immich.app\" or http.host eq \"shop.immich.app\" or http.host eq \"merch.immich.app\")"
+    description = "Redirect visitors going to store or shop on immich.app to immich.store"
+    enabled     = true
+  }
+
+  rules {
+    action = "redirect"
+    action_parameters {
+      from_value {
+        status_code = 307
+        target_url {
           value = "https://discord.gg/cHD2af9DbA"
         }
         preserve_query_string = true
@@ -93,3 +109,4 @@ resource "cloudflare_ruleset" "immich_cloud_redirects" {
     enabled     = true
   }
 }
+
