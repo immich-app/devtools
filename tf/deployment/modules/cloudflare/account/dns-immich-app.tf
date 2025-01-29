@@ -43,6 +43,33 @@ resource "cloudflare_record" "immich_app_aaaa_discord" {
   zone_id = cloudflare_zone.immich_app.id
 }
 
+resource "cloudflare_record" "immich_app_aaaa_store" {
+  name    = "store"
+  proxied = true
+  ttl     = 1
+  type    = "AAAA"
+  content = "100::"
+  zone_id = cloudflare_zone.immich_app.id
+}
+
+resource "cloudflare_record" "immich_app_aaaa_shop" {
+  name    = "shop"
+  proxied = true
+  ttl     = 1
+  type    = "AAAA"
+  content = "100::"
+  zone_id = cloudflare_zone.immich_app.id
+}
+
+resource "cloudflare_record" "immich_app_aaaa_merch" {
+  name    = "merch"
+  proxied = true
+  ttl     = 1
+  type    = "AAAA"
+  content = "100::"
+  zone_id = cloudflare_zone.immich_app.id
+}
+
 resource "cloudflare_record" "immich_app_cname__domainconnect" {
   name    = "_domainconnect"
   proxied = true
