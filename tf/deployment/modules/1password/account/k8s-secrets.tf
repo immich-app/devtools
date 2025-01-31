@@ -220,6 +220,27 @@ resource "onepassword_item" "bot_github_webhook_slug" {
   }
 }
 
+resource "random_password" "bot_fourthwall_webhook_slug" {
+  length  = 40
+  special = false
+}
+
+resource "onepassword_item" "bot_fourthwall_webhook_slug" {
+  vault    = data.onepassword_vault.kubernetes.uuid
+  title    = "bot-fourthwall-webhook-slug"
+  category = "secure_note"
+
+  section {
+    label = "Fourthwall webhook slug for the bot"
+
+    field {
+      label = "FOURTHWALL_SLUG"
+      type  = "CONCEALED"
+      value = random_password.bot_fourthwall_webhook_slug.result
+    }
+  }
+}
+
 resource "random_password" "hedgedoc_oauth_secret" {
   length  = 40
   special = false
