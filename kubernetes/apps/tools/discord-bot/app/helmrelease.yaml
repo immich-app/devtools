@@ -44,6 +44,8 @@ spec:
               - secretRef:
                   name: bot-github-webhook-slug
               - secretRef:
+                  name: bot-fourthwall-webhook-slug
+              - secretRef:
                   name: zulip-bot
               - secretRef:
                   name: discord-bot-db-app
