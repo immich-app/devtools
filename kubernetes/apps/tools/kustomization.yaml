@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./podbump/ks.yaml
-  - ./hedgedoc/ks.yaml
   - ./discord-bot/ks.yaml
   - ./containerssh/ks.yaml
   - ./outline/ks.yaml

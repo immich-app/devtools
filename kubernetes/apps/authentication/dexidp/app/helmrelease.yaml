@@ -26,8 +26,6 @@ spec:
       - secretRef:
           name: github-oauth-client
       - secretRef:
-          name: hedgedoc-oauth
-      - secretRef:
           name: grafana-oauth
       - secretRef:
           name: outline-oauth
@@ -91,11 +89,6 @@ spec:
               - name: immich-app
 
       staticClients:
-        - id: hedgedoc
-          name: hedgedoc
-          secretEnv: CMD_OAUTH2_CLIENT_SECRET
-          redirectURIs:
-            - "https://md.immich.cloud/auth/oauth2/callback"
         - id: containerssh
           name: containerssh
           public: true
