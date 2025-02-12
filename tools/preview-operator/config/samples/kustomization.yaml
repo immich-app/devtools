@@ -1,4 +1,0 @@
-## Append samples of your project ##
-resources:
-- devtools_v1alpha1_preview.yaml
-#+kubebuilder:scaffold:manifestskustomizesamples
