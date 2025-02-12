@@ -15,3 +15,4 @@ resources:
   - ./victoria-metrics.yaml
   - ./backube.yaml
   - ./immich-charts.yaml
+  - ./controlplaneio.yaml

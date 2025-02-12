@@ -5,3 +5,4 @@ resources:
   - ./namespace.yaml
   - ./immich-release.yaml
   - ./snapshot/ks.yaml
+  - ./flux-operator/ks.yaml
