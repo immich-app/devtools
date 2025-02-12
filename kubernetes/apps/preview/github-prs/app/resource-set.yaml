@@ -6,7 +6,7 @@ metadata:
 spec:
   inputsFrom:
     - apiVersion: fluxcd.controlplane.io/v1
-      kind: ResourceSetInputsProvider
+      kind: ResourceSetInputProvider
       name: immich-github-prs
   resources:
     - apiVersion: postgresql.cnpg.io/v1
