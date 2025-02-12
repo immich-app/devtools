@@ -1,0 +1,11 @@
+apiVersion: fluxcd.controlplane.io/v1
+kind: ResourceSetInputProvider
+metadata:
+  name: immich-github-prs
+  namespace: previews
+spec:
+  type: GitHubPullRequest
+  url: https://github.com/immich-app/immich
+  filter:
+    labels:
+      - "preview"
