@@ -2,7 +2,7 @@ apiVersion: fluxcd.controlplane.io/v1
 kind: ResourceSet
 metadata:
   name: immich-github-prs
-  namespace: previews
+  namespace: preview
 spec:
   inputsFrom:
     - apiVersion: fluxcd.controlplane.io/v1
