@@ -112,16 +112,16 @@ spec:
                 className: nginx
                 annotations:
                   # TODO: LE prod
-                  cert-manager.io/cluster-issuer: letsencrypt-staging
+                  cert-manager.io/cluster-issuer: letsencrypt-production
                   nginx.ingress.kubernetes.io/proxy-body-size: "0"
                 hosts:
-                  - host: pr-<< inputs.id >>-preview.internal.immich.cloud
+                  - host: pr-<< inputs.id >>.preview.internal.immich.cloud
                     paths:
                       - path: /
                         pathType: Prefix
                 tls:
                   - hosts:
-                      - pr-<< inputs.id >>-preview.internal.immich.cloud
+                      - pr-<< inputs.id >>.preview.internal.immich.cloud
                     secretName: immich-main-tls
           machine-learning:
             image:
