@@ -111,7 +111,6 @@ spec:
                 enabled: true
                 className: nginx
                 annotations:
-                  # TODO: LE prod
                   cert-manager.io/cluster-issuer: letsencrypt-production
                   nginx.ingress.kubernetes.io/proxy-body-size: "0"
                 hosts:
