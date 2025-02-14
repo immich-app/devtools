@@ -102,7 +102,7 @@ spec:
                   key: dbname
             LOG_LEVEL: verbose
           image:
-            tag: pr-<< inputs.id >>
+            tag: commit-<< inputs.sha >>
           server:
             image:
               pullPolicy: Always
