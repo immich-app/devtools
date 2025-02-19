@@ -49,3 +49,22 @@ spec:
         storageClass: zfs
         size: 100Gi
         accessMode: ReadWriteOnce
+    ingress:
+      main:
+        enabled: true
+        className: nginx
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          nginx.ingress.kubernetes.io/auth-type: basic
+          nginx.ingress.kubernetes.io/auth-secret: registry-auth
+        hosts:
+          - host: &host preview-registry.internal.immich.cloud
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: preview-registry-tls
