@@ -17,5 +17,9 @@ terraform {
       source  = "hashicorp/tls"
       version = "4.0.6"
     }
+    htpasswd = {
+      source = "loafoe/htpasswd"
+      version = "1.2.1"
+    }
   }
 }

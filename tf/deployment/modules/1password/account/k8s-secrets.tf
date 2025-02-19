@@ -303,3 +303,40 @@ resource "onepassword_item" "outline_secret" {
     }
   }
 }
+
+resource "random_password" "preview_registry_password" {
+  length           = 30
+  special          = false
+}
+
+resource "random_password" "preview_registry_salt" {
+  length           = 8
+  special          = false
+}
+
+resource "htpasswd_password" "preview_registry_secret" {
+  password = random_password.preview_registry_password.result
+  salt     = random_password.preview_registry_salt.result
+}
+
+locals {
+  preview_registry_user = "immich"
+}
+
+resource "onepassword_item" "preview_registry_secret" {
+  vault = data.onepassword_vault.kubernetes.uuid
+  title = "preview-registry-secret"
+  category = "secure_note"
+
+  username = local.preview_registry_user
+  password = random_password.preview_registry_password.result
+
+  section {
+    label = "htpasswd"
+
+    field {
+      label = "auth"
+      value = "${local.preview_registry_user}:${htpasswd_password.preview_registry_secret.apr1}"
+    }
+  }
+}
