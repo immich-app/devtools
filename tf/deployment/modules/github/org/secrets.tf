@@ -94,9 +94,11 @@ data "onepassword_item" "preview_registry_secret" {
 resource "github_actions_organization_secret" "preview_registry_user" {
   secret_name     = "PREVIEW_REGISTRY_USER"
   plaintext_value = data.onepassword_item.preview_registry_secret.username
+  visibility      = "all"
 }
 
 resource "github_actions_organization_secret" "preview_registry_password" {
   secret_name     = "PREVIEW_REGISTRY_PASSWORD"
   plaintext_value = data.onepassword_item.preview_registry_secret.password
+  visibility      = "all"
 }
