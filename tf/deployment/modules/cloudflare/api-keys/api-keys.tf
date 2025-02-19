@@ -22,6 +22,8 @@ resource "cloudflare_api_token" "terraform_cloudflare_account" {
       data.cloudflare_api_token_permission_groups.all.account["Queues Write"],
       data.cloudflare_api_token_permission_groups.all.account["Account Settings Write"],
       data.cloudflare_api_token_permission_groups.all.account["Account Settings Read"],
+      data.cloudflare_api_token_permission_groups.all.account["D1 Read"],
+      data.cloudflare_api_token_permission_groups.all.account["D1 Write"],
     ]
     resources = {
       "com.cloudflare.api.account.*" = "*"
