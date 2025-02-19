@@ -305,13 +305,13 @@ resource "onepassword_item" "outline_secret" {
 }
 
 resource "random_password" "preview_registry_password" {
-  length           = 30
-  special          = false
+  length  = 30
+  special = false
 }
 
 resource "random_password" "preview_registry_salt" {
-  length           = 8
-  special          = false
+  length  = 8
+  special = false
 }
 
 resource "htpasswd_password" "preview_registry_secret" {
@@ -324,8 +324,8 @@ locals {
 }
 
 resource "onepassword_item" "preview_registry_secret" {
-  vault = data.onepassword_vault.kubernetes.uuid
-  title = "preview-registry-secret"
+  vault    = data.onepassword_vault.kubernetes.uuid
+  title    = "preview-registry-secret"
   category = "secure_note"
 
   username = local.preview_registry_user
