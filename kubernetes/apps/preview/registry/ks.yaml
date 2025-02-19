@@ -4,6 +4,7 @@ metadata:
   name: &app preview-registry
   namespace: flux-system
 spec:
+  targetNamespace: preview
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
