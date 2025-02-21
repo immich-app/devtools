@@ -12,17 +12,18 @@ spec:
       kind: ResourceSetInputProvider
       name: immich-github-branches
   resourcesTemplate: |
-    <<- if .inputs.author >>
-      <<- $name := list "pr" .inputs.id | join "-" >>
-      <<- set . "name" $name >>
+    <<- $ctx := dict >>
+    <<- if inputs.author >>
+      <<- $name := list "pr" inputs.id | join "-" >>
+      <<- set $ctx "name" $name >>
     <<- else >>
-      <<- set . "name" .inputs.branch >>
+      <<- set $ctx "name" inputs.branch >>
     <<- end >>
     ---
     apiVersion: postgresql.cnpg.io/v1
     kind: Cluster
     metadata:
-      name: << .name >>-preview-database
+      name: << $ctx.name >>-preview-database
       namespace: preview
     spec:
       instances: 1
@@ -45,7 +46,7 @@ spec:
     kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
-      name: << .name >>-preview-library
+      name: << $ctx.name >>-preview-library
       namespace: preview
     spec:
       dataSource:
@@ -62,7 +63,7 @@ spec:
     apiVersion: helm.toolkit.fluxcd.io/v2
     kind: HelmRelease
     metadata:
-      name: << .name >>-preview
+      name: << $ctx.name >>-preview
       namespace: preview
     spec:
       interval: 5m
@@ -79,8 +80,6 @@ spec:
         remediation:
           retries: 3
       values:
-        podLabels:
-          podbump.bo0tzz.me/enabled: 'true'
         postgres:
           enabled: false
         redis:
@@ -88,27 +87,27 @@ spec:
         immich:
           persistence:
             library:
-              existingClaim: << .name >>-preview-library
+              existingClaim: << $ctx.name >>-preview-library
         env:
           DB_HOSTNAME:
             valueFrom:
               secretKeyRef:
-                name: << .name >>-preview-database-superuser
+                name: << $ctx.name >>-preview-database-superuser
                 key: host
           DB_USERNAME:
             valueFrom:
               secretKeyRef:
-                name: << .name >>-preview-database-superuser
+                name: << $ctx.name >>-preview-database-superuser
                 key: user
           DB_PASSWORD:
             valueFrom:
               secretKeyRef:
-                name: << .name >>-preview-database-superuser
+                name: << $ctx.name >>-preview-database-superuser
                 key: password
           DB_DATABASE_NAME:
             valueFrom:
               secretKeyRef:
-                name: << .name >>-preview-database-app
+                name: << $ctx.name >>-preview-database-app
                 key: dbname
           LOG_LEVEL: verbose
         image:
@@ -124,13 +123,13 @@ spec:
                 cert-manager.io/cluster-issuer: letsencrypt-production
                 nginx.ingress.kubernetes.io/proxy-body-size: "0"
               hosts:
-                - host: << .name >>.preview.internal.immich.cloud
+                - host: << $ctx.name >>.preview.internal.immich.cloud
                   paths:
                     - path: /
                       pathType: Prefix
               tls:
                 - hosts:
-                    - << .name >>.preview.internal.immich.cloud
+                    - << $ctx.name >>.preview.internal.immich.cloud
                   secretName: immich-main-tls
         machine-learning:
           image:
