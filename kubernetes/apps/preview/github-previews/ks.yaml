@@ -1,13 +1,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app github-pr-previews
+  name: &app github-previews
   namespace: flux-system
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/preview/github-prs/app
+  path: ./kubernetes/apps/preview/github/app
   prune: true
   sourceRef:
     kind: GitRepository
