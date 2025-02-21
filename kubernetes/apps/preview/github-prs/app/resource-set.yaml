@@ -15,9 +15,9 @@ spec:
     <<- $ctx := dict >>
     <<- if inputs.author >>
       <<- $name := list "pr" inputs.id | join "-" >>
-      <<- set $ctx "name" $name >>
+      <<- $_ := set $ctx "name" $name >>
     <<- else >>
-      <<- set $ctx "name" inputs.branch >>
+      <<- $_ := set $ctx "name" inputs.branch >>
     <<- end >>
     ---
     apiVersion: postgresql.cnpg.io/v1
