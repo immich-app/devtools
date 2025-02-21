@@ -130,7 +130,7 @@ spec:
               tls:
                 - hosts:
                     - << $ctx.name >>.preview.internal.immich.cloud
-                  secretName: immich-main-tls
+                  secretName: << $ctx.name >>-preview-tls
         machine-learning:
           image:
             pullPolicy: Always
