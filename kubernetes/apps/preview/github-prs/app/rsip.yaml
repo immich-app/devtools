@@ -9,3 +9,14 @@ spec:
   filter:
     labels:
       - "preview"
+---
+apiVersion: fluxcd.controlplane.io/v1
+kind: ResourceSetInputProvider
+metadata:
+  name: immich-github-branches
+  namespace: preview
+spec:
+  type: GitHubBranch
+  url: https://github.com/immich-app/immich
+  filter:
+    includeBranch: "^main$"
