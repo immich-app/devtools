@@ -7,3 +7,4 @@ resources:
   - ./snapshot/ks.yaml
   - ./flux-operator/ks.yaml
   - ./github-prs/ks.yaml
+  - ./registry/ks.yaml
