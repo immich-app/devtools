@@ -13,7 +13,7 @@ spec:
       name: immich-github-branches
   resourcesTemplate: |
     <<- $ctx := dict >>
-    <<- if inputs.author >>
+    <<- if hasKey inputs "author" >>
       <<- $name := list "pr" inputs.id | join "-" >>
       <<- $_ := set $ctx "name" $name >>
     <<- else >>
