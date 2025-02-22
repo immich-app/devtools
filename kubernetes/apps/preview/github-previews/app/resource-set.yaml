@@ -123,7 +123,7 @@ spec:
                 key: dbname
           LOG_LEVEL: verbose
         image:
-          tag: commit-<< $ctx.tag >>
+          tag: << $ctx.tag >>
         server:
           image:
             pullPolicy: Always
