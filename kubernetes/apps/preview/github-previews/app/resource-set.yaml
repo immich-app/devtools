@@ -11,6 +11,10 @@ spec:
     - apiVersion: fluxcd.controlplane.io/v1
       kind: ResourceSetInputProvider
       name: immich-github-branches
+  inputs:
+    - branch: release
+      # renovate: datasource=github-releases depName=immich-app/immich
+      tag: v1.126.1
   resourcesTemplate: |
     <<- $ctx := dict >>
     <<- if hasKey inputs "author" >>
@@ -19,6 +23,14 @@ spec:
     <<- else >>
       <<- $_ := set $ctx "name" inputs.branch >>
     <<- end >>
+
+    <<- if hasKey inputs "sha" >>
+      <<- $tag := list "commit" inputs.sha | join "-" >>
+      <<- $_ := set $ctx "tag" $tag >>
+    <<- else >>
+      <<- $_ := set $ctx "tag" inputs.tag >>
+    <<- end >>
+    
     ---
     apiVersion: postgresql.cnpg.io/v1
     kind: Cluster
@@ -111,7 +123,7 @@ spec:
                 key: dbname
           LOG_LEVEL: verbose
         image:
-          tag: commit-<< inputs.sha >>
+          tag: << $ctx.tag >>
         server:
           image:
             pullPolicy: Always
