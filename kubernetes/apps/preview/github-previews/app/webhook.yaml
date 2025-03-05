@@ -21,8 +21,12 @@ spec:
     name: previews-webhook-secret
   resources:
     - apiVersion: fluxcd.controlplane.io/v1
-      kind: ResourceSet
-      name: immich-github-previews
+      kind: ResourceSetInputProvider
+      name: immich-github-prs
+      namespace: preview
+    - apiVersion: fluxcd.controlplane.io/v1
+      kind: ResourceSetInputProvider
+      name: immich-github-branches
       namespace: preview
 
 # NOTE: The external ingress for this webhook goes to the notification-controller through apps/infrastructure/flux-system/addons/webhooks/github/ingress.yaml
