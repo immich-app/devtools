@@ -305,13 +305,13 @@ resource "onepassword_item" "outline_secret" {
 }
 
 resource "random_password" "previews_webhook_token" {
-  length = 40
+  length  = 40
   special = false
 }
 
 resource "onepassword_item" "previews_webhook_secret" {
-  vault = data.onepassword_vault.kubernetes.uuid
-  title = "previews-webhook-secret"
+  vault    = data.onepassword_vault.kubernetes.uuid
+  title    = "previews-webhook-secret"
   category = "secure_note"
 
   section {
@@ -319,7 +319,7 @@ resource "onepassword_item" "previews_webhook_secret" {
 
     field {
       label = "token"
-      type = "CONCEALED"
+      type  = "CONCEALED"
       value = random_password.previews_webhook_token.result
     }
   }
