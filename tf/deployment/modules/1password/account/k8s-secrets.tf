@@ -303,3 +303,28 @@ resource "onepassword_item" "outline_secret" {
     }
   }
 }
+
+resource "random_password" "previews_webhook_token" {
+  length = 40
+  special = false
+}
+
+resource "onepassword_item" "previews_webhook_secret" {
+  vault = data.onepassword_vault.kubernetes.uuid
+  title = "previews-webhook-secret"
+  category = "secure_note"
+
+  section {
+    label = "Generated"
+
+    field {
+      label = "token"
+      type = "CONCEALED"
+      value = random_password.previews_webhook_token.result
+    }
+  }
+
+  section {
+    label = "Manual"
+  }
+}

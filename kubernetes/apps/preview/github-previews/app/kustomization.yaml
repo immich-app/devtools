@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./rsip.yaml
   - ./resource-set.yaml
+  - ./webhook.yaml

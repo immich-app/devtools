@@ -1,0 +1,28 @@
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: previews-webhook-secret
+  namespace: preview
+spec:
+  itemPath: "vaults/Kubernetes/items/previews-webhook-secret"
+---
+apiVersion: notification.toolkit.fluxcd.io/v1
+kind: Receiver
+metadata:
+  name: preview-receiver
+  namespace: preview
+spec:
+  type: github
+  events:
+    - ping
+    - push
+    - pull_request
+  secretRef:
+    name: previews-webhook-secret
+  resources:
+    - apiVersion: fluxcd.controlplane.io/v1
+      kind: ResourceSet
+      name: immich-github-previews
+      namespace: preview
+
+# NOTE: The external ingress for this webhook goes to the notification-controller through apps/infrastructure/flux-system/addons/webhooks/github/ingress.yaml
