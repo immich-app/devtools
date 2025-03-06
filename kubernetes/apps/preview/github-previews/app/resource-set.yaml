@@ -82,6 +82,7 @@ spec:
       chart:
         spec:
           chart: immich
+          # renovate: datasource=github-releases depName=immich-app/immich-charts
           version: 0.9.0
           sourceRef:
             kind: HelmRepository
