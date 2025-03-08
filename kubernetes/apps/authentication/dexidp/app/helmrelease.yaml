@@ -58,7 +58,7 @@ spec:
       frontend:
         issuer: immich
         issuerUrl: *issuer
-        logoUrl: https://github.com/immich-app/immich/raw/main/design/immich-logo-no-outline.png
+        logoUrl: https://github.com/immich-app/immich/raw/main/design/immich-logo.png
 
       expiry:
         signingKeys: "6h"
