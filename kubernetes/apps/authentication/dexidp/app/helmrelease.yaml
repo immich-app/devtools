@@ -62,7 +62,7 @@ spec:
 
       expiry:
         signingKeys: "6h"
-        idTokens: "24h"
+        idTokens: "168h"
 
       logger:
         level: debug
