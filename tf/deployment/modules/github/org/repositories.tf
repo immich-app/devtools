@@ -64,6 +64,10 @@ variable "repositories" {
       url         = "https://ui.immich.app",
     },
     {
+      name        = "sql-tools",
+      description = "A collection of tools and utilities to help manage SQL migrations"
+    },
+    {
       name        = "native_video_player",
       description = "A Flutter widget to play videos on iOS and Android using a native implementation.",
       fork        = true
