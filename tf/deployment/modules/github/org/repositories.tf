@@ -75,6 +75,10 @@ variable "repositories" {
     {
       name        = "justified-layout",
       description = "A blazingly fast implementation of justified layout, a gallery view popularized by Flickr, written in rust and exported to WASM."
+    },
+    {
+      name        = "ml-models",
+      description = "Tools for exporting and benchmarking the ML models used by Immich."
     }
   ]
 }
