@@ -23,6 +23,8 @@ RUN \
         unrar \
         wget \
         zip \
+        g++ \
+        cmake \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -SL https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose \
