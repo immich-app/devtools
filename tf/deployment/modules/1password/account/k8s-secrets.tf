@@ -313,6 +313,7 @@ resource "onepassword_item" "previews_webhook_secret" {
   vault    = data.onepassword_vault.kubernetes.uuid
   title    = "previews-webhook-secret"
   category = "secure_note"
+  url      = "CHANGE_ME_MANUALLY"
 
   section {
     label = "Generated"
@@ -324,7 +325,9 @@ resource "onepassword_item" "previews_webhook_secret" {
     }
   }
 
-  section {
-    label = "Manual"
+  lifecycle {
+    ignore_changes = [
+      url
+    ]
   }
 }
