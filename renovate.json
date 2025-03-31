@@ -2,6 +2,17 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["local>immich-app/.github:renovate-config"],
   "automerge": true,
+  "packageRules": [
+    {
+      "matchPackageNames": ["gha-runner**"],
+      "groupName": "github actions runners"
+    },
+    {
+      "matchPackageNames": ["immich-app/immich"],
+      "schedule": ["at any time"],
+      "minimumReleaseAge": "0 days"
+    }
+  ],
   "flux": {
     "fileMatch": ["(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"]
   },
