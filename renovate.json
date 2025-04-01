@@ -2,14 +2,14 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["local>immich-app/.github:renovate-config"],
   "automerge": true,
+  "schedule": ["at any time"],
   "packageRules": [
     {
-      "matchPackageNames": ["gha-runner**"],
+      "matchPackageNames": ["/gha-runner/", "/dind/"],
       "groupName": "github actions runners"
     },
     {
       "matchPackageNames": ["immich-app/immich"],
-      "schedule": ["at any time"],
       "minimumReleaseAge": "0 days"
     }
   ],
