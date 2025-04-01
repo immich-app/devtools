@@ -64,17 +64,14 @@ spec:
             nginx.ingress.kubernetes.io/cors-max-age: "3600"
 
             nginx.ingress.kubernetes.io/configuration-snippet: |
-              # Block specific PUT routes
               if ($request_method = PUT && $uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets/.*/original|auth/change-password)) {
                 return 403;
               }
 
-              # Block specific POST routes
               if ($request_method = POST && $uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets|auth/change-password|notifications/test-email|libraries)) {
                 return 403;
               }
 
-              # Required for proper CORS handling
               add_header 'Vary' 'Origin' always;
           hosts:
             - host: demo.immich.cloud
