@@ -35,6 +35,9 @@ spec:
         enabled: true
       ingressClassResource:
         default: true
+      config:
+        allow-snippet-annotations: true
+        annotations-risk-level: Critical
       metrics:
         enabled: false
       resources:
