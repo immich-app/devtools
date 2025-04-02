@@ -6,3 +6,4 @@ resources:
   - ./snapshot/ks.yaml
   - ./flux-operator/ks.yaml
   - ./github-previews/ks.yaml
+  - ./demo/ks.yaml
