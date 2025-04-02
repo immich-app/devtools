@@ -64,11 +64,23 @@ spec:
             nginx.ingress.kubernetes.io/cors-max-age: "3600"
 
             nginx.ingress.kubernetes.io/configuration-snippet: |
-              if ($request_method = PUT && $uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets/.*/original|auth/change-password)) {
+              if ($request_method = PUT) {
+                set $block_put 1;
+              }
+                if ($uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets/.*/original|auth/change-password)$) {
+                set $block_put "${block_put}1";
+              }
+                if ($block_put = 11) {
                 return 403;
               }
 
-              if ($request_method = POST && $uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets|auth/change-password|notifications/test-email|libraries)) {
+              if ($request_method = POST) {
+                set $block_post 1;
+              }
+                if ($uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets|auth/change-password|notifications/test-email|libraries)$) {
+                set $block_post "${block_post}1";
+              }
+                if ($block_post = 11) {
                 return 403;
               }
 
@@ -81,7 +93,7 @@ spec:
           tls:
             - hosts:
                 - demo.immich.cloud
-              secretName: demo-tls
+              secretName: demo-tls # TODO: Keep TLS secret out of reset loop
     machine-learning:
       image:
         pullPolicy: Always
