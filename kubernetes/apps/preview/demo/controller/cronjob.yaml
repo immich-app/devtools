@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: demo-controller
+  namespace: preview
+spec:
+  schedule: "*/15 * * * *" # TODO: A sensible schedule (every 4 hrs?)
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: demo-controller
+          containers:
+            - name: demo-controller
+              image: ghcr.io/fluxcd/flux-cli:v2.5.1
+              imagePullPolicy: IfNotPresent
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  #!/bin/bash
+
+                  set -o errexit
+                  set -o nounset
+
+                  flux delete kustomization demo-deployment
+                  flux reconcile kustomization demo-deployment-parent
+          restartPolicy: OnFailure

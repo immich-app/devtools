@@ -1,0 +1,87 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: demo
+  namespace: preview
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: immich
+      # renovate: datasource=github-releases depName=immich-app/immich-charts
+      version: 0.9.1
+      sourceRef:
+        kind: HelmRepository
+        name: immich-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    postgres:
+      enabled: false
+    redis:
+      enabled: true
+    immich:
+      persistence:
+        library:
+          existingClaim: demo-library
+    env:
+      DB_HOSTNAME:
+        valueFrom:
+          secretKeyRef:
+            name: demo-database-superuser
+            key: host
+      DB_USERNAME:
+        valueFrom:
+          secretKeyRef:
+            name: demo-database-superuser
+            key: user
+      DB_PASSWORD:
+        valueFrom:
+          secretKeyRef:
+            name: demo-database-superuser
+            key: password
+      DB_DATABASE_NAME:
+        valueFrom:
+          secretKeyRef:
+            name: demo-database-app
+            key: dbname
+      LOG_LEVEL: verbose
+    image:
+      tag: release
+    server:
+      image:
+        pullPolicy: Always
+      ingress:
+        main:
+          enabled: true
+          className: nginx
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-production
+            nginx.ingress.kubernetes.io/enable-cors: "true"
+            nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, PATCH, DELETE"
+            nginx.ingress.kubernetes.io/cors-allow-headers: "x-api-key, Authorization"
+            nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+            nginx.ingress.kubernetes.io/cors-max-age: "3600"
+
+            nginx.ingress.kubernetes.io/configuration-snippet: |
+              if ($request_method = PUT && $uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets/.*/original|auth/change-password)) {
+                return 403;
+              }
+
+              if ($request_method = POST && $uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets|auth/change-password|notifications/test-email|libraries)) {
+                return 403;
+              }
+
+              add_header 'Vary' 'Origin' always;
+          hosts:
+            - host: demo.immich.cloud
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls:
+            - hosts:
+                - demo.immich.cloud
+              secretName: demo-tls
+    machine-learning:
+      image:
+        pullPolicy: Always
