@@ -23,7 +23,7 @@ spec:
     immich:
       persistence:
         library:
-          existingClaim: demo-library
+          existingClaim: ignored
     env:
       DB_HOSTNAME:
         valueFrom:
@@ -51,6 +51,23 @@ spec:
     server:
       image:
         pullPolicy: Always
+      persistence:
+        library:
+          type: custom
+          volumeSpec:
+            ephemeral: # This way, the volume restores from snapshot every time the pod is recreated
+              volumeClaimTemplate:
+                spec:
+                  dataSource:
+                    name: preview-base-library-snapshot
+                    kind: VolumeSnapshot
+                    apiGroup: snapshot.storage.k8s.io
+                  storageClassName: zfs
+                  accessModes:
+                    - ReadWriteOnce
+                  resources:
+                    requests:
+                      storage: 100Gi
       ingress:
         main:
           enabled: true
@@ -93,7 +110,7 @@ spec:
           tls:
             - hosts:
                 - demo.immich.cloud
-              secretName: demo-tls # TODO: Keep TLS secret out of reset loop
+              secretName: demo-tls
     machine-learning:
       image:
         pullPolicy: Always
