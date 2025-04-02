@@ -23,7 +23,7 @@ spec:
     immich:
       persistence:
         library:
-          existingClaim: demo-library
+          existingClaim: ignored
     env:
       DB_HOSTNAME:
         valueFrom:
@@ -51,6 +51,23 @@ spec:
     server:
       image:
         pullPolicy: Always
+      persistence:
+        library:
+          type: custom
+          volumeSpec:
+            ephemeral: # This way, the volume restores from snapshot every time the pod is recreated
+              volumeClaimTemplate:
+                spec:
+                  dataSource:
+                    name: preview-base-library-snapshot
+                    kind: VolumeSnapshot
+                    apiGroup: snapshot.storage.k8s.io
+                  storageClassName: zfs
+                  accessModes:
+                    - ReadWriteOnce
+                  resources:
+                    requests:
+                      storage: 100Gi
       ingress:
         main:
           enabled: true
@@ -64,11 +81,23 @@ spec:
             nginx.ingress.kubernetes.io/cors-max-age: "3600"
 
             nginx.ingress.kubernetes.io/configuration-snippet: |
-              if ($request_method = PUT && $uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets/.*/original|auth/change-password)) {
+              if ($request_method = PUT) {
+                set $block_put 1;
+              }
+                if ($uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets/.*/original|auth/change-password)$) {
+                set $block_put "${block_put}1";
+              }
+                if ($block_put = 11) {
                 return 403;
               }
 
-              if ($request_method = POST && $uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets|auth/change-password|notifications/test-email|libraries)) {
+              if ($request_method = POST) {
+                set $block_post 1;
+              }
+                if ($uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets|auth/change-password|notifications/test-email|libraries)$) {
+                set $block_post "${block_post}1";
+              }
+                if ($block_post = 11) {
                 return 403;
               }
 

@@ -12,11 +12,11 @@ rules:
   - apiGroups: ["kustomize.toolkit.fluxcd.io"]
     resources: ["kustomizations"]
     resourceNames: ["demo-deployment"]
-    verbs: ["delete"]
+    verbs: ["get", "list", "delete"]
   - apiGroups: ["kustomize.toolkit.fluxcd.io"]
     resources: ["kustomizations"]
     resourceNames: ["demo-deployment-parent"]
-    verbs: ["patch"]
+    verbs: ["get", "list", "patch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding

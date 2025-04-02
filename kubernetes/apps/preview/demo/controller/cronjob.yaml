@@ -4,7 +4,7 @@ metadata:
   name: demo-controller
   namespace: preview
 spec:
-  schedule: "*/15 * * * *" # TODO: A sensible schedule (every 4 hrs?)
+  schedule: "0 */5 * * *"
   jobTemplate:
     spec:
       template:
@@ -23,6 +23,8 @@ spec:
                   set -o errexit
                   set -o nounset
 
-                  flux delete kustomization demo-deployment
-                  flux reconcile kustomization demo-deployment-parent
+                  kubectl delete cluster demo-database --wait=true --cascade=foreground --namespace=preview
+                  flux reconcile kustomization demo-deployment --namespace=flux-system
+                  # Trigger recreation of the pod to get a fresh volume snapshot
+                  kubectl rollout restart deployment/demo-server --namespace=preview
           restartPolicy: OnFailure
