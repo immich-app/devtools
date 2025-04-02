@@ -4,7 +4,7 @@ metadata:
   name: demo-controller
   namespace: preview
 spec:
-  schedule: "*/15 * * * *" # TODO: A sensible schedule (every 4 hrs?)
+  schedule: "0 */5 * * *"
   jobTemplate:
     spec:
       template:
@@ -24,5 +24,6 @@ spec:
                   set -o nounset
 
                   flux delete kustomization demo-deployment -s
+                  kubectl wait --for=delete --namespace=flux-system kustomization/demo-deployment
                   flux reconcile kustomization demo-deployment-parent
           restartPolicy: OnFailure
