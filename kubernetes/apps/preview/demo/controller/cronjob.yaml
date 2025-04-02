@@ -23,6 +23,6 @@ spec:
                   set -o errexit
                   set -o nounset
 
-                  flux delete kustomization demo-deployment
+                  flux delete kustomization demo-deployment -s
                   flux reconcile kustomization demo-deployment-parent
           restartPolicy: OnFailure
