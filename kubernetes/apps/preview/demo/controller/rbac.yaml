@@ -17,6 +17,15 @@ rules:
     resources: ["clusters"]
     resourceNames: ["demo-database"]
     verbs: ["get", "list", "delete", "watch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "deployments/scale"]
+    resourceNames: ["demo-server"]
+    verbs: ["get", "list", "delete", "watch", "patch"]
+  - apiGroups: ["apps"]
+    resources: ["statefulsets"]
+    resourceNames: ["demo-redis-master"]
+    verbs: ["get", "list", "delete", "watch", "patch"]
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
