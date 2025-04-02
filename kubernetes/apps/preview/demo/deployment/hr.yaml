@@ -111,9 +111,14 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
+            - host: demo.preview.internal.immich.cloud
+              paths:
+                - path: /
+                  pathType: Prefix
           tls:
             - hosts:
                 - demo.immich.cloud
+                - demo.preview.internal.immich.cloud
               secretName: demo-tls
     machine-learning:
       image:
