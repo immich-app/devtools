@@ -3,14 +3,15 @@
   "extends": ["local>immich-app/.github:renovate-config"],
   "automerge": true,
   "schedule": ["at any time"],
+  "minimumReleaseAge": "0 days",
   "packageRules": [
     {
       "matchPackageNames": ["/gha-runner/", "/dind/"],
       "groupName": "github actions runners"
     },
     {
-      "matchPackageNames": ["immich-app/immich"],
-      "minimumReleaseAge": "0 days"
+      "matchPackageNames": ["/discord-bot/"],
+      "pinDigests": false
     }
   ],
   "flux": {
