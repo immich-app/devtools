@@ -39,6 +39,7 @@ variable "repositories" {
       name        = "demo",
       description = "This repo contains the setup for the demo instance at https://demo.immich.app/"
       url         = "https://demo.immich.app",
+      archived    = true
     },
     {
       name        = "test-assets",
