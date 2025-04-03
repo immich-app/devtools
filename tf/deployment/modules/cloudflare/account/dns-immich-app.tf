@@ -1,9 +1,9 @@
-resource "cloudflare_record" "immich_app_a_demo" {
+resource "cloudflare_record" "immich_app_cname_demo" {
   name    = "demo"
   proxied = false
   ttl     = 1
-  type    = "A"
-  content = "158.101.217.188"
+  type    = "CNAME"
+  content = "mich.immich.cloud"
   zone_id = cloudflare_zone.immich_app.id
 }
 
