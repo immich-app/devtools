@@ -12,7 +12,7 @@ rules:
   - apiGroups: ["kustomize.toolkit.fluxcd.io"]
     resources: ["kustomizations"]
     resourceNames: ["demo-deployment"]
-    verbs: ["get", "list", "delete", "watch"]
+    verbs: ["get", "list", "delete", "watch", "patch"]
   - apiGroups: ["postgresql.cnpg.io"]
     resources: ["clusters"]
     resourceNames: ["demo-database"]
