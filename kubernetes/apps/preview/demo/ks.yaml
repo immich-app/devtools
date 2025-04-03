@@ -28,7 +28,7 @@ spec:
       app.kubernetes.io/name: *app
   path: ./kubernetes/apps/preview/demo/deployment
   dependsOn:
-    - demo-snapshot
+    - name: demo-snapshot
   prune: true
   sourceRef:
     kind: GitRepository
