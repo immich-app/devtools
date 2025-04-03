@@ -5,7 +5,7 @@ metadata:
   namespace: preview
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole # TODO: Should this just be a Role?
+kind: ClusterRole
 metadata:
   name: demo-controller
 rules:

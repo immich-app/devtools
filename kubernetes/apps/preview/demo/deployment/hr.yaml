@@ -16,7 +16,6 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
-    # TODO: Config file
     postgres:
       enabled: false
     redis:
@@ -63,7 +62,7 @@ spec:
               volumeClaimTemplate:
                 spec:
                   dataSource:
-                    name: preview-base-library-snapshot
+                    name: demo-library-snapshot
                     kind: VolumeSnapshot
                     apiGroup: snapshot.storage.k8s.io
                   storageClassName: zfs

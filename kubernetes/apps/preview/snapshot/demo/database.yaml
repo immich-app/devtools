@@ -1,0 +1,10 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Backup
+metadata:
+  name: demo-database-snapshot
+  namespace: preview
+spec:
+  cluster:
+    name: pr-17357-preview-database
+  method: volumeSnapshot
+  online: false
