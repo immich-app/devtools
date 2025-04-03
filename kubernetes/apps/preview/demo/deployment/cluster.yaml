@@ -10,7 +10,7 @@ spec:
   bootstrap:
     recovery:
       backup:
-        name: preview-base-database-snapshot
+        name: demo-database-snapshot
   postgresql:
     shared_preload_libraries:
       - "vectors.so"
