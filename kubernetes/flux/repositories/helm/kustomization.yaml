@@ -16,3 +16,4 @@ resources:
   - ./backube.yaml
   - ./immich-charts.yaml
   - ./controlplaneio.yaml
+  - ./external-secrets.yaml
