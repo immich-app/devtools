@@ -1,19 +1,3 @@
-data "onepassword_vault" "opentofu" {
-  name = "OpenTofu"
-}
-
-data "onepassword_vault" "kubernetes" {
-  name = "Kubernetes"
-}
-
-data "onepassword_vault" "tf_dev" {
-  name = "tf_dev"
-}
-
-data "onepassword_vault" "tf_prod" {
-  name = "tf_prod"
-}
-
 resource "tls_private_key" "containerssh_host_key" {
   algorithm = "ED25519"
 }
