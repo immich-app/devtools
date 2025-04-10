@@ -1,6 +1,6 @@
 data "onepassword_item" "bot" {
   title = "IMMICH_DISCORD_BOT_GITHUB_WEBHOOK_SLUG"
-  vault = data.onepassword_vault.kubernetes.name
+  vault = data.onepassword_vault.tf.name
 }
 
 resource "github_organization_webhook" "bot" {
