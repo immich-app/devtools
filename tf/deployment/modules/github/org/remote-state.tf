@@ -23,3 +23,7 @@ data "onepassword_vault" "kubernetes" {
 data "onepassword_vault" "github" {
   name = "Github"
 }
+
+data "onepassword_vault" "tf" {
+  name = "tf"
+}
