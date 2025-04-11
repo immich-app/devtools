@@ -79,6 +79,7 @@ spec:
       namespace: preview
     spec:
       interval: 5m
+      timeout: 20m
       chart:
         spec:
           chart: immich
