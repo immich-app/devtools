@@ -3,12 +3,12 @@ on:
   pull_request:
     branches: [ "main" ]
     paths:
-      - "tf/deployment/**"
+      - "tf/**"
       - ".github/workflows/terragrunt.yaml"
   push:
     branches: [ "main" ]
     paths:
-      - "tf/deployment/**"
+      - "tf/**"
       - ".github/workflows/terragrunt.yaml"
 
 concurrency:
