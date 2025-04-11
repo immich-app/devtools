@@ -10,7 +10,8 @@ module "manual-secrets" {
       "IMMICH_GITHUB_CLIENT_SECRET",
       "FUTO_ZULIP_DOMAIN",
       "FOURTHWALL_USER",
-      "FOURTHWALL_PASSWORD"
+      "FOURTHWALL_PASSWORD",
+      "OUTLINE_API_KEY"
     ]
   }
 }
