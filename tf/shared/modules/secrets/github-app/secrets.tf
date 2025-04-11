@@ -49,27 +49,29 @@ resource "null_resource" "convert_certificates" {
   }
 
   provisioner "local-exec" {
+    environment = {
+      PEM_VALUE = each.value.section[0].field[0].value
+    }
     command = <<-EOT
-      # Extract PEM from 1Password section[0]
-      PEM_VALUE=$(echo '${each.value.section[0].field[0].value}')
-
       # Create cert directory if it doesn't exist
-      mkdir -p ${path.module}/certs
+      mkdir -p /tmp/tf-certs
 
       if [ -z "$PEM_VALUE" ] || [ "$PEM_VALUE" = "CHANGE_ME" ]; then
         echo "PEM value not set or is still the default value. Using CHANGE_ME as certificate values."
 
         # Create certificate files with CHANGE_ME content
-        echo "CHANGE_ME" > ${path.module}/certs/${each.key}_pkcs1.pem
-        echo "CHANGE_ME" > ${path.module}/certs/${each.key}_pkcs8.pem
+        echo "CHANGE_ME" > /tmp/tf-certs/${each.key}_pkcs1.pem
+        echo "CHANGE_ME" > /tmp/tf-certs/${each.key}_pkcs8.pem
       else
         echo "Processing PEM value to handle newlines"
 
         # Convert literal \n to actual newlines and create PKCS#1 PEM file (original format)
-        echo -e "$PEM_VALUE" > ${path.module}/certs/${each.key}_pkcs1.pem
+        printf "%b" "$PEM_VALUE" > /tmp/tf-certs/${each.key}_pkcs1.pem
+
+        cat /tmp/tf-certs/${each.key}_pkcs1.pem
 
         # Validate PKCS#1 format
-        openssl rsa -in ${path.module}/certs/${each.key}_pkcs1.pem -check -noout
+        openssl rsa -in /tmp/tf-certs/${each.key}_pkcs1.pem -check -noout
         PKCS1_VALID=$?
 
         if [ $PKCS1_VALID -ne 0 ]; then
@@ -78,16 +80,16 @@ resource "null_resource" "convert_certificates" {
         fi
 
         # Convert to PKCS8
-        openssl pkcs8 -topk8 -inform PEM -in ${path.module}/certs/${each.key}_pkcs1.pem -outform PEM -nocrypt > ${path.module}/certs/${each.key}_pkcs8.pem
+        openssl pkcs8 -topk8 -inform PEM -in /tmp/tf-certs/${each.key}_pkcs1.pem -outform PEM -nocrypt > /tmp/tf-certs/${each.key}_pkcs8.pem
         PKCS8_SUCCESS=$?
 
         # Verify files were created with content
-        if [ ! -s ${path.module}/certs/${each.key}_pkcs1.pem ]; then
+        if [ ! -s /tmp/tf-certs/${each.key}_pkcs1.pem ]; then
           echo "PKCS1 file is empty"
           exit 1
         fi
 
-        if [ $PKCS8_SUCCESS -ne 0 ] || [ ! -s ${path.module}/certs/${each.key}_pkcs8.pem ]; then
+        if [ $PKCS8_SUCCESS -ne 0 ] || [ ! -s /tmp/tf-certs/${each.key}_pkcs8.pem ]; then
           echo "PKCS8 conversion failed or file is empty"
           exit 1
         fi
@@ -101,13 +103,13 @@ resource "null_resource" "convert_certificates" {
 # Read the converted certificate files
 data "local_file" "pkcs1_cert" {
   for_each   = onepassword_item.manual
-  filename   = "${path.module}/certs/${each.key}_pkcs1.pem"
+  filename   = "/tmp/tf-certs/${each.key}_pkcs1.pem"
   depends_on = [null_resource.convert_certificates]
 }
 
 data "local_file" "pkcs8_cert" {
   for_each   = onepassword_item.manual
-  filename   = "${path.module}/certs/${each.key}_pkcs8.pem"
+  filename   = "/tmp/tf-certs/${each.key}_pkcs8.pem"
   depends_on = [null_resource.convert_certificates]
 }
 
