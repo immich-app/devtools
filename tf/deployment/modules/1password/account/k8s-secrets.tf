@@ -183,46 +183,12 @@ resource "onepassword_item" "vmetrics_data_read_token" {
   }
 }
 
-resource "random_password" "bot_github_webhook_slug" {
-  length  = 40
-  special = false
+removed {
+  from = onepassword_item.bot_github_webhook_slug
 }
 
-resource "onepassword_item" "bot_github_webhook_slug" {
-  vault    = data.onepassword_vault.kubernetes.uuid
-  title    = "bot-github-webhook-slug"
-  category = "secure_note"
-
-  section {
-    label = "Github webhook slug for the bot"
-
-    field {
-      label = "GITHUB_SLUG"
-      type  = "CONCEALED"
-      value = random_password.bot_github_webhook_slug.result
-    }
-  }
-}
-
-resource "random_password" "bot_fourthwall_webhook_slug" {
-  length  = 40
-  special = false
-}
-
-resource "onepassword_item" "bot_fourthwall_webhook_slug" {
-  vault    = data.onepassword_vault.kubernetes.uuid
-  title    = "bot-fourthwall-webhook-slug"
-  category = "secure_note"
-
-  section {
-    label = "Fourthwall webhook slug for the bot"
-
-    field {
-      label = "FOURTHWALL_SLUG"
-      type  = "CONCEALED"
-      value = random_password.bot_fourthwall_webhook_slug.result
-    }
-  }
+removed {
+  from = onepassword_item.bot_fourthwall_webhook_slug
 }
 
 resource "random_password" "grafana_oauth_client_secret" {
