@@ -9,9 +9,5 @@ terraform {
       source  = "registry.terraform.io/docker/docker"
       version = "0.4.2"
     }
-    onepassword = {
-      source  = "1Password/onepassword"
-      version = "~> 2.1"
-    }
   }
 }
