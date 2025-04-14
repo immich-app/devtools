@@ -11,7 +11,8 @@ module "manual-secrets" {
       "FUTO_ZULIP_DOMAIN",
       "FOURTHWALL_USER",
       "FOURTHWALL_PASSWORD",
-      "OUTLINE_API_KEY"
+      "OUTLINE_API_KEY",
+      "IMMICH_TF_DISCORD_BOT_TOKEN"
     ]
   }
 }
