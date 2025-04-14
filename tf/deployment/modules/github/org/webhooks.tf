@@ -16,24 +16,51 @@ resource "github_organization_webhook" "bot" {
   }
 }
 
-data "onepassword_item" "previews_webhook_secret" {
-  title = "previews-webhook-secret"
-  vault = data.onepassword_vault.kubernetes.name
+data "onepassword_item" "previews_webhook_url" {
+  title = "PREVIEWS_GITHUB_WEBHOOK_URL"
+  vault = data.onepassword_vault.tf.name
 }
 
-locals {
-  previews_webhook_token = [for field in data.onepassword_item.previews_webhook_secret.section[0].field : field.value if field.label == "token"][0]
+data "onepassword_item" "previews_webhook_secret" {
+  title = "PREVIEWS_GITHUB_WEBHOOK_SECRET"
+  vault = data.onepassword_vault.tf.name
 }
 
 resource "github_repository_webhook" "previews" {
+  count = data.onepassword_item.previews_webhook_url.password != "REPLACE_ME" ? 1 : 0
   events = [
     "push",
     "pull_request"
   ]
   repository = "immich"
   configuration {
-    url          = data.onepassword_item.previews_webhook_secret.url
-    secret       = local.previews_webhook_token
+    url          = data.onepassword_item.previews_webhook_url.password
+    secret       = data.onepassword_item.previews_webhook_secret.password
     content_type = "form"
   }
 }
+
+data "onepassword_item" "fluxcd_webhook_url" {
+  title = "FLUXCD_GITHUB_WEBHOOK_URL"
+  vault = data.onepassword_vault.tf.name
+}
+
+data "onepassword_item" "fluxcd_webhook_secret" {
+  title = "FLUXCD_GITHUB_WEBHOOK_SECRET"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_repository_webhook" "fluxcd" {
+  count = data.onepassword_item.fluxcd_webhook_url.password != "REPLACE_ME" ? 1 : 0
+  events = [
+    "push",
+    "pull_request"
+  ]
+  repository = "devtools"
+  configuration {
+    url          = data.onepassword_item.fluxcd_webhook_url.password
+    secret       = data.onepassword_item.fluxcd_webhook_secret.password
+    content_type = "form"
+  }
+}
+

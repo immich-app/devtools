@@ -253,31 +253,3 @@ resource "onepassword_item" "outline_secret" {
     }
   }
 }
-
-resource "random_password" "previews_webhook_token" {
-  length  = 40
-  special = false
-}
-
-resource "onepassword_item" "previews_webhook_secret" {
-  vault    = data.onepassword_vault.kubernetes.uuid
-  title    = "previews-webhook-secret"
-  category = "secure_note"
-  url      = "CHANGE_ME_MANUALLY"
-
-  section {
-    label = "Generated"
-
-    field {
-      label = "token"
-      type  = "CONCEALED"
-      value = random_password.previews_webhook_token.result
-    }
-  }
-
-  lifecycle {
-    ignore_changes = [
-      url
-    ]
-  }
-}
