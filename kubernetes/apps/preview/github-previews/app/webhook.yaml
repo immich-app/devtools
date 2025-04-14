@@ -1,10 +1,17 @@
-apiVersion: onepassword.com/v1
-kind: OnePasswordItem
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
 metadata:
   name: previews-webhook-secret
   namespace: preview
 spec:
-  itemPath: "vaults/Kubernetes/items/previews-webhook-secret"
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: 1p-tf
+  refreshInterval: "20s"
+  data:
+    - secretKey: token
+      remoteRef:
+        key: PREVIEWS_GITHUB_WEBHOOK_SECRET
 ---
 apiVersion: notification.toolkit.fluxcd.io/v1
 kind: Receiver
