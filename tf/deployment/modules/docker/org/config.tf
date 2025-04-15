@@ -7,7 +7,7 @@ terraform {
   required_providers {
     docker = {
       source  = "registry.terraform.io/docker/docker"
-      version = "0.4.1"
+      version = "0.4.2"
     }
     onepassword = {
       source  = "1Password/onepassword"
