@@ -1,3 +1,1 @@
 provider "docker" {}
-
-provider "onepassword" {}
