@@ -1,4 +1,5 @@
 ### Project gitignore
+tf/shared/modules/**/.terraform.lock.hcl
 
 ### VisualStudioCode template
 .vscode/*
