@@ -6,8 +6,8 @@ terraform {
 
   required_providers {
     discord = {
-      source  = "registry.terraform.io/Lucky3028/discord"
-      version = "~> 2.0.1"
+      source  = "registry.terraform.io/zp-forks/discord"
+      version = "~> 3.0.0"
     }
     onepassword = {
       source  = "1Password/onepassword"

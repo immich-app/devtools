@@ -24,10 +24,18 @@ provider "registry.opentofu.org/1password/onepassword" {
   ]
 }
 
-provider "registry.terraform.io/lucky3028/discord" {
-  version     = "2.0.1"
-  constraints = "~> 2.0.1"
+provider "registry.terraform.io/zp-forks/discord" {
+  version     = "3.0.0"
+  constraints = "~> 3.0"
   hashes = [
-    "h1:/ObLQecCigwVoXCYzP8qyg0uWf2TgPCs9zrdZXiFW7U=",
+    "h1:nVOyxGp1wV9z0mkwz/3QM8/+4FH5CMSU7yRPbf+RoRw=",
+    "zh:0779f63a1ac0315b29a495f0b34bfcc1b6d6665fa8a55bd97dcf3521570a2c7c",
+    "zh:53a174b84e5dd7114bd57e192169aada17be5028901b1ffd855f53e12ff59abb",
+    "zh:593bb18940176555e6a386621b84a48f15dfbd97272faec5f302592c4730e42b",
+    "zh:73e0d2d744a11fd18e32f87970cdcc59beb0399a015c1860e8bd567fe02ab685",
+    "zh:9797e91416216a8129e29fc438c47b2bb5b0f496a5b2c6f703b4b2d793d1301d",
+    "zh:987f35e9c0326400910bd2696c168656508c8838f66d7a6a2b3c5c32aea9edab",
+    "zh:9def90dcd772f46c0bf99936452d59cedd6da2f3579e40c0914cb00f1d982ac3",
+    "zh:d770b6540797e4b3986a2735d915260a30492a9ad83915f48ee7927b0ede706e",
   ]
 }

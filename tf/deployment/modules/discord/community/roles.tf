@@ -1,12 +1,3 @@
-locals {
-  role_order = [
-    "admin",
-    "moderator",
-    "contributor",
-    "member"
-  ]
-}
-
 data "discord_permission" "everyone" {
   view_channel              = "allow"
   create_instant_invite     = "allow"
@@ -37,8 +28,7 @@ data "discord_permission" "everyone" {
 }
 
 resource "discord_role_everyone" "everyone" {
-  server_id = discord_server.server.id
-  # permissions = parseint("111111001001111100110000110001101011100111001000001", 2)
+  server_id   = discord_server.server.id
   permissions = data.discord_permission.everyone.allow_bits
 }
 
