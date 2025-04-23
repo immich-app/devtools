@@ -1,0 +1,39 @@
+[tools]
+flux2 = "2.5.1"
+helm = "3.17.3"
+jq = "1.7.1"
+kubectl = "1.28.6"
+opentofu = "1.7.1"
+"pipx:flux-local" = "7.3.0"
+terragrunt = "0.58.12"
+yamlfmt = "0.16.0"
+
+[env]
+KUBECONFIG = "{{config_root}}/.mise/kube.config"
+
+[tasks.tf]
+dir = "{{config_root}}/tf/deployment"
+run = "op run '--env-file=.env' -- terragrunt run-all"
+description = "Wrapper for terragrunt run-all"
+
+[tasks."tf:fmt"]
+run = "tofu fmt -recursive tf/"
+description = "Format terraform files"
+
+[tasks."kube:fmt"]
+run = "yamlfmt kubernetes/ templates/kubernetes/"
+description = "Format kubernetes manifests"
+
+[tasks."kube:auth"]
+run = "op inject -i .mise/kube-exec-credential.json | jq '.status.[] |= @base64d'"
+description = "Retrieve kubectl auth key"
+silent = true
+hide = true
+
+[tasks."kube:diff"]
+run = "flux-local diff hr --path ./kubernetes -A --branch-orig main"
+description = "Diff kubernetes helm releases"
+
+[tasks.fmt]
+depends = ["*:fmt"]
+description = "Format all files"
