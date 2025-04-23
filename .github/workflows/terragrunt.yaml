@@ -17,9 +17,6 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  tofu_version: '1.7.1'
-  tg_version: '0.58.12'
-  working_dir: 'tf/deployment'
   TERRAGRUNT_PARALLELISM: 1
 
 jobs:
@@ -34,30 +31,16 @@ jobs:
         with:
           version: 2.30.3
 
-      - name: Install Terragrunt
-        uses: eLco/setup-terragrunt@2c5116f8979bb261072ef57c97ac026cd9c27434 # v1
-        with:
-          terragrunt_version: ${{ env.tg_version }}
-
-      - name: 'Install OpenTofu'
-        uses: opentofu/setup-opentofu@592200bd4b9bbf4772ace78f887668b1aee8f716 # v1
-        with:
-          tofu_version: ${{ env.tofu_version }}
-          tofu_wrapper: false
+      - uses: jdx/mise-action@v2
 
       - name: Check Formatting
-        uses: gruntwork-io/terragrunt-action@9559e51d05873b0ea467c42bbabcb5c067642ccc # v2
-        with:
-          tofu_version: ${{ env.tofu_version }}
-          tg_version: ${{ env.tg_version }}
-          tg_dir: ${{ env.working_dir }}
-          tg_command: 'hclfmt --terragrunt-check --terragrunt-diff'
+        run: terragrunt hclfmt --terragrunt-check --terragrunt-diff
 
       - name: Check terraform fmt
-        working-directory: ${{ env.working_dir }}
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
-        run: op run --env-file=".env" -- terragrunt run-all fmt -diff -check
+        run: mise run tf fmt -diff -check
+
   plan:
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
@@ -67,33 +50,15 @@ jobs:
 
       - name: Install 1Password CLI
         uses: 1password/install-cli-action@143a85f84a90555d121cde2ff5872e393a47ab9f # v1
-
-      - name: Install Terragrunt
-        uses: eLco/setup-terragrunt@2c5116f8979bb261072ef57c97ac026cd9c27434 # v1
         with:
-          terragrunt_version: ${{ env.tg_version }}
+          version: 2.30.3
 
-      - name: 'Install OpenTofu'
-        uses: opentofu/setup-opentofu@592200bd4b9bbf4772ace78f887668b1aee8f716 # v1
-        with:
-          tofu_version: ${{ env.tofu_version }}
-          tofu_wrapper: false
+      - uses: jdx/mise-action@v2
 
       - name: Plan All
-        working-directory: ${{ env.working_dir }}
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
-        run: op run --env-file=".env" -- terragrunt run-all plan -no-color 2>&1 | tee "${{github.workspace}}/plan_output.txt" && exit ${PIPESTATUS[0]};
-
-#      - name: 'List files'
-#        run: 'ls -la ${{ github.workspace }}'
-
-#      - name: Comment Terraform Plan on PR
-#        uses: blinqas/tf-plan-pr-comment@v1
-#        with:
-#          output_file: "${{ github.workspace }}/plan_output.txt"
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mise run tf plan -no-color 2>&1 | tee "${{github.workspace}}/plan_output.txt" && exit ${PIPESTATUS[0]};
 
   deploy:
     runs-on: ubuntu-latest
@@ -104,20 +69,12 @@ jobs:
 
       - name: Install 1Password CLI
         uses: 1password/install-cli-action@143a85f84a90555d121cde2ff5872e393a47ab9f # v1
-
-      - name: Install Terragrunt
-        uses: eLco/setup-terragrunt@2c5116f8979bb261072ef57c97ac026cd9c27434 # v1
         with:
-          terragrunt_version: ${{ env.tg_version }}
+          version: 2.30.3
 
-      - name: 'Install OpenTofu'
-        uses: opentofu/setup-opentofu@592200bd4b9bbf4772ace78f887668b1aee8f716 # v1
-        with:
-          tofu_version: ${{ env.tofu_version }}
-          tofu_wrapper: false
+      - uses: jdx/mise-action@v2
 
       - name: Deploy All
-        working-directory: ${{ env.working_dir }}
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
-        run: op run --env-file=".env" -- terragrunt run-all apply --terragrunt-non-interactive
+        run: mise run tf apply --terragrunt-non-interactive
