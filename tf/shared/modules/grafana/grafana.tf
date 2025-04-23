@@ -16,7 +16,7 @@ locals {
 resource "grafana_dashboard" "dashboards" {
   for_each    = toset(local.dashboard_files)
   folder      = data.grafana_folder.folder.id
-  config_json = templatefile("${var.dashboards_path}/${each.value}")
+  config_json = file("${var.dashboards_path}/${each.value}")
 
   # Overwrite existing dashboards with the same name
   overwrite = true

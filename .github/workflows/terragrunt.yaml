@@ -56,7 +56,8 @@ jobs:
       - name: Check terraform fmt
         working-directory: ${{ env.working_dir }}
         env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_DEV_ENV }}
+          ENVIRONMENT: dev
         run: op run --env-file=".env" -- terragrunt run-all fmt -diff -check
   plan:
     runs-on: ubuntu-latest
@@ -79,21 +80,26 @@ jobs:
           tofu_version: ${{ env.tofu_version }}
           tofu_wrapper: false
 
-      - name: Plan All
-        working-directory: ${{ env.working_dir }}
+      - name: Plan Shared
+        working-directory: ${{ env.working_dir }}/modules/shared
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
-        run: op run --env-file=".env" -- terragrunt run-all plan -no-color 2>&1 | tee "${{github.workspace}}/plan_output.txt" && exit ${PIPESTATUS[0]};
+          ENVIRONMENT: prod
+        run: op run --env-file="../../.env" -- terragrunt run-all plan
 
-#      - name: 'List files'
-#        run: 'ls -la ${{ github.workspace }}'
+      - name: Plan Dev
+        working-directory: ${{ env.working_dir }}/modules/scoped
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_DEV_ENV }}
+          ENVIRONMENT: dev
+        run: op run --env-file="../../.env" -- terragrunt run-all plan
 
-#      - name: Comment Terraform Plan on PR
-#        uses: blinqas/tf-plan-pr-comment@v1
-#        with:
-#          output_file: "${{ github.workspace }}/plan_output.txt"
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Plan Prod
+        working-directory: ${{ env.working_dir }}/modules/scoped
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
+          ENVIRONMENT: prod
+        run: op run --env-file="../../.env" -- terragrunt run-all plan
 
   deploy:
     runs-on: ubuntu-latest
@@ -116,8 +122,23 @@ jobs:
           tofu_version: ${{ env.tofu_version }}
           tofu_wrapper: false
 
-      - name: Deploy All
-        working-directory: ${{ env.working_dir }}
+      - name: Deploy Shared
+        working-directory: ${{ env.working_dir }}/modules/shared
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
-        run: op run --env-file=".env" -- terragrunt run-all apply --terragrunt-non-interactive
+          ENVIRONMENT: prod
+        run: op run --env-file="../../.env" -- terragrunt run-all apply --terragrunt-non-interactive
+
+      - name: Deploy Dev
+        working-directory: ${{ env.working_dir }}/modules/scoped
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_DEV_ENV }}
+          ENVIRONMENT: dev
+        run: op run --env-file="../../.env" -- terragrunt run-all apply --terragrunt-non-interactive
+
+      - name: Deploy Prod
+        working-directory: ${{ env.working_dir }}/modules/scoped
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
+          ENVIRONMENT: prod
+        run: op run --env-file="../../.env" -- terragrunt run-all apply --terragrunt-non-interactive

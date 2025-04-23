@@ -14,11 +14,11 @@ resource "grafana_contact_point" "team_alerts" {
   }
 }
 
-module "monitoring_dashboards" {
+module "example_dashboards" {
   source = "./shared/modules/grafana"
 
   env             = var.env
-  folder_name     = "Monitoring Dashboards"
+  folder_name     = "Example TF Dashboard"
   folder_exists   = false # Let the module create the folder
   dashboards_path = "${path.module}/dashboards"
 }
