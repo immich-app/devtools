@@ -82,15 +82,13 @@ spec:
               subPath: daemon.json
         volumes:
         - name: work
-          emptyDir:
-            medium: "Memory"
+          emptyDir: {}
         - name: dind-sock
           emptyDir: {}
         - name: dind-externals
           emptyDir: {}
         - name: varlibdocker
-          emptyDir:
-            medium: "Memory"
+          emptyDir: {}
         - name: daemon-json
           configMap:
             name: docker-daemon-config
