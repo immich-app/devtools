@@ -4,6 +4,7 @@ metadata:
   name: victoria-metrics
   namespace: monitoring
 spec:
+  uid: '36979063-5384-4eb9-8679-565a727cbc13'
   instanceSelector:
     matchLabels:
       dashboards: "grafana"
