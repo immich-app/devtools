@@ -1,0 +1,38 @@
+{
+  "name": "@immich/scripts",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "album-creator": "tsx src/album-creator.ts",
+    "build": "tsc",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "lint": "eslint \"src/**/*.ts\" --max-warnings 0",
+    "lint:fix": "npm run lint -- --fix",
+    "check": "tsc --noEmit",
+    "check:all": "npm run format && npm run lint && npm run check",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.20.0",
+    "@immich/sdk": "^1.126.1",
+    "@types/luxon": "^3.4.2",
+    "@types/node": "^22.13.1",
+    "@typescript-eslint/eslint-plugin": "^8.24.0",
+    "@typescript-eslint/parser": "^8.24.0",
+    "eslint": "^9.20.1",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-unicorn": "^56.0.1",
+    "luxon": "^3.5.0",
+    "prettier": "^3.5.0",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.0"
+  }
+}

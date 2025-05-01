@@ -144,3 +144,6 @@ terragrunt-debug.tfvars.json
 /.idea/modules.xml
 /.idea/terraform.xml
 /.idea/vcs.xml
+
+scripts/node_modules/
+scripts/dist/
