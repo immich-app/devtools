@@ -6,4 +6,4 @@ metadata:
 spec:
   volumeSnapshotClassName: zfs
   source:
-    persistentVolumeClaimName: pr-17357-preview-library
+    persistentVolumeClaimName: pr-17963-preview-library
