@@ -25,6 +25,8 @@ spec:
     rendering:
       server_url: http://grafana-image-renderer:8081/render
       callback_url: http://grafana-service:3000/
+    unified_alerting.screenshots:
+      capture: "true"
   persistentVolumeClaim:
     spec:
       accessModes:
