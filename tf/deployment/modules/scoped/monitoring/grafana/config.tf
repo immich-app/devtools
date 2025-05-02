@@ -1,7 +1,5 @@
 terraform {
-  backend "pg" {
-    schema_name = "dev_monitoring_grafana"
-  }
+  backend "pg" {}
   required_version = "~> 1.7"
 
   required_providers {
