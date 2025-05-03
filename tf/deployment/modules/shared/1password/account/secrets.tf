@@ -16,6 +16,14 @@ module "manual-secrets" {
       "FLUXCD_GITHUB_WEBHOOK_URL",
       "PREVIEWS_GITHUB_WEBHOOK_URL"
     ]
+    dev = [
+      "MONITORING_GRAFANA_TF_AUTH_TOKEN",
+      "MONITORING_GRAFANA_URL"
+    ]
+    prod = [
+      "MONITORING_GRAFANA_TF_AUTH_TOKEN",
+      "MONITORING_GRAFANA_URL"
+    ]
   }
 }
 
@@ -39,3 +47,4 @@ module "github-apps" {
 
   app_names = ["IMMICH_TOFU", "IMMICH_PUSH_O_MATIC", "IMMICH_READ_ONLY"]
 }
+

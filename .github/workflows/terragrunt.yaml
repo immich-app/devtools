@@ -39,8 +39,8 @@ jobs:
       - name: Check terraform fmt
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
+          ENVIRONMENT: dev
         run: mise run tf fmt -diff -check
-
   plan:
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
@@ -55,10 +55,26 @@ jobs:
 
       - uses: jdx/mise-action@v2
 
-      - name: Plan All
+      - name: Plan Shared
+        working-directory: ${{ env.working_dir }}/modules/shared
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
-        run: mise run tf plan -no-color 2>&1 | tee "${{github.workspace}}/plan_output.txt" && exit ${PIPESTATUS[0]};
+          ENVIRONMENT: prod
+        run: mise run tf plan
+
+      - name: Plan Dev
+        working-directory: ${{ env.working_dir }}/modules/scoped
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_DEV_ENV }}
+          ENVIRONMENT: dev
+        run: mise run tf plan
+
+      - name: Plan Prod
+        working-directory: ${{ env.working_dir }}/modules/scoped
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
+          ENVIRONMENT: prod
+        run: mise run tf plan
 
   deploy:
     runs-on: ubuntu-latest
@@ -74,7 +90,23 @@ jobs:
 
       - uses: jdx/mise-action@v2
 
-      - name: Deploy All
+      - name: Deploy Shared
+        working-directory: ${{ env.working_dir }}/modules/shared
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
+          ENVIRONMENT: prod
+        run: mise run tf apply --terragrunt-non-interactive
+
+      - name: Deploy Dev
+        working-directory: ${{ env.working_dir }}/modules/scoped
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_DEV_ENV }}
+          ENVIRONMENT: dev
+        run: mise run tf apply --terragrunt-non-interactive
+
+      - name: Deploy Prod
+        working-directory: ${{ env.working_dir }}/modules/scoped
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
+          ENVIRONMENT: prod
         run: mise run tf apply --terragrunt-non-interactive

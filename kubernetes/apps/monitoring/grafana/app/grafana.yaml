@@ -22,6 +22,11 @@ spec:
       auto_login: "true"
     users:
       viewers_can_edit: "true"
+    rendering:
+      server_url: http://grafana-image-renderer:8081/render
+      callback_url: http://grafana-service:3000/
+    unified_alerting.screenshots:
+      capture: "true"
   persistentVolumeClaim:
     spec:
       accessModes:
