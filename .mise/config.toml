@@ -12,8 +12,7 @@ yamlfmt = "0.16.0"
 KUBECONFIG = "{{config_root}}/.mise/kube.config"
 
 [tasks.tg]
-dir = "{{config_root}}/tf/deployment"
-run = "op run '--env-file=.env' -- terragrunt"
+run = "op run '--env-file={{config_root}}/tf/deployment/.env' -- terragrunt"
 description = "Wrapper for terragrunt"
 
 [tasks."tg:fmt"]
@@ -21,7 +20,6 @@ run = "mise run tg hclfmt"
 description = "Format terragrunt files"
 
 [tasks.tf]
-dir = "{{config_root}}/tf/deployment"
 run = "mise run tg run-all"
 description = "Wrapper for terragrunt run-all"
 
