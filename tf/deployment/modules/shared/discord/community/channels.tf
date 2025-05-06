@@ -31,12 +31,12 @@ locals {
     "team",
     "team_off_topic",
     "team_focus_topic",
+    "team_purchases",
     "team_alerts",
     # Leadership Category
     "leadership",
     "leadership_off_topic",
     "leadership_alerts",
-    "leadership_purchases",
     "leadership_focus_topic",
     "moderator_only",
     # Third Parties Category
@@ -291,6 +291,18 @@ resource "discord_text_channel" "team_alerts" {
   category  = discord_category_channel.team.id
 }
 
+resource "discord_text_channel" "team_purchases" {
+  name      = "team-purchases"
+  position  = index(local.channel_order, "team_purchases")
+  server_id = discord_server.server.id
+  category  = discord_category_channel.team.id
+}
+
+moved {
+  from = discord_text_channel.leadership_purchases
+  to   = discord_text_channel.team_purchases
+}
+
 resource "discord_text_channel" "leadership" {
   name      = "leadership"
   topic     = "The place we make decisions that we know nothing about"
@@ -309,13 +321,6 @@ resource "discord_text_channel" "leadership_off_topic" {
 resource "discord_text_channel" "leadership_alerts" {
   name      = "leadership-alerts"
   position  = index(local.channel_order, "leadership_alerts")
-  server_id = discord_server.server.id
-  category  = discord_category_channel.leadership.id
-}
-
-resource "discord_text_channel" "leadership_purchases" {
-  name      = "leadership-purchases"
-  position  = index(local.channel_order, "leadership_purchases")
   server_id = discord_server.server.id
   category  = discord_category_channel.leadership.id
 }
