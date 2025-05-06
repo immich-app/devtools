@@ -160,7 +160,7 @@ import {
 }
 
 data "discord_color" "team" {
-  hex = "#1382FF"
+  hex = "#1E83F7"
 }
 
 resource "discord_role" "team" {
