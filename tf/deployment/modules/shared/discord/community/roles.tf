@@ -143,7 +143,7 @@ data "discord_permission" "contributor" {
 }
 
 data "discord_color" "contributor" {
-  hex = "#3498DB"
+  hex = "#29A0BE"
 }
 
 resource "discord_role" "contributor" {
@@ -160,7 +160,7 @@ import {
 }
 
 data "discord_color" "team" {
-  hex = "#E91E63"
+  hex = "#ADCAFA"
 }
 
 resource "discord_role" "team" {
