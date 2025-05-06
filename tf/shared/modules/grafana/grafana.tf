@@ -1,6 +1,7 @@
 resource "grafana_folder" "folder" {
   count = var.folder_exists ? 0 : 1
   title = var.folder_name
+  uid   = replace(lower(var.folder_name), "/[^a-z\\d]/", "-")
 }
 
 data "grafana_folder" "folder" {

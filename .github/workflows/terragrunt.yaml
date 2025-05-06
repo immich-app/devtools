@@ -99,7 +99,9 @@ jobs:
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
           ENVIRONMENT: prod
-        run: op run --env-file="../../.env" -- terragrunt run-all plan
+        run: |
+          op run --env-file="../../.env" -- terragrunt run-all init -reconfigure
+          op run --env-file="../../.env" -- terragrunt run-all plan
 
   deploy:
     runs-on: ubuntu-latest
@@ -141,4 +143,6 @@ jobs:
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
           ENVIRONMENT: prod
-        run: op run --env-file="../../.env" -- terragrunt run-all apply --terragrunt-non-interactive
+        run:  |
+          op run --env-file="../../.env" -- terragrunt run-all init -reconfigure
+          op run --env-file="../../.env" -- terragrunt run-all apply --terragrunt-non-interactive
