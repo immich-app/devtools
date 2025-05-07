@@ -53,7 +53,7 @@ import {
 }
 
 data "discord_color" "server_booster" {
-  hex = "#F47FFF"
+  hex = "#E55353"
 }
 
 resource "discord_role" "server_booster" {
@@ -68,7 +68,7 @@ import {
 }
 
 data "discord_color" "support_crew" {
-  hex = "#1F8B4C"
+  hex = "#18C249"
 }
 
 data "discord_permission" "support_crew" {
@@ -122,7 +122,7 @@ import {
 }
 
 data "discord_color" "in_the_zone" {
-  hex = "#FF0000"
+  hex = "#FA2921"
 }
 
 resource "discord_role" "in_the_zone" {
@@ -143,7 +143,7 @@ data "discord_permission" "contributor" {
 }
 
 data "discord_color" "contributor" {
-  hex = "#3498DB"
+  hex = "#ED79B5"
 }
 
 resource "discord_role" "contributor" {
@@ -160,7 +160,7 @@ import {
 }
 
 data "discord_color" "team" {
-  hex = "#E91E63"
+  hex = "#1E83F7"
 }
 
 resource "discord_role" "team" {
@@ -176,7 +176,7 @@ import {
 }
 
 data "discord_color" "head_down" {
-  hex = "#FF0000"
+  hex = "#FA2921"
 }
 
 resource "discord_role" "head_down" {
@@ -261,7 +261,7 @@ data "discord_permission" "fake_admin" {
 }
 
 data "discord_color" "admin" {
-  hex = "#F1C40F"
+  hex = "#FFB400"
 }
 
 resource "discord_role" "admin" {
