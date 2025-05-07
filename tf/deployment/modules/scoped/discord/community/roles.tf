@@ -1,4 +1,5 @@
 data "discord_permission" "everyone" {
+  view_channel              = "allow"
   create_instant_invite     = "allow"
   change_nickname           = "allow"
   send_messages             = "allow"
