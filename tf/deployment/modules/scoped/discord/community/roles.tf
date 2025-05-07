@@ -32,11 +32,6 @@ resource "discord_role_everyone" "everyone" {
   permissions = data.discord_permission.everyone.allow_bits
 }
 
-import {
-  id = discord_server.server.id
-  to = discord_role_everyone.everyone
-}
-
 data "discord_color" "package_maintainer" {
   hex = "#E74C3C"
 }
@@ -47,11 +42,6 @@ resource "discord_role" "package_maintainer" {
   color     = data.discord_color.package_maintainer.dec
 }
 
-import {
-  id = "${discord_server.server.id}:1288858805937115229"
-  to = discord_role.package_maintainer
-}
-
 data "discord_color" "server_booster" {
   hex = "#E55353"
 }
@@ -60,11 +50,6 @@ resource "discord_role" "server_booster" {
   server_id = discord_server.server.id
   name      = "Server Booster"
   color     = data.discord_color.server_booster.dec
-}
-
-import {
-  id = "${discord_server.server.id}:1045716730456055939"
-  to = discord_role.server_booster
 }
 
 data "discord_color" "support_crew" {
@@ -86,11 +71,6 @@ resource "discord_role" "support_crew" {
   hoist       = true
 }
 
-import {
-  id = "${discord_server.server.id}:1184258769312551053"
-  to = discord_role.support_crew
-}
-
 data "discord_color" "mobile_expert" {
   hex = "#2ECC71"
 }
@@ -99,11 +79,6 @@ resource "discord_role" "mobile_expert" {
   server_id = discord_server.server.id
   name      = "Mobile Expert"
   color     = data.discord_color.mobile_expert.dec
-}
-
-import {
-  id = "${discord_server.server.id}:1070359265371500554"
-  to = discord_role.mobile_expert
 }
 
 data "discord_color" "security_researcher" {
@@ -116,11 +91,6 @@ resource "discord_role" "security_researcher" {
   color     = data.discord_color.security_researcher.dec
 }
 
-import {
-  id = "${discord_server.server.id}:1020479701040508938"
-  to = discord_role.security_researcher
-}
-
 data "discord_color" "in_the_zone" {
   hex = "#FA2921"
 }
@@ -130,11 +100,6 @@ resource "discord_role" "in_the_zone" {
   name      = "In The Zone"
   color     = data.discord_color.in_the_zone.dec
   hoist     = true
-}
-
-import {
-  id = "${discord_server.server.id}:1194042573258498098"
-  to = discord_role.in_the_zone
 }
 
 data "discord_permission" "contributor" {
@@ -154,11 +119,6 @@ resource "discord_role" "contributor" {
   hoist       = true
 }
 
-import {
-  id = "${discord_server.server.id}:980972470964215870"
-  to = discord_role.contributor
-}
-
 data "discord_color" "team" {
   hex = "#1E83F7"
 }
@@ -170,11 +130,6 @@ resource "discord_role" "team" {
   hoist     = true
 }
 
-import {
-  id = "${discord_server.server.id}:1330248951613358101"
-  to = discord_role.team
-}
-
 data "discord_color" "head_down" {
   hex = "#FA2921"
 }
@@ -183,11 +138,6 @@ resource "discord_role" "head_down" {
   server_id = discord_server.server.id
   name      = "Head Down"
   color     = data.discord_color.head_down.dec
-}
-
-import {
-  id = "${discord_server.server.id}:1235198938349441054"
-  to = discord_role.head_down
 }
 
 data "discord_permission" "administrator" {
@@ -203,11 +153,6 @@ resource "discord_role" "hidden_admin" {
   name        = "Hidden Admin"
   permissions = data.discord_permission.administrator.allow_bits
   color       = data.discord_color.hidden_admin.dec
-}
-
-import {
-  id = "${discord_server.server.id}:1194350448459653241"
-  to = discord_role.hidden_admin
 }
 
 data "discord_permission" "fake_admin" {
@@ -270,9 +215,4 @@ resource "discord_role" "admin" {
   permissions = data.discord_permission.fake_admin.allow_bits
   color       = data.discord_color.admin.dec
   hoist       = true
-}
-
-import {
-  id = "${discord_server.server.id}:991443154182078484"
-  to = discord_role.admin
 }

@@ -58,6 +58,10 @@ locals {
   ]
 }
 
+data "discord_permission" "view_channel" {
+  view_channel = "allow"
+}
+
 resource "discord_text_channel" "rules" {
   name                     = "rules"
   position                 = index(local.channel_order, "rules")
