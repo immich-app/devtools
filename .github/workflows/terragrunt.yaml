@@ -39,7 +39,7 @@ jobs:
 
       - name: Check terraform fmt
         env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_DEV_ENV }}
           ENVIRONMENT: dev
         run: mise run tf fmt -diff -check
   plan:
