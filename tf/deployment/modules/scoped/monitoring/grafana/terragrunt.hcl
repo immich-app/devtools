@@ -24,3 +24,9 @@ remote_state {
     schema_name = "${local.env}_monitoring_grafana"
   }
 }
+
+dependencies {
+  paths = [
+    "../../discord/community"
+  ]
+}
