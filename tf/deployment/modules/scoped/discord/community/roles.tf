@@ -1,30 +1,22 @@
+locals {
+  role_order = [
+    "admin",
+    "hidden_admin",
+    "head_down",
+    "team",
+    "contributor",
+    "in_the_zone",
+    "security_researcher",
+    "mobile_expert",
+    "support_crew",
+    "package_maintainer",
+    "server_booster",
+  ]
+}
+
 data "discord_permission" "everyone" {
-  view_channel              = "allow"
-  create_instant_invite     = "allow"
-  change_nickname           = "allow"
-  send_messages             = "allow"
-  send_thread_messages      = "allow"
-  create_public_threads     = "allow"
-  create_private_threads    = "allow"
-  embed_links               = "allow"
-  attach_files              = "allow"
-  add_reactions             = "allow"
-  use_external_emojis       = "allow"
-  use_external_stickers     = "allow"
-  read_message_history      = "allow"
-  send_voice_messages       = "allow"
-  send_polls                = "allow"
-  start_embedded_activities = "allow"
-  connect                   = "allow"
-  speak                     = "allow"
-  stream                    = "allow"
-  use_soundboard            = "allow"
-  use_external_sounds       = "allow"
-  use_vad                   = "allow"
-  set_voice_channel_status  = "allow"
-  use_application_commands  = "allow"
-  use_external_apps         = "allow"
-  request_to_speak          = "allow"
+  create_instant_invite = "allow"
+  change_nickname       = "allow"
 }
 
 resource "discord_role_everyone" "everyone" {
