@@ -4,7 +4,7 @@ locals {
     { username = "alex.tran1502", id = 285511635735543828, role = "admin" },
     { username = "jrasm91", id = 613523742479483183, role = "admin" },
     { username = "bo0tzz", id = 324007594262003722, role = "admin" },
-    { username = "zackpollard", id = 185097470215192579, role = "admin" },
+    { username = "zackpollard", id = 185097470215192579, role = "admin", dev = true },
     # Team
     { username = "ddietzler", id = 273458650557841408, role = "team" },
     { username = ".eleman.", id = 1110388960842219662, role = "team" },
@@ -49,7 +49,7 @@ locals {
 }
 
 resource "discord_member_roles" "roles" {
-  for_each = { for user in local.users : user.id => user }
+  for_each = { for user in local.users : user.id => user if var.env == "prod" || lookup(user, "dev", false) == true }
 
   server_id = discord_server.server.id
   user_id   = each.value.id
