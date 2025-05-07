@@ -17,6 +17,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
+  working_dir: 'tf/deployment'
   TERRAGRUNT_PARALLELISM: 1
 
 jobs:
