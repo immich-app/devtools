@@ -1,5 +1,5 @@
 resource "discord_server" "server" {
-  name                          = "Immich"
+  name                          = var.env == "prod" ? "Immich" : "Immich ${title(var.env)}"
   region                        = "us-west"
   default_message_notifications = 1
   explicit_content_filter       = 2
@@ -7,6 +7,6 @@ resource "discord_server" "server" {
 }
 
 import {
-  id = "979116623879368755"
+  id = var.discord_server_id
   to = discord_server.server
 }
