@@ -1,0 +1,9 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: zitadel-db
+  namespace: authentication
+spec:
+  storage:
+    size: 10Gi
+    storageClass: zfs
