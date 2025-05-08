@@ -270,10 +270,6 @@ module "team_channels_write" {
 module "admin_channels_write" {
   source = "./channel-perms"
   channel_ids = [
-    discord_text_channel.rules.id,
-    discord_text_channel.welcome.id,
-    discord_news_channel.announcements.id,
-    discord_news_channel.poll.id,
     discord_text_channel.leadership.id,
     discord_text_channel.leadership_off_topic.id,
     discord_text_channel.leadership_alerts.id,
@@ -287,6 +283,19 @@ module "admin_channels_write" {
   allow       = data.discord_permission.write_channel.allow_bits
   everyone_id = discord_role_everyone.everyone.id
   public      = false
+}
+
+module "admin_channels_write_public" {
+  source = "./channel-perms"
+  channel_ids = [
+    discord_text_channel.rules.id,
+    discord_text_channel.welcome.id,
+    discord_news_channel.announcements.id,
+    discord_news_channel.poll.id,
+  ]
+  role_ids = [discord_role.admin.id]
+  allow    = data.discord_permission.write_channel.allow_bits
+  public   = true
 }
 
 resource "discord_text_channel" "rules" {
