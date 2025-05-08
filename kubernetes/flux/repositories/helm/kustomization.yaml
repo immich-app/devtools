@@ -17,3 +17,4 @@ resources:
   - ./immich-charts.yaml
   - ./controlplaneio.yaml
   - ./external-secrets.yaml
+  - ./zitadel.yaml
