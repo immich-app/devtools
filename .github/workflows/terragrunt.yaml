@@ -6,11 +6,13 @@ on:
     paths:
       - "tf/**"
       - ".github/workflows/terragrunt.yaml"
+      - ".mise/config.toml"
   push:
     branches: [ "main" ]
     paths:
       - "tf/**"
       - ".github/workflows/terragrunt.yaml"
+      - ".mise/config.toml"
 
 concurrency:
   group: ${{ github.workflow }}
