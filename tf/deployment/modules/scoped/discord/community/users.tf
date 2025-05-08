@@ -2,13 +2,13 @@ locals {
   users = [
     // Admins
     { username = "alex.tran1502", id = 285511635735543828, role = "admin" },
-    { username = "jrasm91", id = 613523742479483183, role = "admin" },
-    { username = "bo0tzz", id = 324007594262003722, role = "admin" },
+    { username = "jrasm91", id = 613523742479483183, role = "admin", dev = true },
+    { username = "bo0tzz", id = 324007594262003722, role = "admin", dev = true },
     { username = "zackpollard", id = 185097470215192579, role = "admin", dev = true },
     # Team
-    { username = "ddietzler", id = 273458650557841408, role = "team" },
+    { username = "ddietzler", id = 273458650557841408, role = "team", dev = true },
     { username = ".eleman.", id = 1110388960842219662, role = "team" },
-    { username = "shenlong", id = 879025674214584330, role = "team" },
+    { username = "shenlong", id = 879025674214584330, role = "team", dev = true },
     # Contributors
     { username = "adamantike", id = 820328828580134953, role = "contributor" },
     { username = "hungrypandas", id = 391059578743160832, role = "contributor" },
