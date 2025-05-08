@@ -15,6 +15,7 @@ KUBECONFIG = "{{config_root}}/.mise/kube.config"
 [tasks.tg]
 run = "op run '--env-file={{config_root}}/tf/deployment/.env' -- terragrunt"
 description = "Wrapper for terragrunt"
+dir = "{{cwd}}"
 
 [tasks."tg:fmt"]
 run = "mise run tg hclfmt"
