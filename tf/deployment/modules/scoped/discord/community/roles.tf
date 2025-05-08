@@ -95,8 +95,7 @@ resource "discord_role" "in_the_zone" {
 }
 
 data "discord_permission" "contributor" {
-  allow_extends    = data.discord_permission.support_crew.allow_bits
-  mention_everyone = "allow"
+  allow_extends = data.discord_permission.support_crew.allow_bits
 }
 
 data "discord_color" "contributor" {
@@ -115,11 +114,56 @@ data "discord_color" "team" {
   hex = "#1E83F7"
 }
 
+data "discord_permission" "team" {
+  create_expressions        = "allow"
+  manage_emojis             = "allow"
+  view_guild_insights       = "allow"
+  manage_guild              = "allow"
+  create_instant_invite     = "allow"
+  change_nickname           = "allow"
+  manage_nicknames          = "allow"
+  kick_members              = "allow"
+  ban_members               = "allow"
+  moderate_members          = "allow"
+  send_messages             = "allow"
+  send_thread_messages      = "allow"
+  create_public_threads     = "allow"
+  create_private_threads    = "allow"
+  embed_links               = "allow"
+  attach_files              = "allow"
+  add_reactions             = "allow"
+  use_external_emojis       = "allow"
+  use_external_stickers     = "allow"
+  mention_everyone          = "allow"
+  manage_messages           = "allow"
+  manage_threads            = "allow"
+  read_message_history      = "allow"
+  send_tts_messages         = "allow"
+  send_voice_messages       = "allow"
+  send_polls                = "allow"
+  speak                     = "allow"
+  stream                    = "allow"
+  use_soundboard            = "allow"
+  use_external_sounds       = "allow"
+  use_vad                   = "allow"
+  priority_speaker          = "allow"
+  mute_members              = "allow"
+  deafen_members            = "allow"
+  move_members              = "allow"
+  set_voice_channel_status  = "allow"
+  use_application_commands  = "allow"
+  start_embedded_activities = "allow"
+  request_to_speak          = "allow"
+  create_events             = "allow"
+  manage_events             = "allow"
+}
+
 resource "discord_role" "team" {
-  server_id = discord_server.server.id
-  name      = "Team"
-  color     = data.discord_color.team.dec
-  hoist     = true
+  server_id   = discord_server.server.id
+  name        = "Team"
+  permissions = data.discord_permission.team.allow_bits
+  color       = data.discord_color.team.dec
+  hoist       = true
 }
 
 data "discord_color" "head_down" {
@@ -148,53 +192,13 @@ resource "discord_role" "hidden_admin" {
 }
 
 data "discord_permission" "fake_admin" {
-  view_channel              = "allow"
-  manage_channels           = "allow"
-  manage_roles              = "allow"
-  create_expressions        = "allow"
-  manage_emojis             = "allow"
-  view_audit_log            = "allow"
-  view_guild_insights       = "allow"
-  manage_webhooks           = "allow"
-  manage_guild              = "allow"
-  create_instant_invite     = "allow"
-  change_nickname           = "allow"
-  manage_nicknames          = "allow"
-  kick_members              = "allow"
-  ban_members               = "allow"
-  moderate_members          = "allow"
-  send_messages             = "allow"
-  send_thread_messages      = "allow"
-  create_public_threads     = "allow"
-  create_private_threads    = "allow"
-  embed_links               = "allow"
-  attach_files              = "allow"
-  add_reactions             = "allow"
-  use_external_emojis       = "allow"
-  use_external_stickers     = "allow"
-  mention_everyone          = "allow"
-  manage_messages           = "allow"
-  manage_threads            = "allow"
-  read_message_history      = "allow"
-  send_tts_messages         = "allow"
-  send_voice_messages       = "allow"
-  send_polls                = "allow"
-  connect                   = "allow"
-  speak                     = "allow"
-  stream                    = "allow"
-  use_soundboard            = "allow"
-  use_external_sounds       = "allow"
-  use_vad                   = "allow"
-  priority_speaker          = "allow"
-  mute_members              = "allow"
-  deafen_members            = "allow"
-  move_members              = "allow"
-  set_voice_channel_status  = "allow"
-  use_application_commands  = "allow"
-  start_embedded_activities = "allow"
-  request_to_speak          = "allow"
-  create_events             = "allow"
-  manage_events             = "allow"
+  allow_extends   = data.discord_permission.team.allow_bits
+  view_channel    = "allow"
+  manage_channels = "allow"
+  manage_roles    = "allow"
+  view_audit_log  = "allow"
+  manage_webhooks = "allow"
+  connect         = "allow"
 }
 
 data "discord_color" "admin" {
