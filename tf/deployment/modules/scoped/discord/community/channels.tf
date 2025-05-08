@@ -90,13 +90,19 @@ data "discord_permission" "view_channel" {
   add_reactions        = "allow"
   use_external_emojis  = "allow"
   read_message_history = "allow"
+  send_messages        = "deny"
+}
+
+data "discord_permission" "read_channel_write_threads" {
+  allow_extends         = data.discord_permission.view_channel.allow_bits
+  send_messages         = "deny"
+  send_thread_messages  = "allow"
+  create_public_threads = "allow"
 }
 
 data "discord_permission" "write_channel" {
-  allow_extends             = data.discord_permission.view_channel.allow_bits
+  allow_extends             = data.discord_permission.read_channel_write_threads.allow_bits
   send_messages             = "allow"
-  send_thread_messages      = "allow"
-  create_public_threads     = "allow"
   embed_links               = "allow"
   attach_files              = "allow"
   use_external_stickers     = "allow"
@@ -119,12 +125,30 @@ module "everyone_channels_read" {
   channel_ids = [
     discord_text_channel.rules.id,
     discord_text_channel.welcome.id,
+    discord_text_channel.developer_updates.id,
+    discord_text_channel.cloudflare_status.id,
+    discord_text_channel.github_status.id,
+    discord_text_channel.github_issues_and_discussion.id,
+    discord_text_channel.github_pull_requests.id,
+    discord_text_channel.fosdem_2025.id,
+    discord_text_channel.immich_nix.id,
+  ]
+  role_ids = [discord_role_everyone.everyone.id]
+  allow    = data.discord_permission.view_channel.allow_bits
+  deny     = data.discord_permission.view_channel.deny_bits
+  public   = true
+}
+
+module "everyone_channels_write_threads" {
+  source = "./channel-perms"
+  channel_ids = [
     discord_news_channel.announcements.id,
     discord_news_channel.poll.id,
     discord_news_channel.github_releases.id,
   ]
   role_ids = [discord_role_everyone.everyone.id]
-  allow    = data.discord_permission.view_channel.allow_bits
+  allow    = data.discord_permission.read_channel_write_threads.allow_bits
+  deny     = data.discord_permission.read_channel_write_threads.deny_bits
   public   = true
 }
 
@@ -144,18 +168,12 @@ module "everyone_channels_write" {
     discord_text_channel.immich_power_tools.id,
     discord_text_channel.truenas.id,
     discord_text_channel.unraid.id,
-    discord_text_channel.developer_updates.id,
-    discord_text_channel.cloudflare_status.id,
-    discord_text_channel.github_status.id,
-    discord_text_channel.github_issues_and_discussion.id,
-    discord_text_channel.github_pull_requests.id,
     discord_text_channel.off_topic.id,
     discord_voice_channel.immich_voice.id,
-    discord_text_channel.fosdem_2025.id,
-    discord_text_channel.immich_nix.id,
   ]
   role_ids = [discord_role_everyone.everyone.id]
   allow    = data.discord_permission.write_channel.allow_bits
+  deny     = data.discord_permission.write_channel.deny_bits
   public   = true
 }
 
@@ -181,14 +199,9 @@ module "package_maintainers_write" {
   public      = false
 }
 
-module "contributor_channels_write" {
+module "contributor_channels_read" {
   source = "./channel-perms"
   channel_ids = [
-    discord_text_channel.dev.id,
-    discord_text_channel.dev_off_topic.id,
-    local.forum_channels.dev_focus_topic[var.env],
-    local.forum_channels.dev_announcements[var.env],
-    discord_voice_channel.dev_voice.id,
     discord_text_channel.dev_fosdem.id,
     discord_text_channel.dev_server.id,
     discord_text_channel.conference_room.id,
@@ -202,7 +215,36 @@ module "contributor_channels_write" {
     discord_text_channel.dev_cli.id,
   ]
   role_ids    = [discord_role.contributor.id]
+  allow       = data.discord_permission.view_channel.allow_bits
+  deny        = data.discord_permission.view_channel.deny_bits
+  everyone_id = discord_role_everyone.everyone.id
+  public      = false
+}
+
+module "contributor_channels_write" {
+  source = "./channel-perms"
+  channel_ids = [
+    discord_text_channel.dev.id,
+    discord_text_channel.dev_off_topic.id,
+    local.forum_channels.dev_focus_topic[var.env],
+    local.forum_channels.dev_announcements[var.env],
+    discord_voice_channel.dev_voice.id,
+  ]
+  role_ids    = [discord_role.contributor.id]
   allow       = data.discord_permission.write_channel.allow_bits
+  everyone_id = discord_role_everyone.everyone.id
+  public      = false
+}
+
+module "team_channels_read" {
+  source = "./channel-perms"
+  channel_ids = [
+    discord_text_channel.futo.id,
+    discord_text_channel.futo_discussion_old.id,
+  ]
+  role_ids    = [discord_role.team.id]
+  allow       = data.discord_permission.view_channel.allow_bits
+  deny        = data.discord_permission.view_channel.deny_bits
   everyone_id = discord_role_everyone.everyone.id
   public      = false
 }
@@ -218,8 +260,6 @@ module "team_channels_write" {
     discord_text_channel.bot_spam.id,
     discord_text_channel.emotes.id,
     discord_voice_channel.team_voice.id,
-    discord_text_channel.futo.id,
-    discord_text_channel.futo_discussion_old.id,
   ]
   role_ids    = [discord_role.team.id]
   allow       = data.discord_permission.write_channel.allow_bits
@@ -230,6 +270,10 @@ module "team_channels_write" {
 module "admin_channels_write" {
   source = "./channel-perms"
   channel_ids = [
+    discord_text_channel.rules.id,
+    discord_text_channel.welcome.id,
+    discord_news_channel.announcements.id,
+    discord_news_channel.poll.id,
     discord_text_channel.leadership.id,
     discord_text_channel.leadership_off_topic.id,
     discord_text_channel.leadership_alerts.id,
@@ -250,6 +294,9 @@ resource "discord_text_channel" "rules" {
   position                 = index(local.channel_order, "rules")
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "welcome" {
@@ -257,6 +304,9 @@ resource "discord_text_channel" "welcome" {
   position                 = index(local.channel_order, "welcome")
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_news_channel" "announcements" {
@@ -264,6 +314,9 @@ resource "discord_news_channel" "announcements" {
   position                 = index(local.channel_order, "announcements")
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_news_channel" "poll" {
@@ -272,6 +325,9 @@ resource "discord_news_channel" "poll" {
   position                 = index(local.channel_order, "poll")
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 # resource "discord_forum_channel" "help_desk_support" {
@@ -292,6 +348,9 @@ resource "discord_text_channel" "support_crew" {
   category                 = discord_category_channel.immich.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "package_maintainers" {
@@ -300,6 +359,9 @@ resource "discord_text_channel" "package_maintainers" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.immich.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 # resource "discord_forum_channel" "focus_discussion" {
@@ -321,6 +383,9 @@ resource "discord_text_channel" "contributing" {
   category                 = discord_category_channel.immich.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "translations" {
@@ -330,6 +395,9 @@ resource "discord_text_channel" "translations" {
   category                 = discord_category_channel.immich.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "immich" {
@@ -339,6 +407,9 @@ resource "discord_text_channel" "immich" {
   category                 = discord_category_channel.immich.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "merch" {
@@ -348,6 +419,9 @@ resource "discord_text_channel" "merch" {
   category                 = discord_category_channel.immich.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "imagegenius_aio" {
@@ -357,6 +431,9 @@ resource "discord_text_channel" "imagegenius_aio" {
   category                 = discord_category_channel.community.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "immich_go" {
@@ -366,6 +443,9 @@ resource "discord_text_channel" "immich_go" {
   category                 = discord_category_channel.community.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "immich_frame" {
@@ -375,6 +455,9 @@ resource "discord_text_channel" "immich_frame" {
   category                 = discord_category_channel.community.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "immich_kiosk" {
@@ -384,6 +467,9 @@ resource "discord_text_channel" "immich_kiosk" {
   category                 = discord_category_channel.community.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "immich_power_tools" {
@@ -393,6 +479,9 @@ resource "discord_text_channel" "immich_power_tools" {
   category                 = discord_category_channel.community.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "truenas" {
@@ -402,6 +491,9 @@ resource "discord_text_channel" "truenas" {
   category                 = discord_category_channel.community.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "unraid" {
@@ -411,6 +503,9 @@ resource "discord_text_channel" "unraid" {
   category                 = discord_category_channel.community.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "dev" {
@@ -419,6 +514,9 @@ resource "discord_text_channel" "dev" {
   category                 = discord_category_channel.development.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "dev_off_topic" {
@@ -428,6 +526,9 @@ resource "discord_text_channel" "dev_off_topic" {
   category                 = discord_category_channel.development.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 # resource "discord_forum_channel" "dev_announcements" {
@@ -460,6 +561,9 @@ resource "discord_text_channel" "team" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.team.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "team_off_topic" {
@@ -468,6 +572,9 @@ resource "discord_text_channel" "team_off_topic" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.team.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 # resource "discord_forum_channel" "team_focus_topic" {
@@ -488,6 +595,9 @@ resource "discord_text_channel" "team_alerts" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.team.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "team_purchases" {
@@ -496,6 +606,9 @@ resource "discord_text_channel" "team_purchases" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.team.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 moved {
@@ -510,6 +623,9 @@ resource "discord_text_channel" "leadership" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.leadership.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "leadership_off_topic" {
@@ -518,6 +634,9 @@ resource "discord_text_channel" "leadership_off_topic" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.leadership.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "leadership_alerts" {
@@ -526,6 +645,9 @@ resource "discord_text_channel" "leadership_alerts" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.leadership.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 # resource "discord_forum_channel" "leadership_focus_topic" {
@@ -546,6 +668,9 @@ resource "discord_text_channel" "moderator_only" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.leadership.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "developer_updates" {
@@ -554,6 +679,9 @@ resource "discord_text_channel" "developer_updates" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.third_parties.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "cloudflare_status" {
@@ -562,6 +690,9 @@ resource "discord_text_channel" "cloudflare_status" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.third_parties.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "github_status" {
@@ -571,6 +702,9 @@ resource "discord_text_channel" "github_status" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.third_parties.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "github_issues_and_discussion" {
@@ -580,6 +714,9 @@ resource "discord_text_channel" "github_issues_and_discussion" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.third_parties.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "github_pull_requests" {
@@ -588,6 +725,9 @@ resource "discord_text_channel" "github_pull_requests" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.third_parties.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_news_channel" "github_releases" {
@@ -596,6 +736,9 @@ resource "discord_news_channel" "github_releases" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.third_parties.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "bot_spam" {
@@ -604,6 +747,9 @@ resource "discord_text_channel" "bot_spam" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.off_topic.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "emotes" {
@@ -612,6 +758,9 @@ resource "discord_text_channel" "emotes" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.off_topic.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "off_topic" {
@@ -621,6 +770,9 @@ resource "discord_text_channel" "off_topic" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.off_topic.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_voice_channel" "immich_voice" {
@@ -629,6 +781,9 @@ resource "discord_voice_channel" "immich_voice" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.voice.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_voice_channel" "dev_voice" {
@@ -637,6 +792,9 @@ resource "discord_voice_channel" "dev_voice" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.voice.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_voice_channel" "team_voice" {
@@ -645,6 +803,9 @@ resource "discord_voice_channel" "team_voice" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.voice.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_voice_channel" "leadership_voice" {
@@ -653,6 +814,9 @@ resource "discord_voice_channel" "leadership_voice" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.voice.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 resource "discord_text_channel" "dev_fosdem" {
@@ -661,6 +825,9 @@ resource "discord_text_channel" "dev_fosdem" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -674,6 +841,9 @@ resource "discord_text_channel" "fosdem_2025" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -687,6 +857,9 @@ resource "discord_text_channel" "dev_server" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -700,6 +873,9 @@ resource "discord_text_channel" "conference_room" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -713,6 +889,9 @@ resource "discord_text_channel" "branding" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -726,6 +905,9 @@ resource "discord_text_channel" "dev_ml" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -739,6 +921,9 @@ resource "discord_text_channel" "futo" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -752,6 +937,9 @@ resource "discord_text_channel" "immich_nix" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -765,6 +953,9 @@ resource "discord_text_channel" "dev_mobile" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -778,6 +969,9 @@ resource "discord_text_channel" "dev_roles" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -791,6 +985,9 @@ resource "discord_text_channel" "dev_security" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -804,6 +1001,9 @@ resource "discord_text_channel" "dev_ops" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -817,6 +1017,9 @@ resource "discord_text_channel" "futo_discussion_old" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -830,6 +1033,9 @@ resource "discord_text_channel" "dev_web" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -843,6 +1049,9 @@ resource "discord_text_channel" "dev_cli" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -856,6 +1065,9 @@ resource "discord_text_channel" "jasons_adventures_with_unraid_docker_and_networ
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -869,6 +1081,9 @@ resource "discord_text_channel" "build_status" {
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
