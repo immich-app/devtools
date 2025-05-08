@@ -1,31 +1,25 @@
 # Kubernetes
 
-This folder holds the kubernetes GitOps configuration for the maintainers' dedicated server.  
+This folder holds the kubernetes GitOps configuration for the maintainers' dedicated server.
 It manages services such as the demo instance and preview environments.
 
 ### Bootstrap
 
 1. Boot the Hetzner server into the recovery image and connect via SSH
-2. Install debian 12 through https://github.com/terem42/zfs-hetzner-vm ([note this issue comment](https://github.com/terem42/zfs-hetzner-vm/issues/69#issuecomment-1879991824))
-3. Ssh into the new install
-4. Install k3s with this command:
+1. Install debian 12 through https://github.com/terem42/zfs-hetzner-vm ([note this issue comment](https://github.com/terem42/zfs-hetzner-vm/issues/69#issuecomment-1879991824))
+1. Ssh into the new install
+1. Install k3s with this command:
 
 ```
 curl -sfL https://get.k3s.io | sh -s - --disable-cloud-controller --disable-helm-controller --disable=traefik,local-storage,servicelb --tls-san 'mich.immich.cloud'
 ```
 
-5. From your local system, grab the kubeconfig file:
-
-```
-scp mich:/etc/rancher/k3s/k3s.yaml ~/.kube/mich.kubeconfig
-sed -i '' s/default/mich/g ~/.kube/mich.kubeconfig
-sed -i '' s/127.0.0.1/mich.immich.cloud/g ~/.kube/mich.kubeconfig
-cp ~/.kube/config ~/.kube/config.bak && KUBECONFIG=~/.kube/config:~/.kube/mich.kubeconfig kubectl config view --flatten > /tmp/config && mv /tmp/config ~/.kube/config
-```
-
-6. Bootstrap the onepassword operator (See [secrets bootstrapping](#secrets-bootstrapping))
-7. Bootstrap flux: `kubectl apply --kustomize ./bootstrap`
-8. Apply the cluster config: `kubectl apply --kustomize ./flux/config`
+5. Grab the kubeconfig file:
+`scp mich:/etc/rancher/k3s/k3s.yaml ~/.kube/mich.kubeconfig`
+1. Enter the user credentials from the kubeconfig into 1password.
+1. Bootstrap the onepassword operator (See [secrets bootstrapping](#secrets-bootstrapping))
+1. Bootstrap flux: `kubectl apply --kustomize ./bootstrap`
+1. Apply the cluster config: `kubectl apply --kustomize ./flux/config`
 
 ### Secrets bootstrapping
 
