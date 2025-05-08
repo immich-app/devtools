@@ -24,6 +24,7 @@ description = "Format terragrunt files"
 [tasks.tf]
 run = "mise run tg run-all"
 description = "Wrapper for terragrunt run-all"
+dir = "{{cwd}}"
 
 [tasks."tf:fmt"]
 run = "tofu fmt -recursive tf/"
