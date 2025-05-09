@@ -9,11 +9,11 @@ locals {
     { username = "ddietzler", id = 273458650557841408, role = "team", dev = true },
     { username = ".eleman.", id = 1110388960842219662, role = "team" },
     { username = "shenlong", id = 879025674214584330, role = "team", dev = true },
+    { username = "bwees", id = 172431702465970176, role = "team", dev = true },
     # Contributors
     { username = "adamantike", id = 820328828580134953, role = "contributor" },
     { username = "hungrypandas", id = 391059578743160832, role = "contributor" },
     { username = "benmccann", id = 709488329003106344, role = "contributor" },
-    { username = "bwees", id = 172431702465970176, role = "contributor" },
     { username = "brighteyed", id = 638460185228345345, role = "contributor" },
     { username = "keinfalschparker", id = 1270365817304912046, role = "contributor" },
     { username = "deanfuto_49548", id = 1303064606712922142, role = "contributor" },
@@ -31,7 +31,7 @@ locals {
     { username = "snowknight26", id = 287636133876334613, role = "contributor" },
     { username = "theflamingchicken", id = 720985629323952151, role = "contributor" },
     { username = "uhhthomas", id = 105750004563509248, role = "contributor" },
-    { username = "yarossyubayev", id = 519561606175129600, role = "contributor" },
+    { username = "yarossyubayev", id = 519561606175129600, role = "contributor" }
     # Support Crew
     { username = "aviv251", id = 360064066527690753, role = "support" },
     { username = "crushedasian255", id = 386612331288723469, role = "support" },
