@@ -7,7 +7,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/monitoring/grafana-operator/app
+  path: ./kubernetes/apps/infrastructure/operators/grafana-operator/app
   prune: true
   sourceRef:
     kind: GitRepository

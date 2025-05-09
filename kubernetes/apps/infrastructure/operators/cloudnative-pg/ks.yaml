@@ -6,16 +6,16 @@ metadata:
   name: database-cloudnative-pg
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/infrastructure/database/cloudnative-pg/app
+  path: ./kubernetes/apps/infrastructure/operators/cloudnative-pg/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: immich-kubernetes
   healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: cloudnative-pg
-      namespace: database
+      namespace: operators
   interval: 30m
   retryInterval: 1m
   timeout: 3m
