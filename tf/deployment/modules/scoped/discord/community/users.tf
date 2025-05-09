@@ -9,11 +9,11 @@ locals {
     { username = "ddietzler", id = 273458650557841408, role = "team", dev = true },
     { username = ".eleman.", id = 1110388960842219662, role = "team" },
     { username = "shenlong", id = 879025674214584330, role = "team", dev = true },
+    { username = "bwees", id = 172431702465970176, role = "team" },
     # Contributors
     { username = "adamantike", id = 820328828580134953, role = "contributor" },
     { username = "hungrypandas", id = 391059578743160832, role = "contributor" },
     { username = "benmccann", id = 709488329003106344, role = "contributor" },
-    { username = "bwees", id = 172431702465970176, role = "contributor" },
     { username = "brighteyed", id = 638460185228345345, role = "contributor" },
     { username = "keinfalschparker", id = 1270365817304912046, role = "contributor" },
     { username = "deanfuto_49548", id = 1303064606712922142, role = "contributor" },
