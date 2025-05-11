@@ -45,6 +45,7 @@ locals {
     { username = "schuhbacca1", id = 275064456210284546, role = "support" },
     { username = "solid256", id = 1142920273851592814, role = "support" },
     { username = "zzzeus.", id = 304729090064252948, role = "support" },
+    { username = "nomachine", id = 662674908492333056, role = "support" },
   ]
 }
 
