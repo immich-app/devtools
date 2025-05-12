@@ -80,6 +80,10 @@ spec:
     spec:
       interval: 5m
       timeout: 20m
+      install:
+        disableWait: true
+      upgrade:
+        disableWait: true
       chart:
         spec:
           chart: immich
