@@ -6,19 +6,19 @@ on:
     paths:
       - "tf/**"
       - ".github/workflows/terragrunt.yaml"
+      - ".mise/config.toml"
   push:
     branches: [ "main" ]
     paths:
       - "tf/**"
       - ".github/workflows/terragrunt.yaml"
+      - ".mise/config.toml"
 
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: false
 
 env:
-  tofu_version: '1.7.1'
-  tg_version: '0.58.12'
   working_dir: 'tf/deployment'
   TERRAGRUNT_PARALLELISM: 1
 
@@ -34,31 +34,16 @@ jobs:
         with:
           version: 2.30.3
 
-      - name: Install Terragrunt
-        uses: eLco/setup-terragrunt@2c5116f8979bb261072ef57c97ac026cd9c27434 # v1
-        with:
-          terragrunt_version: ${{ env.tg_version }}
-
-      - name: 'Install OpenTofu'
-        uses: opentofu/setup-opentofu@592200bd4b9bbf4772ace78f887668b1aee8f716 # v1
-        with:
-          tofu_version: ${{ env.tofu_version }}
-          tofu_wrapper: false
+      - uses: jdx/mise-action@c94f0bf9e520b150e34c017db785461f7e71c5fb # v2.2.2
 
       - name: Check Formatting
-        uses: gruntwork-io/terragrunt-action@9559e51d05873b0ea467c42bbabcb5c067642ccc # v2
-        with:
-          tofu_version: ${{ env.tofu_version }}
-          tg_version: ${{ env.tg_version }}
-          tg_dir: ${{ env.working_dir }}
-          tg_command: 'hclfmt --terragrunt-check --terragrunt-diff'
+        run: terragrunt hclfmt --terragrunt-check --terragrunt-diff
 
       - name: Check terraform fmt
-        working-directory: ${{ env.working_dir }}
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_DEV_ENV }}
           ENVIRONMENT: dev
-        run: op run --env-file=".env" -- terragrunt run-all fmt -diff -check
+        run: mise run tf fmt -diff -check
   plan:
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
@@ -68,31 +53,24 @@ jobs:
 
       - name: Install 1Password CLI
         uses: 1password/install-cli-action@143a85f84a90555d121cde2ff5872e393a47ab9f # v1
-
-      - name: Install Terragrunt
-        uses: eLco/setup-terragrunt@2c5116f8979bb261072ef57c97ac026cd9c27434 # v1
         with:
-          terragrunt_version: ${{ env.tg_version }}
+          version: 2.30.3
 
-      - name: 'Install OpenTofu'
-        uses: opentofu/setup-opentofu@592200bd4b9bbf4772ace78f887668b1aee8f716 # v1
-        with:
-          tofu_version: ${{ env.tofu_version }}
-          tofu_wrapper: false
+      - uses: jdx/mise-action@c94f0bf9e520b150e34c017db785461f7e71c5fb # v2.2.2
 
       - name: Plan Shared
         working-directory: ${{ env.working_dir }}/modules/shared
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
           ENVIRONMENT: prod
-        run: op run --env-file="../../.env" -- terragrunt run-all plan
+        run: mise run tf plan
 
       - name: Plan Dev
         working-directory: ${{ env.working_dir }}/modules/scoped
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_DEV_ENV }}
           ENVIRONMENT: dev
-        run: op run --env-file="../../.env" -- terragrunt run-all plan
+        run: mise run tf plan
 
       - name: Plan Prod
         working-directory: ${{ env.working_dir }}/modules/scoped
@@ -100,8 +78,8 @@ jobs:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
           ENVIRONMENT: prod
         run: |
-          op run --env-file="../../.env" -- terragrunt run-all init -reconfigure
-          op run --env-file="../../.env" -- terragrunt run-all plan
+          mise run tf init -reconfigure
+          mise run tf plan
 
   deploy:
     runs-on: ubuntu-latest
@@ -112,37 +90,30 @@ jobs:
 
       - name: Install 1Password CLI
         uses: 1password/install-cli-action@143a85f84a90555d121cde2ff5872e393a47ab9f # v1
-
-      - name: Install Terragrunt
-        uses: eLco/setup-terragrunt@2c5116f8979bb261072ef57c97ac026cd9c27434 # v1
         with:
-          terragrunt_version: ${{ env.tg_version }}
+          version: 2.30.3
 
-      - name: 'Install OpenTofu'
-        uses: opentofu/setup-opentofu@592200bd4b9bbf4772ace78f887668b1aee8f716 # v1
-        with:
-          tofu_version: ${{ env.tofu_version }}
-          tofu_wrapper: false
+      - uses: jdx/mise-action@c94f0bf9e520b150e34c017db785461f7e71c5fb # v2.2.2
 
       - name: Deploy Shared
         working-directory: ${{ env.working_dir }}/modules/shared
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
           ENVIRONMENT: prod
-        run: op run --env-file="../../.env" -- terragrunt run-all apply --terragrunt-non-interactive
+        run: mise run tf apply --terragrunt-non-interactive
 
       - name: Deploy Dev
         working-directory: ${{ env.working_dir }}/modules/scoped
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_DEV_ENV }}
           ENVIRONMENT: dev
-        run: op run --env-file="../../.env" -- terragrunt run-all apply --terragrunt-non-interactive
+        run: mise run tf apply --terragrunt-non-interactive
 
       - name: Deploy Prod
         working-directory: ${{ env.working_dir }}/modules/scoped
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
           ENVIRONMENT: prod
-        run:  |
-          op run --env-file="../../.env" -- terragrunt run-all init -reconfigure
-          op run --env-file="../../.env" -- terragrunt run-all apply --terragrunt-non-interactive
+        run: |
+          mise run tf init -reconfigure
+          mise run tf apply --terragrunt-non-interactive

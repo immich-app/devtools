@@ -5,6 +5,7 @@ provider "registry.opentofu.org/1password/onepassword" {
   version     = "2.1.2"
   constraints = "~> 2.1"
   hashes = [
+    "h1:GdQ0kRDSi6naVt37Ui42uGLpgDsIEGx8Q8qBC7Ja2vo=",
     "h1:GodYqoGG/PLyQr/Zm3EAw/lU4ixmDkWGPSJnAGT95nA=",
     "zh:03d20138bf7bc645707b2c0c00203f66c07902d03c72be3f5f7bc365155bdc35",
     "zh:0bf54b246f141a7d0cb75c7c2c086d372c810efc061bf5a7ae0b62b70d9558f4",
@@ -26,9 +27,10 @@ provider "registry.opentofu.org/1password/onepassword" {
 
 provider "registry.terraform.io/zp-forks/discord" {
   version     = "3.0.0"
-  constraints = "~> 3.0"
+  constraints = "~> 3.0.0"
   hashes = [
     "h1:nVOyxGp1wV9z0mkwz/3QM8/+4FH5CMSU7yRPbf+RoRw=",
+    "h1:u7N/W9mC/pOjxDDwEOvvYN/4KdtkC9Lkzw1WPNC/gUs=",
     "zh:0779f63a1ac0315b29a495f0b34bfcc1b6d6665fa8a55bd97dcf3521570a2c7c",
     "zh:53a174b84e5dd7114bd57e192169aada17be5028901b1ffd855f53e12ff59abb",
     "zh:593bb18940176555e6a386621b84a48f15dfbd97272faec5f302592c4730e42b",

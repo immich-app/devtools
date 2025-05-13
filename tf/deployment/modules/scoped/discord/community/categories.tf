@@ -12,6 +12,30 @@ locals {
   ]
 }
 
+data "discord_permission" "category" {
+  view_channel    = "deny"
+  manage_channels = "deny"
+}
+
+module "category_perms" {
+  source = "./channel-perms"
+  channel_ids = [
+    discord_category_channel.immich.id,
+    discord_category_channel.community.id,
+    discord_category_channel.development.id,
+    discord_category_channel.team.id,
+    discord_category_channel.leadership.id,
+    discord_category_channel.third_parties.id,
+    discord_category_channel.off_topic.id,
+    discord_category_channel.voice.id,
+    discord_category_channel.archive.id
+  ]
+  role_ids = [discord_role_everyone.everyone.id]
+  allow    = data.discord_permission.category.allow_bits
+  deny     = data.discord_permission.category.deny_bits
+  public   = true
+}
+
 resource "discord_category_channel" "immich" {
   name      = "Immich"
   server_id = discord_server.server.id

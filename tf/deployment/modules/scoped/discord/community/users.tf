@@ -2,18 +2,18 @@ locals {
   users = [
     // Admins
     { username = "alex.tran1502", id = 285511635735543828, role = "admin" },
-    { username = "jrasm91", id = 613523742479483183, role = "admin" },
-    { username = "bo0tzz", id = 324007594262003722, role = "admin" },
+    { username = "jrasm91", id = 613523742479483183, role = "admin", dev = true },
+    { username = "bo0tzz", id = 324007594262003722, role = "admin", dev = true },
     { username = "zackpollard", id = 185097470215192579, role = "admin", dev = true },
     # Team
-    { username = "ddietzler", id = 273458650557841408, role = "team" },
+    { username = "ddietzler", id = 273458650557841408, role = "team", dev = true },
     { username = ".eleman.", id = 1110388960842219662, role = "team" },
-    { username = "shenlong", id = 879025674214584330, role = "team" },
+    { username = "shenlong", id = 879025674214584330, role = "team", dev = true },
+    { username = "bwees", id = 172431702465970176, role = "team" },
     # Contributors
     { username = "adamantike", id = 820328828580134953, role = "contributor" },
     { username = "hungrypandas", id = 391059578743160832, role = "contributor" },
     { username = "benmccann", id = 709488329003106344, role = "contributor" },
-    { username = "bwees", id = 172431702465970176, role = "contributor" },
     { username = "brighteyed", id = 638460185228345345, role = "contributor" },
     { username = "keinfalschparker", id = 1270365817304912046, role = "contributor" },
     { username = "deanfuto_49548", id = 1303064606712922142, role = "contributor" },
@@ -45,6 +45,7 @@ locals {
     { username = "schuhbacca1", id = 275064456210284546, role = "support" },
     { username = "solid256", id = 1142920273851592814, role = "support" },
     { username = "zzzeus.", id = 304729090064252948, role = "support" },
+    { username = "nomachine", id = 662674908492333056, role = "support" },
   ]
 }
 
