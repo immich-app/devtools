@@ -2,7 +2,7 @@
 flux2 = "2.5.1"
 helm = "3.17.3"
 jq = "1.7.1"
-kubectl = "1.32.3"
+kubectl = "1.33.0"
 opentofu = "1.7.1"
 "pipx:flux-local" = "7.3.0"
 terragrunt = "0.58.12"
