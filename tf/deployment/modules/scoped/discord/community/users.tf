@@ -16,7 +16,6 @@ locals {
     { username = "benmccann", id = 709488329003106344, role = "contributor" },
     { username = "brighteyed", id = 638460185228345345, role = "contributor" },
     { username = "keinfalschparker", id = 1270365817304912046, role = "contributor" },
-    { username = "deanfuto_49548", id = 1303064606712922142, role = "contributor" },
     { username = "etnoy", id = 1084581712702472252, role = "contributor" },
     { username = "zody", id = 145524839938129920, role = "contributor" },
     { username = "exonintrendo", id = 281866662007799809, role = "contributor" },
