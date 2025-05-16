@@ -22,9 +22,13 @@ env:
   working_dir: 'tf/deployment'
   TERRAGRUNT_PARALLELISM: 1
 
+permissions: {}
+
 jobs:
   check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: 'Checkout'
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -49,9 +53,13 @@ jobs:
   plan:
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
+    permissions:
+      contents: read
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@main
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
 
       - name: Install 1Password CLI
         uses: 1password/install-cli-action@143a85f84a90555d121cde2ff5872e393a47ab9f # v1.0.0
@@ -86,9 +94,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@main
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
 
       - name: Install 1Password CLI
         uses: 1password/install-cli-action@143a85f84a90555d121cde2ff5872e393a47ab9f # v1.0.0
