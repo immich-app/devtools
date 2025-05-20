@@ -6,7 +6,7 @@ kubectl = "1.33.1"
 opentofu = "1.7.1"
 "pipx:flux-local" = "7.3.0"
 terragrunt = "0.58.12"
-uv = "0.7.3"
+uv = "0.7.6"
 yamlfmt = "0.16.0"
 
 [env]
