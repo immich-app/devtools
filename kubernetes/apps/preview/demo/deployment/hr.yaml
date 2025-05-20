@@ -97,7 +97,7 @@ spec:
               if ($request_method = POST) {
                 set $block_post 1;
               }
-                if ($uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets|auth/change-password|notifications/test-email|libraries)$) {
+                if ($uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets|auth/change-password|notifications/test-email|libraries|trash/empty)$) {
                 set $block_post "${block_post}1";
               }
                 if ($block_post = 11) {
