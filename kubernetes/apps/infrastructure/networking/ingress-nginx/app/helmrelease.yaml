@@ -40,6 +40,8 @@ spec:
         annotations-risk-level: Critical
       metrics:
         enabled: false
+      updateStrategy:
+        type: Restart
       resources:
         requests:
           cpu: 10m
