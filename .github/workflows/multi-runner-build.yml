@@ -89,7 +89,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: immich-app/devtools/actions/image-build@main # TODO: Versioning and pinning to that version
+      - uses: immich-app/devtools/actions/image-build@51c5a0e1c1bfd3f0d5eb1ebad74948b2194f9aba # image-build-action-0.0.1
         with:
           context: ${{ inputs.context }}
           dockerfile: ${{ inputs.dockerfile }}
