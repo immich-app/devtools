@@ -41,7 +41,7 @@ spec:
       metrics:
         enabled: false
       updateStrategy:
-        type: Restart
+        type: Recreate
       resources:
         requests:
           cpu: 10m
