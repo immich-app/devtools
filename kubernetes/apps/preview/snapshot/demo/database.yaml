@@ -5,6 +5,6 @@ metadata:
   namespace: preview
 spec:
   cluster:
-    name: pr-17963-preview-database
+    name: temp-snapshot-base
   method: volumeSnapshot
   online: false
