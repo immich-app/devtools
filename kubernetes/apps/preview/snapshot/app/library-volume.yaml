@@ -6,4 +6,4 @@ metadata:
 spec:
   volumeSnapshotClassName: zfs
   source:
-    persistentVolumeClaimName: preview-immich-release-library
+    persistentVolumeClaimName: temp-snapshot-base-library

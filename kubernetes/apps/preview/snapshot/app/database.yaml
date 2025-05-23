@@ -5,6 +5,6 @@ metadata:
   namespace: preview
 spec:
   cluster:
-    name: preview-immich-release
+    name: temp-snapshot-base
   method: volumeSnapshot
   online: false

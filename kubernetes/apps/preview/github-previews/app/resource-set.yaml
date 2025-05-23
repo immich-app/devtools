@@ -14,7 +14,7 @@ spec:
   inputs:
     - branch: release
       # renovate: datasource=github-releases depName=immich-app/immich
-      tag: "v1.132.3"
+      tag: "v1.133.0"
   resourcesTemplate: |
     <<- $ctx := dict >>
     <<- if hasKey inputs "author" >>
@@ -39,7 +39,7 @@ spec:
       namespace: preview
     spec:
       instances: 1
-      imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:14.12-v0.3.0
+      imageName: ghcr.io/tensorchord/cloudnative-vectorchord:14.18-0.3.0
       enableSuperuserAccess: true
       bootstrap:
         recovery:
@@ -47,7 +47,7 @@ spec:
             name: preview-base-database-snapshot
       postgresql:
         shared_preload_libraries:
-          - "vectors.so"
+          - "vchord.so"
       storage:
         size: 10Gi
         storageClass: zfs
@@ -88,7 +88,7 @@ spec:
         spec:
           chart: immich
           # renovate: datasource=github-releases depName=immich-app/immich-charts
-          version: "0.9.1"
+          version: "0.9.3"
           sourceRef:
             kind: HelmRepository
             name: immich-charts
