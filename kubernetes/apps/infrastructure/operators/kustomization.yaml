@@ -5,3 +5,4 @@ resources:
   - ./namespace.yaml
   - ./cloudnative-pg/ks.yaml
   - ./grafana-operator/ks.yaml
+  - ./flux-operator/ks.yaml
