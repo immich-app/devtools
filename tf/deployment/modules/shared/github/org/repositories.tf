@@ -1,27 +1,31 @@
 variable "repositories" {
   type = list(object({
-    name        = string
-    description = string
-    url         = optional(string)
-    discussions = optional(bool)
-    projects    = optional(bool)
-    issues      = optional(bool)
-    archived    = optional(bool)
-    fork        = optional(bool)
+    name          = string
+    description   = string
+    url           = optional(string)
+    discussions   = optional(bool)
+    projects      = optional(bool)
+    issues        = optional(bool)
+    archived      = optional(bool)
+    fork          = optional(bool)
+    collaborators = optional(bool)
   }))
   default = [
     {
-      name        = "immich", description = "High performance self-hosted photo and video management solution.",
-      discussions = true, projects = true
+      name          = "immich", description = "High performance self-hosted photo and video management solution.",
+      discussions   = true,
+      projects      = true,
+      collaborators = true
     },
     {
       name        = "devtools",
       description = "Various tooling used by the Immich maintainer team"
     },
     {
-      name        = "static-pages",
-      description = "Redirect urls to personal, hosted, instances of Immich.",
-      url         = "https://buy.immich.app",
+      name          = "static-pages",
+      description   = "Redirect urls to personal, hosted, instances of Immich.",
+      url           = "https://buy.immich.app",
+      collaborators = true
     },
     {
       name        = "base-images",
@@ -42,8 +46,9 @@ variable "repositories" {
       archived    = true
     },
     {
-      name        = "test-assets",
-      description = "Test assets used for testing Immich. Contains various formats and codecs"
+      name          = "test-assets",
+      description   = "Test assets used for testing Immich. Contains various formats and codecs",
+      collaborators = true
     },
     {
       name        = ".github",
@@ -60,9 +65,10 @@ variable "repositories" {
       url         = "https://data.immich.app",
     },
     {
-      name        = "ui",
-      description = "Svelte components for Immich"
-      url         = "https://ui.immich.app",
+      name          = "ui",
+      description   = "Svelte components for Immich"
+      url           = "https://ui.immich.app",
+      collaborators = true
     },
     {
       name        = "sql-tools",
