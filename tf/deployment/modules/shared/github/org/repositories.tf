@@ -101,7 +101,7 @@ resource "github_repository" "repositories" {
   has_downloads             = true
   has_projects              = coalesce(each.value.projects, false)
   has_wiki                  = false
-  vulnerability_alerts      = true
+  vulnerability_alerts      = !coalesce(each.value.archived, false)
   homepage_url              = coalesce(each.value.url, "https://immich.app")
   squash_merge_commit_title = "PR_TITLE"
 
