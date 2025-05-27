@@ -36,7 +36,7 @@ jobs:
         with:
           version: 2.30.3
 
-      - uses: jdx/mise-action@c94f0bf9e520b150e34c017db785461f7e71c5fb # v2.2.2
+      - uses: jdx/mise-action@13abe502c30c1559a5c37dff303831bab82c9402 # v2.2.3
 
       - name: Check Formatting
         run: terragrunt hclfmt --terragrunt-check --terragrunt-diff
@@ -58,7 +58,7 @@ jobs:
         with:
           version: 2.30.3
 
-      - uses: jdx/mise-action@c94f0bf9e520b150e34c017db785461f7e71c5fb # v2.2.2
+      - uses: jdx/mise-action@13abe502c30c1559a5c37dff303831bab82c9402 # v2.2.3
 
       - name: Plan Shared
         working-directory: ${{ env.working_dir }}/modules/shared
@@ -95,7 +95,7 @@ jobs:
         with:
           version: 2.30.3
 
-      - uses: jdx/mise-action@c94f0bf9e520b150e34c017db785461f7e71c5fb # v2.2.2
+      - uses: jdx/mise-action@13abe502c30c1559a5c37dff303831bab82c9402 # v2.2.3
 
       - name: Deploy Shared
         working-directory: ${{ env.working_dir }}/modules/shared
