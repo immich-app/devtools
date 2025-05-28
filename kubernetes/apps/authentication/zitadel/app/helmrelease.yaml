@@ -28,7 +28,6 @@ spec:
                 Username: zitadel-iac-admin-sa
                 Name: Admin
               MachineKey:
-                ExpirationDate: "2026-01-01T00:00:00Z"
                 Type: 1
         ExternalDomain: zitadel.internal.immich.cloud
         TLS:
