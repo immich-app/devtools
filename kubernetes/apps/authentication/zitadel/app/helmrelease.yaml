@@ -16,10 +16,10 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    image:
+      repository: ghcr.io/zitadel/zitadel
+      tag: v3.2.2
     zitadel:
-      image:
-        repository: ghcr.io/zitadel/zitadel
-        tag: v3.2.2
       configmapConfig:
         FirstInstance:
           Org:
@@ -33,45 +33,45 @@ spec:
         TLS:
           Enabled: false # TLS is terminated at the ingress
       masterkeySecretName: zitadel-master-key
-      env:
-        - name: ZITADEL_DATABASE_POSTGRES_HOST
-          valueFrom:
-            secretKeyRef:
-              name: zitadel-db-app
-              key: host
-        - name: ZITADEL_DATABASE_POSTGRES_DATABASE
-          valueFrom:
-            secretKeyRef:
-              name: zitadel-db-app
-              key: dbname
-        - name: ZITADEL_DATABASE_POSTGRES_USER_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: zitadel-db-app
-              key: user
-        - name: ZITADEL_DATABASE_POSTGRES_USER_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: zitadel-db-app
-              key: password
-      ingress:
-        enabled: true
-        className: nginx
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-production
-        hosts:
-          - host: &host zitadel.internal.immich.cloud
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *host
-            secretName: zitadel-tls
-      resources:
-        limits:
-          cpu: 1
-          memory: 2Gi
-        requests:
-          cpu: 500m
-          memory: 512Mi
+    env:
+      - name: ZITADEL_DATABASE_POSTGRES_HOST
+        valueFrom:
+          secretKeyRef:
+            name: zitadel-db-app
+            key: host
+      - name: ZITADEL_DATABASE_POSTGRES_DATABASE
+        valueFrom:
+          secretKeyRef:
+            name: zitadel-db-app
+            key: dbname
+      - name: ZITADEL_DATABASE_POSTGRES_USER_USERNAME
+        valueFrom:
+          secretKeyRef:
+            name: zitadel-db-app
+            key: user
+      - name: ZITADEL_DATABASE_POSTGRES_USER_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: zitadel-db-app
+            key: password
+    ingress:
+      enabled: true
+      className: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+      hosts:
+        - host: &host zitadel.internal.immich.cloud
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - *host
+          secretName: zitadel-tls
+    resources:
+      limits:
+        cpu: 1
+        memory: 2Gi
+      requests:
+        cpu: 500m
+        memory: 512Mi
