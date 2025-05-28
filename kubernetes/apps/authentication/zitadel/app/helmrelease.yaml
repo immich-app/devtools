@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: zitadel
-      version: 8.13.1
+      version: 8.13.3
       sourceRef:
         kind: HelmRepository
         name: zitadel
@@ -19,7 +19,7 @@ spec:
     zitadel:
       image:
         repository: ghcr.io/zitadel/zitadel
-        tag: v3.0.3
+        tag: v3.2.2
       configmapConfig:
         FirstInstance:
           Org:
