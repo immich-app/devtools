@@ -21,6 +21,12 @@
         "/discord-bot/"
       ],
       "pinDigests": false
+    },
+    {
+      "matchPackageNames": [
+        "/flux/"
+      ],
+      "groupName": "fluxcd"
     }
   ],
   "flux": {
