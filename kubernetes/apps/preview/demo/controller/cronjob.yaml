@@ -12,7 +12,7 @@ spec:
           serviceAccountName: demo-controller
           containers:
             - name: demo-controller
-              image: ghcr.io/fluxcd/flux-cli:v2.5.1
+              image: ghcr.io/fluxcd/flux-cli:v2.6.0@sha256:7de35ed3e4fe557a2db01005aa8843a4ad9d30c9f565ebab473785931675b4cc
               imagePullPolicy: IfNotPresent
               command:
                 - /bin/sh
