@@ -1,21 +1,24 @@
 locals {
   secrets = concat(
     var.secrets.global != null ? [
-      for name in var.secrets.global : {
-        vault = data.onepassword_vault.tf
-        name  = name
+      for secret_obj in var.secrets.global : {
+        vault  = data.onepassword_vault.tf
+        name   = secret_obj.name
+        length = secret_obj.length
       }
     ] : [],
     var.secrets.dev != null ? [
-      for name in var.secrets.dev : {
-        vault = data.onepassword_vault.tf_dev
-        name  = name
+      for secret_obj in var.secrets.dev : {
+        vault  = data.onepassword_vault.tf_dev
+        name   = secret_obj.name
+        length = secret_obj.length
       }
     ] : [],
     var.secrets.prod != null ? [
-      for name in var.secrets.prod : {
-        vault = data.onepassword_vault.tf_prod
-        name  = name
+      for secret_obj in var.secrets.prod : {
+        vault  = data.onepassword_vault.tf_prod
+        name   = secret_obj.name
+        length = secret_obj.length
       }
     ] : []
   )
@@ -24,7 +27,7 @@ locals {
 resource "random_password" "generated" {
   for_each = { for idx, secret in local.secrets : "${secret.vault.name}_${secret.name}" => secret }
 
-  length  = 40
+  length  = each.value.length != null ? each.value.length : var.default_secret_length
   special = false
 }
 
