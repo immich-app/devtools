@@ -202,6 +202,13 @@
   },
   {
     "discord": {
+      "username": "wuzihao051119",
+      "id": 1361297818383421571
+    },
+    "role": "contributor"
+  },
+  {
+    "discord": {
       "username": "aviv251",
       "id": 360064066527690753
     },
@@ -290,12 +297,5 @@
       "id": 662674908492333056
     },
     "role": "support"
-  },
-  {
-    "discord": {
-      "username": "wuzihao051119",
-      "id": 1361297818383421571
-    },
-    "role": "contributor"
   }
 ]
