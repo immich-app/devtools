@@ -54,6 +54,17 @@ spec:
           secretKeyRef:
             name: zitadel-db-app
             key: password
+      - name: ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME
+        valueFrom:
+          secretKeyRef:
+            name: zitadel-db-superuser
+            key: user
+      - name: ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: zitadel-db-superuser
+            key: password
+
     ingress:
       enabled: true
       className: nginx
