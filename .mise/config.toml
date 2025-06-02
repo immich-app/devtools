@@ -1,6 +1,6 @@
 [tools]
 flux2 = "2.6.1"
-helm = "3.18.1"
+helm = "3.18.2"
 jq = "1.7.1"
 kubectl = "1.33.1"
 opentofu = "1.7.1"
