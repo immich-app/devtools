@@ -1,0 +1,17 @@
+apiVersion: external-secrets.io/v1alpha1
+kind: PushSecret
+metadata:
+  name: zitadel-iac-admin-sa
+  namespace: authentication
+spec:
+  secretStoreRefs:
+    - kind: ClusterSecretStore
+      name: 1p-kubernetes
+  selector:
+    secret:
+      name: zitadel-iac-admin-sa
+  data:
+    - match:
+        secretKey: zitadel-iac-admin-sa.json
+        remoteRef:
+          remoteKey: PUSHED_ZITADEL_IAC_ADMIN_SA
