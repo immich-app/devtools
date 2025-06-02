@@ -27,7 +27,8 @@ This cluster uses the 1password operator for secrets management. To bootstrap:
 
 1. Download the 1password-credentials.json file from 1password to a temporary folder
 2. Copy the 1password connect access token from the vault
-3. Create the namespace and secret:
+3. Beware sneaky trailing newlines in the access token, they will ruin your life.
+4. Create the namespace and secret:
 
 ```
 kubectl create namespace secrets
