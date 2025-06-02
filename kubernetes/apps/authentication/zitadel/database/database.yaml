@@ -4,6 +4,7 @@ metadata:
   name: zitadel-db
   namespace: authentication
 spec:
+  enableSuperuserAccess: true
   storage:
     size: 10Gi
     storageClass: zfs
