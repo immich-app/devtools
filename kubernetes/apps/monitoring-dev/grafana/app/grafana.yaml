@@ -18,8 +18,7 @@ spec:
       auth_url: https://zitadel.internal.immich.cloud/oauth/v2/authorize
       token_url: https://zitadel.internal.immich.cloud/oauth/v2/token
       api_url: https://zitadel.internal.immich.cloud/oidc/v1/userinfo
-      # best I can tell grafana defaults to grabbing the role from the oauth userinfo, so no need for explicit role_attribute_path
-      # TODO: zitadel should map to 'GrafanaAdmin' || 'Viewer'
+      role_attribute_path: role
       allow_assign_grafana_admin: "true"
       auto_login: "true"
     users:
