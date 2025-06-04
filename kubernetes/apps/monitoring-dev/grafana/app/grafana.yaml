@@ -13,6 +13,7 @@ spec:
       enabled: "true"
       client_id: ${quote}${GRAFANA_OAUTH_CLIENT_ID}${quote}
       client_secret: ''
+      use_pkce: "true"
       scopes: openid email profile groups offline_access
       auth_url: https://zitadel.internal.immich.cloud/oauth/v2/authorize
       token_url: https://zitadel.internal.immich.cloud/oauth/v2/token
