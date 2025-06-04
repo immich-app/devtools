@@ -253,3 +253,16 @@ resource "onepassword_item" "outline_secret" {
     }
   }
 }
+
+data "onepassword_item" "zitadel_profile_json" {
+  vault = data.onepassword_vault.kubernetes.uuid
+  title = "PUSHED_ZITADEL_IAC_ADMIN_SA"
+}
+
+resource "onepassword_item" "zitadel_profile_json" {
+  vault    = data.onepassword_vault.tf.uuid
+  title    = "ZITADEL_PROFILE_JSON"
+  category = "password"
+
+  password = data.onepassword_item.zitadel_profile_json.password
+}
