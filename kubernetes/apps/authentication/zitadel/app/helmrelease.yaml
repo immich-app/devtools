@@ -70,6 +70,9 @@ spec:
       className: nginx
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-production
+        nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+        nginx.ingress.kubernetes.io/configuration-snippet: |
+          grpc_set_header Host $host;
       hosts:
         - host: &host zitadel.internal.immich.cloud
           paths:
