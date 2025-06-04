@@ -48,3 +48,6 @@ description = "Diff kubernetes helm releases"
 [tasks.fmt]
 depends = ["*:fmt"]
 description = "Format all files"
+
+[settings]
+experimental = true
