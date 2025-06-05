@@ -15,6 +15,9 @@ spec:
     size: 10Gi
     storageClass: zfs
 
+  cluster:
+    imageName: ghcr.io/cnpg-io/postgresql:15.13
+
   backup:
     retentionPolicy: "14d"
     barmanObjectStore:
