@@ -5,11 +5,12 @@ metadata:
   namespace: terraform
 spec:
   bootstrap:
-    initdb:
-      database: tf_state
-      owner: terraform
-      secret:
-        name: tf-state-storage-user
+    recovery:
+      backup:
+        name: tf-state-daily-backup-20250605000000
+      recoveryTarget:
+        targetTime: "2025-05-06 12:19:00.00000+00"
+
   storage:
     size: 10Gi
     storageClass: zfs
@@ -18,6 +19,7 @@ spec:
     retentionPolicy: "14d"
     barmanObjectStore:
       destinationPath: s3://${bucket_name}
+      serverName: tf-state-storage-2
       endpointURL: ${api_endpoint}
       wal:
         compression: bzip2
