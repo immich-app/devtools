@@ -4,6 +4,8 @@ metadata:
   name: tf-state-storage
   namespace: terraform
 spec:
+  imageName: ghcr.io/cnpg-io/postgresql:15.13
+  
   bootstrap:
     recovery:
       backup:
@@ -15,9 +17,6 @@ spec:
     size: 10Gi
     storageClass: zfs
 
-  cluster:
-    imageName: ghcr.io/cnpg-io/postgresql:15.13
-
   backup:
     retentionPolicy: "14d"
     barmanObjectStore:
@@ -26,6 +25,7 @@ spec:
       endpointURL: ${api_endpoint}
       wal:
         compression: bzip2
+        maxParallel: 8
       s3Credentials:
         accessKeyId:
           name: tf-state-backup-secret
