@@ -4,7 +4,7 @@ metadata:
   name: tf-state-storage
   namespace: terraform
 spec:
-  imageName: ghcr.io/cnpg-io/postgresql:15.13
+  imageName: ghcr.io/cloudnative-pg/postgresql:15.13
   
   bootstrap:
     recovery:
