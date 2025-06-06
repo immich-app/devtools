@@ -30,7 +30,8 @@ resource "zitadel_human_user" "users" {
     ignore_changes = [
       first_name,
       last_name,
-      email
+      email,
+      nickname
     ]
   }
 }
