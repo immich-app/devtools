@@ -3,14 +3,17 @@ variable "secrets" {
     global = optional(list(object({
       name   = string
       length = optional(number)
+      type   = optional(string, "alphanumeric")
     })))
     dev = optional(list(object({
       name   = string
       length = optional(number)
+      type   = optional(string, "alphanumeric")
     })))
     prod = optional(list(object({
       name   = string
       length = optional(number)
+      type   = optional(string, "alphanumeric")
     })))
   })
 }

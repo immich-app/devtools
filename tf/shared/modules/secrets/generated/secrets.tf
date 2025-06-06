@@ -5,6 +5,7 @@ locals {
         vault  = data.onepassword_vault.tf
         name   = secret_obj.name
         length = secret_obj.length
+        type   = secret_obj.type
       }
     ] : [],
     var.secrets.dev != null ? [
@@ -12,6 +13,7 @@ locals {
         vault  = data.onepassword_vault.tf_dev
         name   = secret_obj.name
         length = secret_obj.length
+        type   = secret_obj.type
       }
     ] : [],
     var.secrets.prod != null ? [
@@ -19,6 +21,7 @@ locals {
         vault  = data.onepassword_vault.tf_prod
         name   = secret_obj.name
         length = secret_obj.length
+        type   = secret_obj.type
       }
     ] : []
   )
@@ -28,6 +31,9 @@ resource "random_password" "generated" {
   for_each = { for idx, secret in local.secrets : "${secret.vault.name}_${secret.name}" => secret }
 
   length  = each.value.length != null ? each.value.length : var.default_secret_length
+  lower   = each.value.type != null && each.value.type != "numeric" ? true : false
+  upper   = each.value.type != null && each.value.type != "numeric" ? true : false
+  numeric = each.value.type != null && each.value.type != "alphabetic" ? true : false
   special = false
 }
 
