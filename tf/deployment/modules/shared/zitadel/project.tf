@@ -1,21 +1,24 @@
 locals {
-  projects = [
+  project_defaults = {
+    authMethod   = "NONE"
+    appType      = "WEB"
+    redirectUris = []
+    grantTypes   = ["AUTHORIZATION_CODE"]
+  }
+  projects_data = [
     {
       name         = "Grafana Monitoring Prod"
       roles        = { "GrafanaAdmin" : ["admin"], "Editor" : ["team"] }
-      authMethod   = "NONE"
       redirectUris = ["https://monitoring.immich.cloud/login/generic_oauth"]
     },
     {
       name         = "Grafana Monitoring Dev"
       roles        = { "GrafanaAdmin" : ["admin"], "Editor" : ["team"] }
-      authMethod   = "NONE"
       redirectUris = ["https://monitoring.dev.immich.cloud/login/generic_oauth"]
     },
     {
       name         = "Grafana Data Prod"
       roles        = { "GrafanaAdmin" : ["admin"], "Editor" : ["team"] }
-      authMethod   = "NONE"
       redirectUris = ["https://grafana.data.immich.cloud/login/generic_oauth"]
     },
     {
@@ -29,9 +32,13 @@ locals {
       roles = {
         "Granted" : ["admin", "team", "contributor"]
       }
-      authMethod   = "NONE"
-      redirectUris = ["/device/callback"]
+      appType    = "NATIVE"
+      grantTypes = ["DEVICE_CODE"]
     }
+  ]
+
+  projects = [
+    for project in local.projects_data : merge(local.project_defaults, project)
   ]
 }
 
@@ -52,8 +59,8 @@ resource "zitadel_application_oidc" "applications" {
 
   redirect_uris    = each.value.redirectUris
   response_types   = ["OIDC_RESPONSE_TYPE_CODE"]
-  grant_types      = ["OIDC_GRANT_TYPE_AUTHORIZATION_CODE"]
-  app_type         = "OIDC_APP_TYPE_WEB"
+  grant_types      = [for grant_type in each.value.grantTypes : "OIDC_GRANT_TYPE_${grant_type}"]
+  app_type         = "OIDC_APP_TYPE_${each.value.appType}"
   auth_method_type = "OIDC_AUTH_METHOD_TYPE_${each.value.authMethod}"
 }
 
@@ -76,7 +83,6 @@ resource "onepassword_item" "application_client_secret" {
   vault    = data.onepassword_vault.tf.uuid
   title    = "ZITADEL_OAUTH_CLIENT_SECRET_${each.value.name}"
   category = "password"
-
 
   password = each.value.client_secret
 }
