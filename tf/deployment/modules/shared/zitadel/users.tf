@@ -31,7 +31,7 @@ resource "zitadel_human_user" "users" {
       first_name,
       last_name,
       email,
-      nickname
+      nick_name
     ]
   }
 }
