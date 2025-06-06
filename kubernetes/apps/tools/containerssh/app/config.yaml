@@ -14,11 +14,11 @@ data:
       keyboardInteractive:
         method: oauth2
         oauth2:
-          clientId: "containerssh"
+          clientId: ${quote}${OAUTH_CLIENT_ID}${quote}
           clientSecret: "ignored"
           provider: oidc
           oidc:
-            url: http://dex.authentication:5556/
+            url: http://zitadel.authentication:8080/
             deviceFlow: true
     backend: kubernetes
     kubernetes:

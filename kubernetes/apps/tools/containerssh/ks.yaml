@@ -1,5 +1,25 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app containerssh-secrets
+  namespace: flux-system
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
+    - name: zitadel
+  path: ./kubernetes/apps/tools/containerssh/secrets
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: immich-kubernetes
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -10,8 +30,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: cluster-apps-onepassword
-    - name: dexidp
+    - name: containerssh-secrets
   path: ./kubernetes/apps/tools/containerssh/app
   prune: true
   sourceRef:
@@ -21,3 +40,9 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: containerssh-oauth-clientid
+    substitute:
+      quote: '"'
