@@ -40,11 +40,10 @@ spec:
               FILE_STORAGE_LOCAL_ROOT_DIR: /data
               FILE_STORAGE_UPLOAD_MAX_SIZE: &upload-limit "26214400"
               FILE_STORAGE_IMPORT_MAX_SIZE: *upload-limit
-              OIDC_CLIENT_ID: outline
               OIDC_SCOPES: "openid profile email"
-              OIDC_AUTH_URI: "https://auth.immich.cloud/auth"
-              OIDC_TOKEN_URI: "https://auth.immich.cloud/token"
-              OIDC_USERINFO_URI: "https://auth.immich.cloud/userinfo"
+              OIDC_AUTH_URI: "https://zitadel.internal.immich.cloud/oauth/v2/authorize"
+              OIDC_TOKEN_URI: "https://zitadel.internal.immich.cloud/oauth/v2/token"
+              OIDC_USERINFO_URI: "https://zitadel.internal.immich.cloud/oidc/v1/userinfo"
               WEB_CONCURRENCY: 10
               DATABASE_URL:
                 valueFrom:
@@ -53,7 +52,9 @@ spec:
                     key: uri
             envFrom:
               - secretRef:
-                  name: outline-secret
+                  name: outline-secret-keys
+              - secretRef:
+                  name: outline-oauth-clientid
             securityContext:
               fsGroup: 1001
       valkey:

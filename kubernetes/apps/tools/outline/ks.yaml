@@ -8,7 +8,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: cluster-apps-onepassword
+    - name: external-secrets-stores
+    - name: zitadel
   path: ./kubernetes/apps/tools/outline/secrets
   prune: true
   sourceRef:
@@ -30,7 +31,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: dexidp
     - name: outline-secrets
   path: ./kubernetes/apps/tools/outline/app
   prune: true
