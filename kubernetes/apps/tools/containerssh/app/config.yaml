@@ -18,7 +18,7 @@ data:
           clientSecret: "ignored"
           provider: oidc
           oidc:
-            url: http://zitadel.authentication:8080/
+            url: https://zitadel.internal.immich.cloud/
             deviceFlow: true
     backend: kubernetes
     kubernetes:
