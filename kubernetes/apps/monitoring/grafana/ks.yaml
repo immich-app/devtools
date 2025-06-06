@@ -44,4 +44,6 @@ spec:
   postBuild:
     substituteFrom:
       - kind: Secret
-        name: grafana-oauth
+        name: grafana-prod-oauth-clientid
+    substitute:
+      quote: '"'
