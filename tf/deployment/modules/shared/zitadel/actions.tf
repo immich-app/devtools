@@ -47,7 +47,7 @@ resource "zitadel_action" "map_github_oauth" {
       let lastName = " ";
 
       const nameParts = ctx.v1.providerInfo.name.trim().split(" ");
-      if (nameParts.length > 0) {
+      if (nameParts.length > 0 && nameParts[0].length > 0) {
         firstName = nameParts[0];
       }
       if (nameParts.length > 1) {
