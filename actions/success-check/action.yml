@@ -8,11 +8,11 @@ runs:
   using: 'composite'
   steps: # TODO: check each condition much more explicitly
     - name: Any jobs failed?
-      if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
+      if: ${{ contains(inputs.needs.*.result, 'failure') || contains(inputs.needs.*.result, 'cancelled') }}
       shell: bash
       run: exit 1
     - name: All jobs passed or skipped
-      if: ${{ !(contains(needs.*.result, 'failure')) && !contains(needs.*.result, 'cancelled') }}
+      if: ${{ !(contains(inputs.needs.*.result, 'failure')) && !contains(inputs.needs.*.result, 'cancelled') }}
       shell: bash
       # zizmor: ignore[template-injection]
-      run: echo "All jobs passed or skipped" && echo "${{ toJSON(needs.*.result) }}"
+      run: echo "All jobs passed or skipped" && echo "${{ toJSON(inputs.needs.*.result) }}"
