@@ -191,69 +191,6 @@ removed {
   from = onepassword_item.bot_fourthwall_webhook_slug
 }
 
-resource "random_password" "grafana_oauth_client_secret" {
-  length  = 40
-  special = false
-}
-
-resource "onepassword_item" "grafana_oauth_client_secret" {
-  vault    = data.onepassword_vault.kubernetes.uuid
-  title    = "grafana-oauth-client-secret"
-  category = "secure_note"
-
-  section {
-    label = "OAuth secret for grafana"
-
-    field {
-      label = "GRAFANA_OAUTH_CLIENT_SECRET"
-      type  = "CONCEALED"
-      value = random_password.grafana_oauth_client_secret.result
-    }
-  }
-}
-
-resource "random_bytes" "outline_secret_key" {
-  length = 32
-}
-
-resource "random_password" "outline_utils_secret" {
-  length  = 40
-  special = false
-}
-
-resource "random_password" "outline_oauth_client_secret" {
-  length  = 40
-  special = false
-}
-
-resource "onepassword_item" "outline_secret" {
-  vault    = data.onepassword_vault.kubernetes.uuid
-  title    = "outline-secret"
-  category = "secure_note"
-
-  section {
-    label = "Outline secret"
-
-    field {
-      label = "SECRET_KEY"
-      type  = "CONCEALED"
-      value = random_bytes.outline_secret_key.hex
-    }
-
-    field {
-      label = "UTILS_SECRET"
-      type  = "CONCEALED"
-      value = random_password.outline_utils_secret.result
-    }
-
-    field {
-      label = "OIDC_CLIENT_SECRET"
-      type  = "CONCEALED"
-      value = random_password.outline_oauth_client_secret.result
-    }
-  }
-}
-
 data "onepassword_item" "zitadel_profile_json" {
   vault = data.onepassword_vault.kubernetes.uuid
   title = "PUSHED_ZITADEL_IAC_ADMIN_SA"

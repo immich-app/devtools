@@ -44,7 +44,9 @@ module "generated-secrets" {
       { name = "IMMICH_DISCORD_BOT_FOURTHWALL_WEBHOOK_SLUG" },
       { name = "FLUXCD_GITHUB_WEBHOOK_SECRET" },
       { name = "PREVIEWS_GITHUB_WEBHOOK_SECRET" },
-      { name = "AUTH_ZITADEL_MASTER_KEY", length = 32 }
+      { name = "AUTH_ZITADEL_MASTER_KEY", length = 32 },
+      { name = "OUTLINE_SECRET_KEY", length = 32 },
+      { name = "OUTLINE_UTILS_SECRET" }
     ]
   }
 }
