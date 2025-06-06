@@ -54,7 +54,7 @@ spec:
               - secretRef:
                   name: outline-secret-keys
               - secretRef:
-                  name: outline-oauth-clientid
+                  name: outline-oauth-client
             securityContext:
               fsGroup: 1001
       valkey:
