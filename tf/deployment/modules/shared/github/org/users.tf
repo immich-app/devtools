@@ -13,6 +13,10 @@ locals {
     )
     if user.role == "contributor" || user.role == "support"
   }
+
+  bots = {
+    "weblate" = "write"
+  }
 }
 
 resource "github_team" "employees" {
@@ -79,10 +83,26 @@ resource "github_repository_collaborators" "repo_collaborators" {
   repository = each.value.name
 
   dynamic "user" {
-    for_each = local.collaborators
+    // Modified: Only add general collaborators if repo.collaborators is true for the current repo
+    for_each = coalesce(each.value.collaborators, false) ? local.collaborators : {}
     content {
       username   = user.key
       permission = user.value
     }
+  }
+
+  // Adds bot users to Immich repository only
+  dynamic "user" {
+    for_each = each.value.name == "Immich" ? local.bots : {}
+    content {
+      username   = user.key
+      permission = user.value
+    }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      team
+    ]
   }
 }
