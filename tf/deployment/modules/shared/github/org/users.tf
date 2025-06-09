@@ -93,7 +93,7 @@ resource "github_repository_collaborators" "repo_collaborators" {
 
   // Adds bot users to Immich repository only
   dynamic "user" {
-    for_each = each.value.name == "Immich" ? local.bots : {}
+    for_each = each.value.name == "immich" ? local.bots : {}
     content {
       username   = user.key
       permission = user.value
