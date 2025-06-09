@@ -1,14 +1,15 @@
 variable "repositories" {
   type = list(object({
-    name          = string
-    description   = string
-    url           = optional(string)
-    discussions   = optional(bool, false)
-    projects      = optional(bool, false)
-    issues        = optional(bool, true)
-    archived      = optional(bool, false)
-    fork          = optional(bool, false)
-    collaborators = optional(bool, false)
+    name               = string
+    description        = string
+    url                = optional(string)
+    discussions        = optional(bool, false)
+    projects           = optional(bool, false)
+    issues             = optional(bool, true)
+    archived           = optional(bool, false)
+    fork               = optional(bool, false)
+    collaborators      = optional(bool, false)
+    require_codeowners = optional(bool, false)
   }))
   default = [
     {
@@ -18,8 +19,9 @@ variable "repositories" {
       collaborators = true
     },
     {
-      name        = "devtools",
-      description = "Various tooling used by the Immich maintainer team"
+      name               = "devtools",
+      description        = "Various tooling used by the Immich maintainer team",
+      require_codeowners = true
     },
     {
       name          = "static-pages",
