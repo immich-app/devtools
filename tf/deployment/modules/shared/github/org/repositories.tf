@@ -1,14 +1,15 @@
 variable "repositories" {
   type = list(object({
-    name          = string
-    description   = string
-    url           = optional(string)
-    discussions   = optional(bool)
-    projects      = optional(bool)
-    issues        = optional(bool)
-    archived      = optional(bool)
-    fork          = optional(bool)
-    collaborators = optional(bool)
+    name               = string
+    description        = string
+    url                = optional(string)
+    discussions        = optional(bool, false)
+    projects           = optional(bool, false)
+    issues             = optional(bool, true)
+    archived           = optional(bool, false)
+    fork               = optional(bool, false)
+    collaborators      = optional(bool, false)
+    require_codeowners = optional(bool, false)
   }))
   default = [
     {
@@ -18,8 +19,9 @@ variable "repositories" {
       collaborators = true
     },
     {
-      name        = "devtools",
-      description = "Various tooling used by the Immich maintainer team"
+      name               = "devtools",
+      description        = "Various tooling used by the Immich maintainer team",
+      require_codeowners = true
     },
     {
       name          = "static-pages",
@@ -99,15 +101,15 @@ resource "github_repository" "repositories" {
   allow_rebase_merge        = false
   allow_squash_merge        = true
   allow_update_branch       = true
-  archived                  = coalesce(each.value.archived, false)
+  archived                  = each.value.archived
   auto_init                 = false
   delete_branch_on_merge    = true
-  has_discussions           = coalesce(each.value.discussions, false)
-  has_issues                = coalesce(each.value.issues, true)
+  has_discussions           = each.value.discussions
+  has_issues                = each.value.issues
   has_downloads             = true
-  has_projects              = coalesce(each.value.projects, false)
+  has_projects              = each.value.projects
   has_wiki                  = false
-  vulnerability_alerts      = !coalesce(each.value.archived, false)
+  vulnerability_alerts      = !each.value.archived
   homepage_url              = coalesce(each.value.url, "https://immich.app")
   squash_merge_commit_title = "PR_TITLE"
 
@@ -154,7 +156,7 @@ resource "github_repository_ruleset" "main_ruleset" {
     non_fast_forward = true
     pull_request {
       dismiss_stale_reviews_on_push     = false
-      require_code_owner_review         = false
+      require_code_owner_review         = each.value.require_codeowners
       require_last_push_approval        = false
       required_approving_review_count   = 1
       required_review_thread_resolution = false
