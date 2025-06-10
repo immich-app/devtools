@@ -6,3 +6,4 @@ resources:
   - ./cloudnative-pg/ks.yaml
   - ./grafana-operator/ks.yaml
   - ./flux-operator/ks.yaml
+  - ./victoria-metrics/ks.yaml

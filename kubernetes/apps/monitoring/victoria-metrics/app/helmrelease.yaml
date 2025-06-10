@@ -29,6 +29,10 @@ spec:
     keepHistory: false
   values:
     fullnameOverride: vmetrics
+    crds:
+      enabled: false
+    victoria-metrics-operator:
+      enabled: false
     defaultDashboards:
       grafanaOperator:
         enabled: true
