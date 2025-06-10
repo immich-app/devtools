@@ -9,6 +9,7 @@ spec:
       app.kubernetes.io/name: *app1
   dependsOn:
     - name: grafana-operator
+    - name: victoria-metrics-operator
   path: ./kubernetes/apps/monitoring/victoria-metrics/app
   prune: true
   sourceRef:
