@@ -5,7 +5,7 @@ terraform {
   required_providers {
     grafana = {
       source  = "grafana/grafana"
-      version = "3.25.2"
+      version = "3.25.3"
     }
     onepassword = {
       source  = "1Password/onepassword"
