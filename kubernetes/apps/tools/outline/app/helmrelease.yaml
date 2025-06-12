@@ -62,7 +62,7 @@ spec:
           app:
             image:
               repository: valkey/valkey
-              tag: 8.1.1@sha256:a19bebed6a91bd5e6e2106fef015f9602a3392deeb7c9ed47548378dcee3dfc2
+              tag: 8.1.2@sha256:fec42f399876eb6faf9e008570597741c87ff7662a54185593e74b09ce83d177
     persistence:
       data:
         enabled: true
