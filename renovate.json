@@ -27,6 +27,12 @@
         "/flux/"
       ],
       "groupName": "fluxcd"
+    },
+    {
+      "matchPackageNames": [
+        "/victoria-metrics/"
+      ],
+      "groupName": "vmetrics"
     }
   ],
   "flux": {
