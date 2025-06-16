@@ -1,0 +1,201 @@
+name: Overall Pipeline Status Check
+
+on:
+  # This workflow can be triggered manually or on a schedule if desired,
+  # but its primary design here is to be triggered by workflow_dispatch
+  # or potentially by a push to main if you want to check status after merges.
+#  workflow_dispatch: # Allows manual triggering
+  workflow_run:
+    workflows: [Zizmor, Terragrunt, Scripts]
+    branches-ignore:
+      - "main"
+    types:
+      - completed
+#  push:
+#    branches: [main]
+#    # paths: # Consider path filtering if you only want to run this for specific changes
+#    #   - '.github/workflows/**' # Example: run if any workflow changes
+#  pull_request:
+#    branches:
+#      - main
+permissions:
+  checks: read   # Required to read check runs
+  actions: read  # Required to list workflow runs (fallback or additional info)
+  contents: read # Required to checkout the repository
+
+jobs:
+  check_all_workflow_success_jobs:
+    runs-on: ubuntu-latest
+    outputs:
+      overall_status_message: ${{ steps.evaluate_checks.outputs.overall_status_message }}
+      all_checks_successful: ${{ steps.evaluate_checks.outputs.all_checks_successful }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4 # Use a more recent version
+        with:
+          # No need to persist credentials for this read-only operation
+          persist-credentials: false
+
+      - name: Verify Workflow Success Checks via GitHub Checks API
+        id: evaluate_checks
+        uses: actions/github-script@v7 # Use a more recent version
+        env:
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }} # Handle both PR and push events
+          EXPECTED_CHECK_NAMES_JSON: |
+            [
+              "Zizmor Workflow Success",
+              "Scripts Workflow Success",
+              "Flux Diff Workflow Success",
+              "Terragrunt Workflow Success",
+              "Build Actions Runner Workflow Success"
+            ]
+          POLLING_INTERVAL_SECONDS: 8 # Interval in seconds to poll the Checks API
+          POLLING_TIMEOUT_MINUTES: 15  # Timeout in minutes to wait for all checks
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const commit_sha = process.env.COMMIT_SHA;
+            const expected_check_names = JSON.parse(process.env.EXPECTED_CHECK_NAMES_JSON);
+            const polling_interval_ms = parseInt(process.env.POLLING_INTERVAL_SECONDS) * 1000;
+            const polling_timeout_ms = parseInt(process.env.POLLING_TIMEOUT_MINUTES) * 60 * 1000;
+            const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+
+            let all_successful = true;
+            let status_summary = `Overall status for commit ${commit_sha}:\n`;
+            let found_checks_count = 0;
+            const relevant_checks = {};
+            const startTime = Date.now();
+
+            core.info(`Starting to poll for ${expected_check_names.length} expected check runs for SHA: ${commit_sha}`);
+            core.info(`Polling interval: ${process.env.POLLING_INTERVAL_SECONDS}s, Timeout: ${process.env.POLLING_TIMEOUT_MINUTES}m`);
+
+            async function getChecks() {
+              const { data: checks } = await github.rest.checks.listForRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: commit_sha,
+                per_page: 100
+              });
+              return checks.check_runs;
+            }
+
+            try {
+              while (Date.now() - startTime < polling_timeout_ms) {
+                const check_runs = await getChecks();
+                let current_found_expected_checks = 0;
+
+                for (const check_run of check_runs) {
+                  if (expected_check_names.includes(check_run.name)) {
+                    // Store the latest completed status for each expected check name
+                    if (!relevant_checks[check_run.name] ||
+                        new Date(check_run.completed_at) > new Date(relevant_checks[check_run.name].completed_at)) {
+                       // Only consider it "found" for polling purposes if it's completed,
+                       // or if we decide to track pending ones too.
+                       // For now, let's assume we are waiting for them to appear, possibly completed.
+                      relevant_checks[check_run.name] = {
+                        conclusion: check_run.conclusion,
+                        status: check_run.status,
+                        html_url: check_run.html_url,
+                        completed_at: check_run.completed_at,
+                        name: check_run.name
+                      };
+                    }
+                  }
+                }
+
+                // Count how many of the *expected* checks we have found so far
+                current_found_expected_checks = expected_check_names.filter(name => relevant_checks[name]).length;
+                core.info(`Poll: Found ${current_found_expected_checks}/${expected_check_names.length} expected checks so far.`);
+
+                if (current_found_expected_checks === expected_check_names.length) {
+                  core.info("All expected checks have been found.");
+                  break; // Exit polling loop
+                }
+
+                if (Date.now() - startTime + polling_interval_ms > polling_timeout_ms) {
+                  core.warning("Polling timeout nearing, last attempt.");
+                }
+                await new Promise(resolve => setTimeout(resolve, polling_interval_ms));
+              }
+
+              if (Object.keys(relevant_checks).length < expected_check_names.length) {
+                status_summary += `TIMEOUT: Not all expected checks were found within ${process.env.POLLING_TIMEOUT_MINUTES} minutes.\n`;
+                core.error(`Timeout: Expected ${expected_check_names.length} checks, but only found ${Object.keys(relevant_checks).length}.`);
+                all_successful = false;
+                // List missing checks
+                for (const check_name of expected_check_names) {
+                  if (!relevant_checks[check_name]) {
+                    status_summary += `  - ${check_name}: MISSING (Not found after timeout)\n`;
+                    core.warning(`Missing expected check: ${check_name}`);
+                  }
+                }
+              }
+
+              core.info("Proceeding to evaluate conclusions of found checks.");
+              // Evaluate conclusions of all *expected* checks, whether found or timed out
+              for (const check_name of expected_check_names) {
+                const check = relevant_checks[check_name];
+                if (check) {
+                  if (check.name === check_name) { // Ensure we are evaluating the correct check from our map
+                    found_checks_count++; // This counts checks that were found and are being evaluated
+                    status_summary += `  - ${check.name}: ${check.status} - ${check.conclusion || 'pending/unknown'} (${check.html_url})\n`;
+                    if (check.status !== 'completed') {
+                      core.warning(`Check '${check.name}' is not completed (Status: ${check.status}). Treating as not successful.`);
+                      all_successful = false;
+                    } else if (check.conclusion !== 'success') {
+                      if (check.conclusion === 'skipped' || check.conclusion === 'neutral') {
+                        core.info(`Check '${check.name}' was ${check.conclusion}, considering it acceptable.`);
+                      } else {
+                        all_successful = false;
+                        core.warning(`Check '${check.name}' did not succeed (Conclusion: ${check.conclusion}).`);
+                      }
+                    }
+                  }
+                } else if (all_successful) {
+                    // If it wasn't found due to timeout, it's already handled and all_successful is false.
+                    // This part is more of a safeguard if a check was expected but somehow not in relevant_checks after polling completed.
+                    status_summary += `  - ${check_name}: Not found (Logic error or not reported by API)\n`;
+                    all_successful = false;
+                    core.warning(`Expected check '${check_name}' was not in the final list for evaluation.`);
+                }
+              }
+
+              if (found_checks_count < expected_check_names.length && all_successful) {
+                // This case should ideally be covered by the timeout logic making all_successful false.
+                status_summary += `Warning: Some expected checks were not evaluated (${found_checks_count}/${expected_check_names.length}).\n`;
+                all_successful = false;
+              }
+
+            } catch (error) {
+              core.error(`Error during polling or processing check runs: ${error}`);
+              status_summary += `  - Error during script execution: ${error.message}\n`;
+              all_successful = false;
+            }
+
+            core.setOutput('overall_status_message', status_summary);
+            core.setOutput('all_checks_successful', all_successful.toString());
+
+            core.summary.addRaw(status_summary);
+            await core.summary.write();
+
+            if (!all_successful) {
+              core.setFailed('One or more required workflow success checks have not succeeded, are missing, or timed out.');
+            }
+
+  report_final_status:
+    runs-on: ubuntu-latest
+    needs: check_all_workflow_success_jobs
+    if: always() # Always run to report the outcome
+    steps:
+      - name: Report Overall Pipeline Status
+        run: |
+          echo "Overall Pipeline Evaluation Complete."
+          echo "Summary from previous job:"
+          echo "${{ needs.check_all_workflow_success_jobs.outputs.overall_status_message }}"
+          echo "All checks successful: ${{ needs.check_all_workflow_success_jobs.outputs.all_checks_successful }}"
+          if [[ "${{ needs.check_all_workflow_success_jobs.outputs.all_checks_successful }}" != "true" ]]; then
+            echo "Pipeline has issues or one or more checks did not succeed."
+            # exit 1 # Optionally fail this job too, check_all_workflow_success_jobs already fails
+          else
+            echo "All checks reported success! Pipeline is green."
+          fi
