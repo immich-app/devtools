@@ -11,5 +11,5 @@ data:
           "com.docker.network.driver.mtu": "1450"
         }
       },
-      "registry-mirrors": ["http://registry.registry-cache.svc.cluster.local:5000"]
+      "registry-mirrors": ["http://registry.actions-cache.svc.cluster.local:5000"]
     }

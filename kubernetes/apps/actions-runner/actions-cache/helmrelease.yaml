@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: registry
+  name: actions-cache
   namespace: actions-cache
 spec:
   interval: 5m
@@ -32,19 +32,17 @@ spec:
         containers:
           main:
             image:
-              repository: registry
-              tag: 3.0.0@sha256:1fc7de654f2ac1247f0b67e8a459e273b0993be7d2beda1f3f56fbf1001ed3e7
+              repository: ghcr.io/falcondev-oss/github-actions-cache-server
+              tag: 8.0.1@sha256:f9ceeb0770901846393d319e0c819edbf219775e2c9bd1651aaed94d0b09d9b4
             env:
-              REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
-              REGISTRY_PROXY_REMOTEURL: https://registry-1.docker.io
-              # Default TTL is 7 days
-              REGISTRY_DELETE_ENABLED: "true"
-              # TODO: Docker hub creds
+              API_BASE_URL: "http://actions-cache.actions-cache.svc.cluster.local:3000"
+              STORAGE_FILESYSTEM_PATH: "/data/cache"
+              DB_SQLITE_PATH: "/data/sqlite.db"
     service:
       main:
         ports:
           http:
-            port: 5000
+            port: 3000
     persistence:
       data:
         enabled: true
