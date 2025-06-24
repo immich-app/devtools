@@ -31,6 +31,16 @@ spec:
         - port: 5000
           protocol: TCP
     - to:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: actions-cache
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/name: actions-cache
+      ports:
+        - port: 3000
+          protocol: TCP
+    - to:
       - ipBlock:
           cidr: 0.0.0.0/0
           except:

@@ -50,6 +50,8 @@ spec:
               value: unix:///run/docker/docker.sock
             - name: RUNNER_WAIT_FOR_DOCKER_IN_SECONDS
               value: '120'
+            - name: CUSTOM_ACTIONS_RESULTS_URL
+              value: "http://actions-cache.actions-cache.svc.cluster.local:3000"
           volumeMounts:
             - name: work
               mountPath: /home/runner/_work

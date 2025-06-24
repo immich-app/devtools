@@ -21,6 +21,28 @@ spec:
   retryInterval: 1m
   timeout: 5m
 ---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app actions-runner-actions-cache
+  namespace: flux-system
+spec:
+  targetNamespace: actions-cache
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: cluster-apps-onepassword
+  path: ./kubernetes/apps/actions-runner/actions-cache
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: immich-kubernetes
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+---
 # yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
