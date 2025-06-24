@@ -23,7 +23,7 @@ spec:
     - to:
       - namespaceSelector:
           matchLabels:
-            kubernetes.io/metadata.name: registry-cache
+            kubernetes.io/metadata.name: actions-cache
         podSelector:
           matchLabels:
             app.kubernetes.io/name: registry

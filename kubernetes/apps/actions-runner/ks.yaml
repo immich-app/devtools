@@ -5,7 +5,7 @@ metadata:
   name: &app actions-runner-registry-cache
   namespace: flux-system
 spec:
-  targetNamespace: registry-cache
+  targetNamespace: actions-cache
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
