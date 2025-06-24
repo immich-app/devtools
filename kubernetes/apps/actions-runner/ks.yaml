@@ -31,8 +31,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: cluster-apps-onepassword
   path: ./kubernetes/apps/actions-runner/actions-cache
   prune: true
   sourceRef:
@@ -54,8 +52,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: cluster-apps-onepassword
   path: ./kubernetes/apps/actions-runner/controller
   prune: true
   sourceRef:
