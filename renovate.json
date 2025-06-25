@@ -33,6 +33,19 @@
         "/victoria-metrics/"
       ],
       "groupName": "vmetrics"
+    },
+    {
+      "matchFiles": [".mise/config.toml"],
+      "groupName": "mise",
+      "schedule": ["before 9am on tuesday"]
+    },
+    {
+      "matchPackageNames": [
+        "/opentofu/",
+        "/terragrunt/"
+      ],
+      "groupName": "tofu",
+      "schedule": ["before 9am on tuesday"]
     }
   ],
   "flux": {
