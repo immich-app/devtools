@@ -35,7 +35,7 @@
       "groupName": "vmetrics"
     },
     {
-      "matchFiles": [".mise/config.toml"],
+      "matchFileNames": [".mise/config.toml"],
       "groupName": "mise",
       "schedule": ["before 9am on tuesday"]
     },
