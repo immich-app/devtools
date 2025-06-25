@@ -87,7 +87,7 @@ resource "github_actions_organization_secret" "docker_hub_write_token" {
 }
 
 resource "github_actions_organization_secret" "CF_TURNSTILE_DEFAULT_INVISIBLE_SITE_KEY" {
-  secret_name     = "CF_TURNSTILE_DEFAULT_INVISIBLE_SECRET"
+  secret_name     = "CF_TURNSTILE_DEFAULT_INVISIBLE_SITE_KEY"
   plaintext_value = data.terraform_remote_state.cloudflare_account.outputs.turnstile_default_invisible_site_key
   visibility      = "all"
 }
