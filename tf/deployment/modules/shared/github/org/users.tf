@@ -15,7 +15,7 @@ locals {
   }
 
   bots = {
-    "weblate" = "write"
+    "weblate" = "push"
   }
 }
 
