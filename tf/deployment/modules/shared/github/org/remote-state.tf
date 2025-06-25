@@ -16,6 +16,16 @@ data "terraform_remote_state" "docker_org_state" {
   }
 }
 
+data "terraform_remote_state" "cloudflare_account" {
+  backend = "pg"
+
+  config = {
+    conn_str    = var.tf_state_postgres_conn_str
+    schema_name = "prod_cloudflare_account"
+  }
+}
+
+
 data "onepassword_vault" "kubernetes" {
   name = "Kubernetes"
 }
