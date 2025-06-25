@@ -4,10 +4,8 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["containers/actions-runner/**", ".github/workflows/build-actions-runner.yaml"]
   pull_request:
     branches: [main]
-    paths: ["containers/actions-runner/**", ".github/workflows/build-actions-runner.yaml"]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -17,9 +15,30 @@ permissions:
   packages: write
 
 jobs:
-  build_and_push:
+  pre-job:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      should_run: ${{ steps.found_paths.outputs.actions_runner == 'true' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
 
+      - id: found_paths
+        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        with:
+          filters: |
+            actions_runner:
+              - 'containers/actions-runner/**'
+              - '.github/workflows/build-actions-runner.yaml'
+
+  build_and_push:
+    needs: [pre-job]
+    if: ${{ needs.pre-job.outputs.should_run == 'true' }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -52,3 +71,14 @@ jobs:
           push: ${{ !github.event.pull_request.head.repo.fork && steps.metadata.outputs.tags != '' }}
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
+
+  success-check:
+    name: Actions Runner Build Success
+    needs: [build_and_push]
+    runs-on: ubuntu-latest
+    permissions: {}
+    if: always()
+    steps:
+      - uses: immich-app/devtools/actions/success-check@68f10eb389bb02a3cf9d1156111964c549eb421b # 0.0.4
+        with:
+          needs: ${{ toJSON(needs) }}
