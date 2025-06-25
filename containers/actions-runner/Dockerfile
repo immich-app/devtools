@@ -14,9 +14,9 @@ ENV HOMEBREW_NO_ANALYTICS=1 \
 USER root
 
 RUN \
-    apt-get update && apt-get upgrade -y \
-    && \
-    apt-get install -y --no-install-recommends \
+    add-apt-repository ppa:rmescandon/yq \
+    && apt-get update && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends \
         ca-certificates \
         gcc \
         jo \
@@ -28,6 +28,11 @@ RUN \
         g++ \
         cmake \
         libgl1 \
+        yq \
+        xz-utils \
+        ninja-build \
+        zstd \
+        android-sdk \
     && mkdir -p -m 755 /etc/apt/keyrings \
         && out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
         && cat $out | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
