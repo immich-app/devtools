@@ -36,6 +36,7 @@
     },
     {
       "matchFileNames": [".mise/config.toml"],
+      "matchPackageNames": ["!/flux/"],
       "groupName": "mise",
       "schedule": ["before 9am on tuesday"]
     },
