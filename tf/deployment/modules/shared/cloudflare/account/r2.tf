@@ -32,7 +32,7 @@ moved {
 }
 
 module "outline_volsync_backups" {
-  source = "../../../../../shared/modules/cloudflare-r2-bucket"
+  source = "./shared/modules/cloudflare-r2-bucket"
 
   bucket_name = "outline-volsync-backups"
   cloudflare_account_id = var.cloudflare_account_id
