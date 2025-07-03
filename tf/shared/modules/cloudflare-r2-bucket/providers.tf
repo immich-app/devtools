@@ -1,7 +1,12 @@
-provider "cloudflare" {
-  api_token = var.cloudflare_api_token
-}
-
-provider "onepassword" {
-  service_account_token = var.op_service_account_token
+terraform {
+  required_providers {
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 4.0"
+    }
+    onepassword = {
+      source  = "1Password/onepassword"
+      version = "~> 1.0"
+    }
+  }
 }

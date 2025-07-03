@@ -1,15 +1,5 @@
-variable "cloudflare_api_token" {
-  description = "Cloudflare API token with permission to manage R2 buckets"
-  sensitive   = true
-}
-
 variable "cloudflare_account_id" {
   description = "Cloudflare account ID"
-}
-
-variable "op_service_account_token" {
-  description = "1Password service account token"
-  sensitive   = true
 }
 
 variable "bucket_name" {
