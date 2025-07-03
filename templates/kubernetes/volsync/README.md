@@ -43,9 +43,6 @@ resources:
 
 - `APP`: The application name
 - `VOLSYNC_CAPACITY`: The PVC size
-- `VOLSYNC_REPO_SECRET`  
-  The name of the 1password entry holding the appropriate secret values:
-  - `RESTIC_REPOSITORY`
-  - `RESTIC_PASSWORD`
-  - `AWS_ACCESS_KEY_ID`
-  - `AWS_SECRET_ACCESS_KEY`
+- `VOLSYNC_SECRET_STORE`: The name of the ClusterSecretStore to use 
+- `VOLSYNC_RESTIC_PASSWORD_SECRET`: The name of the 1password entry holding the restic password
+- `VOLSYNC_BUCKET_SECRET`: The name of the 1password entry holding the bucket credentials

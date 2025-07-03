@@ -46,7 +46,8 @@ module "generated-secrets" {
       { name = "PREVIEWS_GITHUB_WEBHOOK_SECRET" },
       { name = "AUTH_ZITADEL_MASTER_KEY", length = 32 },
       { name = "OUTLINE_SECRET_KEY", length = 64, type = "numeric" },
-      { name = "OUTLINE_UTILS_SECRET" }
+      { name = "OUTLINE_UTILS_SECRET" },
+      { name = "OUTLINE_VOLSYNC_BACKUPS_RESTIC_SECRET" }
     ]
   }
 }
