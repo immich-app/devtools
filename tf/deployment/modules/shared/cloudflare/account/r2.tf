@@ -28,17 +28,17 @@ resource "cloudflare_r2_bucket" "outline_database_backups" {
 
 moved {
   from = cloudflare_r2_bucket.outline_volsync_backups
-  to = module.outline_volsync_backups.cloudflare_r2_bucket.bucket
+  to   = module.outline_volsync_backups.cloudflare_r2_bucket.bucket
 }
 
 module "outline_volsync_backups" {
   source = "./shared/modules/cloudflare-r2-bucket"
 
-  bucket_name = "outline-volsync-backups"
+  bucket_name           = "outline-volsync-backups"
   cloudflare_account_id = var.cloudflare_account_id
-  onepassword_vault_id = data.onepassword_vault.tf.uuid
-  item_name = "OUTLINE_VOLSYNC_BACKUPS_BUCKET"
-  allowed_ips = [local.mich_ip]
+  onepassword_vault_id  = data.onepassword_vault.tf.uuid
+  item_name             = "OUTLINE_VOLSYNC_BACKUPS_BUCKET"
+  allowed_ips           = [local.mich_ip]
 }
 
 resource "cloudflare_r2_bucket" "static" {

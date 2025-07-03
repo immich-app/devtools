@@ -2,8 +2,8 @@ module "domain" {
   source = "../domain"
 
   app_name = var.app_name
-  stage = var.stage
-  env = var.env
+  stage    = var.stage
+  env      = var.env
 }
 
 data "cloudflare_zone" "domain" {
