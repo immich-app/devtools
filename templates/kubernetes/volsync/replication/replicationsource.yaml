@@ -10,7 +10,7 @@ spec:
     schedule: "${VOLSYNC_SCHEDULE:-0 4 * * *}"
   restic:
     copyMethod: Clone
-    repository: "${VOLSYNC_REPO_SECRET}"
+    repository: "${APP}-volsync-repo"
     cacheStorageClassName: "zfs"
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-1Gi}"
     storageClassName: "zfs"
