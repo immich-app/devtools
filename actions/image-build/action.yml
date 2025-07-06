@@ -22,6 +22,9 @@ inputs:
   build-args:
     description: 'Docker build arguments'
     required: false
+  target:
+    description: 'Sets the target stage to build'
+    required: false
 runs:
   using: 'composite'
   steps:
@@ -95,6 +98,7 @@ runs:
           type=registry,ref=${{ inputs.image }}-build-cache:${{ steps.cache-target.outputs.cache-key-base }}-${{ env.CACHE_KEY_SUFFIX }}
           type=registry,ref=${{ inputs.image }}-build-cache:${{ steps.cache-target.outputs.cache-key-base }}-main
         outputs: type=image,"name=${{ inputs.image }}",push-by-digest=true,name-canonical=true,push=${{ !github.event.pull_request.head.repo.fork }}
+        target: ${{ inputs.target }}
         build-args: |
           BUILD_ID=${{ github.run_id }}
           BUILD_IMAGE=${{ github.event_name == 'release' && github.ref_name || steps.meta.outputs.tags }}
