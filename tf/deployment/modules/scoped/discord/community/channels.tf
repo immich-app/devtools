@@ -620,11 +620,6 @@ resource "discord_text_channel" "team_purchases" {
   }
 }
 
-moved {
-  from = discord_text_channel.leadership_purchases
-  to   = discord_text_channel.team_purchases
-}
-
 resource "discord_text_channel" "leadership" {
   name                     = "leadership"
   topic                    = "The place we make decisions that we know nothing about"
