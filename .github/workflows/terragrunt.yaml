@@ -15,7 +15,7 @@ on:
       - ".mise/config.toml"
 
 concurrency:
-  group: ${{ github.workflow }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 env:
