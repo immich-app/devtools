@@ -43,7 +43,7 @@ resource "cloudflare_api_token" "bucket_api_token" {
 
 // Store credentials in 1Password
 resource "onepassword_item" "bucket_credentials" {
-  vault = var.onepassword_vault_id
+  vault    = var.onepassword_vault_id
   title    = var.item_name
   category = "secure_note"
 

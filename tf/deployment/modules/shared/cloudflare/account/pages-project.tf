@@ -61,11 +61,6 @@ resource "cloudflare_pages_project" "static_pages" {
   }
 }
 
-moved {
-  from = cloudflare_pages_project.my_immich_app
-  to   = cloudflare_pages_project.static_pages["my.immich.app"]
-}
-
 output "static_pages_project_names" {
   value = { for page in local.static_pages : page => cloudflare_pages_project.static_pages[page].name }
 }

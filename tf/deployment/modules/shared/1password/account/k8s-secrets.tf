@@ -73,11 +73,6 @@ resource "random_password" "vmetrics_write_token" {
   special = false
 }
 
-moved {
-  to   = random_password.vmetrics_write_token
-  from = random_password.cf_workers_metrics_token
-}
-
 resource "onepassword_item" "vmetrics_write_token" {
   for_each = { for vault in [data.onepassword_vault.kubernetes, data.onepassword_vault.tf_dev, data.onepassword_vault.tf_prod] : vault.name => vault }
   vault    = each.value.uuid
@@ -181,14 +176,6 @@ resource "onepassword_item" "vmetrics_data_read_token" {
       value = random_password.vmetrics_data_read_token.result
     }
   }
-}
-
-removed {
-  from = onepassword_item.bot_github_webhook_slug
-}
-
-removed {
-  from = onepassword_item.bot_fourthwall_webhook_slug
 }
 
 data "onepassword_item" "zitadel_profile_json" {
