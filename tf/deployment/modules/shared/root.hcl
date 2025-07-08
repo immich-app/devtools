@@ -9,3 +9,10 @@ remote_state {
     conn_str = local.tf_state_postgres_conn_str
   }
 }
+
+terraform {
+  extra_arguments "retry_lock" {
+    commands  = get_terraform_commands_that_need_locking()
+    arguments = ["-lock-timeout=5m"]
+  }
+}

@@ -4,9 +4,9 @@ flux2 = "2.6.3"
 helm = "3.18.3"
 jq = "1.7.1"
 kubectl = "1.33.2"
-opentofu = "1.7.1"
+opentofu = "1.10.2"
 "pipx:flux-local" = "7.5.6"
-terragrunt = "0.82.0"
+terragrunt = "0.83.0"
 uv = "0.7.17"
 yamlfmt = "0.17.2"
 
@@ -23,13 +23,22 @@ run = "mise run tg hclfmt"
 description = "Format terragrunt files"
 
 [tasks.tf]
-run = "mise run tg run-all"
+run = "mise run tg run --all"
 description = "Wrapper for terragrunt run-all"
 dir = "{{cwd}}"
 
 [tasks."tf:fmt"]
 run = "tofu fmt -recursive tf/"
 description = "Format terraform files"
+
+[tasks."tf:init"]
+run = "mise run tf init -- -reconfigure"
+
+[tasks."tf:plan"]
+run = "mise run tf plan"
+
+[tasks."tf:apply"]
+run = "mise run tf apply"
 
 [tasks."kube:fmt"]
 run = "yamlfmt kubernetes/ templates/kubernetes/"
