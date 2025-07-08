@@ -32,6 +32,9 @@ on:
       runner-mapping:
         description: 'Mapping from platforms to runners'
         type: string
+      target:
+        description: 'Sets the target stage to build'
+        type: string
     secrets:
       DOCKERHUB_USERNAME:
         required: false
@@ -89,7 +92,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: immich-app/devtools/actions/image-build@7d95e52a7a597ce005a306d6891467fc15427b69 # 0.1.1
+      - uses: immich-app/devtools/actions/image-build@7d95e52a7a597ce005a306d6891467fc15427b69 # image-build-action-0.1.1
         with:
           context: ${{ inputs.context }}
           dockerfile: ${{ inputs.dockerfile }}
@@ -98,6 +101,7 @@ jobs:
           platform: ${{ matrix.platform }}
           artifact-key-base: ${{ needs.matrix.outputs.key }}
           build-args: ${{ inputs.build-args }}
+          target: ${{ inputs.target }}
 
   merge:
     needs: [matrix, build]
