@@ -9,7 +9,7 @@ spec:
     manual: restore-once
   restic:
     copyMethod: Snapshot
-    repository: "${VOLSYNC_REPO_SECRET}"
+    repository: "${APP}-volsync-repo"
     cacheStorageClassName: "zfs"
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-1Gi}"
     storageClassName: "zfs"
