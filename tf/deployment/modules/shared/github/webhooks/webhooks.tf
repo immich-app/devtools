@@ -16,6 +16,11 @@ resource "github_organization_webhook" "bot" {
   }
 }
 
+import {
+  to = github_organization_webhook.bot
+  id = "503958075"
+}
+
 data "onepassword_item" "previews_webhook_url" {
   title = "PREVIEWS_GITHUB_WEBHOOK_URL"
   vault = data.onepassword_vault.tf.name
@@ -38,6 +43,11 @@ resource "github_repository_webhook" "previews" {
     secret       = data.onepassword_item.previews_webhook_secret.password
     content_type = "form"
   }
+}
+
+import {
+  to = github_repository_webhook.previews[0]
+  id = "immich/541139517"
 }
 
 data "onepassword_item" "fluxcd_webhook_url" {
@@ -64,3 +74,7 @@ resource "github_repository_webhook" "fluxcd" {
   }
 }
 
+import {
+  to = github_repository_webhook.fluxcd[0]
+  id = "devtools/541139511"
+}
