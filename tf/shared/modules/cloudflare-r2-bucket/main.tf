@@ -6,7 +6,8 @@ resource "cloudflare_r2_bucket" "bucket" {
 
 // Create the API token for R2 bucket access
 resource "cloudflare_api_token" "bucket_api_token" {
-  name = "r2_token_${var.bucket_name}"
+  name     = "r2_token_${var.bucket_name}"
+  provider = cloudflare.api_keys
 
   // First policy for R2 storage access
   policy {

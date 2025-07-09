@@ -33,6 +33,9 @@ moved {
 
 module "outline_volsync_backups" {
   source = "./shared/modules/cloudflare-r2-bucket"
+  providers = {
+    cloudflare.api_keys = cloudflare.api_keys
+  }
 
   bucket_name           = "outline-volsync-backups"
   cloudflare_account_id = var.cloudflare_account_id
