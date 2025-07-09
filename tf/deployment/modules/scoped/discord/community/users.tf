@@ -3,7 +3,7 @@ locals {
 }
 
 resource "discord_member_roles" "roles" {
-  for_each = { for user in local.users : user.discord.id => user if var.env == "prod" || lookup(user, "dev", false) == true }
+  for_each = { for user in local.users : user.discord.id => user if(var.env == "prod" || lookup(user, "dev", false)) && try(user.discord.username, "") != "" }
 
   server_id = discord_server.server.id
   user_id   = each.value.discord.id
