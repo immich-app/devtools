@@ -1,3 +1,7 @@
+data "cloudflare_api_token_permission_groups" "all" {
+  provider = cloudflare.api_keys
+}
+
 resource "cloudflare_r2_bucket" "bucket" {
   account_id = var.cloudflare_account_id
   name       = var.bucket_name
@@ -12,8 +16,7 @@ resource "cloudflare_api_token" "bucket_api_token" {
   // First policy for R2 storage access
   policy {
     permission_groups = [
-      "com.cloudflare.api.account.worker.r2.storage.read",
-      "com.cloudflare.api.account.worker.r2.storage.write"
+      data.cloudflare_api_token_permission_groups.all.account["Workers R2 Storage Read"],
     ]
     resources = {
       "com.cloudflare.api.account.*" = "*"
@@ -23,20 +26,20 @@ resource "cloudflare_api_token" "bucket_api_token" {
   // Second policy specifically for R2 bucket item operations
   policy {
     permission_groups = [
-      "com.cloudflare.edge.r2.bucket.object_read",
-      "com.cloudflare.edge.r2.bucket.object_write"
+      data.cloudflare_api_token_permission_groups.all.r2["Workers R2 Storage Bucket Item Read"],
+      data.cloudflare_api_token_permission_groups.all.r2["Workers R2 Storage Bucket Item Write"]
     ]
     resources = {
-      "com.cloudflare.edge.r2.bucket.${var.bucket_name}" = "*"
+      "com.cloudflare.edge.r2.bucket.${var.cloudflare_account_id}_default_${var.bucket_name}" = "*"
     }
   }
 
   // Add IP restrictions if specified
   dynamic "condition" {
-    for_each = length(var.allowed_ips) > 0 ? [1] : []
+    for_each = length(var.allowed_cidrs) > 0 ? [1] : []
     content {
       request_ip {
-        in = var.allowed_ips
+        in = var.allowed_cidrs
       }
     }
   }

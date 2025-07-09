@@ -23,7 +23,7 @@ variable "item_name" {
   type        = string
 }
 
-variable "allowed_ips" {
+variable "allowed_cidrs" {
   description = "List of IP CIDRs allowed to access the bucket via the generated API key"
   type        = list(string)
   default     = []
