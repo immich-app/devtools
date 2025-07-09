@@ -33,12 +33,15 @@ description = "Format terraform files"
 
 [tasks."tf:init"]
 run = "mise run tf init -- -reconfigure"
+dir = "{{cwd}}"
 
 [tasks."tf:plan"]
 run = "mise run tf plan"
+dir = "{{cwd}}"
 
 [tasks."tf:apply"]
 run = "mise run tf apply"
+dir = "{{cwd}}"
 
 [tasks."kube:fmt"]
 run = "yamlfmt kubernetes/ templates/kubernetes/"
