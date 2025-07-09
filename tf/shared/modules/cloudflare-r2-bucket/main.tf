@@ -17,7 +17,6 @@ resource "cloudflare_api_token" "bucket_api_token" {
   policy {
     permission_groups = [
       data.cloudflare_api_token_permission_groups.all.account["Workers R2 Storage Read"],
-      data.cloudflare_api_token_permission_groups.all.account["Workers R2 Storage Write"],
     ]
     resources = {
       "com.cloudflare.api.account.*" = "*"
