@@ -212,7 +212,7 @@ resource "github_repository_file" "default_files" {
         # Ignore all .terragrunt files in any child directory
         if !can(regex(".*terragrunt.*", file))
       ]
-      if !coalesce(repo.fork, false)
+      if !coalesce(repo.fork, false) && !coalesce(repo.archived, false)
     ]) : "${combination.repo.name}/${combination.file}" => combination
   }
   repository          = each.value.repo.name
@@ -222,6 +222,7 @@ resource "github_repository_file" "default_files" {
   overwrite_on_create = true
 
   lifecycle {
+
     ignore_changes = [
       commit_message,
       commit_email,
