@@ -41,7 +41,7 @@ module "outline_volsync_backups" {
   cloudflare_account_id = var.cloudflare_account_id
   onepassword_vault_id  = data.onepassword_vault.tf.uuid
   item_name             = "OUTLINE_VOLSYNC_BACKUPS_BUCKET"
-  allowed_ips           = [local.mich_ip]
+  allowed_cidrs         = local.mich_cidrs
 }
 
 resource "cloudflare_r2_bucket" "static" {

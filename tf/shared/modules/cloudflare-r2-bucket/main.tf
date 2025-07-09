@@ -36,10 +36,10 @@ resource "cloudflare_api_token" "bucket_api_token" {
 
   // Add IP restrictions if specified
   dynamic "condition" {
-    for_each = length(var.allowed_ips) > 0 ? [1] : []
+    for_each = length(var.allowed_cidrs) > 0 ? [1] : []
     content {
       request_ip {
-        in = var.allowed_ips
+        in = var.allowed_cidrs
       }
     }
   }
