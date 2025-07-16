@@ -1,4 +1,4 @@
-/* eslint-disable unicorn/no-process-exit */
+#!/usr/bin/env bun
 import {
   addAssetsToAlbum,
   createAlbum,
@@ -7,13 +7,13 @@ import {
   searchAssets,
   searchSmart,
   updateAlbumInfo,
-} from '@immich/sdk';
-import { DateTime } from 'luxon';
+} from '@immich/sdk@1.126.1';
+import { DateTime } from 'luxon@3.5.0';
 
 const baseUrl = process.argv[2] || process.env.IMMICH_BASE_URL;
 const apiKey = process.argv[3] || process.env.IMMICH_API_KEY;
 if (!baseUrl || !apiKey) {
-  console.log('Usage: npx src/album-creator.ts <baseUrl> <apiKey>');
+  console.log('Usage: mise run album-creator <baseUrl> <apiKey>');
   process.exit(1);
 }
 
