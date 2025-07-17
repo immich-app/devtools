@@ -33,7 +33,7 @@ spec:
           main:
             image:
               repository: ghcr.io/falcondev-oss/github-actions-cache-server
-              tag: 8.1.1@sha256:fecbb1f4ba1a5420d75532a585e32ab34e85905bdb8e295a05594b7928b4a111
+              tag: 8.1.2@sha256:ae13d4e5aeb25bcef3591cde5e2f73a8effa2d61fbb94550954a58b4370113ea
             env:
               API_BASE_URL: "http://actions-cache.actions-cache.svc.cluster.local:3000"
               STORAGE_FILESYSTEM_PATH: "/data/cache"
