@@ -61,7 +61,7 @@ resource "onepassword_item" "bucket_credentials" {
     field {
       label = "secret_access_key"
       type  = "CONCEALED"
-      value = cloudflare_api_token.bucket_api_token.value
+      value = sha256(cloudflare_api_token.bucket_api_token.value)
     }
   }
 }
