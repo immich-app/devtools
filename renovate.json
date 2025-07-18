@@ -4,10 +4,6 @@
     "local>immich-app/.github:renovate-config"
   ],
   "automerge": true,
-  "schedule": [
-    "at any time"
-  ],
-  "minimumReleaseAge": "0 days",
   "packageRules": [
     {
       "matchPackageNames": [
@@ -37,16 +33,14 @@
     {
       "matchFileNames": [".mise/config.toml"],
       "matchPackageNames": ["!/flux/"],
-      "groupName": "mise",
-      "schedule": ["before 9am on tuesday"]
+      "groupName": "mise"
     },
     {
       "matchPackageNames": [
         "/opentofu/",
         "/terragrunt/"
       ],
-      "groupName": "tofu",
-      "schedule": ["before 9am on tuesday"]
+      "groupName": "tofu"
     }
   ],
   "flux": {
