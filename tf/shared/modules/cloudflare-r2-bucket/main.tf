@@ -8,22 +8,10 @@ resource "cloudflare_r2_bucket" "bucket" {
   location   = var.location
 }
 
-// Create the API token for R2 bucket access
 resource "cloudflare_api_token" "bucket_api_token" {
   name     = "r2_token_${var.bucket_name}"
   provider = cloudflare.api_keys
 
-  // First policy for R2 storage access
-  policy {
-    permission_groups = [
-      data.cloudflare_api_token_permission_groups.all.account["Workers R2 Storage Read"],
-    ]
-    resources = {
-      "com.cloudflare.api.account.*" = "*"
-    }
-  }
-
-  // Second policy specifically for R2 bucket item operations
   policy {
     permission_groups = [
       data.cloudflare_api_token_permission_groups.all.r2["Workers R2 Storage Bucket Item Read"],
@@ -34,7 +22,6 @@ resource "cloudflare_api_token" "bucket_api_token" {
     }
   }
 
-  // Add IP restrictions if specified
   dynamic "condition" {
     for_each = length(var.allowed_cidrs) > 0 ? [1] : []
     content {
@@ -45,7 +32,6 @@ resource "cloudflare_api_token" "bucket_api_token" {
   }
 }
 
-// Store credentials in 1Password
 resource "onepassword_item" "bucket_credentials" {
   vault    = var.onepassword_vault_id
   title    = var.item_name
