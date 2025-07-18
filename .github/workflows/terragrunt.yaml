@@ -40,7 +40,7 @@ jobs:
           version: 2.30.3
 
       - name: Setup Mise
-        uses: immich-app/devtools/actions/use-mise@7d34a132b573cc0d7dcb1b53ccc8bc5d8ec8a2ed
+        uses: immich-app/devtools/actions/use-mise@bbb5616a94a7655905c406f8f82a5bf74d022c73
 
       - name: Check Formatting
         run: terragrunt hclfmt --terragrunt-check --terragrunt-diff
@@ -67,7 +67,7 @@ jobs:
           version: 2.30.3
 
       - name: Setup Mise
-        uses: immich-app/devtools/actions/use-mise@7d34a132b573cc0d7dcb1b53ccc8bc5d8ec8a2ed
+        uses: immich-app/devtools/actions/use-mise@bbb5616a94a7655905c406f8f82a5bf74d022c73
 
       - name: Plan Shared
         working-directory: ${{ env.working_dir }}/modules/shared
@@ -109,7 +109,7 @@ jobs:
           version: 2.30.3
 
       - name: Setup Mise
-        uses: immich-app/devtools/actions/use-mise@7d34a132b573cc0d7dcb1b53ccc8bc5d8ec8a2ed
+        uses: immich-app/devtools/actions/use-mise@bbb5616a94a7655905c406f8f82a5bf74d022c73
 
       - name: Deploy Shared
         working-directory: ${{ env.working_dir }}/modules/shared
