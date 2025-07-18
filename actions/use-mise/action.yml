@@ -1,0 +1,11 @@
+name: 'Use Mise'
+description: 'Use Mise with a pinned version'
+runs:
+  using: 'composite'
+  steps:
+    - uses: jdx/mise-action@v2
+      with:
+        version: 2025.7.12
+        sha256: ${{ runner.os == 'Linux' && runner.arch == 'X64' && '78e141b547e4b50dac6b97f9be35e117f6a3e520aa6891aa5ee75c956585d5d2' ||
+                 runner.os == 'Linux' && runner.arch == 'ARM64' && '2e06c7bc32263d7a4ec45edb760922c85e37adba048dc1249d281cbf46e7f703' ||
+                 runner.os == 'macOS' && runner.arch == 'ARM64' && '41eaf6d5a35cc077e205548ecb753ea30d83cdca650c84858c211fb850ef63ef' }}
