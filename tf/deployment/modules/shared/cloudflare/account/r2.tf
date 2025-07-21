@@ -44,6 +44,20 @@ module "outline_volsync_backups" {
   allowed_cidrs         = local.mich_cidrs
 }
 
+
+module "victorialogs_volsync_backups" {
+  source = "./shared/modules/cloudflare-r2-bucket"
+  providers = {
+    cloudflare.api_keys = cloudflare.api_keys
+  }
+
+  bucket_name           = "victorialogs-volsync-backups"
+  cloudflare_account_id = var.cloudflare_account_id
+  onepassword_vault_id  = data.onepassword_vault.tf.uuid
+  item_name             = "VICTORIALOGS_VOLSYNC_BACKUPS_BUCKET"
+  allowed_cidrs         = local.mich_cidrs
+}
+
 resource "cloudflare_r2_bucket" "static" {
   account_id = var.cloudflare_account_id
   name       = "static"

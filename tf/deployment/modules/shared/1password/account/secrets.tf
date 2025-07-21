@@ -47,7 +47,8 @@ module "generated-secrets" {
       { name = "AUTH_ZITADEL_MASTER_KEY", length = 32 },
       { name = "OUTLINE_SECRET_KEY", length = 64, type = "numeric" },
       { name = "OUTLINE_UTILS_SECRET" },
-      { name = "OUTLINE_VOLSYNC_BACKUPS_RESTIC_SECRET" }
+      { name = "OUTLINE_VOLSYNC_BACKUPS_RESTIC_SECRET" },
+      { name = "VICTORIALOGS_VOLSYNC_BACKUPS_RESTIC_SECRET" }
     ]
   }
 }
