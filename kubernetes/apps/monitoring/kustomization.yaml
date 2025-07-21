@@ -5,3 +5,4 @@ resources:
   - ./namespace.yaml
   - ./victoria-metrics/ks.yaml
   - ./grafana/ks.yaml
+  - ./victoria-logs/ks.yaml
