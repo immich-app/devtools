@@ -4,6 +4,7 @@ metadata:
   name: &app1 victoria-logs
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app1
