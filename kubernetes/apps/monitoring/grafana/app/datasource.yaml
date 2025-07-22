@@ -29,7 +29,7 @@ spec:
     name: victoria-logs
     type: victoriametrics-logs-datasource
     access: proxy
-    url: http://vmsingle-vmetrics:9428
+    url: http://victoria-logs-victoria-logs-single-server:9428
   plugins:
     - name: victoriametrics-logs-datasource
       version: 0.18.1
