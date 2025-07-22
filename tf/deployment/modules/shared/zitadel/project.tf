@@ -23,7 +23,7 @@ locals {
     },
     {
       name         = "Outline"
-      roles        = { "Leadership" : ["admin"], "Team" : ["team"], "Contributor" : ["contributor"] }
+      roles        = { "Leadership" : ["admin"], "Team" : ["team"], "Contributor" : ["contributor"], "Support Crew" : ["support"] }
       authMethod   = "BASIC"
       redirectUris = ["https://outline.immich.cloud/auth/oidc.callback"]
     },

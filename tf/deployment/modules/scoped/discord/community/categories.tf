@@ -2,6 +2,7 @@ locals {
   category_order = [
     "immich",
     "community",
+    "support_crew",
     "development",
     "team",
     "leadership",
@@ -46,6 +47,12 @@ resource "discord_category_channel" "community" {
   name      = "Community"
   server_id = discord_server.server.id
   position  = index(local.category_order, "community")
+}
+
+resource "discord_category_channel" "support_crew" {
+  name      = "Support Crew"
+  server_id = discord_server.server.id
+  position  = index(local.category_order, "support_crew")
 }
 
 resource "discord_category_channel" "development" {
