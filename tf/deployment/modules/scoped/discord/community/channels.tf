@@ -7,7 +7,6 @@ locals {
     "poll",
     # Immich Category
     "help_desk_support",
-    "support_crew",
     "package_maintainers",
     "focus_discussion",
     "contributing",
@@ -22,10 +21,12 @@ locals {
     "immich_power_tools",
     "truenas",
     "unraid",
+    # Support Crew Category
+    "support_crew",
+    "draft_announcements",
     # Development Category
     "dev",
     "dev_off_topic",
-    "dev_announcements",
     "dev_focus_topic",
     # Team Category
     "team",
@@ -79,7 +80,7 @@ locals {
     help_desk_support      = { prod = 1049703391762321418, dev = 1369634313804709919 },
     focus_discussion       = { prod = 1026327300284887111, dev = 1369634360923394100 },
     dev_focus_topic        = { prod = 1045707766754451486, dev = 1369634655103619073 },
-    dev_announcements      = { prod = 1073000522338017381, dev = 1369634690172063825 },
+    draft_announcements    = { prod = 1073000522338017381, dev = 1369634690172063825 },
     team_focus_topic       = { prod = 1330248543721754746, dev = 1369634517366607883 },
     leadership_focus_topic = { prod = 1229454284479795291, dev = 1369634453672169532 },
   }
@@ -180,7 +181,8 @@ module "everyone_channels_write" {
 module "support_channels_write" {
   source = "./channel-perms"
   channel_ids = [
-    discord_text_channel.support_crew.id
+    discord_text_channel.support_crew.id,
+    local.forum_channels.draft_announcements[var.env]
   ]
   role_ids    = [discord_role.support_crew.id, discord_role.contributor.id]
   allow       = data.discord_permission.write_channel.allow_bits
@@ -227,7 +229,6 @@ module "contributor_channels_write" {
     discord_text_channel.dev.id,
     discord_text_channel.dev_off_topic.id,
     local.forum_channels.dev_focus_topic[var.env],
-    local.forum_channels.dev_announcements[var.env],
     discord_voice_channel.dev_voice.id,
   ]
   role_ids    = [discord_role.contributor.id]
@@ -354,7 +355,7 @@ resource "discord_news_channel" "poll" {
 resource "discord_text_channel" "support_crew" {
   name                     = "support-crew"
   position                 = index(local.channel_order, "support_crew")
-  category                 = discord_category_channel.immich.id
+  category                 = discord_category_channel.support_crew.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
   lifecycle {
@@ -540,16 +541,16 @@ resource "discord_text_channel" "dev_off_topic" {
   }
 }
 
-# resource "discord_forum_channel" "dev_announcements" {
-#   name      = "dev-announcements"
-#   position  = index(local.channel_order, "dev_announcements")
+# resource "discord_forum_channel" "draft_announcements" {
+#   name      = "draft-announcements"
+#   position  = index(local.channel_order, "draft_announcements")
 #   server_id = discord_server.server.id
-#   category  = discord_category_channel.development.id
+#   category  = discord_category_channel.support_crew.id
 # }
 #
 # import {
 #   id = 1073000522338017381
-#   to = discord_forum_channel.dev_announcements
+#   to = discord_forum_channel.draft_announcements
 # }
 
 # resource "discord_forum_channel" "dev_focus_topic" {
