@@ -1,19 +1,27 @@
-apiVersion: onepassword.com/v1
-kind: OnePasswordItem
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
 metadata:
-  name: vmetrics-write-token
+  name: metrics-write-token
   namespace: monitoring-dev
 spec:
-  itemPath: "vaults/Kubernetes/items/vmetrics_write_token"
+  secretStoreRef:
+    name: tf-dev
+    kind: ClusterSecretStore
+  data:
+    - secretKey: token
+      remoteRef:
+        key: METRICS_WRITE_TOKEN
 ---
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMUser
 metadata:
-  name: write
+  name: metrics-write
   namespace: monitoring-dev
+  labels:
+    vm-user: "write"
 spec:
   tokenRef:
-    name: vmetrics-write-token
+    name: metrics-write-token
     key: token
   targetRefs:
     - crd:
