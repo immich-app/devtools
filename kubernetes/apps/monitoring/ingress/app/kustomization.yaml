@@ -6,3 +6,4 @@ resources:
   - write.yaml
   - read.yaml
   - admin.yaml
+  - logs-write.yaml
