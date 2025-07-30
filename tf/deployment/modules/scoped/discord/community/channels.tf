@@ -55,6 +55,7 @@ locals {
     "immich_voice",
     "dev_voice",
     "team_voice",
+    "team_voice_2",
     "leadership_voice",
     # Archive
     "dev_fosdem",
@@ -261,6 +262,7 @@ module "team_channels_write" {
     discord_text_channel.bot_spam.id,
     discord_text_channel.emotes.id,
     discord_voice_channel.team_voice.id,
+    discord_voice_channel.team_voice_2.id,
   ]
   role_ids    = [discord_role.team.id]
   allow       = data.discord_permission.write_channel.allow_bits
@@ -805,6 +807,17 @@ resource "discord_voice_channel" "dev_voice" {
 resource "discord_voice_channel" "team_voice" {
   name                     = "team-voice"
   position                 = index(local.channel_order, "team_voice")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.voice.id
+  sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
+}
+
+resource "discord_voice_channel" "team_voice_2" {
+  name                     = "team-voice-2"
+  position                 = index(local.channel_order, "team_voice_2")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.voice.id
   sync_perms_with_category = false
