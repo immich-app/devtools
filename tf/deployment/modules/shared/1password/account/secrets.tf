@@ -58,7 +58,8 @@ module "generated-secrets" {
     prod = [
       { name = "METRICS_READ_TOKEN" },
       { name = "METRICS_WRITE_TOKEN" },
-      { name = "METRICS_ADMIN_TOKEN" }
+      { name = "METRICS_ADMIN_TOKEN" },
+      { name = "LOGS_WRITE_TOKEN" }
     ]
   }
 }

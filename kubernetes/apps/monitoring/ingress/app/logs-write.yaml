@@ -1,0 +1,29 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: logs-write-token
+  namespace: monitoring
+spec:
+  secretStoreRef:
+    name: 1p-tf-prod
+    kind: ClusterSecretStore
+  data:
+    - secretKey: token
+      remoteRef:
+        key: LOGS_WRITE_TOKEN
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMUser
+metadata:
+  name: logs-write
+  namespace: monitoring
+  labels:
+    vm-user: "write"
+spec:
+  tokenRef:
+    name: logs-write-token
+    key: token
+  targetRefs:
+    - static:
+        url: "http://victoria-logs-victoria-logs-single-server:9428"
+      paths: ["/insert/.*"]
