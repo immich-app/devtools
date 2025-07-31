@@ -807,6 +807,7 @@ resource "discord_voice_channel" "team_voice" {
   position                 = index(local.channel_order, "team_voice")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.voice.id
+  bitrate                  = var.env == "prod" ? 384000 : 64000
   sync_perms_with_category = false
   lifecycle {
     ignore_changes = [sync_perms_with_category]
