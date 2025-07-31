@@ -5,7 +5,7 @@ metadata:
   namespace: monitoring-dev
 spec:
   secretStoreRef:
-    name: tf-dev
+    name: 1p-tf-dev
     kind: ClusterSecretStore
   data:
     - secretKey: token
