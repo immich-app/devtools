@@ -6,3 +6,4 @@ resources:
   - ./victoria-metrics/ks.yaml
   - ./grafana/ks.yaml
   - ./victoria-logs/ks.yaml
+  - ./ingress/ks.yaml
