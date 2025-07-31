@@ -45,10 +45,3 @@ resource "onepassword_item" "generated" {
   category = "password"
   password = random_password.generated[each.key].result
 }
-
-output "global_values" {
-  value = {
-    for secret in local.secrets :
-    secret.name => onepassword_item.generated[format("${secret.vault.name}_${secret.name}")].password
-  }
-}
