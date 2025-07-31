@@ -1,16 +1,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app1 victoria-metrics-dev
+  name: &app monitoring-ingress-dev
   namespace: flux-system
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app1
+      app.kubernetes.io/name: *app
   dependsOn:
-    - name: grafana-operator
-    - name: victoria-metrics-operator
-  path: ./kubernetes/apps/monitoring-dev/victoria-metrics/app
+    - name: victoria-metrics-dev
+  path: ./kubernetes/apps/monitoring-dev/ingress/app
   prune: true
   sourceRef:
     kind: GitRepository

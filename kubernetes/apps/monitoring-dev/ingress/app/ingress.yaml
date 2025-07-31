@@ -1,20 +1,20 @@
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMAuth
 metadata:
-  name: vmetrics-ingress
-  namespace: monitoring
+  name: monitoring-ingress
+  namespace: monitoring-dev
 spec:
   userSelector: {}
   userNamespaceSelector:
     matchLabels:
-      kubernetes.io/metadata.name: monitoring
+      kubernetes.io/metadata.name: monitoring-dev
   selectAllByDefault: true
   ingress:
-    tlsSecretName: vmetrics-tls
+    tlsSecretName: monitoring-ingress-tls
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-production
       nginx.ingress.kubernetes.io/proxy-body-size: "0"
     class_name: nginx
     tlsHosts:
-      - api.monitoring.immich.cloud
-      - cf-workers.monitoring.immich.cloud
+      - api.monitoring.dev.immich.cloud
+      - cf-workers.monitoring.dev.immich.cloud

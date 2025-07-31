@@ -50,6 +50,16 @@ module "generated-secrets" {
       { name = "OUTLINE_VOLSYNC_BACKUPS_RESTIC_SECRET" },
       { name = "VICTORIALOGS_VOLSYNC_BACKUPS_RESTIC_SECRET" }
     ]
+    dev = [
+      { name = "METRICS_READ_TOKEN" },
+      { name = "METRICS_WRITE_TOKEN" },
+      { name = "METRICS_ADMIN_TOKEN" }
+    ]
+    prod = [
+      { name = "METRICS_READ_TOKEN" },
+      { name = "METRICS_WRITE_TOKEN" },
+      { name = "METRICS_ADMIN_TOKEN" }
+    ]
   }
 }
 

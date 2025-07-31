@@ -1,21 +1,27 @@
-apiVersion: onepassword.com/v1
-kind: OnePasswordItem
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
 metadata:
-  name: vmetrics-admin-token
+  name: metrics-admin-token
   namespace: monitoring-dev
 spec:
-  itemPath: "vaults/Kubernetes/items/vmetrics_admin_token"
+  secretStoreRef:
+    name: tf-dev
+    kind: ClusterSecretStore
+  data:
+    - secretKey: token
+      remoteRef:
+        key: METRICS_ADMIN_TOKEN
 ---
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMUser
 metadata:
-  name: admin
+  name: metrics-admin
   namespace: monitoring-dev
   labels:
     vm-user: "admin"
 spec:
   tokenRef:
-    name: vmetrics-admin-token
+    name: metrics-admin-token
     key: token
   targetRefs:
     - crd:

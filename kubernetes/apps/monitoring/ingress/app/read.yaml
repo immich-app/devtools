@@ -1,19 +1,25 @@
-apiVersion: onepassword.com/v1
-kind: OnePasswordItem
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
 metadata:
-  name: vmetrics-read-token
+  name: metrics-read-token
   namespace: monitoring
 spec:
-  itemPath: "vaults/Kubernetes/items/vmetrics_read_token"
+  secretStoreRef:
+    name: tf-prod
+    kind: ClusterSecretStore
+  data:
+    - secretKey: token
+      remoteRef:
+        key: METRICS_READ_TOKEN
 ---
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMUser
 metadata:
-  name: read
+  name: metrics-read
   namespace: monitoring
 spec:
   tokenRef:
-    name: vmetrics-read-token
+    name: metrics-read-token
     key: token
   targetRefs:
     - crd:
