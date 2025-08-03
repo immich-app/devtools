@@ -46,7 +46,7 @@
       "groupName": "immich",
       "minimumReleaseAge": "0",
       "matchPackageNames": [
-        "ghcr.io/immich-app/immich-**"
+        "immich-app/immich"
       ]
     }
   ],
