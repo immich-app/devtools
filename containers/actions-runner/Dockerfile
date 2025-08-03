@@ -2,7 +2,7 @@
 # https://github.com/onedr0p/containers/blob/main/apps/actions-runner/Dockerfile
 
 # This base image is patched for the local actions-cache
-FROM ghcr.io/falcondev-oss/actions-runner:2.324.0@sha256:4de199ed415f0238e9d4f3844f3e037fc4f03af71a01e267aa080d5aeef6a00f
+FROM ghcr.io/falcondev-oss/actions-runner:2.327.0@sha256:75d5132f40748e90f9103945d35e88eda33c88b9d0ae160322b72fa1cb357f30
 
 ENV HOMEBREW_NO_ANALYTICS=1 \
     HOMEBREW_NO_ENV_HINTS=1 \
