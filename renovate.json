@@ -41,6 +41,13 @@
         "/terragrunt/"
       ],
       "groupName": "tofu"
+    },
+    {
+      "groupName": "immich",
+      "minimumReleaseAge": "0",
+      "matchPackageNames": [
+        "ghcr.io/immich-app/immich-**"
+      ]
     }
   ],
   "flux": {
