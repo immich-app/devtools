@@ -11,7 +11,7 @@ resource "github_organization_webhook" "bot" {
     "release"
   ]
   configuration {
-    url          = "https://api.immich.app/webhooks/github/${data.onepassword_item.bot.password}"
+    url          = "https://discord-webhooks.immich.cloud/webhooks/github/${data.onepassword_item.bot.password}"
     content_type = "json"
   }
 }
