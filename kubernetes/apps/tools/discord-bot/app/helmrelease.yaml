@@ -62,13 +62,7 @@ spec:
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
         hosts:
-          - host: &host1 api.immich.app
-            paths:
-              - path: /
-                service:
-                  name: main
-                  port: http
-          - host: &host2 discord-webhooks.immich.cloud
+          - host: &host discord-webhooks.immich.cloud
             paths:
               - path: /
                 service:
@@ -76,6 +70,5 @@ spec:
                   port: http
         tls:
           - hosts:
-              - *host1
-              - *host2
+              - *host
             secretName: discord-webhooks-tls
