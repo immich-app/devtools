@@ -8,8 +8,6 @@ module "manual-secrets" {
       "IMMICH_ZULIP_BOT_API_KEY",
       "IMMICH_ZULIP_USER_USERNAME",
       "IMMICH_ZULIP_USER_API_KEY",
-      "IMMICH_GITHUB_CLIENT_ID",
-      "IMMICH_GITHUB_CLIENT_SECRET",
       "FUTO_ZULIP_DOMAIN",
       "FOURTHWALL_USER",
       "FOURTHWALL_PASSWORD",
@@ -69,4 +67,3 @@ module "github-apps" {
 
   app_names = ["IMMICH_TOFU", "IMMICH_PUSH_O_MATIC", "IMMICH_READ_ONLY"]
 }
-
