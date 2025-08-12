@@ -79,15 +79,6 @@ resource "cloudflare_record" "immich_app_cname__domainconnect" {
   zone_id = cloudflare_zone.immich_app.id
 }
 
-resource "cloudflare_record" "immich_app_cname_api" {
-  name    = "api.immich.app"
-  proxied = false
-  ttl     = 1
-  type    = "CNAME"
-  content = "mich.immich.cloud"
-  zone_id = cloudflare_zone.immich_app.id
-}
-
 resource "cloudflare_record" "immich_app_mx_root_10" {
   name     = "immich.app"
   priority = 10
