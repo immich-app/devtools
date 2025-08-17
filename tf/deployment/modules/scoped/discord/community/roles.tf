@@ -156,6 +156,7 @@ data "discord_permission" "team" {
   request_to_speak          = "allow"
   create_events             = "allow"
   manage_events             = "allow"
+  view_audit_log            = "allow"
 }
 
 resource "discord_role" "team" {
@@ -196,7 +197,6 @@ data "discord_permission" "fake_admin" {
   view_channel    = "allow"
   manage_channels = "allow"
   manage_roles    = "allow"
-  view_audit_log  = "allow"
   manage_webhooks = "allow"
   connect         = "allow"
 }
