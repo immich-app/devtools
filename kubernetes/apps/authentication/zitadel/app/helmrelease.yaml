@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: ghcr.io/zitadel/zitadel
-      tag: v3.3.2@sha256:27ac010816bf07d7d3c08ac61d470edfdf771f58aa0836909d0383aaca8fd72b
+      tag: v3.3.6@sha256:d0551cf97a0119292fd726f825d63897fc036e6f7b86548665bf20be71cb3cf1
     zitadel:
       configmapConfig:
         FirstInstance:
