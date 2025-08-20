@@ -1,16 +1,17 @@
 variable "repositories" {
   type = list(object({
-    name               = string
-    description        = string
-    url                = optional(string)
-    discussions        = optional(bool, false)
-    projects           = optional(bool, false)
-    issues             = optional(bool, true)
-    archived           = optional(bool, false)
-    fork               = optional(bool, false)
-    collaborators      = optional(bool, false)
-    require_codeowners = optional(bool, false)
-    license            = optional(string, "AGPL")
+    name                   = string
+    description            = string
+    url                    = optional(string)
+    discussions            = optional(bool, false)
+    projects               = optional(bool, false)
+    issues                 = optional(bool, true)
+    archived               = optional(bool, false)
+    fork                   = optional(bool, false)
+    collaborators          = optional(bool, false)
+    require_codeowners     = optional(bool, false)
+    license                = optional(string, "AGPL")
+    collaborator_overrides = optional(map(string), {})
   }))
   default = [
     {
@@ -94,6 +95,8 @@ variable "repositories" {
       name        = "one-click",
       description = "One-Click deployment for Immich on various platforms.",
       license     = "MIT"
+      name                   = "one-click",
+      description            = "One-Click deployment for Immich on various platforms.",
     }
   ]
 }

@@ -77,14 +77,13 @@ resource "github_membership" "org_members" {
 resource "github_repository_collaborators" "repo_collaborators" {
   for_each = {
     for repo in var.repositories : repo.name => repo
-    if coalesce(repo.collaborators, false)
   }
 
   repository = each.value.name
 
   dynamic "user" {
     // Modified: Only add general collaborators if repo.collaborators is true for the current repo
-    for_each = coalesce(each.value.collaborators, false) ? local.collaborators : {}
+    for_each = merge(coalesce(each.value.collaborators, false) ? local.collaborators : {}, each.value.collaborator_overrides)
     content {
       username   = user.key
       permission = user.value
