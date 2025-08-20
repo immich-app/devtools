@@ -5,6 +5,7 @@ provider "registry.opentofu.org/1password/onepassword" {
   version     = "2.1.1"
   constraints = "~> 2.1"
   hashes = [
+    "h1:/MbQZAxCGZZkIrBiZqJCLavrP4FKWzOE36gmBd/W9uQ=",
     "h1:uAat7tvWRAQowjlHPnoxqykZxoTWWrGWAnEJnIThYmM=",
     "zh:2ff1639be2548cafc75f5e28239d39963b10ca5f41ae262765e01de58eeac32e",
     "zh:381c0dc0135ee2f48eeeeefb5330687afa79af2e693fc5c7c45fe6b0c80262e3",
@@ -29,6 +30,7 @@ provider "registry.opentofu.org/integrations/github" {
   constraints = "~> 6.0"
   hashes = [
     "h1:nHTegsQYYUJZbaTnU1aMJBgnZUbR2zsfCl7DsL/kZjQ=",
+    "h1:qBH3fN/NItflQkBoIVdQa7n8WvBOuu7Ao20oeoAubKM=",
     "zh:05874671652a260b12d784cc46b0eea156f493a5f12e00368d1f6cb319156257",
     "zh:0c7a3cae5a66e5c5efc3b25ba646a0d46bfe1fd3edba1f5a75f51aede85a9d1b",
     "zh:174310010d08f13e36e53ff18e44a21dd040c89884ef190a192c6ce27926a912",

@@ -10,6 +10,7 @@ variable "repositories" {
     fork               = optional(bool, false)
     collaborators      = optional(bool, false)
     require_codeowners = optional(bool, false)
+    license            = optional(string, "AGPL")
   }))
   default = [
     {
@@ -88,6 +89,11 @@ variable "repositories" {
     {
       name        = "ml-models",
       description = "Tools for exporting and benchmarking the ML models used by Immich."
+    },
+    {
+      name        = "one-click",
+      description = "One-Click deployment for Immich on various platforms.",
+      license     = "MIT"
     }
   ]
 }
@@ -221,6 +227,8 @@ resource "github_repository_file" "default_files" {
   commit_message      = "chore: modify ${each.value.file}"
   overwrite_on_create = true
 
+  depends_on = [github_repository.repositories]
+
   lifecycle {
 
     ignore_changes = [
@@ -231,6 +239,39 @@ resource "github_repository_file" "default_files" {
     ]
   }
 }
+
+resource "github_repository_file" "license_files" {
+  for_each = {
+    for repo in var.repositories : repo.name => repo
+    if !coalesce(repo.fork, false) && !coalesce(repo.archived, false)
+  }
+  repository          = each.value.name
+  file                = "LICENSE"
+  content             = file("${path.module}/license-files/${each.value.license}.txt")
+  commit_message      = "chore: modify LICENSE to ${each.value.license}"
+  overwrite_on_create = true
+
+  depends_on = [github_repository.repositories]
+
+  lifecycle {
+    ignore_changes = [
+      commit_message,
+      commit_email,
+      commit_author,
+      overwrite_on_create
+    ]
+  }
+}
+
+import {
+  to = github_repository_file.license_files["${each.value.name}"]
+  id = "${each.value.name}/LICENSE"
+  for_each = {
+    for repo in var.repositories : repo.name => repo
+    if !coalesce(repo.fork, false) && !coalesce(repo.archived, false) && repo.name != "one-click"
+  }
+}
+
 
 import {
   to = github_repository.repositories["native_video_player"]
