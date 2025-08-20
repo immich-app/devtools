@@ -23,4 +23,6 @@ resource "cloudflare_record" "pages_subdomain" {
   type    = "CNAME"
   content = "${local.pages_url_prefix}${var.pages_project.subdomain}"
   zone_id = data.cloudflare_zone.domain.zone_id
+
+  depends_on = [cloudflare_pages_domain.pages_domain]
 }
