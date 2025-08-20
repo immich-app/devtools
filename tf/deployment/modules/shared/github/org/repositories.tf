@@ -227,6 +227,8 @@ resource "github_repository_file" "default_files" {
   commit_message      = "chore: modify ${each.value.file}"
   overwrite_on_create = true
 
+  depends_on = [github_repository.repositories]
+
   lifecycle {
 
     ignore_changes = [
@@ -248,6 +250,8 @@ resource "github_repository_file" "license_files" {
   content             = file("${path.module}/license-files/${each.value.license}.txt")
   commit_message      = "chore: modify LICENSE to ${each.value.license}"
   overwrite_on_create = true
+
+  depends_on = [github_repository.repositories]
 
   lifecycle {
     ignore_changes = [
