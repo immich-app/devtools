@@ -92,6 +92,10 @@ variable "repositories" {
       description = "Tools for exporting and benchmarking the ML models used by Immich."
     },
     {
+      name        = "services",
+      description = "Assortment of services, apis, webhooks, and other misc things."
+    },
+    {
       name                   = "one-click",
       description            = "One-Click deployment for Immich on various platforms.",
       license                = "MIT",
