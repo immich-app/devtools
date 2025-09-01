@@ -268,28 +268,3 @@ resource "github_repository_file" "license_files" {
     ]
   }
 }
-
-import {
-  to = github_repository_file.license_files["${each.value.name}"]
-  id = "${each.value.name}/LICENSE"
-  for_each = {
-    for repo in var.repositories : repo.name => repo
-    if !coalesce(repo.fork, false) && !coalesce(repo.archived, false) && repo.name != "one-click"
-  }
-}
-
-
-import {
-  to = github_repository.repositories["native_video_player"]
-  id = "native_video_player"
-}
-
-# import {
-#   to = github_repository_file.default_files["static-pages/${each.value}"]
-#   id = "static-pages/${each.value}"
-#   for_each = {
-#     for file in fileset("${path.module}/repo-files", "**") : file => file
-#     # FIXME find a better solution
-#     if !contains([".terragrunt-source-manifest", ".terragrunt-module-manifest", ".github/.terragrunt-source-manifest", ".github/.terragrunt-module-manifest"], file)
-#   }
-# }
