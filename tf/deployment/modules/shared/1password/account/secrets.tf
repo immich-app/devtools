@@ -46,7 +46,8 @@ module "generated-secrets" {
       { name = "OUTLINE_SECRET_KEY", length = 64, type = "numeric" },
       { name = "OUTLINE_UTILS_SECRET" },
       { name = "OUTLINE_VOLSYNC_BACKUPS_RESTIC_SECRET" },
-      { name = "VICTORIALOGS_VOLSYNC_BACKUPS_RESTIC_SECRET" }
+      { name = "VICTORIALOGS_VOLSYNC_BACKUPS_RESTIC_SECRET" },
+      { name = "OAUTH2_PROXY_COOKIE_SECRET" }
     ]
     dev = [
       { name = "METRICS_READ_TOKEN" },
