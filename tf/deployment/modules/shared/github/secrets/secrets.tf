@@ -151,3 +151,14 @@ import {
   to = github_actions_organization_secret.CF_TURNSTILE_DEFAULT_INVISIBLE_SITE_KEY
   id = "CF_TURNSTILE_DEFAULT_INVISIBLE_SITE_KEY"
 }
+
+data "onepassword_item" "digitalocean_api_token" {
+  title = "DIGITALOCEAN_API_TOKEN"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "DIGTALOCEAN_API_TOKEN" {
+  secret_name     = "DIGITALOCEAN_API_TOKEN"
+  plaintext_value = data.onepassword_item.digitalocean_api_token.password
+  visibility      = "all"
+}
