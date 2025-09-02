@@ -8,7 +8,8 @@ resource "github_organization_webhook" "bot" {
     "discussion",
     "issues",
     "pull_request",
-    "release"
+    "release",
+    "workflow_run"
   ]
   configuration {
     url          = "https://discord-webhooks.immich.cloud/webhooks/github/${data.onepassword_item.bot.password}"
