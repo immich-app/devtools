@@ -12,7 +12,7 @@ resource "cloudflare_api_token" "bucket_api_token" {
   name     = "r2_token_${var.bucket_name}"
   provider = cloudflare.api_keys
 
-  policy {
+  policies = [{
     permission_groups = [
       data.cloudflare_api_token_permission_groups.all.r2["Workers R2 Storage Bucket Item Read"],
       data.cloudflare_api_token_permission_groups.all.r2["Workers R2 Storage Bucket Item Write"]
@@ -20,12 +20,12 @@ resource "cloudflare_api_token" "bucket_api_token" {
     resources = {
       "com.cloudflare.edge.r2.bucket.${var.cloudflare_account_id}_default_${var.bucket_name}" = "*"
     }
-  }
+  }]
 
   dynamic "condition" {
     for_each = length(var.allowed_cidrs) > 0 ? [1] : []
     content {
-      request_ip {
+      request_ip = {
         in = var.allowed_cidrs
       }
     }

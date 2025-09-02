@@ -18,19 +18,19 @@ resource "cloudflare_notification_policy" "r2_storage_usage_alert" {
   enabled     = true
   alert_type  = "billing_usage_alert"
 
-  filters {
-    limit   = ["8000000000"]
+  filters = {
+    limit   = ["2000000000000"] // 2TB
     product = ["r2_storage"]
   }
 
-  email_integration {
+  email_integration = [{
     id = local.alerts_email
-  }
+  }]
 
-  webhooks_integration {
+  webhooks_integration = [{
     id   = cloudflare_notification_policy_webhooks.discord_leadership_alert.id
     name = cloudflare_notification_policy_webhooks.discord_leadership_alert.name
-  }
+  }]
 }
 
 resource "cloudflare_notification_policy" "r2_class_a_operations_alert" {
@@ -40,19 +40,19 @@ resource "cloudflare_notification_policy" "r2_class_a_operations_alert" {
   enabled     = true
   alert_type  = "billing_usage_alert"
 
-  filters {
+  filters = {
     limit   = ["500000"]
     product = ["r2_class_a_operations"]
   }
 
-  email_integration {
+  email_integration = [{
     id = local.alerts_email
-  }
+  }]
 
-  webhooks_integration {
+  webhooks_integration = [{
     id   = cloudflare_notification_policy_webhooks.discord_leadership_alert.id
     name = cloudflare_notification_policy_webhooks.discord_leadership_alert.name
-  }
+  }]
 }
 
 resource "cloudflare_notification_policy" "r2_class_b_operations_alert" {
@@ -62,19 +62,19 @@ resource "cloudflare_notification_policy" "r2_class_b_operations_alert" {
   enabled     = true
   alert_type  = "billing_usage_alert"
 
-  filters {
+  filters = {
     limit   = ["5000000"]
     product = ["r2_class_b_operations"]
   }
 
-  email_integration {
+  email_integration = [{
     id = local.alerts_email
-  }
+  }]
 
-  webhooks_integration {
+  webhooks_integration = [{
     id   = cloudflare_notification_policy_webhooks.discord_leadership_alert.id
     name = cloudflare_notification_policy_webhooks.discord_leadership_alert.name
-  }
+  }]
 }
 
 resource "cloudflare_notification_policy_webhooks" "discord_leadership_alert" {

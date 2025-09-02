@@ -119,7 +119,7 @@ resource "terraform_data" "r2_static_custom_domain" {
 resource "cloudflare_page_rule" "static_cache_all" {
   zone_id = cloudflare_zone.immich_cloud.id
   target  = "static.immich.cloud/*"
-  actions {
+  actions = {
     cache_level       = "cache_everything"
     browser_cache_ttl = 2678400 # 31 days
     edge_cache_ttl    = 2678400 # 31 days

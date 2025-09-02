@@ -1,6 +1,8 @@
 resource "cloudflare_zone" "immich_app" {
-  account_id = var.cloudflare_account_id
-  zone       = "immich.app"
+  account = {
+    id = var.cloudflare_account_id
+  }
+  name = "immich.app"
 }
 
 resource "cloudflare_zone_settings_override" "immich_app" {
@@ -21,8 +23,8 @@ resource "cloudflare_zone_settings_override" "immich_app" {
 }
 
 resource "cloudflare_tiered_cache" "immich_app" {
-  zone_id    = cloudflare_zone.immich_app.id
-  cache_type = "smart"
+  zone_id = cloudflare_zone.immich_app.id
+  value   = "smart"
 }
 
 
@@ -31,8 +33,10 @@ output "immich_app_zone_id" {
 }
 
 resource "cloudflare_zone" "immich_cloud" {
-  account_id = var.cloudflare_account_id
-  zone       = "immich.cloud"
+  account = {
+    id = var.cloudflare_account_id
+  }
+  name = "immich.cloud"
 }
 
 resource "cloudflare_zone_settings_override" "immich_cloud" {
@@ -48,8 +52,8 @@ resource "cloudflare_zone_settings_override" "immich_cloud" {
 }
 
 resource "cloudflare_tiered_cache" "immich_cloud" {
-  zone_id    = cloudflare_zone.immich_cloud.id
-  cache_type = "smart"
+  zone_id = cloudflare_zone.immich_cloud.id
+  value   = "smart"
 }
 
 output "immich_cloud_zone_id" {
@@ -57,8 +61,10 @@ output "immich_cloud_zone_id" {
 }
 
 resource "cloudflare_zone" "immich_store" {
-  account_id = var.cloudflare_account_id
-  zone       = "immich.store"
+  account = {
+    id = var.cloudflare_account_id
+  }
+  name = "immich.store"
 }
 
 resource "cloudflare_zone_settings_override" "immich_store" {
@@ -79,8 +85,8 @@ resource "cloudflare_zone_settings_override" "immich_store" {
 }
 
 resource "cloudflare_tiered_cache" "immich_store" {
-  zone_id    = cloudflare_zone.immich_store.id
-  cache_type = "smart"
+  zone_id = cloudflare_zone.immich_store.id
+  value   = "smart"
 }
 
 import {

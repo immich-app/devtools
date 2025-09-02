@@ -4,7 +4,7 @@ terraform {
   required_providers {
     cloudflare = {
       source                = "cloudflare/cloudflare"
-      version               = "~> 4.46"
+      version               = "~> 5"
       configuration_aliases = [cloudflare.api_keys]
     }
     onepassword = {
