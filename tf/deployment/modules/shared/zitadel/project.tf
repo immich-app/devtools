@@ -34,6 +34,11 @@ locals {
       }
       appType    = "NATIVE"
       grantTypes = ["DEVICE_CODE"]
+    },
+    {
+      name         = "OAuth2 Proxy"
+      roles        = { "Granted" : ["admin", "team"] }
+      redirectUris = ["https://oauth2-proxy.internal.immich.cloud/oauth2/callback"]
     }
   ]
 
