@@ -7,3 +7,4 @@ resources:
   - read.yaml
   - admin.yaml
   - logs-write.yaml
+  - victoria-logs-ui.yaml
