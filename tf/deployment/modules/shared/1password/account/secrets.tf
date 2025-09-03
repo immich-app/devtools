@@ -17,6 +17,7 @@ module "manual-secrets" {
       "PREVIEWS_GITHUB_WEBHOOK_URL",
       "GITHUB_OAUTH_APP_IMMICH_ZITADEL_CLIENT_ID",
       "GITHUB_OAUTH_APP_IMMICH_ZITADEL_CLIENT_SECRET",
+      "DIGITALOCEAN_API_TOKEN",
     ]
     dev = [
       "MONITORING_GRAFANA_TF_AUTH_TOKEN",
@@ -47,7 +48,6 @@ module "generated-secrets" {
       { name = "OUTLINE_UTILS_SECRET" },
       { name = "OUTLINE_VOLSYNC_BACKUPS_RESTIC_SECRET" },
       { name = "VICTORIALOGS_VOLSYNC_BACKUPS_RESTIC_SECRET" },
-      { name = "DIGITALOCEAN_API_TOKEN" },
       { name = "OAUTH2_PROXY_COOKIE_SECRET", length = 32 }
     ]
     dev = [
