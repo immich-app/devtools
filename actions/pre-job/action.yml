@@ -75,7 +75,7 @@ runs:
         skip-force-logic: ${{ inputs.skip-force-logic }}
         filters-list: ${{ steps.list-filters.outputs.filters }}
         script: |
-          const script = require('./.github/actions/pre-job/check-conditions.js')
+          const script = require('./actions/pre-job/check-conditions.js')
           script({ core, context })
 
     - name: Checkout code
@@ -153,5 +153,5 @@ runs:
         force-path-results: ${{ toJSON(steps.force_paths_filter.outputs) }}
         main-path-results: ${{ toJSON(steps.main_paths.outputs) }}
         script: |
-          const script = require('./.github/actions/pre-job/generate-outputs.js')
+          const script = require('./actions/pre-job/generate-outputs.js')
           script({ core })
