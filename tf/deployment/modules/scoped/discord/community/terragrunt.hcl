@@ -4,6 +4,11 @@ terraform {
   extra_arguments custom_vars {
     commands = get_terraform_commands_that_need_vars()
   }
+
+  extra_arguments parallism {
+    commands  = ["apply"]
+    arguments = ["-parallelism=1"]
+  }
 }
 
 include "root" {

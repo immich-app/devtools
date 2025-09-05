@@ -5,6 +5,7 @@ locals {
     "support_crew",
     "development",
     "team",
+    "yucca",
     "leadership",
     "third_parties",
     "off_topic",
@@ -25,6 +26,7 @@ module "category_perms" {
     discord_category_channel.community.id,
     discord_category_channel.development.id,
     discord_category_channel.team.id,
+    discord_category_channel.yucca.id,
     discord_category_channel.leadership.id,
     discord_category_channel.third_parties.id,
     discord_category_channel.off_topic.id,
@@ -65,6 +67,12 @@ resource "discord_category_channel" "team" {
   name      = "Team"
   server_id = discord_server.server.id
   position  = index(local.category_order, "team")
+}
+
+resource "discord_category_channel" "yucca" {
+  name      = "Yucca"
+  server_id = discord_server.server.id
+  position  = index(local.category_order, "yucca")
 }
 
 resource "discord_category_channel" "leadership" {
