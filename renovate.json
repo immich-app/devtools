@@ -48,6 +48,12 @@
       "matchPackageNames": [
         "immich-app/immich"
       ]
+    },
+    {
+      "matchPackageNames": [
+        "/zitadel/"
+      ],
+      "groupName": "zitadel"
     }
   ],
   "flux": {
