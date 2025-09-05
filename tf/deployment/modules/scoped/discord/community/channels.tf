@@ -34,6 +34,11 @@ locals {
     "team_focus_topic",
     "team_purchases",
     "team_alerts",
+    # Yucca Category
+    "yucca",
+    "yucca_off_topic",
+    "yucca_focus_topic",
+    "yucca_alerts",
     # Leadership Category
     "leadership",
     "leadership_off_topic",
@@ -56,6 +61,7 @@ locals {
     "dev_voice",
     "team_voice",
     "team_voice_2",
+    "yucca_voice",
     "leadership_voice",
     # Archive
     "dev_fosdem",
@@ -77,14 +83,6 @@ locals {
     "build_status",
     "the_main_stage"
   ]
-  forum_channels = {
-    help_desk_support      = { prod = 1049703391762321418, dev = 1369634313804709919 },
-    focus_discussion       = { prod = 1026327300284887111, dev = 1369634360923394100 },
-    dev_focus_topic        = { prod = 1045707766754451486, dev = 1369634655103619073 },
-    draft_announcements    = { prod = 1073000522338017381, dev = 1369634690172063825 },
-    team_focus_topic       = { prod = 1330248543721754746, dev = 1369634517366607883 },
-    leadership_focus_topic = { prod = 1229454284479795291, dev = 1369634453672169532 },
-  }
 }
 
 data "discord_permission" "view_channel" {
@@ -157,8 +155,8 @@ module "everyone_channels_write_threads" {
 module "everyone_channels_write" {
   source = "./channel-perms"
   channel_ids = [
-    local.forum_channels.help_desk_support[var.env],
-    local.forum_channels.focus_discussion[var.env],
+    discord_forum_channel.help_desk_support.id,
+    discord_forum_channel.focus_discussion.id,
     discord_text_channel.contributing.id,
     discord_text_channel.translations.id,
     discord_text_channel.immich.id,
@@ -183,7 +181,7 @@ module "support_channels_write" {
   source = "./channel-perms"
   channel_ids = [
     discord_text_channel.support_crew.id,
-    local.forum_channels.draft_announcements[var.env]
+    discord_forum_channel.draft_announcements.id,
   ]
   role_ids    = [discord_role.support_crew.id, discord_role.contributor.id]
   allow       = data.discord_permission.write_channel.allow_bits
@@ -229,7 +227,7 @@ module "contributor_channels_write" {
   channel_ids = [
     discord_text_channel.dev.id,
     discord_text_channel.dev_off_topic.id,
-    local.forum_channels.dev_focus_topic[var.env],
+    discord_forum_channel.dev_focus_topic.id,
     discord_voice_channel.dev_voice.id,
   ]
   role_ids    = [discord_role.contributor.id]
@@ -256,13 +254,18 @@ module "team_channels_write" {
   channel_ids = [
     discord_text_channel.team.id,
     discord_text_channel.team_off_topic.id,
-    local.forum_channels.team_focus_topic[var.env],
+    discord_forum_channel.team_focus_topic.id,
     discord_text_channel.team_purchases.id,
     discord_text_channel.team_alerts.id,
     discord_text_channel.bot_spam.id,
     discord_text_channel.emotes.id,
     discord_voice_channel.team_voice.id,
     discord_voice_channel.team_voice_2.id,
+    discord_text_channel.yucca.id,
+    discord_text_channel.yucca_off_topic.id,
+    discord_forum_channel.yucca_focus_topic.id,
+    discord_text_channel.yucca_alerts.id,
+    discord_voice_channel.yucca_voice.id,
   ]
   role_ids    = [discord_role.team.id]
   allow       = data.discord_permission.write_channel.allow_bits
@@ -276,7 +279,7 @@ module "admin_channels_write" {
     discord_text_channel.leadership.id,
     discord_text_channel.leadership_off_topic.id,
     discord_text_channel.leadership_alerts.id,
-    local.forum_channels.leadership_focus_topic[var.env],
+    discord_forum_channel.leadership_focus_topic.id,
     discord_text_channel.moderator_only.id,
     discord_voice_channel.leadership_voice.id,
     discord_text_channel.jasons_adventures_with_unraid_docker_and_networking.id,
@@ -342,17 +345,18 @@ resource "discord_news_channel" "poll" {
   }
 }
 
-# resource "discord_forum_channel" "help_desk_support" {
-#   name      = "help-desk-support"
-#   position  = index(local.channel_order, "help_desk_support")
-#   server_id = discord_server.server.id
-#   category = discord_category_channel.immich.id
-# }
-#
-# import {
-#   id = 1049703391762321418
-#   to = discord_forum_channel.help_desk_support
-# }
+resource "discord_forum_channel" "help_desk_support" {
+  name                     = "help-desk-support"
+  position                 = index(local.channel_order, "help_desk_support")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.immich.id
+  sync_perms_with_category = false
+}
+
+import {
+  id = 1049703391762321418
+  to = discord_forum_channel.help_desk_support
+}
 
 resource "discord_text_channel" "support_crew" {
   name                     = "support-crew"
@@ -376,17 +380,18 @@ resource "discord_text_channel" "package_maintainers" {
   }
 }
 
-# resource "discord_forum_channel" "focus_discussion" {
-#   name      = "focus-discussion"
-#   position  = index(local.channel_order, "focus_discussion")
-#   server_id = discord_server.server.id
-#   category  = discord_category_channel.immich.id
-# }
-#
-# import {
-#   id = 1026327300284887111
-#   to = discord_forum_channel.focus_discussion
-# }
+resource "discord_forum_channel" "focus_discussion" {
+  name                     = "focus-discussion"
+  position                 = index(local.channel_order, "focus_discussion")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.immich.id
+  sync_perms_with_category = false
+}
+
+import {
+  id = 1026327300284887111
+  to = discord_forum_channel.focus_discussion
+}
 
 resource "discord_text_channel" "contributing" {
   name                     = "contributing"
@@ -543,29 +548,31 @@ resource "discord_text_channel" "dev_off_topic" {
   }
 }
 
-# resource "discord_forum_channel" "draft_announcements" {
-#   name      = "draft-announcements"
-#   position  = index(local.channel_order, "draft_announcements")
-#   server_id = discord_server.server.id
-#   category  = discord_category_channel.support_crew.id
-# }
-#
-# import {
-#   id = 1073000522338017381
-#   to = discord_forum_channel.draft_announcements
-# }
+resource "discord_forum_channel" "draft_announcements" {
+  name                     = "draft-announcements"
+  position                 = index(local.channel_order, "draft_announcements")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.support_crew.id
+  sync_perms_with_category = false
+}
 
-# resource "discord_forum_channel" "dev_focus_topic" {
-#   name      = "dev-focus-topic"
-#   position  = index(local.channel_order, "dev_focus_topic")
-#   server_id = discord_server.server.id
-#   category  = discord_category_channel.development.id
-# }
-#
-# import {
-#   id = 1045707766754451486
-#   to = discord_forum_channel.dev_focus_topic
-# }
+import {
+  id = 1073000522338017381
+  to = discord_forum_channel.draft_announcements
+}
+
+resource "discord_forum_channel" "dev_focus_topic" {
+  name                     = "dev-focus-topic"
+  position                 = index(local.channel_order, "dev_focus_topic")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.development.id
+  sync_perms_with_category = false
+}
+
+import {
+  id = 1045707766754451486
+  to = discord_forum_channel.dev_focus_topic
+}
 
 resource "discord_text_channel" "team" {
   name                     = "team"
@@ -589,17 +596,18 @@ resource "discord_text_channel" "team_off_topic" {
   }
 }
 
-# resource "discord_forum_channel" "team_focus_topic" {
-#   name      = "team-focus-topic"
-#   position  = index(local.channel_order, "team_focus_topic")
-#   server_id = discord_server.server.id
-#   category  = discord_category_channel.team.id
-# }
-#
-# import {
-#   id = 1330248543721754746
-#   to = discord_forum_channel.team_focus_topic
-# }
+resource "discord_forum_channel" "team_focus_topic" {
+  name                     = "team-focus-topic"
+  position                 = index(local.channel_order, "team_focus_topic")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.team.id
+  sync_perms_with_category = false
+}
+
+import {
+  id = 1330248543721754746
+  to = discord_forum_channel.team_focus_topic
+}
 
 resource "discord_text_channel" "team_alerts" {
   name                     = "team-alerts"
@@ -621,6 +629,53 @@ resource "discord_text_channel" "team_purchases" {
   lifecycle {
     ignore_changes = [sync_perms_with_category]
   }
+}
+
+resource "discord_text_channel" "yucca" {
+  name                     = "yucca"
+  position                 = index(local.channel_order, "yucca")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.yucca.id
+  sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
+}
+
+resource "discord_text_channel" "yucca_off_topic" {
+  name                     = "yucca-off-topic"
+  position                 = index(local.channel_order, "yucca_off_topic")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.yucca.id
+  sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
+  depends_on = [discord_text_channel.yucca]
+}
+
+resource "discord_forum_channel" "yucca_focus_topic" {
+  name                     = "yucca-focus-topic"
+  position                 = index(local.channel_order, "yucca_focus_topic")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.yucca.id
+  sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
+  depends_on = [discord_text_channel.yucca_off_topic]
+}
+
+resource "discord_text_channel" "yucca_alerts" {
+  name                     = "yucca-alerts"
+  position                 = index(local.channel_order, "yucca_alerts")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.yucca.id
+  sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
+  depends_on = [discord_forum_channel.yucca_focus_topic]
 }
 
 resource "discord_text_channel" "leadership" {
@@ -657,17 +712,18 @@ resource "discord_text_channel" "leadership_alerts" {
   }
 }
 
-# resource "discord_forum_channel" "leadership_focus_topic" {
-#   name      = "leadership-focus-topic"
-#   position  = index(local.channel_order, "leadership_focus_topic")
-#   server_id = discord_server.server.id
-#   category  = discord_category_channel.leadership.id
-# }
-#
-# import {
-#   id = 1229454284479795291
-#   to = discord_forum_channel.leadership_focus_topic
-# }
+resource "discord_forum_channel" "leadership_focus_topic" {
+  name                     = "leadership-focus-topic"
+  position                 = index(local.channel_order, "leadership_focus_topic")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.leadership.id
+  sync_perms_with_category = false
+}
+
+import {
+  id = 1229454284479795291
+  to = discord_forum_channel.leadership_focus_topic
+}
 
 resource "discord_text_channel" "moderator_only" {
   name                     = "moderator-only"
@@ -821,6 +877,18 @@ resource "discord_voice_channel" "team_voice_2" {
   position                 = index(local.channel_order, "team_voice_2")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.voice.id
+  sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
+}
+
+resource "discord_voice_channel" "yucca_voice" {
+  name                     = "yucca-voice"
+  position                 = index(local.channel_order, "yucca_voice")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.voice.id
+  bitrate                  = var.env == "prod" ? 384000 : 64000
   sync_perms_with_category = false
   lifecycle {
     ignore_changes = [sync_perms_with_category]
