@@ -1,0 +1,24 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "simple",
+  "separate-pull-requests": true,
+  "always-update": true,
+  "packages": {
+    "actions/image-build": {
+      "component": "image-build-action",
+    },
+    "actions/success-check": {
+      "component": "success-check-action",
+    },
+    "actions/use-mise": {
+      "component": "use-mise-action",
+    },
+    ".github/workflows": {
+      "component": "multi-runner-build-workflow",
+      "exclude-paths": [
+        ".github/workflows/release-please.yml",
+        ".github/workflows/zizmor.yaml"
+      ]
+    }
+  }
+}
