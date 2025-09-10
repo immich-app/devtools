@@ -5,13 +5,13 @@
   "always-update": true,
   "packages": {
     "actions/image-build": {
-      "component": "image-build-action",
+      "component": "image-build-action"
     },
     "actions/success-check": {
-      "component": "success-check-action",
+      "component": "success-check-action"
     },
     "actions/use-mise": {
-      "component": "use-mise-action",
+      "component": "use-mise-action"
     },
     ".github/workflows": {
       "component": "multi-runner-build-workflow",
