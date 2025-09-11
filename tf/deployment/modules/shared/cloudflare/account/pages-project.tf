@@ -1,3 +1,4 @@
+// Old archives prior to docs.immich.app
 resource "cloudflare_pages_project" "immich_app_archive" {
   account_id        = var.cloudflare_account_id
   name              = "immich-app-archive"
@@ -12,12 +13,26 @@ resource "cloudflare_pages_project" "immich_app_archive" {
   }
 }
 
+resource "cloudflare_pages_project" "docs_immich_app_archive" {
+  account_id        = var.cloudflare_account_id
+  name              = "docs-immich-app-archive"
+  production_branch = "we-will-never-use-this"
+
+  lifecycle {
+    ignore_changes = [
+      build_config["build_caching"],
+      build_config["web_analytics_tag"],
+      build_config["web_analytics_token"],
+    ]
+  }
+}
+
 output "immich_app_archive_pages_project_name" {
-  value = cloudflare_pages_project.immich_app_archive.name
+  value = cloudflare_pages_project.docs_immich_app_archive.name
 }
 
 output "immich_app_archive_pages_project_subdomain" {
-  value = cloudflare_pages_project.immich_app_archive.subdomain
+  value = cloudflare_pages_project.docs_immich_app_archive.subdomain
 }
 
 resource "cloudflare_pages_project" "immich_app_preview" {
