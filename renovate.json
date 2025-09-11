@@ -4,6 +4,8 @@
     "local>immich-app/.github:renovate-config"
   ],
   "automerge": true,
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 5,
   "packageRules": [
     {
       "matchPackageNames": [
@@ -48,6 +50,12 @@
       "matchPackageNames": [
         "immich-app/immich"
       ]
+    },
+    {
+      "matchPackageNames": [
+        "/zitadel/"
+      ],
+      "groupName": "zitadel"
     }
   ],
   "flux": {

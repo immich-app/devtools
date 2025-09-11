@@ -26,18 +26,17 @@ provider "registry.opentofu.org/1password/onepassword" {
 }
 
 provider "registry.terraform.io/zp-forks/discord" {
-  version     = "3.0.0"
-  constraints = "~> 3.0.0"
+  version     = "3.1.0"
+  constraints = "~> 3.1"
   hashes = [
-    "h1:nVOyxGp1wV9z0mkwz/3QM8/+4FH5CMSU7yRPbf+RoRw=",
-    "h1:u7N/W9mC/pOjxDDwEOvvYN/4KdtkC9Lkzw1WPNC/gUs=",
-    "zh:0779f63a1ac0315b29a495f0b34bfcc1b6d6665fa8a55bd97dcf3521570a2c7c",
-    "zh:53a174b84e5dd7114bd57e192169aada17be5028901b1ffd855f53e12ff59abb",
-    "zh:593bb18940176555e6a386621b84a48f15dfbd97272faec5f302592c4730e42b",
-    "zh:73e0d2d744a11fd18e32f87970cdcc59beb0399a015c1860e8bd567fe02ab685",
-    "zh:9797e91416216a8129e29fc438c47b2bb5b0f496a5b2c6f703b4b2d793d1301d",
-    "zh:987f35e9c0326400910bd2696c168656508c8838f66d7a6a2b3c5c32aea9edab",
-    "zh:9def90dcd772f46c0bf99936452d59cedd6da2f3579e40c0914cb00f1d982ac3",
-    "zh:d770b6540797e4b3986a2735d915260a30492a9ad83915f48ee7927b0ede706e",
+    "h1:tGX9kU94mzz5D3v9D6/FKFYbtRTfsCQHqNawCMx04Vs=",
+    "zh:0a8c2ea7d4303b5cb8b77684c233e14eba79ff980e0fc7d2841e1de0d923ebe2",
+    "zh:2e306f33a865529e3bcd2877c615cbca347f6bdb3684842d76eafb3811a8cbec",
+    "zh:4a5cc9a3a9efa7419f56bb03bd5f0f8dba9397f4756ee0bc093cf36a99c6e5c1",
+    "zh:680b2aaa58fd03cf3c55750fef20f067a9445f663c561c87dc61b2026ec010ef",
+    "zh:8fde8193a8f54ed205d0d4f53ad60ec9fdda69856eef60e89783374ba813e5ce",
+    "zh:bfe6e53a58d89b06c9cb18cbec1013c7d347c6dd5843d38cf4f3ab61c02c6ca9",
+    "zh:e7b9cd591d6d1abf724ff5dae7b8307b675d0d88ebeb23359ef316f82ae596bf",
+    "zh:ea7dcb3299e42d419efc1cfb5cb76ae58d361ac13805094378ee1df38a594a04",
   ]
 }
