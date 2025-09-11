@@ -162,3 +162,14 @@ resource "github_actions_organization_secret" "DIGTALOCEAN_API_TOKEN" {
   plaintext_value = data.onepassword_item.digitalocean_api_token.password
   visibility      = "all"
 }
+
+data "onepassword_item" "weblate_api_key" {
+  title = "WEBLATE_API_KEY"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "WEBLATE_TOKEN" {
+  secret_name = "WEBLATE_TOKEN"
+  plaintext_value = data.onepassword_item.weblate_api_key.password
+  visibility  = "all"
+}
