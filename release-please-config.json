@@ -13,6 +13,9 @@
     "actions/use-mise": {
       "component": "use-mise-action"
     },
+    "actions/pre-job": {
+      "component": "pre-job-action"
+    },
     ".github/workflows": {
       "component": "multi-runner-build-workflow",
       "exclude-paths": [
