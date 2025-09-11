@@ -169,7 +169,7 @@ data "onepassword_item" "weblate_api_key" {
 }
 
 resource "github_actions_organization_secret" "WEBLATE_TOKEN" {
-  secret_name = "WEBLATE_TOKEN"
+  secret_name     = "WEBLATE_TOKEN"
   plaintext_value = data.onepassword_item.weblate_api_key.password
-  visibility  = "all"
+  visibility      = "all"
 }
