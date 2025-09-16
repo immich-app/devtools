@@ -69,6 +69,9 @@ resource "github_organization_ruleset" "org_required_checks" {
       required_check {
         context = "Zizmor / zizmor"
       }
+      required_check {
+        context = "Approval Check"
+      }
     }
   }
 }
