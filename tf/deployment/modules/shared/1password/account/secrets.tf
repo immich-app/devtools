@@ -74,5 +74,5 @@ module "generated-secrets" {
 module "github-apps" {
   source = "./shared/modules/secrets/github-app"
 
-  app_names = ["IMMICH_TOFU", "IMMICH_PUSH_O_MATIC", "IMMICH_READ_ONLY"]
+  app_names = ["IMMICH_TOFU", "IMMICH_PUSH_O_MATIC", "IMMICH_READ_ONLY", "IMMICH_GITHUB_ACTION_CHECKS"]
 }
