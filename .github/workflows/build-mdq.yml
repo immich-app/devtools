@@ -19,21 +19,17 @@ jobs:
     permissions:
       contents: read
     outputs:
-      should_run: ${{ steps.found_paths.outputs.mdq == 'true' || github.event_name == 'workflow_dispatch' }}
+      should_run: ${{ steps.check.outputs.should_run }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
-        with:
-          persist-credentials: false
-
-      - id: found_paths
-        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+      - name: Check what should run
+        id: check
+        uses: immich-app/devtools/actions/pre-job@24820aa4ef67959b0dcf69a438cccf00d7c7042b # pre-job-action-v1.0.1
         with:
           filters: |
             mdq:
               - 'containers/mdq/**'
               - '.github/workflows/build-mdq.yaml'
-
+  
   build_and_push:
     needs: [pre-job]
     permissions:
