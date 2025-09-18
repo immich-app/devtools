@@ -27,8 +27,7 @@ jobs:
             scripts:
               - 'scripts/**'
           force-filters: |
-            workflow:
-              - '.github/workflows/scripts.yml'
+            - '.github/workflows/scripts.yml'
   
   scripts-unit-tests:
     name: Test & Lint Scripts
