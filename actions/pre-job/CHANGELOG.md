@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/immich-app/devtools/compare/pre-job-action-v1.0.1...pre-job-action-v1.1.0) (2025-09-18)
+
+
+### Features
+
+* custom force input for pre-job ([#980](https://github.com/immich-app/devtools/issues/980)) ([051fe60](https://github.com/immich-app/devtools/commit/051fe6080af3f08edd10000578d2c48aabb1a220))
+
 ## [1.0.1](https://github.com/immich-app/devtools/compare/pre-job-action-v1.0.0...pre-job-action-v1.0.1) (2025-09-18)
 
 
