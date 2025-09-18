@@ -24,6 +24,10 @@ inputs:
     description: 'Skip the standard force logic'
     required: false
     default: 'false'
+  force:
+    description: 'Custom boolean condition to force all jobs to run'
+    required: false
+    default: 'false'
 
 outputs:
   should_run:
@@ -73,6 +77,7 @@ runs:
         force-branches: ${{ inputs.force-branches }}
         exclude-branches: ${{ inputs.exclude-branches }}
         skip-force-logic: ${{ inputs.skip-force-logic }}
+        force: ${{ inputs.force }}
         filters-list: ${{ steps.list-filters.outputs.filters }}
         script: |
             console.log('=== Pre-Job: Checking Conditions ===');
@@ -93,6 +98,7 @@ runs:
               .map((s) => s.trim())
               .filter(Boolean);
             const skipForceLogic = core.getBooleanInput('skip-force-logic');
+            const forceInput = core.getBooleanInput('force');
             const filtersList = core.getInput('filters-list');
 
             let filterNames = [];
@@ -152,12 +158,17 @@ runs:
             if (!skipForceLogic) {
               const eventForce = forceEvents.includes(currentEvent);
               const branchForce = forceBranches.includes(currentBranch);
-              forceTriggered = eventForce || branchForce;
+              forceTriggered = eventForce || branchForce || forceInput;
 
               if (forceTriggered) {
-                const reason = eventForce
-                  ? `event: ${currentEvent}`
-                  : `branch: ${currentBranch}`;
+                let reason;
+                if (forceInput) {
+                  reason = 'custom force input';
+                } else if (eventForce) {
+                  reason = `event: ${currentEvent}`;
+                } else {
+                  reason = `branch: ${currentBranch}`;
+                }
                 console.log(`🚀 FORCED: Triggered by ${reason}`);
                 core.setOutput('should_skip', false);
                 core.setOutput('force_triggered', true);
