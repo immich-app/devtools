@@ -62,4 +62,6 @@ spec:
       spec:
         extraArgs:
           search.maxUniqueTimeseries: "600000"
-        resources: {}
+        resources:
+          limits:
+            memory: 8Gi
