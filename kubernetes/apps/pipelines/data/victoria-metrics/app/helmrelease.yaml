@@ -65,7 +65,9 @@ spec:
         retentionPeriod: 50y
         extraArgs:
           search.maxUniqueTimeseries: "600000"
-        resources: {}
+        resources:
+          limits:
+            memory: 8Gi
         storage:
           resources:
             requests:
