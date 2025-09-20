@@ -11,5 +11,5 @@ spec:
     name: victoria-metrics
     type: prometheus
     access: proxy
-    url: http://vmsingle-vmetrics-data:8429
+    url: http://vmsingle-vmetrics-data:8428
     isDefault: true
