@@ -19,6 +19,10 @@ spec:
     image:
       repository: ghcr.io/zitadel/zitadel
       tag: v4.1.3@sha256:c3e64aee8f3616846bd0c38a011036429daf6188d47fd65bbd18666a2da37701
+    setupJob:
+      machinekeyWriter:
+        image:
+          tag: 1.32.3
     zitadel:
       configmapConfig:
         FirstInstance:
