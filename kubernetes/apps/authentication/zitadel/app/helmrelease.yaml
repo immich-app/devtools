@@ -37,6 +37,8 @@ spec:
         TLS:
           Enabled: false # TLS is terminated at the ingress
       masterkeySecretName: zitadel-master-key
+    login:
+      enabled: false
     env:
       - name: ZITADEL_DATABASE_POSTGRES_HOST
         valueFrom:
