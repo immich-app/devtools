@@ -173,3 +173,14 @@ resource "github_actions_organization_secret" "WEBLATE_TOKEN" {
   plaintext_value = data.onepassword_item.weblate_api_key.password
   visibility      = "all"
 }
+
+data "onepassword_item" "vultr_api_token" {
+  title = "VULTR_API_TOKEN"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "VULTR_API_TOKEN" {
+  secret_name     = "VULTR_API_TOKEN"
+  plaintext_value = data.onepassword_item.vultr_api_token.password
+  visibility      = "all"
+}
