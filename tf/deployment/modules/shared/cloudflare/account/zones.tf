@@ -92,3 +92,67 @@ import {
 output "immich_store_zone_id" {
   value = cloudflare_zone.immich_store.id
 }
+
+resource "cloudflare_zone" "immich_cc" {
+  account_id = var.cloudflare_account_id
+  zone       = "immich.cc"
+}
+
+resource "cloudflare_zone_settings_override" "immich_cc" {
+  zone_id = cloudflare_zone.immich_cc.id
+
+  settings {
+    http3            = "on"
+    zero_rtt         = "on"
+    tls_1_3          = "zrt"
+    always_use_https = "on"
+    ssl              = "strict"
+    brotli           = "on"
+    fonts            = "on"
+    early_hints      = "on"
+    rocket_loader    = "on"
+    speed_brain      = "on"
+  }
+}
+
+resource "cloudflare_tiered_cache" "immich_cc" {
+  zone_id    = cloudflare_zone.immich_cc.id
+  cache_type = "smart"
+}
+
+
+output "immich_cc_zone_id" {
+  value = cloudflare_zone.immich_cc.id
+}
+
+resource "cloudflare_zone" "immich_pro" {
+  account_id = var.cloudflare_account_id
+  zone       = "immich.pro"
+}
+
+resource "cloudflare_zone_settings_override" "immich_pro" {
+  zone_id = cloudflare_zone.immich_pro.id
+
+  settings {
+    http3            = "on"
+    zero_rtt         = "on"
+    tls_1_3          = "zrt"
+    always_use_https = "on"
+    ssl              = "strict"
+    brotli           = "on"
+    fonts            = "on"
+    early_hints      = "on"
+    rocket_loader    = "on"
+    speed_brain      = "on"
+  }
+}
+
+resource "cloudflare_tiered_cache" "immich_pro" {
+  zone_id    = cloudflare_zone.immich_pro.id
+  cache_type = "smart"
+}
+
+
+output "immich_pro_zone_id" {
+  value = cloudflare_zone.immich_pro.id
+}
