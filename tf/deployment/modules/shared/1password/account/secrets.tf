@@ -24,7 +24,8 @@ module "manual-secrets" {
       "TIGRIS_WRITE_ACCESS_KEY",
       "TIGRIS_ADMIN_KEY_ID",
       "TIGRIS_ADMIN_ACCESS_KEY",
-      "WEBLATE_API_KEY"
+      "WEBLATE_API_KEY",
+      "VULTR_API_KEY"
     ]
     dev = [
       "MONITORING_GRAFANA_TF_AUTH_TOKEN",
