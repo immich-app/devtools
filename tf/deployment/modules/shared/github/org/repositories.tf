@@ -224,7 +224,7 @@ resource "github_repository_file" "default_files" {
         # Ignore all .terragrunt files in any child directory
         if !can(regex(".*terragrunt.*", file))
       ]
-      if !coalesce(repo.fork, false) && !coalesce(repo.archived, false)
+      if !coalesce(repo.archived, false)
     ]) : "${combination.repo.name}/${combination.file}" => combination
   }
   repository          = each.value.repo.name
