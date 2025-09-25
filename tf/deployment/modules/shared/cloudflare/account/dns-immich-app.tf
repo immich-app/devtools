@@ -7,15 +7,6 @@ resource "cloudflare_record" "immich_app_cname_demo" {
   zone_id = cloudflare_zone.immich_app.id
 }
 
-resource "cloudflare_record" "immich_app_aaaa_docs" {
-  name    = "docs"
-  proxied = true
-  ttl     = 1
-  type    = "AAAA"
-  content = "100::"
-  zone_id = cloudflare_zone.immich_app.id
-}
-
 resource "cloudflare_record" "immich_app_aaaa_documentation" {
   name    = "documentation"
   proxied = true
