@@ -126,3 +126,50 @@ resource "cloudflare_ruleset" "immich_cloud_redirects" {
   }
 }
 
+resource "cloudflare_ruleset" "immich_pro_redirects" {
+  zone_id     = cloudflare_zone.immich_pro.id
+  name        = "immich.pro to immich.app redirects"
+  description = "Redirects immich.pro to immich.app"
+  kind        = "zone"
+  phase       = "http_request_dynamic_redirect"
+
+  rules {
+    action = "redirect"
+    action_parameters {
+      from_value {
+        status_code = 307
+        target_url {
+          value = "https://immich.app"
+        }
+        preserve_query_string = true
+      }
+    }
+    expression  = "(http.host eq \"www.immich.pro\") or (http.host eq \"immich.pro\")"
+    description = "Redirect visitors going to immich.pro links"
+    enabled     = true
+  }
+}
+
+resource "cloudflare_ruleset" "immich_cc_redirects" {
+  zone_id     = cloudflare_zone.immich_cc.id
+  name        = "immich.cc to immich.app redirects"
+  description = "Redirects immich.cc to immich.app"
+  kind        = "zone"
+  phase       = "http_request_dynamic_redirect"
+
+  rules {
+    action = "redirect"
+    action_parameters {
+      from_value {
+        status_code = 307
+        target_url {
+          value = "https://immich.app"
+        }
+        preserve_query_string = true
+      }
+    }
+    expression  = "(http.host eq \"www.immich.cc\") or (http.host eq \"immich.cc\")"
+    description = "Redirect visitors going to immich.cc links"
+    enabled     = true
+  }
+}
