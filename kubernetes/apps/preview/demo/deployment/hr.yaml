@@ -80,7 +80,7 @@ spec:
             nginx.ingress.kubernetes.io/enable-cors: "true"
             nginx.ingress.kubernetes.io/cors-allow-origin: "*"
             nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, PATCH, DELETE"
-            nginx.ingress.kubernetes.io/cors-allow-headers: "x-session-token, x-api-key, Authorization"
+            nginx.ingress.kubernetes.io/cors-allow-headers: "x-session-token, x-api-key, Authorization, Content-Type"
             nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
             nginx.ingress.kubernetes.io/cors-max-age: "3600"
 
