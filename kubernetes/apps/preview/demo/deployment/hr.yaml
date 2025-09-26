@@ -78,10 +78,10 @@ spec:
           annotations:
             cert-manager.io/cluster-issuer: letsencrypt-production
             nginx.ingress.kubernetes.io/enable-cors: "true"
-            nginx.ingress.kubernetes.io/cors-allow-origin: "https://api.immich.app"
+            nginx.ingress.kubernetes.io/cors-allow-origin: "*"
             nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, PATCH, DELETE"
-            nginx.ingress.kubernetes.io/cors-allow-headers: "x-api-key, Authorization"
-            nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+            nginx.ingress.kubernetes.io/cors-allow-headers: "x-session-token, x-api-key, Authorization"
+            nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
             nginx.ingress.kubernetes.io/cors-max-age: "3600"
 
             nginx.ingress.kubernetes.io/configuration-snippet: |
