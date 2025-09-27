@@ -77,14 +77,19 @@ spec:
           className: nginx
           annotations:
             cert-manager.io/cluster-issuer: letsencrypt-production
-            nginx.ingress.kubernetes.io/enable-cors: "true"
-            nginx.ingress.kubernetes.io/cors-allow-origin: "*"
-            nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, PATCH, DELETE"
-            nginx.ingress.kubernetes.io/cors-allow-headers: "x-session-token, x-api-key, Authorization, Content-Type"
-            nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-            nginx.ingress.kubernetes.io/cors-max-age: "3600"
-
             nginx.ingress.kubernetes.io/configuration-snippet: |
+              more_set_headers 'Access-Control-Allow-Origin: *';
+              more_set_headers 'Access-Control-Allow-Credentials: false';
+              more_set_headers 'Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE';
+              more_set_headers 'Access-Control-Allow-Headers: x-session-token, x-api-key, Authorization, Content-Type';
+              
+              if ($request_method = 'OPTIONS') {
+                  more_set_headers 'Access-Control-Max-Age: 3600';
+                  more_set_headers 'Content-Type: text/plain charset=UTF-8';
+                  more_set_headers 'Content-Length: 0';
+                  return 204;
+              }
+              
               if ($request_method = PUT) {
                 set $block_put 1;
               }
