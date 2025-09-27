@@ -81,7 +81,7 @@ spec:
               more_set_headers 'Access-Control-Allow-Origin: *';
               more_set_headers 'Access-Control-Allow-Credentials: false';
               more_set_headers 'Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE';
-              more_set_headers 'Access-Control-Allow-Headers: x-session-token, x-api-key, Authorization, Content-Type';
+              more_set_headers 'Access-Control-Allow-Headers: x-immich-session-token, x-api-key, Authorization, Content-Type';
               
               if ($request_method = 'OPTIONS') {
                   more_set_headers 'Access-Control-Max-Age: 3600';
