@@ -39,6 +39,8 @@ locals {
     "yucca_off_topic",
     "yucca_focus_topic",
     "yucca_alerts",
+    "yucca_alerts_testing",
+    "yucca_alerts_dev",
     # Leadership Category
     "leadership",
     "leadership_off_topic",
@@ -265,6 +267,8 @@ module "team_channels_write" {
     discord_text_channel.yucca_off_topic.id,
     discord_forum_channel.yucca_focus_topic.id,
     discord_text_channel.yucca_alerts.id,
+    discord_text_channel.yucca_alerts_testing.id,
+    discord_text_channel.yucca_alerts_dev.id,
     discord_voice_channel.yucca_voice.id,
   ]
   role_ids    = [discord_role.team.id]
@@ -676,6 +680,30 @@ resource "discord_text_channel" "yucca_alerts" {
     ignore_changes = [sync_perms_with_category]
   }
   depends_on = [discord_forum_channel.yucca_focus_topic]
+}
+
+resource "discord_text_channel" "yucca_alerts_testing" {
+  name                     = "yucca-alerts-testing"
+  position                 = index(local.channel_order, "yucca_alerts_testing")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.yucca.id
+  sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
+  depends_on = [discord_text_channel.yucca_alerts]
+}
+
+resource "discord_text_channel" "yucca_alerts_dev" {
+  name                     = "yucca-alerts-dev"
+  position                 = index(local.channel_order, "yucca_alerts_dev")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.yucca.id
+  sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
+  depends_on = [discord_text_channel.yucca_alerts_testing]
 }
 
 resource "discord_text_channel" "leadership" {
