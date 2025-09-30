@@ -143,3 +143,12 @@ resource "cloudflare_record" "immich_app_txt_1password_verification" {
   content = "1password-site-verification=GPHHHHLRXZHQFKUCAEYLDTI4TM"
   zone_id = cloudflare_zone.immich_app.id
 }
+
+resource "cloudflare_record" "immich_app_txt_google_site_verification" {
+  name    = "immich.app"
+  proxied = false
+  ttl     = 1
+  type    = "TXT"
+  content = "\"google-site-verification=OSHGLJBzjJP6YwNjRiFhhOlHeR2zb_2hBgZvZOc0K1Q\""
+  zone_id = cloudflare_zone.immich_app.id
+}
