@@ -184,3 +184,47 @@ resource "github_actions_organization_secret" "VULTR_API_TOKEN" {
   plaintext_value = data.onepassword_item.vultr_api_token.password
   visibility      = "all"
 }
+
+data "onepassword_item" "google_play_signing_key_jks" {
+  title = "GOOGLE_PLAY_SIGNING_KEY_JKS"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "GOOGLE_PLAY_SIGNING_KEY_JKS" {
+  secret_name     = "GOOGLE_PLAY_SIGNING_KEY_JKS"
+  plaintext_value = data.onepassword_item.google_play_signing_key_jks.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "google_play_signing_key_alias" {
+  title = "GOOGLE_PLAY_SIGNING_KEY_ALIAS"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "GOOGLE_PLAY_SIGNING_KEY_ALIAS" {
+  secret_name     = "GOOGLE_PLAY_SIGNING_KEY_ALIAS"
+  plaintext_value = data.onepassword_item.google_play_signing_key_alias.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "google_play_signing_key_password" {
+  title = "GOOGLE_PLAY_SIGNING_KEY_PASSWORD"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "GOOGLE_PLAY_SIGNING_KEY_PASSWORD" {
+  secret_name     = "GOOGLE_PLAY_SIGNING_KEY_PASSWORD"
+  plaintext_value = data.onepassword_item.google_play_signing_key_password.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "google_play_signing_key_store_password" {
+  title = "GOOGLE_PLAY_SIGNING_KEY_STORE_PASSWORD"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "GOOGLE_PLAY_SIGNING_KEY_STORE_PASSWORD" {
+  secret_name     = "GOOGLE_PLAY_SIGNING_KEY_STORE_PASSWORD"
+  plaintext_value = data.onepassword_item.google_play_signing_key_store_password.password
+  visibility      = "all"
+}
