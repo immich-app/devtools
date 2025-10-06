@@ -156,8 +156,9 @@ jobs:
             type=ref,event=pr
             # Tag with long commit sha hash
             type=sha,format=long,prefix=commit-
-            # Tag with git tag on release
-            type=ref,event=tag
+            # Release version tags
+            type=semver,pattern=v{{version}}
+            type=semver,pattern=v{{major}}
             type=raw,value=release,enable=${{ github.event_name == 'release' }}
 
       - name: Create manifest list and push
