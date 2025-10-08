@@ -35,6 +35,10 @@ on:
       target:
         description: 'Sets the target stage to build'
         type: string
+      release-tag-type:
+        description: 'The type of release tag to use, either git-tag or semver'
+        type: string
+        default: 'semver'
     secrets:
       DOCKERHUB_USERNAME:
         required: false
@@ -157,8 +161,9 @@ jobs:
             # Tag with long commit sha hash
             type=sha,format=long,prefix=commit-
             # Release version tags
-            type=semver,pattern=v{{version}}
-            type=semver,pattern=v{{major}}
+            type=semver,pattern=v{{version}},enabled=${{ inputs.release-tag-type == 'semver' }}
+            type=semver,pattern=v{{major}},enabled=${{ inputs.release-tag-type == 'semver' }}
+            type=ref,event=tag,enabled=${{ inputs.release-tag-type == 'git-tag' }}
             type=raw,value=release,enable=${{ github.event_name == 'release' }}
 
       - name: Create manifest list and push
