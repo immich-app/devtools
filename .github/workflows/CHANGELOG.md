@@ -1,0 +1,19 @@
+# Changelog
+
+## [0.2.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-0.1.1...multi-runner-build-workflow-v0.2.0) (2025-10-07)
+
+
+### Features
+
+* bootstrap release-please ([#942](https://github.com/immich-app/devtools/issues/942)) ([d0775a0](https://github.com/immich-app/devtools/commit/d0775a0f7265bee71938b48ea91faac13f61c27e))
+* github security hardening ([#834](https://github.com/immich-app/devtools/issues/834)) ([4fd3b4a](https://github.com/immich-app/devtools/commit/4fd3b4a167432e50a19cdeaa55df3bad5891c731))
+* mdq image with jq ([#972](https://github.com/immich-app/devtools/issues/972)) ([3646922](https://github.com/immich-app/devtools/commit/3646922ebe9512dddb9de29e2274676a588a5940))
+* org wide conventional commit and zizmor checks ([#974](https://github.com/immich-app/devtools/issues/974)) ([ac85430](https://github.com/immich-app/devtools/commit/ac854300945828c321ce43bd63c616d00f18a771))
+* tag image builds with major version ([#1024](https://github.com/immich-app/devtools/issues/1024)) ([2f0961b](https://github.com/immich-app/devtools/commit/2f0961babab188fdde832563ad9ebc0baee6b89b))
+* use pre-job ([#981](https://github.com/immich-app/devtools/issues/981)) ([96b982c](https://github.com/immich-app/devtools/commit/96b982c0ea30c5c21656edc99406af6358c81d81))
+
+
+### Bug Fixes
+
+* disable approval checks ([#854](https://github.com/immich-app/devtools/issues/854)) ([effe8f2](https://github.com/immich-app/devtools/commit/effe8f2972bcbb338f1899d44c503b7f7cfef673))
+* rename yaml to yml workflows and zizmor workflow triggers ([#975](https://github.com/immich-app/devtools/issues/975)) ([33c35d9](https://github.com/immich-app/devtools/commit/33c35d9756122ba9f2e1c9690a3c861448fa8415))
