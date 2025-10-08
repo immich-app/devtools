@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v0.2.0...multi-runner-build-workflow-v0.2.1) (2025-10-08)
+
+
+### Bug Fixes
+
+* add release-tag-type input ([#1035](https://github.com/immich-app/devtools/issues/1035)) ([44a9c51](https://github.com/immich-app/devtools/commit/44a9c5141750a6f68f957ecccf68c56c377ac13d))
+
 ## [0.2.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-0.1.1...multi-runner-build-workflow-v0.2.0) (2025-10-07)
 
 
