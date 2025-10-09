@@ -27,8 +27,9 @@ provider "registry.opentofu.org/1password/onepassword" {
 
 provider "registry.terraform.io/zp-forks/discord" {
   version     = "3.1.0"
-  constraints = "~> 3.1"
+  constraints = "~> 3.0"
   hashes = [
+    "h1:kGVbgnloSlgoufyydgkyL0SOPGNN/VRorKCgDPkiEFg=",
     "h1:tGX9kU94mzz5D3v9D6/FKFYbtRTfsCQHqNawCMx04Vs=",
     "zh:0a8c2ea7d4303b5cb8b77684c233e14eba79ff980e0fc7d2841e1de0d923ebe2",
     "zh:2e306f33a865529e3bcd2877c615cbca347f6bdb3684842d76eafb3811a8cbec",
