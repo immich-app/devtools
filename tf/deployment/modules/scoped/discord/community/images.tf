@@ -1,7 +1,5 @@
 locals {
-  image_paths = [
-    "${path.module}/images/grafana_128_128.webp",
-  ]
+  image_paths = fileset(path.module, "images/*.{png,jpg,jpeg,gif,webp,svg}")
 
   extensions = {
     for path in local.image_paths :
