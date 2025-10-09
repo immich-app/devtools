@@ -7,7 +7,7 @@ terraform {
   required_providers {
     docker = {
       source  = "registry.terraform.io/docker/docker"
-      version = "0.4.3"
+      version = "0.5.2"
     }
   }
 }
