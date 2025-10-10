@@ -137,6 +137,18 @@ spec:
               annotations:
                 cert-manager.io/cluster-issuer: letsencrypt-production
                 nginx.ingress.kubernetes.io/proxy-body-size: "0"
+                nginx.ingress.kubernetes.io/configuration-snippet: |
+                  # UI tweaks: login page banner (html), subdued logo (javascript)
+                  sub_filter_types text/html text/javascript;
+                  sub_filter_once off;
+                  sub_filter '<body class="bg-light text-dark">' '<body class="bg-light text-dark"><div id="custom-banner" style="display: flex; justify-content: center; padding: 20px;">$host<br>This is a preview instance.<br>Use developer credentials to log in.</div>';
+                  sub_filter "fa2921" "aaaaaa";
+                  sub_filter "ed79b5" "aaaaaa";
+                  sub_filter "ffb400" "aaaaaa";
+                  sub_filter "1e83f7" "aaaaaa";
+                  sub_filter "18c249" "aaaaaa";
+                  # required for subdued logo (replacement in js files: http_sub_module doesn't support compression between ingress and backend)
+                  proxy_set_header Accept-Encoding "";
               hosts:
                 - host: << $ctx.name >>.preview.internal.immich.cloud
                   paths:
@@ -149,4 +161,3 @@ spec:
         machine-learning:
           image:
             pullPolicy: Always
-
