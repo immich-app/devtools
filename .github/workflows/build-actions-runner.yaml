@@ -30,10 +30,10 @@ jobs:
             actions_runner:
               - 'containers/actions-runner/**'
               - '.github/workflows/build-actions-runner.yaml'
-  
+
   build_and_push:
     needs: [pre-job]
-    if: ${{ needs.pre-job.outputs.should_run == 'true' }}
+    if: ${{ fromJSON(needs.pre-job.outputs.should_run).actions_runner == true }}
     runs-on: ubuntu-latest
 
     steps:

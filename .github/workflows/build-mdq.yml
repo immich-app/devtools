@@ -28,13 +28,13 @@ jobs:
           filters: |
             mdq:
               - 'containers/mdq/**'
-              - '.github/workflows/build-mdq.yaml'
-  
+              - '.github/workflows/build-mdq.yml'
+
   build_and_push:
     needs: [pre-job]
     permissions:
       packages: write
-    if: ${{ needs.pre-job.outputs.should_run == 'true' }}
+    if: ${{ fromJSON(needs.pre-job.outputs.should_run).mdq == true }}
     runs-on: ubuntu-latest
 
     steps:

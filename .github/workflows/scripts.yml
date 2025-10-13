@@ -28,11 +28,11 @@ jobs:
               - 'scripts/**'
           force-filters: |
             - '.github/workflows/scripts.yml'
-  
+
   scripts-unit-tests:
     name: Test & Lint Scripts
     needs: pre-job
-    if: ${{ needs.pre-job.outputs.should_run_script == 'true' }}
+    if: ${{ fromJSON(needs.pre-job.outputs.should_run).scripts == true }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
