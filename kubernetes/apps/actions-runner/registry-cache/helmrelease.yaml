@@ -33,7 +33,7 @@ spec:
           main:
             image:
               repository: registry
-              tag: 3.0.0@sha256:3725021071ec9383eb3d87ddbdff9ed602439b3f7c958c9c2fb941049ea6531d
+              tag: 3.0.0@sha256:cd92709b4191c5779cd7215ccd695db6c54652e7a62843197e367427efb84d0e
             env:
               REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
               REGISTRY_PROXY_REMOTEURL: https://registry-1.docker.io
