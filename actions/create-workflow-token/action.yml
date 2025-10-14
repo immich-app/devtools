@@ -1,5 +1,5 @@
 name: 'Create workflow token'
-description: 'Create an app token, with fallback to ${{ github.token }}'
+description: 'Create an app token, with fallback to $\{{ github.token }}'
 inputs:
   app-id:
     description: 'The GitHub App ID'
@@ -10,7 +10,7 @@ inputs:
 
 outputs:
   token:
-    description: 'The created token, or ${{ github.token }} if creation failed'
+    description: 'The created token, or $\{{ github.token }} if creation failed'
     value: ${{ steps.output.outputs.token }}
 
 runs:
