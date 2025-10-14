@@ -8,7 +8,7 @@ spec:
   interval: 10m
   url: oci://ghcr.io/fluxcd/flux-manifests
   ref:
-    digest: sha256:ae20e273d5d3bfe9fc93c17bf8670cf971d71d075ce3eed9ad1ec3727c9af9cb
+    digest: sha256:416e5cdb6055a90fe6fceb7e9122509a028e71c9fc660f161842536884427178
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
