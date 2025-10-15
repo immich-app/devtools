@@ -16,6 +16,9 @@
     "actions/pre-job": {
       "component": "pre-job-action"
     },
+    "actions/create-workflow-token": {
+      "component": "create-workflow-token-action"
+    },
     ".github/workflows": {
       "component": "multi-runner-build-workflow",
       "exclude-paths": [
