@@ -41,7 +41,7 @@ on:
         default: 'semver'
     secrets:
       GITHUB_APP_TOKEN:
-        required:
+        required: true
       DOCKERHUB_USERNAME:
         required: false
       DOCKERHUB_TOKEN:
