@@ -4,6 +4,9 @@ inputs:
   filters:
     description: 'Path filters as YAML string'
     required: true
+  github-token:
+    description: 'Github token to use'
+    required: true
   force-filters:
     description: 'Additional path filters that trigger force-run (e.g., workflow files)'
     required: false
@@ -190,6 +193,7 @@ runs:
       uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
       with:
         persist-credentials: false
+        token: ${{ inputs.github-token }}
 
     - name: Check force paths
       if: ${{ steps.check-conditions.outputs.needs_path_filtering == 'true' && inputs.force-filters != '' }}
@@ -240,6 +244,7 @@ runs:
       uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
       with:
         filters: ${{ steps.force_paths.outputs.force-paths-yaml }}
+        token: ${{ inputs.github-token }}
 
     - name: Check main paths
       if: ${{ steps.check-conditions.outputs.needs_path_filtering == 'true' && (inputs.force-filters == '' || steps.force_paths_filter.outputs.force-paths != 'true') }}
@@ -247,6 +252,7 @@ runs:
       uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
       with:
         filters: ${{ inputs.filters }}
+        token: ${{ inputs.github-token }}
 
     - name: Generate final outputs
       id: generate-outputs
