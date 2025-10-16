@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v0.2.1...multi-runner-build-workflow-v1.0.0) (2025-10-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* token input for shared actions ([#1055](https://github.com/immich-app/devtools/issues/1055))
+
+### Features
+
+* token input for shared actions ([#1055](https://github.com/immich-app/devtools/issues/1055)) ([1297869](https://github.com/immich-app/devtools/commit/1297869177d20b39191965dbaa60326337399c73))
+
+
+### Bug Fixes
+
+* missing field value in workflow ([#1058](https://github.com/immich-app/devtools/issues/1058)) ([af4d6a6](https://github.com/immich-app/devtools/commit/af4d6a6e0b3d2f0766d66a25f3d2c43e69ce3b25))
+* pre-job conditions ([#1040](https://github.com/immich-app/devtools/issues/1040)) ([8ddbcff](https://github.com/immich-app/devtools/commit/8ddbcffc561a94841cc2ce0a28a9c25f01fe97cd))
+
 ## [0.2.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v0.2.0...multi-runner-build-workflow-v0.2.1) (2025-10-08)
 
 
