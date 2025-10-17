@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.0.0...multi-runner-build-workflow-v1.1.0) (2025-10-17)
+
+
+### Features
+
+* disable zizmor ([#1061](https://github.com/immich-app/devtools/issues/1061)) ([ce1bc80](https://github.com/immich-app/devtools/commit/ce1bc801c8739eb7f5b934f48d458f910bd0b6c0))
+
 ## [1.0.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v0.2.1...multi-runner-build-workflow-v1.0.0) (2025-10-16)
 
 
