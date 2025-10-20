@@ -184,6 +184,10 @@ resource "cloudflare_tiered_cache" "immich_build" {
   cache_type = "smart"
 }
 
+import {
+  to = cloudflare_zone.immich_build
+  id = "eac14dd8002aa49582483c2a5cfcbde6"
+}
 
 output "immich_build_zone_id" {
   value = cloudflare_zone.immich_build.id
