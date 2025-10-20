@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/immich-app/devtools/compare/use-mise-action-v1.0.0...use-mise-action-v1.1.0) (2025-10-20)
+
+
+### Features
+
+* update mise-action version ([#1066](https://github.com/immich-app/devtools/issues/1066)) ([64f22e6](https://github.com/immich-app/devtools/commit/64f22e64f937039a7127a67b4508740b2f41028b))
+
 ## [1.0.0](https://github.com/immich-app/devtools/compare/use-mise-action-0.0.1...use-mise-action-v1.0.0) (2025-10-16)
 
 
