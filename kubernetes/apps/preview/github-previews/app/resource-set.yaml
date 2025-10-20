@@ -138,13 +138,13 @@ spec:
                 cert-manager.io/cluster-issuer: letsencrypt-production
                 nginx.ingress.kubernetes.io/proxy-body-size: "0"
               hosts:
-                - host: << $ctx.name >>.preview.internal.immich.cloud
+                - host: << $ctx.name >>.preview.internal.immich.build
                   paths:
                     - path: /
                       pathType: Prefix
               tls:
                 - hosts:
-                    - << $ctx.name >>.preview.internal.immich.cloud
+                    - << $ctx.name >>.preview.internal.immich.build
                   secretName: << $ctx.name >>-preview-tls
         machine-learning:
           image:
