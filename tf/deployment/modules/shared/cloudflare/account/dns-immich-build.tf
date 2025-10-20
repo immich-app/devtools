@@ -33,3 +33,12 @@ resource "cloudflare_record" "immich_build_a_mich" {
   content = local.mich_ip
   zone_id = cloudflare_zone.immich_build.id
 }
+
+resource "cloudflare_record" "immich_build_txt_google_site_verification" {
+  name    = "immich.build"
+  proxied = false
+  ttl     = 1
+  type    = "TXT"
+  content = "\"google-site-verification=tf_nTykp5S6m2oEp7R01w5AjajH5uM8cheVPmySmqcY\""
+  zone_id = cloudflare_zone.immich_build.id
+}
