@@ -14,8 +14,12 @@ on:
         description: 'Path to Dockerfile'
         type: string
         required: true
+      suffixes:
+        description: 'Comma-separated list of suffixes to append to the image tag'
+        type: string
+        default: ''
       tag-suffix:
-        description: 'Suffix to append to the image tag'
+        description: 'DEPRECATED (use suffixes): Suffix to append to the image tag'
         type: string
         default: ''
       dockerhub-push:
@@ -148,7 +152,6 @@ jobs:
           flavor: |
             # Disable latest tag
             latest=false
-            suffix=${{ inputs.tag-suffix }}
           images: |
             name=${{ env.GHCR_IMAGE }}
             name=${{ env.DOCKERHUB_IMAGE }},enable=${{ inputs.dockerhub-push }}
@@ -167,6 +170,9 @@ jobs:
 
       - name: Create manifest list and push
         working-directory: ${{ runner.temp }}/digests
+        env:
+          SUFFIXES: ${{ inputs.suffixes }}
+          TAG_SUFFIX: ${{ inputs.tag-suffix }}
         shell: uv run {0}
         run: |
           # /// script
@@ -190,7 +196,15 @@ jobs:
             key, value = annotation.split("=", 1)
             docker_args["annotations"][key] = value
 
-          docker_args["tags"] = metadata_json.get("tags", [])
+          tags = metadata_json.get("tags", [])
+
+          if suffixes := os.environ.get("SUFFIXES"):
+            suffixes = suffixes.split(",")
+            if tag_suffix := os.environ.get("TAG_SUFFIX"):
+              suffixes.append(tag_suffix)
+            for suffix in suffixes:
+              for tag in tags:
+                docker_args["tags"].append(f"{tag}{suffix}")
 
           ghcr_image = os.environ['GHCR_IMAGE']
           digests = os.listdir(".")
