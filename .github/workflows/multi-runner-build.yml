@@ -41,7 +41,7 @@ on:
         default: 'semver'
     secrets:
       GITHUB_APP_TOKEN:
-        required: true
+        required: false
       DOCKERHUB_USERNAME:
         required: false
       DOCKERHUB_TOKEN:
@@ -93,14 +93,14 @@ jobs:
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
         with:
           persist-credentials: false
-          token: ${{ secrets.GITHUB_APP_TOKEN }}
+          token: ${{ secrets.GITHUB_APP_TOKEN || github.token }}
 
       - uses: immich-app/devtools/actions/image-build@7d95e52a7a597ce005a306d6891467fc15427b69 # image-build-action-0.1.1
         with:
           context: ${{ inputs.context }}
           dockerfile: ${{ inputs.dockerfile }}
           image: ${{ env.GHCR_IMAGE }}
-          ghcr-token: ${{ secrets.GITHUB_APP_TOKEN }}
+          ghcr-token: ${{ secrets.GITHUB_APP_TOKEN || github.token }}
           platform: ${{ matrix.platform }}
           artifact-key-base: ${{ needs.matrix.outputs.key }}
           build-args: ${{ inputs.build-args }}
@@ -117,7 +117,7 @@ jobs:
           path: ${{ runner.temp }}/digests
           pattern: ${{ needs.matrix.outputs.key }}-*
           merge-multiple: true
-          github-token: ${{ secrets.GITHUB_APP_TOKEN }}
+          github-token: ${{ secrets.GITHUB_APP_TOKEN || github.token }}
 
       - name: Login to Docker Hub
         if: ${{ inputs.dockerhub-push }}
@@ -131,7 +131,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_APP_TOKEN }}
+          password: ${{ secrets.GITHUB_APP_TOKEN || github.token }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
