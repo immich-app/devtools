@@ -8,8 +8,8 @@ opentofu = "1.10.3"
 "pipx:flux-local" = "7.10.1"
 terragrunt = "0.83.2"
 usage = "2.3.2"
-uv = "0.9.0"
-yamlfmt = "0.17.2"
+uv = "0.9.3"
+yamlfmt = "0.19.0"
 
 [env]
 KUBECONFIG = "{{config_root}}/.mise/kube.config"
