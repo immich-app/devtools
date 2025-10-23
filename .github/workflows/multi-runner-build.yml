@@ -173,7 +173,7 @@ jobs:
         env:
           SUFFIXES: ${{ inputs.suffixes }}
           TAG_SUFFIX: ${{ inputs.tag-suffix }}
-        shell: uv run {0}
+        shell: uv run --script {0}
         run: |
           # /// script
           # requires-python = ">=3.11"
