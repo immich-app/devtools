@@ -228,3 +228,69 @@ resource "github_actions_organization_secret" "GOOGLE_PLAY_SIGNING_KEY_STORE_PAS
   plaintext_value = data.onepassword_item.google_play_signing_key_store_password.password
   visibility      = "all"
 }
+
+data "onepassword_item" "APP_STORE_CONNECT_API_KEY_ID" {
+  title = "APP_STORE_CONNECT_API_KEY_ID"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "APP_STORE_CONNECT_API_KEY_ID" {
+  secret_name     = "APP_STORE_CONNECT_API_KEY_ID"
+  plaintext_value = data.onepassword_item.APP_STORE_CONNECT_API_KEY_ID.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "APP_STORE_CONNECT_API_KEY_ISSUER_ID" {
+  title = "APP_STORE_CONNECT_API_KEY_ISSUER_ID"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "APP_STORE_CONNECT_API_KEY_ISSUER_ID" {
+  secret_name     = "APP_STORE_CONNECT_API_KEY_ISSUER_ID"
+  plaintext_value = data.onepassword_item.APP_STORE_CONNECT_API_KEY_ISSUER_ID.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "APP_STORE_CONNECT_API_KEY" {
+  title = "APP_STORE_CONNECT_API_KEY"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "APP_STORE_CONNECT_API_KEY" {
+  secret_name     = "APP_STORE_CONNECT_API_KEY"
+  plaintext_value = data.onepassword_item.APP_STORE_CONNECT_API_KEY.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_CERTIFICATE_P12" {
+  title = "IOS_CERTIFICATE_P12"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_CERTIFICATE_P12" {
+  secret_name     = "IOS_CERTIFICATE_P12"
+  plaintext_value = data.onepassword_item.IOS_CERTIFICATE_P12.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_CERTIFICATE_PASSWORD" {
+  title = "IOS_CERTIFICATE_PASSWORD"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_CERTIFICATE_PASSWORD" {
+  secret_name     = "IOS_CERTIFICATE_PASSWORD"
+  plaintext_value = data.onepassword_item.IOS_CERTIFICATE_PASSWORD.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_PROVISIONING_PROFILE" {
+  title = "IOS_PROVISIONING_PROFILE"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_PROVISIONING_PROFILE" {
+  secret_name     = "IOS_PROVISIONING_PROFILE"
+  plaintext_value = data.onepassword_item.IOS_PROVISIONING_PROFILE.password
+  visibility      = "all"
+}
