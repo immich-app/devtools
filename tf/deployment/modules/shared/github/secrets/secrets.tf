@@ -261,3 +261,36 @@ resource "github_actions_organization_secret" "APP_STORE_CONNECT_API_KEY" {
   plaintext_value = data.onepassword_item.APP_STORE_CONNECT_API_KEY.password
   visibility      = "all"
 }
+
+data "onepassword_item" "IOS_CERTIFICATE_P12" {
+  title = "IOS_CERTIFICATE_P12"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_CERTIFICATE_P12" {
+  secret_name     = "IOS_CERTIFICATE_P12"
+  plaintext_value = data.onepassword_item.IOS_CERTIFICATE_P12.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_CERTIFICATE_PASSWORD" {
+  title = "IOS_CERTIFICATE_PASSWORD"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_CERTIFICATE_PASSWORD" {
+  secret_name     = "IOS_CERTIFICATE_PASSWORD"
+  plaintext_value = data.onepassword_item.IOS_CERTIFICATE_PASSWORD.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_PROVISIONING_PROFILE" {
+  title = "IOS_PROVISIONING_PROFILE"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_PROVISIONING_PROFILE" {
+  secret_name     = "IOS_PROVISIONING_PROFILE"
+  plaintext_value = data.onepassword_item.IOS_PROVISIONING_PROFILE.password
+  visibility      = "all"
+}
