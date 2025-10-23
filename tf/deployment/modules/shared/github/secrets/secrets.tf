@@ -228,3 +228,36 @@ resource "github_actions_organization_secret" "GOOGLE_PLAY_SIGNING_KEY_STORE_PAS
   plaintext_value = data.onepassword_item.google_play_signing_key_store_password.password
   visibility      = "all"
 }
+
+data "onepassword_item" "APP_STORE_CONNECT_API_KEY_ID" {
+  title = "APP_STORE_CONNECT_API_KEY_ID"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "APP_STORE_CONNECT_API_KEY_ID" {
+  secret_name     = "APP_STORE_CONNECT_API_KEY_ID"
+  plaintext_value = data.onepassword_item.APP_STORE_CONNECT_API_KEY_ID.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "APP_STORE_CONNECT_API_KEY_ISSUER_ID" {
+  title = "APP_STORE_CONNECT_API_KEY_ISSUER_ID"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "APP_STORE_CONNECT_API_KEY_ISSUER_ID" {
+  secret_name     = "APP_STORE_CONNECT_API_KEY_ISSUER_ID"
+  plaintext_value = data.onepassword_item.APP_STORE_CONNECT_API_KEY_ISSUER_ID.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "APP_STORE_CONNECT_API_KEY" {
+  title = "APP_STORE_CONNECT_API_KEY"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "APP_STORE_CONNECT_API_KEY" {
+  secret_name     = "APP_STORE_CONNECT_API_KEY"
+  plaintext_value = data.onepassword_item.APP_STORE_CONNECT_API_KEY.password
+  visibility      = "all"
+}
