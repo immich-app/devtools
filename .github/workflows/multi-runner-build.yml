@@ -14,8 +14,12 @@ on:
         description: 'Path to Dockerfile'
         type: string
         required: true
+      suffixes:
+        description: 'Comma-separated list of suffixes to append to the image tag'
+        type: string
+        default: ''
       tag-suffix:
-        description: 'Suffix to append to the image tag'
+        description: 'DEPRECATED (use suffixes): Suffix to append to the image tag'
         type: string
         default: ''
       dockerhub-push:
@@ -111,6 +115,9 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !github.event.pull_request.head.repo.fork }}
     steps:
+      - name: Install uv
+        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+
       - name: Download digests
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
@@ -145,7 +152,6 @@ jobs:
           flavor: |
             # Disable latest tag
             latest=false
-            suffix=${{ inputs.tag-suffix }}
           images: |
             name=${{ env.GHCR_IMAGE }}
             name=${{ env.DOCKERHUB_IMAGE }},enable=${{ inputs.dockerhub-push }}
@@ -164,22 +170,44 @@ jobs:
 
       - name: Create manifest list and push
         working-directory: ${{ runner.temp }}/digests
+        env:
+          SUFFIXES: ${{ inputs.suffixes }}
+          TAG_SUFFIX: ${{ inputs.tag-suffix }}
+        shell: uv run {0}
         run: |
-          # Process annotations
-          declare -a ANNOTATIONS=()
-          if [[ -n "$DOCKER_METADATA_OUTPUT_JSON" ]]; then
-            while IFS= read -r annotation; do
-              # Extract key and value by removing the manifest: prefix
-              if [[ "$annotation" =~ ^manifest:(.+)=(.+)$ ]]; then
-                key="${BASH_REMATCH[1]}"
-                value="${BASH_REMATCH[2]}"
-                # Use array to properly handle arguments with spaces
-                ANNOTATIONS+=(--annotation "index:$key=$value")
-              fi
-            done < <(jq -r '.annotations[]' <<< "$DOCKER_METADATA_OUTPUT_JSON")
-          fi
+          # /// script
+          # requires-python = ">=3.11"
+          # dependencies = [
+          #     "python-on-whales @ git+https://github.com/bo0tzz/python-on-whales.git@43929a5872590daa9513ae9262e81cb4ffd249f2",
+          # ]
+          # ///
 
-          TAGS=$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-          SOURCE_ARGS=$(printf "${GHCR_IMAGE}@sha256:%s " *)
+          from python_on_whales import docker
+          import json
+          import os
 
-          docker buildx imagetools create $TAGS "${ANNOTATIONS[@]}" $SOURCE_ARGS
+          docker_args = {"annotations": {}, "tags": [], "sources": []}
+
+          metadata_json = json.loads(os.environ.get("DOCKER_METADATA_OUTPUT_JSON", "{}"))
+
+          annotations = metadata_json.get("annotations", [])
+          for annotation in annotations:
+            annotation = annotation.replace("manifest:", "index:")
+            key, value = annotation.split("=", 1)
+            docker_args["annotations"][key] = value
+
+          tags = metadata_json.get("tags", [])
+
+          if suffixes := os.environ.get("SUFFIXES"):
+            suffixes = suffixes.split(",")
+            if tag_suffix := os.environ.get("TAG_SUFFIX"):
+              suffixes.append(tag_suffix)
+            for suffix in suffixes:
+              for tag in tags:
+                docker_args["tags"].append(f"{tag}{suffix}")
+
+          ghcr_image = os.environ['GHCR_IMAGE']
+          digests = os.listdir(".")
+          docker_args["sources"] = [f"{ghcr_image}@sha256:{digest}" for digest in digests]
+
+          docker.buildx.imagetools.create(**docker_args)
