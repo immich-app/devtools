@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.0.0...multi-runner-build-workflow-v1.1.0) (2025-10-23)
+
+
+### Features
+
+* disable zizmor ([#1061](https://github.com/immich-app/devtools/issues/1061)) ([ce1bc80](https://github.com/immich-app/devtools/commit/ce1bc801c8739eb7f5b934f48d458f910bd0b6c0))
+* make GITHUB_APP_TOKEN input optional ([#1079](https://github.com/immich-app/devtools/issues/1079)) ([a01825c](https://github.com/immich-app/devtools/commit/a01825cf0e45e9b6a2bc0749578348f996d65b39))
+* use python for multi-runner-build ([#1080](https://github.com/immich-app/devtools/issues/1080)) ([122a466](https://github.com/immich-app/devtools/commit/122a466ce072cf0924b43957d111f4227ec0b2d2))
+
+
+### Bug Fixes
+
+* concurrency for release-please workflow ([#1060](https://github.com/immich-app/devtools/issues/1060)) ([f5dfbf9](https://github.com/immich-app/devtools/commit/f5dfbf9b78b5dd702b7ab4d795714bc1d12088f6))
+
 ## [1.0.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v0.2.1...multi-runner-build-workflow-v1.0.0) (2025-10-16)
 
 
