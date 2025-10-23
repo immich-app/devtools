@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.2...multi-runner-build-workflow-v1.1.3) (2025-10-23)
+
+
+### Bug Fixes
+
+* always include base tags ([#1087](https://github.com/immich-app/devtools/issues/1087)) ([39f8078](https://github.com/immich-app/devtools/commit/39f8078d1776a5023d6f3b86110c561f20f3de54))
+
 ## [1.1.2](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.1...multi-runner-build-workflow-v1.1.2) (2025-10-23)
 
 
