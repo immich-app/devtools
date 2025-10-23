@@ -178,7 +178,7 @@ jobs:
           # /// script
           # requires-python = ">=3.11"
           # dependencies = [
-          #     "python-on-whales @ git+https://github.com/bo0tzz/python-on-whales.git@43929a5872590daa9513ae9262e81cb4ffd249f2",
+          #     "python-on-whales @ git+https://github.com/bo0tzz/python-on-whales.git@8c5ce8c71107d5fc0420ae8b4a202b12503603e9",
           # ]
           # ///
 
