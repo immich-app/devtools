@@ -305,3 +305,25 @@ resource "github_actions_organization_secret" "FASTLANE_TEAM_ID" {
   plaintext_value = data.onepassword_item.FASTLANE_TEAM_ID.password
   visibility      = "all"
 }
+
+data "onepassword_item" "IOS_PROVISIONING_PROFILE_WIDGET_EXTENSION" {
+  title = "IOS_PROVISIONING_PROFILE_WIDGET_EXTENSION"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_PROVISIONING_PROFILE_WIDGET_EXTENSION" {
+  secret_name     = "IOS_PROVISIONING_PROFILE_WIDGET_EXTENSION"
+  plaintext_value = data.onepassword_item.IOS_PROVISIONING_PROFILE_WIDGET_EXTENSION.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_PROVISIONING_PROFILE_SHARE_EXTENSION" {
+  title = "IOS_PROVISIONING_PROFILE_SHARE_EXTENSION"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_PROVISIONING_PROFILE_SHARE_EXTENSION" {
+  secret_name     = "IOS_PROVISIONING_PROFILE_SHARE_EXTENSION"
+  plaintext_value = data.onepassword_item.IOS_PROVISIONING_PROFILE_SHARE_EXTENSION.password
+  visibility      = "all"
+}
