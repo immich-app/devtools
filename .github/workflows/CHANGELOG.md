@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.1...multi-runner-build-workflow-v1.1.2) (2025-10-23)
+
+
+### Bug Fixes
+
+* bump python-on-whales version ([#1084](https://github.com/immich-app/devtools/issues/1084)) ([1847f7e](https://github.com/immich-app/devtools/commit/1847f7ef211c58075482ed38d0e42f358db38b52))
+
 ## [1.1.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.0...multi-runner-build-workflow-v1.1.1) (2025-10-23)
 
 
