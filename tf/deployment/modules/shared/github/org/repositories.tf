@@ -100,6 +100,11 @@ variable "repositories" {
       description            = "One-Click deployment for Immich on various platforms.",
       license                = "MIT",
       collaborator_overrides = { "kennyfuto" : "maintain" }
+    },
+    {
+      name        = "yucca-o11y",
+      description = "o11y stack for yucca",
+      license     = "SOURCE_FIRST"
     }
   ]
 }
