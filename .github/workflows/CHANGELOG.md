@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.0...multi-runner-build-workflow-v1.1.1) (2025-10-23)
+
+
+### Bug Fixes
+
+* uv run --script ([#1082](https://github.com/immich-app/devtools/issues/1082)) ([96698eb](https://github.com/immich-app/devtools/commit/96698eb2afb1362ce20a8b1c73118cad53edbeed))
+
 ## [1.1.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.0.0...multi-runner-build-workflow-v1.1.0) (2025-10-23)
 
 
