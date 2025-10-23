@@ -197,6 +197,7 @@ jobs:
             docker_args["annotations"][key] = value
 
           tags = metadata_json.get("tags", [])
+          docker_args["tags"] = list(tags)
 
           if suffixes := os.environ.get("SUFFIXES"):
             suffixes = suffixes.split(",")
