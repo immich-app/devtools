@@ -35,7 +35,8 @@ module "manual-secrets" {
       "APP_STORE_CONNECT_API_KEY",
       "IOS_CERTIFICATE_P12",
       "IOS_CERTIFICATE_PASSWORD",
-      "IOS_PROVISIONING_PROFILE"
+      "IOS_PROVISIONING_PROFILE",
+      "FASTLANE_TEAM_ID",
     ]
     dev = [
       "MONITORING_GRAFANA_TF_AUTH_TOKEN",
