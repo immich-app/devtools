@@ -327,3 +327,36 @@ resource "github_actions_organization_secret" "IOS_PROVISIONING_PROFILE_SHARE_EX
   plaintext_value = data.onepassword_item.IOS_PROVISIONING_PROFILE_SHARE_EXTENSION.password
   visibility      = "all"
 }
+
+data "onepassword_item" "IOS_DEVELOPMENT_PROVISIONING_PROFILE" {
+  title = "IOS_DEVELOPMENT_PROVISIONING_PROFILE"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_DEVELOPMENT_PROVISIONING_PROFILE" {
+  secret_name     = "IOS_DEVELOPMENT_PROVISIONING_PROFILE"
+  plaintext_value = data.onepassword_item.IOS_DEVELOPMENT_PROVISIONING_PROFILE.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION" {
+  title = "IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION" {
+  secret_name     = "IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION"
+  plaintext_value = data.onepassword_item.IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION" {
+  title = "IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION" {
+  secret_name     = "IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION"
+  plaintext_value = data.onepassword_item.IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION.password
+  visibility      = "all"
+}
