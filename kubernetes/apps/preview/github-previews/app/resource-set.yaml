@@ -15,6 +15,8 @@ spec:
     - branch: release
       # renovate: datasource=github-releases depName=immich-app/immich
       tag: "v2.1.0"
+    - branch: v2
+      tag: "v2.0.0"
   resourcesTemplate: |
     <<- $ctx := dict >>
     <<- if hasKey inputs "author" >>
