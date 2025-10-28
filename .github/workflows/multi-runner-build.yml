@@ -18,10 +18,6 @@ on:
         description: 'Comma-separated list of suffixes to append to the image tag'
         type: string
         default: ''
-      tag-suffix:
-        description: 'DEPRECATED (use suffixes): Suffix to append to the image tag'
-        type: string
-        default: ''
       dockerhub-push:
         description: 'Push to Docker Hub'
         type: boolean
@@ -81,16 +77,9 @@ jobs:
         env:
           IMAGE: ${{ inputs.image }}
           SUFFIXES: ${{ inputs.suffixes }}
-          TAG_SUFFIX: ${{ inputs.tag-suffix }}
         run: |
-          suffix_key=""
-          if [ -n "$SUFFIXES" ]; then
-            # Replace commas with hyphens for the artifact key
-            suffix_key=$(echo "$SUFFIXES" | tr ',' '-')
-          elif [ -n "$TAG_SUFFIX" ]; then
-            # Fallback to deprecated tag-suffix for backward compatibility
-            suffix_key="$TAG_SUFFIX"
-          fi
+          # Replace commas with hyphens for the artifact key
+          suffix_key=$(echo "$SUFFIXES" | tr ',' '-')
           base="${IMAGE}${suffix_key}-digests"
           echo "base=${base}" | tee -a $GITHUB_OUTPUT
 
@@ -181,7 +170,6 @@ jobs:
         working-directory: ${{ runner.temp }}/digests
         env:
           SUFFIXES: ${{ inputs.suffixes }}
-          TAG_SUFFIX: ${{ inputs.tag-suffix }}
         shell: uv run --script {0}
         run: |
           # /// script
@@ -208,23 +196,16 @@ jobs:
           tags = metadata_json.get("tags", [])
           docker_args["tags"] = list(tags)
 
-          suffixes_str = os.environ.get("SUFFIXES")
-          tag_suffix = os.environ.get("TAG_SUFFIX")
-
-          # Use suffixes if set, otherwise fall back to deprecated tag-suffix
-          if suffixes_str:
-            suffixes = suffixes_str.split(",")
-          elif tag_suffix:
-            suffixes = [tag_suffix]
-          else:
-            suffixes = []
-
-          for suffix in suffixes:
-            for tag in tags:
-              docker_args["tags"].append(f"{tag}{suffix}")
+          if suffixes_env := os.environ.get("SUFFIXES"):
+            suffixes = suffixes_env.split(",")
+            print(f"{suffixes=}")
+            for suffix in suffixes:
+              for tag in tags:
+                docker_args["tags"].append(f"{tag}{suffix}")
 
           ghcr_image = os.environ['GHCR_IMAGE']
           digests = os.listdir(".")
           docker_args["sources"] = [f"{ghcr_image}@sha256:{digest}" for digest in digests]
 
+          print(json.dumps(docker_args))
           docker.buildx.imagetools.create(**docker_args)
