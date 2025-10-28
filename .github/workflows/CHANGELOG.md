@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.0.0...multi-runner-build-workflow-v2.0.1) (2025-10-28)
+
+
+### Bug Fixes
+
+* don't initialize with base tags list ([#1117](https://github.com/immich-app/devtools/issues/1117)) ([401f8be](https://github.com/immich-app/devtools/commit/401f8be88425b5bac1680a5957f7fc431fd6f16b))
+
 ## [2.0.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.5...multi-runner-build-workflow-v2.0.0) (2025-10-28)
 
 
