@@ -208,13 +208,20 @@ jobs:
           tags = metadata_json.get("tags", [])
           docker_args["tags"] = list(tags)
 
-          if suffixes := os.environ.get("SUFFIXES"):
-            suffixes = suffixes.split(",")
-            if tag_suffix := os.environ.get("TAG_SUFFIX"):
-              suffixes.append(tag_suffix)
-            for suffix in suffixes:
-              for tag in tags:
-                docker_args["tags"].append(f"{tag}{suffix}")
+          suffixes_str = os.environ.get("SUFFIXES")
+          tag_suffix = os.environ.get("TAG_SUFFIX")
+
+          # Use suffixes if set, otherwise fall back to deprecated tag-suffix
+          if suffixes_str:
+            suffixes = suffixes_str.split(",")
+          elif tag_suffix:
+            suffixes = [tag_suffix]
+          else:
+            suffixes = []
+
+          for suffix in suffixes:
+            for tag in tags:
+              docker_args["tags"].append(f"{tag}{suffix}")
 
           ghcr_image = os.environ['GHCR_IMAGE']
           digests = os.listdir(".")
