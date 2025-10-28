@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.5](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.4...multi-runner-build-workflow-v1.1.5) (2025-10-28)
+
+
+### Bug Fixes
+
+* multi-runner-build artifact suffix incorrectly overriding blank … ([#1113](https://github.com/immich-app/devtools/issues/1113)) ([953d438](https://github.com/immich-app/devtools/commit/953d438649486f337b96268f18e29295cd70d02f))
+
 ## [1.1.4](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.3...multi-runner-build-workflow-v1.1.4) (2025-10-28)
 
 
