@@ -80,9 +80,18 @@ jobs:
         shell: bash
         env:
           IMAGE: ${{ inputs.image }}
-          SUFFIX: ${{ inputs.tag-suffix }}
+          SUFFIXES: ${{ inputs.suffixes }}
+          TAG_SUFFIX: ${{ inputs.tag-suffix }}
         run: |
-          base="${IMAGE}${SUFFIX}-digests"
+          suffix_key=""
+          if [ -n "$SUFFIXES" ]; then
+            # Replace commas with hyphens for the artifact key
+            suffix_key=$(echo "$SUFFIXES" | tr ',' '-')
+          elif [ -n "$TAG_SUFFIX" ]; then
+            # Fallback to deprecated tag-suffix for backward compatibility
+            suffix_key="$TAG_SUFFIX"
+          fi
+          base="${IMAGE}${suffix_key}-digests"
           echo "base=${base}" | tee -a $GITHUB_OUTPUT
 
   build:
