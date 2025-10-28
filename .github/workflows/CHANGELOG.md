@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.5...multi-runner-build-workflow-v2.0.0) (2025-10-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove tag-suffix input ([#1115](https://github.com/immich-app/devtools/issues/1115))
+
+### Bug Fixes
+
+* remove tag-suffix input ([#1115](https://github.com/immich-app/devtools/issues/1115)) ([8c0869f](https://github.com/immich-app/devtools/commit/8c0869f3de41509ebf282ed0e1fce3efbb6b1d6e))
+
 ## [1.1.5](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.4...multi-runner-build-workflow-v1.1.5) (2025-10-28)
 
 
