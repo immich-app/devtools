@@ -12,8 +12,6 @@ jobs:
   zizmor:
     name: zizmor
     runs-on: ubuntu-latest
-    # temporarily disable to see if it is causing issues with rest api limits
-    if: false
     permissions:
       security-events: write
       contents: read
