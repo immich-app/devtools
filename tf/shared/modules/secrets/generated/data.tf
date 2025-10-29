@@ -1,11 +1,8 @@
-data "onepassword_vault" "tf" {
-  name = "tf"
+data "onepassword_vault" "global" {
+  name = var.global_vault
 }
 
-data "onepassword_vault" "tf_dev" {
-  name = "tf_dev"
-}
-
-data "onepassword_vault" "tf_prod" {
-  name = "tf_prod"
+data "onepassword_vault" "scoped" {
+  for_each = var.scoped_vaults
+  name     = each.value
 }
