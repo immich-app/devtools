@@ -5,17 +5,24 @@ variable "secrets" {
       length = optional(number)
       type   = optional(string, "alphanumeric")
     })))
-    dev = optional(list(object({
-      name   = string
-      length = optional(number)
-      type   = optional(string, "alphanumeric")
-    })))
-    prod = optional(list(object({
+    scoped = optional(list(object({
       name   = string
       length = optional(number)
       type   = optional(string, "alphanumeric")
     })))
   })
+}
+
+variable "global_vault" {
+  type        = string
+  description = "Name of the vault for storing global secrets"
+  default     = "tf"
+}
+
+variable "scoped_vaults" {
+  type        = set(string)
+  description = "Names of the vaults for storing scoped secrets"
+  default     = ["tf_prod", "tf_dev"]
 }
 
 variable "default_secret_length" {
