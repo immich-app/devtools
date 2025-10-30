@@ -5,6 +5,7 @@ module "yucca-manual-secrets" {
     global = [
       "TF_STATE_S3_ENDPOINT",
       "TF_STATE_S3_BUCKET",
+      "TF_STATE_S3_REGION",
       "TF_STATE_S3_ACCESS_KEY",
       "TF_STATE_S3_SECRET_KEY",
       "OVH_APPLICATION_KEY",
