@@ -105,6 +105,11 @@ variable "repositories" {
       name        = "yucca-o11y",
       description = "o11y stack for yucca",
       license     = "SOURCE_FIRST"
+    },
+    {
+      name        = "yucca",
+      description = "Everything yucca",
+      license     = "SOURCE_FIRST"
     }
   ]
 }
