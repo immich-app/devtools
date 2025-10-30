@@ -1,15 +1,15 @@
 [tools]
 flux2 = "2.7.2"
-"go:github.com/cloudnative-pg/cloudnative-pg/cmd/kubectl-cnpg" = "1.27.0"
+"go:github.com/cloudnative-pg/cloudnative-pg/cmd/kubectl-cnpg" = "1.27.1"
 helm = "3.19.0"
 jq = "1.8.1"
 kubectl = "1.34.1"
 opentofu = "1.10.3"
 "pipx:flux-local" = "7.10.1"
 terragrunt = "0.83.2"
-usage = "2.3.2"
-uv = "0.9.3"
-yamlfmt = "0.19.0"
+usage = "2.5.0"
+uv = "0.9.5"
+yamlfmt = "0.20.0"
 
 [env]
 KUBECONFIG = "{{config_root}}/.mise/kube.config"
