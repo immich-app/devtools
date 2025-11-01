@@ -141,3 +141,17 @@ output "tiles_r2_kv_token_value" {
   value     = cloudflare_api_token.tiles_r2_kv_token.value
   sensitive = true
 }
+
+resource "cloudflare_api_token" "static_bucket_api_token" {
+  name = "r2_token_static_bucket"
+
+  policy {
+    permission_groups = [
+      data.cloudflare_api_token_permission_groups.all.r2["Workers R2 Storage Bucket Item Read"],
+      data.cloudflare_api_token_permission_groups.all.r2["Workers R2 Storage Bucket Item Write"]
+    ]
+    resources = {
+      "com.cloudflare.edge.r2.bucket.${var.cloudflare_account_id}_default_static" = "*"
+    }
+  }
+}
