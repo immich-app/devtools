@@ -360,3 +360,69 @@ resource "github_actions_organization_secret" "IOS_DEVELOPMENT_PROVISIONING_PROF
   plaintext_value = data.onepassword_item.IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION.password
   visibility      = "all"
 }
+
+data "onepassword_item" "STATIC_BUCKET_NAME" {
+  title = "STATIC_BUCKET_NAME"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "STATIC_BUCKET_NAME" {
+  secret_name     = "STATIC_BUCKET_NAME"
+  plaintext_value = data.onepassword_item.STATIC_BUCKET_NAME.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "STATIC_BUCKET_ENDPOINT" {
+  title = "STATIC_BUCKET_ENDPOINT"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "STATIC_BUCKET_ENDPOINT" {
+  secret_name     = "STATIC_BUCKET_ENDPOINT"
+  plaintext_value = data.onepassword_item.STATIC_BUCKET_ENDPOINT.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "STATIC_BUCKET_KEY_ID" {
+  title = "STATIC_BUCKET_KEY_ID"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "STATIC_BUCKET_KEY_ID" {
+  secret_name     = "STATIC_BUCKET_KEY_ID"
+  plaintext_value = data.onepassword_item.STATIC_BUCKET_KEY_ID.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "STATIC_BUCKET_ACCESS_KEY" {
+  title = "STATIC_BUCKET_ACCESS_KEY"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "STATIC_BUCKET_ACCESS_KEY" {
+  secret_name     = "STATIC_BUCKET_ACCESS_KEY"
+  plaintext_value = data.onepassword_item.STATIC_BUCKET_ACCESS_KEY.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "STATIC_BUCKET_REGION" {
+  title = "STATIC_BUCKET_REGION"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "STATIC_BUCKET_REGION" {
+  secret_name     = "STATIC_BUCKET_REGION"
+  plaintext_value = data.onepassword_item.STATIC_BUCKET_REGION.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "OUTLINE_API_KEY" {
+  title = "OUTLINE_API_KEY"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "OUTLINE_API_KEY" {
+  secret_name     = "OUTLINE_API_KEY"
+  plaintext_value = data.onepassword_item.OUTLINE_API_KEY.password
+  visibility      = "all"
+}

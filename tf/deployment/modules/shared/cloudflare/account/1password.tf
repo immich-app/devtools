@@ -115,3 +115,24 @@ resource "onepassword_item" "mich_cloudflare_r2_outline_database_backups_bucket"
     }
   }
 }
+
+resource "onepassword_item" "static_bucket_name" {
+  vault    = data.onepassword_vault.tf.uuid
+  title    = "STATIC_BUCKET_NAME"
+  category = "password"
+  password = cloudflare_r2_bucket.static.name
+}
+
+resource "onepassword_item" "static_bucket_endpoint" {
+  vault    = data.onepassword_vault.tf.uuid
+  title    = "STATIC_BUCKET_ENDPOINT"
+  category = "password"
+  password = "https://${var.cloudflare_account_id}.r2.cloudflarestorage.com"
+}
+
+resource "onepassword_item" "static_bucket_region" {
+  vault    = data.onepassword_vault.tf.uuid
+  title    = "STATIC_BUCKET_REGION"
+  category = "password"
+  password = "auto"
+}
