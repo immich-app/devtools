@@ -399,8 +399,8 @@ data "onepassword_item" "STATIC_BUCKET_KEY_SECRET" {
   vault = data.onepassword_vault.tf.name
 }
 
-resource "github_actions_organization_secret" "STATIC_BUCKET_ACCESS_KEY" {
-  secret_name     = "STATIC_BUCKET_ACCESS_KEY"
+resource "github_actions_organization_secret" "STATIC_BUCKET_KEY_SECRET" {
+  secret_name     = "STATIC_BUCKET_KEY_SECRET"
   plaintext_value = data.onepassword_item.STATIC_BUCKET_KEY_SECRET.password
   visibility      = "all"
 }
