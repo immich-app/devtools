@@ -9,53 +9,56 @@ spec:
     spec:
       chart: immich
       # renovate: datasource=github-releases depName=immich-app/immich-charts
-      version: "0.9.3"
+      version: "0.10.1"
       sourceRef:
         kind: HelmRepository
         name: immich-charts
         namespace: flux-system
       interval: 1m
   values:
-    postgres:
-      enabled: false
-    redis:
+    valkey:
       enabled: true
-      master:
-        persistence:
-          enabled: false
     immich:
       persistence:
         library:
           existingClaim: ignored
-    env:
-      DB_HOSTNAME:
-        valueFrom:
-          secretKeyRef:
-            name: demo-database-superuser
-            key: host
-      DB_USERNAME:
-        valueFrom:
-          secretKeyRef:
-            name: demo-database-superuser
-            key: user
-      DB_PASSWORD:
-        valueFrom:
-          secretKeyRef:
-            name: demo-database-superuser
-            key: password
-      DB_DATABASE_NAME:
-        valueFrom:
-          secretKeyRef:
-            name: demo-database-app
-            key: dbname
-      LOG_LEVEL: verbose
-    image:
-      tag: release
+    controllers:
+      main:
+        containers:
+          main:
+            env:
+              DB_HOSTNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: demo-database-superuser
+                    key: host
+              DB_USERNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: demo-database-superuser
+                    key: user
+              DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: demo-database-superuser
+                    key: password
+              DB_DATABASE_NAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: demo-database-app
+                    key: dbname
+              LOG_LEVEL: verbose
+            image:
+              tag: release
     server:
-      image:
-        pullPolicy: Always
+      controllers:
+        main:
+          containers:
+            main:
+              image:
+                pullPolicy: Always
       persistence:
-        library:
+        data:
           type: custom
           volumeSpec:
             ephemeral: # This way, the volume restores from snapshot every time the pod is recreated
@@ -121,5 +124,9 @@ spec:
                 - demo.immich.app
               secretName: demo-tls
     machine-learning:
-      image:
-        pullPolicy: Always
+      controllers:
+        main:
+          containers:
+            main:
+              image:
+                pullPolicy: Always
