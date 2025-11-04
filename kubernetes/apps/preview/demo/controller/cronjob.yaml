@@ -25,7 +25,7 @@ spec:
 
                   kubectl scale --replicas=0 --namespace=preview deployment/demo-server
 
-                  kubectl rollout restart --namespace=preview statefulset/demo-redis-master
+                  kubectl rollout restart --namespace=preview deployment/demo-valkey
                   kubectl delete cluster demo-database --wait=true --cascade=foreground --namespace=preview
                   flux reconcile kustomization demo-deployment --namespace=flux-system
 
