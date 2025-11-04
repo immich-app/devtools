@@ -58,7 +58,7 @@ spec:
               image:
                 pullPolicy: Always
       persistence:
-        library:
+        data:
           type: custom
           volumeSpec:
             ephemeral: # This way, the volume restores from snapshot every time the pod is recreated
