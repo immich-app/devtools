@@ -19,7 +19,7 @@ rules:
     verbs: ["get", "list", "delete", "watch"]
   - apiGroups: ["apps"]
     resources: ["deployments", "deployments/scale"]
-    resourceNames: ["demo-server"]
+    resourceNames: ["demo-server", "demo-valkey"]
     verbs: ["get", "list", "delete", "watch", "patch"]
   - apiGroups: ["apps"]
     resources: ["statefulsets"]
