@@ -2,21 +2,21 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.terraform.io/docker/docker" {
-  version     = "0.5.2"
-  constraints = "0.5.2"
+  version     = "0.5.3"
+  constraints = "0.5.3"
   hashes = [
-    "h1:/1atxXwSG5OqjAxpzYq+PEok4rtsHENWbgpp2/0I6bM=",
-    "h1:6KpeHYVZUSMZKnOJ2KdVtSJp46Wls2c901OD1FZfYHc=",
-    "h1:TjV1i5iGaX3VrRC0rxaBoJBOEeY0ti3xAjNYxlGjwi8=",
-    "h1:n4SZNzEDFcTqtZMohcOxFyhfEV/D4DFNzt3b621VkyM=",
-    "h1:oNMOn5xd/df/DSJ7SIKk65l9zUUrmAyoVBmc5bn/gKg=",
-    "h1:uxBCxRxfLhd3TSLRTveatrQ/D/3zW66g7CIy0QITB5A=",
-    "zh:03847c0a5326f2bb8070324bbf0c406f3f0ddbf76767a8274656a71748649e47",
-    "zh:0a8ae7ce4e1608d6ad36de5d02785268cf368fd25a611c2b590f4ee6171ad7ec",
-    "zh:479419412de5f56ff866c20ebc5cf3c94f5e55b4193cc3fc0e7eeedc9433934b",
-    "zh:7ad2fa38822602a362fd0465477e5b3ed131dadba33a36c9e726c4865aef963c",
-    "zh:d6284b797cfdb262d0b1a8327643f835ed1fd2ad33f622a4ac0d0c0dad23c808",
+    "h1:2ErhxaHjp8ZOf62uySEn/OrY6T0CE8KpXRcQxcMOnLw=",
+    "h1:7BvJz9bOJsjsSWqbTpfkIap0/ODNXYGFq/Wq9LCfTxc=",
+    "h1:EtJYA+qkZys7K0+bIRi9gdoMZa/CG4F2s8zfxPahTR4=",
+    "h1:TOYP552cCwpx2DWMobFftBeJqld1hNP1zW0+WmB2Z5A=",
+    "h1:fiiuvXFSxJjs6C6hCx45b8XKaJ/zQ72zrhkCFpSWWLQ=",
+    "h1:rNnk1vGij8/3c2n19jDbdr0JopxWRDC1MY2CSQ/8cFw=",
+    "zh:2a834e5086f26268223ea56c5d7331145ca7820d8a3af43eefc07db5a20fedae",
+    "zh:3e2e79c3fa359caf5cb4b2e3b2b6c886fbd611770bed0d3e87c919f7f5ee64f0",
+    "zh:7db645b0048b3debf8b35a57681050cb1fb3df9715342dcfcc677ff0d6e031f8",
+    "zh:b3d725f163a8bbb236b88eb799e6581da7cad16c24ec134daea75e7848b72102",
+    "zh:e66b4ded681026b69bd9e614ac90f67b407788b22d062d6cdc1cb7a8da6b6893",
+    "zh:ef38f2652566c25b63c60bb3957af0794bcc734c5741490b1a6ca11651a02438",
     "zh:f26e0763dbe6a6b2195c94b44696f2110f7f55433dc142839be16b9697fa5597",
-    "zh:f9dbec63308dd6226579c91660becf05b91fa41022b8f5ecc76a7a2b85ae6cbb",
   ]
 }
