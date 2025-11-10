@@ -116,6 +116,17 @@
   },
   {
     "github": {
+      "username": "",
+      "id": 0
+    },
+    "discord": {
+      "username": "eronwolf",
+      "id": 264509889018068994
+    },
+    "role": "futo"
+  },
+  {
+    "github": {
       "username": "kennyfuto",
       "id": 202023786
     },
@@ -123,7 +134,7 @@
       "username": "kennyfuto",
       "id": 1402320140938510398
     },
-    "role": "contributor"
+    "role": "futo"
   },
   {
     "github": {

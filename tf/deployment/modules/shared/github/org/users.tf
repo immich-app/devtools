@@ -8,10 +8,10 @@ locals {
 
   collaborators = {
     for user in local.github_users : user.github.username => (
-      user.role == "contributor" ? "maintain" :
+      (user.role == "contributor" || user.role == "futo") ? "maintain" :
       (user.role == "support" ? "triage" : null)
     )
-    if user.role == "contributor" || user.role == "support"
+    if user.role == "contributor" || user.role == "support" || user.role == "futo"
   }
 
   bots = {

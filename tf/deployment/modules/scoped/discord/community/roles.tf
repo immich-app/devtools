@@ -4,6 +4,8 @@ locals {
     "hidden_admin",
     "head_down",
     "team",
+    "yucca",
+    "futo",
     "contributor",
     "in_the_zone",
     "security_researcher",
@@ -110,8 +112,16 @@ resource "discord_role" "contributor" {
   hoist       = true
 }
 
-data "discord_color" "team" {
-  hex = "#1E83F7"
+data "discord_color" "futo" {
+  hex = "#254466"
+}
+
+resource "discord_role" "futo" {
+  server_id   = discord_server.server.id
+  name        = "FUTO"
+  permissions = data.discord_permission.contributor.allow_bits
+  color       = data.discord_color.futo.dec
+  hoist       = true
 }
 
 data "discord_permission" "team" {
@@ -157,6 +167,21 @@ data "discord_permission" "team" {
   create_events             = "allow"
   manage_events             = "allow"
   view_audit_log            = "allow"
+}
+
+data "discord_color" "yucca" {
+  hex = "#C27E79"
+}
+
+resource "discord_role" "yucca" {
+  server_id   = discord_server.server.id
+  name        = "Yucca"
+  permissions = data.discord_permission.team.allow_bits
+  color       = data.discord_color.yucca.dec
+}
+
+data "discord_color" "team" {
+  hex = "#1E83F7"
 }
 
 resource "discord_role" "team" {
