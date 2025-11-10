@@ -29,7 +29,8 @@
     },
     "discord": {
       "username": "bo0tzz",
-      "id": 324007594262003722
+      "id": 324007594262003722,
+      "extra_roles": ["yucca"]
     },
     "role": "admin",
     "dev": true
@@ -41,7 +42,8 @@
     },
     "discord": {
       "username": "zackpollard",
-      "id": 185097470215192579
+      "id": 185097470215192579,
+      "extra_roles": ["yucca"]
     },
     "role": "admin",
     "dev": true
@@ -101,7 +103,7 @@
       "username": "jnsq",
       "id": 144206282600087552
     },
-    "role": "team"
+    "role": "yucca"
   },
   {
     "github": {
@@ -112,7 +114,7 @@
       "username": "insert",
       "id": 99765584266264576
     },
-    "role": "team"
+    "role": "yucca"
   },
   {
     "github": {

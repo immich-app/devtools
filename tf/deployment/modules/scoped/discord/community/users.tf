@@ -14,7 +14,7 @@ resource "discord_member_roles" "roles" {
 
   role {
     role_id  = discord_role.team.id
-    has_role = contains(["team", "admin"], each.value.role)
+    has_role = contains(["yucca", "team", "admin"], each.value.role)
   }
 
   role {
@@ -30,5 +30,10 @@ resource "discord_member_roles" "roles" {
   role {
     role_id  = discord_role.support_crew.id
     has_role = contains(["support"], each.value.role)
+  }
+
+  role {
+    role_id  = discord_role.yucca.id
+    has_role = contains(["yucca"], each.value.role) || contains(try(each.value.discord.extra_roles, []), "yucca")
   }
 }
