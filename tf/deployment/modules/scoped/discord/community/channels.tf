@@ -238,6 +238,22 @@ module "contributor_channels_write" {
   public      = false
 }
 
+module "futo_channels_write" {
+  source = "./channel-perms"
+  channel_ids = [
+    discord_text_channel.team.id,
+    discord_forum_channel.team_focus_topic.id,
+    discord_text_channel.team_purchases.id,
+    discord_text_channel.yucca.id,
+    discord_forum_channel.yucca_focus_topic.id,
+    discord_text_channel.yucca_alerts.id,
+  ]
+  role_ids    = [discord_role.futo.id]
+  allow       = data.discord_permission.write_channel.allow_bits
+  everyone_id = discord_role_everyone.everyone.id
+  public      = false
+}
+
 module "team_channels_read" {
   source = "./channel-perms"
   channel_ids = [
@@ -882,6 +898,7 @@ resource "discord_voice_channel" "dev_voice" {
   position                 = index(local.channel_order, "dev_voice")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.voice.id
+  bitrate                  = var.env == "prod" ? 384000 : 64000
   sync_perms_with_category = false
   lifecycle {
     ignore_changes = [sync_perms_with_category]
@@ -928,6 +945,7 @@ resource "discord_voice_channel" "leadership_voice" {
   position                 = index(local.channel_order, "leadership_voice")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.voice.id
+  bitrate                  = var.env == "prod" ? 384000 : 64000
   sync_perms_with_category = false
   lifecycle {
     ignore_changes = [sync_perms_with_category]

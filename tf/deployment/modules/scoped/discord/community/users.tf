@@ -19,7 +19,12 @@ resource "discord_member_roles" "roles" {
 
   role {
     role_id  = discord_role.contributor.id
-    has_role = contains(["contributor", "team", "admin"], each.value.role)
+    has_role = contains(["contributor", "futo", "yucca", "team", "admin"], each.value.role)
+  }
+
+  role {
+    role_id  = discord_role.futo.id
+    has_role = contains(["futo", "yucca", "team", "admin"], each.value.role)
   }
 
   role {
