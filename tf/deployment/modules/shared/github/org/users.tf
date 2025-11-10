@@ -67,7 +67,7 @@ resource "github_team_members" "leadership" {
 resource "github_membership" "org_members" {
   for_each = {
     for user in local.github_users : user.github.username => user
-    if user.role == "team" || user.role == "admin"
+    if user.role == "team" || user.role == "yucca" || user.role == "admin"
   }
 
   username = each.key
