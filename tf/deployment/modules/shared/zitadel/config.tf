@@ -7,7 +7,7 @@ terraform {
   required_providers {
     zitadel = {
       source  = "zitadel/zitadel"
-      version = "2.2.0"
+      version = "2.3.0"
     }
     onepassword = {
       source  = "1Password/onepassword"
