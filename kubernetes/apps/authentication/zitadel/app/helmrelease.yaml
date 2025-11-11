@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: ghcr.io/zitadel/zitadel
-      tag: v4.6.3@sha256:3bbdce4756df69ce50ccadb70b04beff10a77f329dfd4c9441609ce425b7e063
+      tag: v4.6.4@sha256:5e14f4b43cb307973d1b6ed21b384c81d29ca986dc662a1a514806dde49d5eb0
     setupJob:
       machinekeyWriter:
         image:
