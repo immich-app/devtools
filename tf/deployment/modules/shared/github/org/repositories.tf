@@ -110,7 +110,13 @@ variable "repositories" {
       name        = "yucca",
       description = "Everything yucca",
       license     = "SOURCE_FIRST"
-    }
+    },
+    {
+      name        = "drift",
+      description = "Drift is an easy to use, reactive, typesafe persistence library for Dart & Flutter.",
+      fork        = true,
+      url         = "https://pub.dev/packages/drift"
+    },
   ]
 }
 
