@@ -92,12 +92,12 @@ jobs:
         include: ${{ fromJson(needs.matrix.outputs.matrix) }}
     steps:
       - name: Checkout
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           persist-credentials: false
           token: ${{ secrets.GITHUB_APP_TOKEN || github.token }}
 
-      - uses: immich-app/devtools/actions/image-build@7d95e52a7a597ce005a306d6891467fc15427b69 # image-build-action-0.1.1
+      - uses: immich-app/devtools/actions/image-build@bde1992fe1920f15ebc50839b2cf4164e2494ed2 # image-build-action-v0.1.2
         with:
           context: ${{ inputs.context }}
           dockerfile: ${{ inputs.dockerfile }}
