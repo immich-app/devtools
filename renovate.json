@@ -56,6 +56,12 @@
         "/zitadel/"
       ],
       "groupName": "zitadel"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["major"],
+      "groupName": null,
+      "separateMajorMinor": true
     }
   ],
   "flux": {
