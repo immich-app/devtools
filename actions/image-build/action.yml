@@ -54,7 +54,7 @@ runs:
         REF: ${{ github.ref_name }}
       run: |
         if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-          echo "cache-key-suffix=pr-${{ github.event.number }}" >> $GITHUB_OUTPUT
+          echo "suffix=pr-${{ github.event.number }}" >> $GITHUB_OUTPUT
         else
           SUFFIX=$(echo "${REF}" | sed 's/[^a-zA-Z0-9]/-/g')
           echo "suffix=${SUFFIX}" >> $GITHUB_OUTPUT
