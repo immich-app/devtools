@@ -35,7 +35,7 @@ jobs:
           persist-credentials: false
 
       - name: Install 1Password CLI
-        uses: 1password/install-cli-action@143a85f84a90555d121cde2ff5872e393a47ab9f # v1.0.0
+        uses: 1password/install-cli-action@f5d505685ccf986ef535da41cd180792c8ac3a36 # v2.0.1
         with:
           version: 2.30.3
 
@@ -62,7 +62,7 @@ jobs:
           persist-credentials: false
 
       - name: Install 1Password CLI
-        uses: 1password/install-cli-action@143a85f84a90555d121cde2ff5872e393a47ab9f # v1.0.0
+        uses: 1password/install-cli-action@f5d505685ccf986ef535da41cd180792c8ac3a36 # v2.0.1
         with:
           version: 2.30.3
 
@@ -104,7 +104,7 @@ jobs:
           persist-credentials: false
 
       - name: Install 1Password CLI
-        uses: 1password/install-cli-action@143a85f84a90555d121cde2ff5872e393a47ab9f # v1.0.0
+        uses: 1password/install-cli-action@f5d505685ccf986ef535da41cd180792c8ac3a36 # v2.0.1
         with:
           version: 2.30.3
 
