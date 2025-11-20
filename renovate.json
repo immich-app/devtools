@@ -60,8 +60,7 @@
     {
       "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["major"],
-      "groupName": null,
-      "separateMajorMinor": true
+      "groupName": null
     }
   ],
   "flux": {
