@@ -110,6 +110,11 @@ variable "repositories" {
       name        = "yucca",
       description = "Everything yucca",
       license     = "SOURCE_FIRST"
+    },
+    {
+      name        = "restic-wrapper-ts",
+      description = "TypeScript wrapper for the restic backup tool",
+      license     = "MIT"
     }
   ]
 }
