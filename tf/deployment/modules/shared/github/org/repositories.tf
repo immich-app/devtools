@@ -85,7 +85,7 @@ variable "repositories" {
     },
     {
       name        = "justified-layout",
-      description = "A blazingly fast implementation of justified layout, a gallery view popularized by Flickr, written in rust and exported to WASM."
+      description = "A blazingly fast implementation of the justified layout gallery view popularized by Flickr, written in Rust and exported to WebAssembly."
     },
     {
       name        = "ml-models",
@@ -115,6 +115,10 @@ variable "repositories" {
       name        = "restic-wrapper-ts",
       description = "TypeScript wrapper for the restic backup tool",
       license     = "MIT"
+    },
+    {
+      name        = "sqlite-libs",
+      description = "SQLite with extensions and query builders"
     }
   ]
 }
