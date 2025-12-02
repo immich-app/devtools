@@ -59,7 +59,7 @@ spec:
               mountPath: /run/docker
               readOnly: true
         - name: dind
-          image: docker:28.5.2-dind@sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac
+          image: docker:29.0.4-dind@sha256:c9699f4fc7365e8daad3eb48ce3b62dc118b2a5267f7be7bcd3c4e4b2f1cfb4c
           args:
             - dockerd
             - --host=unix:///run/docker/docker.sock
