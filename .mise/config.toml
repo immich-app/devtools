@@ -1,5 +1,5 @@
 [tools]
-flux2 = "2.7.3"
+flux2 = "2.7.5"
 "go:github.com/cloudnative-pg/cloudnative-pg/cmd/kubectl-cnpg" = "1.27.1"
 helm = "3.19.2"
 jq = "1.8.1"
