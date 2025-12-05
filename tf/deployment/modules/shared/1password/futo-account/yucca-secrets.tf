@@ -10,7 +10,9 @@ module "yucca-manual-secrets" {
       "TF_STATE_S3_SECRET_KEY",
       "OVH_APPLICATION_KEY",
       "OVH_APPLICATION_SECRET",
-      "OVH_CONSUMER_KEY"
+      "OVH_CONSUMER_KEY",
+      "TAILSCALE_API_KEY",
+      "TAILSCALE_TAILNET_ID"
     ]
     scoped = []
   }
