@@ -119,6 +119,11 @@ variable "repositories" {
     {
       name        = "sqlite-libs",
       description = "SQLite with extensions and query builders"
+    },
+    {
+      name               = "pokedex",
+      description        = "Pokedex is the Immich team's Kubernetes cluster for hardware testing, developer tools, and more"
+      require_codeowners = true
     }
   ]
 }
