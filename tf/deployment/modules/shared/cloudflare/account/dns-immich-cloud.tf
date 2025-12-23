@@ -34,6 +34,33 @@ resource "cloudflare_record" "immich_cloud_a_mich" {
   zone_id = cloudflare_zone.immich_cloud.id
 }
 
+resource "cloudflare_record" "immich_cloud_a_kube_pokedex_internal_brock" {
+  name    = "kube.pokedex.internal"
+  proxied = false
+  ttl     = 1
+  type    = "A"
+  content = "10.10.10.11"
+  zone_id = cloudflare_zone.immich_cloud.id
+}
+
+resource "cloudflare_record" "immich_cloud_a_kube_pokedex_internal_surge" {
+  name    = "kube.pokedex.internal"
+  proxied = false
+  ttl     = 1
+  type    = "A"
+  content = "10.10.10.12"
+  zone_id = cloudflare_zone.immich_cloud.id
+}
+
+resource "cloudflare_record" "immich_cloud_a_kube_pokedex_internal_misty" {
+  name    = "kube.pokedex.internal"
+  proxied = false
+  ttl     = 1
+  type    = "A"
+  content = "10.10.10.13"
+  zone_id = cloudflare_zone.immich_cloud.id
+}
+
 resource "cloudflare_record" "immich_cloud_txt_google_site_verification" {
   name    = "immich.cloud"
   proxied = false
