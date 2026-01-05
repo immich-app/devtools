@@ -85,31 +85,41 @@ spec:
               more_set_headers 'Access-Control-Allow-Credentials: false';
               more_set_headers 'Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE';
               more_set_headers 'Access-Control-Allow-Headers: x-immich-session-token, x-api-key, Authorization, Content-Type';
-              
+
               if ($request_method = 'OPTIONS') {
                   more_set_headers 'Access-Control-Max-Age: 3600';
                   more_set_headers 'Content-Type: text/plain charset=UTF-8';
                   more_set_headers 'Content-Length: 0';
                   return 204;
               }
-              
+
               if ($request_method = PUT) {
                 set $block_put 1;
               }
-                if ($uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets/.*/original|auth/change-password)$) {
+              if ($uri ~ ^/api/(system-config|users/me|admin/users/.*|users/profile-image|assets/.*/original|auth/change-password)$) {
                 set $block_put "${block_put}1";
               }
-                if ($block_put = 11) {
+              if ($block_put = 11) {
                 return 403;
               }
 
               if ($request_method = POST) {
                 set $block_post 1;
               }
-                if ($uri ~ ^/api/(system-config|users/me|admin/maintenance|admin/users/.*|users/profile-image|assets|auth/change-password|notifications/test-email|libraries|trash/empty)$) {
+              if ($uri ~ ^/api/(system-config|users/me|admin/maintenance|admin/users/.*|users/profile-image|assets|auth/change-password|notifications/test-email|libraries|trash/empty)$) {
                 set $block_post "${block_post}1";
               }
-                if ($block_post = 11) {
+              if ($block_post = 11) {
+                return 403;
+              }
+
+              if ($request_method = DELETE) {
+                set $block_delete 1;
+              }
+              if ($uri ~ ^/api/(admin/users/.*)$) {
+                set $block_delete "${block_post}1";
+              }
+              if ($block_delete = 11) {
                 return 403;
               }
 
