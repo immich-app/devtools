@@ -262,39 +262,6 @@ resource "github_actions_organization_secret" "APP_STORE_CONNECT_API_KEY" {
   visibility      = "all"
 }
 
-data "onepassword_item" "IOS_CERTIFICATE_P12" {
-  title = "IOS_CERTIFICATE_P12"
-  vault = data.onepassword_vault.tf.name
-}
-
-resource "github_actions_organization_secret" "IOS_CERTIFICATE_P12" {
-  secret_name     = "IOS_CERTIFICATE_P12"
-  plaintext_value = data.onepassword_item.IOS_CERTIFICATE_P12.password
-  visibility      = "all"
-}
-
-data "onepassword_item" "IOS_CERTIFICATE_PASSWORD" {
-  title = "IOS_CERTIFICATE_PASSWORD"
-  vault = data.onepassword_vault.tf.name
-}
-
-resource "github_actions_organization_secret" "IOS_CERTIFICATE_PASSWORD" {
-  secret_name     = "IOS_CERTIFICATE_PASSWORD"
-  plaintext_value = data.onepassword_item.IOS_CERTIFICATE_PASSWORD.password
-  visibility      = "all"
-}
-
-data "onepassword_item" "IOS_PROVISIONING_PROFILE" {
-  title = "IOS_PROVISIONING_PROFILE"
-  vault = data.onepassword_vault.tf.name
-}
-
-resource "github_actions_organization_secret" "IOS_PROVISIONING_PROFILE" {
-  secret_name     = "IOS_PROVISIONING_PROFILE"
-  plaintext_value = data.onepassword_item.IOS_PROVISIONING_PROFILE.password
-  visibility      = "all"
-}
-
 data "onepassword_item" "FASTLANE_TEAM_ID" {
   title = "FASTLANE_TEAM_ID"
   vault = data.onepassword_vault.tf.name
@@ -306,60 +273,17 @@ resource "github_actions_organization_secret" "FASTLANE_TEAM_ID" {
   visibility      = "all"
 }
 
-data "onepassword_item" "IOS_PROVISIONING_PROFILE_WIDGET_EXTENSION" {
-  title = "IOS_PROVISIONING_PROFILE_WIDGET_EXTENSION"
+data "onepassword_item" "MATCH_PASSWORD" {
+  title = "MATCH_PASSWORD"
   vault = data.onepassword_vault.tf.name
 }
 
-resource "github_actions_organization_secret" "IOS_PROVISIONING_PROFILE_WIDGET_EXTENSION" {
-  secret_name     = "IOS_PROVISIONING_PROFILE_WIDGET_EXTENSION"
-  plaintext_value = data.onepassword_item.IOS_PROVISIONING_PROFILE_WIDGET_EXTENSION.password
+resource "github_actions_organization_secret" "MATCH_PASSWORD" {
+  secret_name     = "MATCH_PASSWORD"
+  plaintext_value = data.onepassword_item.MATCH_PASSWORD.password
   visibility      = "all"
 }
 
-data "onepassword_item" "IOS_PROVISIONING_PROFILE_SHARE_EXTENSION" {
-  title = "IOS_PROVISIONING_PROFILE_SHARE_EXTENSION"
-  vault = data.onepassword_vault.tf.name
-}
-
-resource "github_actions_organization_secret" "IOS_PROVISIONING_PROFILE_SHARE_EXTENSION" {
-  secret_name     = "IOS_PROVISIONING_PROFILE_SHARE_EXTENSION"
-  plaintext_value = data.onepassword_item.IOS_PROVISIONING_PROFILE_SHARE_EXTENSION.password
-  visibility      = "all"
-}
-
-data "onepassword_item" "IOS_DEVELOPMENT_PROVISIONING_PROFILE" {
-  title = "IOS_DEVELOPMENT_PROVISIONING_PROFILE"
-  vault = data.onepassword_vault.tf.name
-}
-
-resource "github_actions_organization_secret" "IOS_DEVELOPMENT_PROVISIONING_PROFILE" {
-  secret_name     = "IOS_DEVELOPMENT_PROVISIONING_PROFILE"
-  plaintext_value = data.onepassword_item.IOS_DEVELOPMENT_PROVISIONING_PROFILE.password
-  visibility      = "all"
-}
-
-data "onepassword_item" "IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION" {
-  title = "IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION"
-  vault = data.onepassword_vault.tf.name
-}
-
-resource "github_actions_organization_secret" "IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION" {
-  secret_name     = "IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION"
-  plaintext_value = data.onepassword_item.IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION.password
-  visibility      = "all"
-}
-
-data "onepassword_item" "IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION" {
-  title = "IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION"
-  vault = data.onepassword_vault.tf.name
-}
-
-resource "github_actions_organization_secret" "IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION" {
-  secret_name     = "IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION"
-  plaintext_value = data.onepassword_item.IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION.password
-  visibility      = "all"
-}
 
 data "onepassword_item" "STATIC_BUCKET_NAME" {
   title = "STATIC_BUCKET_NAME"
