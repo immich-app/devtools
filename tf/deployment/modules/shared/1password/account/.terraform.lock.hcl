@@ -2,25 +2,24 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.opentofu.org/1password/onepassword" {
-  version     = "2.1.0"
-  constraints = "~> 2.0"
+  version     = "3.0.1"
+  constraints = "~> 3.0"
   hashes = [
-    "h1:B3G7M02HxGCgT4S1+d4ITPR0vj7ZXDzGx+vqkKtk81c=",
-    "zh:0d6f803760aa7cae0e841cfca17ef04411231170b2844cc0b30556d5476d9dff",
-    "zh:17badbffb56309f28aee1893a6b93d1cd87ed5157704fb17b93889f0ccf8cc2d",
-    "zh:185e0c7c66cc159769d7b91c37ab51a546efc13fb99eb206481739a521f75236",
-    "zh:19e213f8265445a29d8bb7c7b1f0d4e3c1fdfd538178704f8e8378db2dcdf359",
-    "zh:49929666304f97301f44ee0fdd39f40f63e35ccfb4c81588439bdab6d5bafde0",
-    "zh:4de33f5630350d6a561d5d62994d525beb8849c94287c2658f39242fe3170cf8",
-    "zh:4f212a8fbbbaa7a47f1b31857be3bad2d590f92be845c6b252c9716bb70076d9",
-    "zh:596cc2bd9aaafd2e649aabcff0125afa9d4270f702813c935fbd5694eed002e7",
-    "zh:618e703a43608c502066c5b909ead45b1f4202f7cebc993f447278477d32cda2",
-    "zh:61fde3651bcb2e691ee9d82ce1de03588d006f53b2e8e2516910321da8627228",
+    "h1:53p3aIPRZuijPFhFoYxgCFIGd4bxQbBUMLmdA4Xh6K8=",
+    "h1:KeclY4SeQFBKYwRe/5knswPr5dm69dVC2BSaYXDJbys=",
+    "h1:QHaALuwuXBq3TdRbp4ob+AGgLYjenOOP/wmJZm5WT/w=",
+    "h1:QQho+8McOZ7csvuGCw2P4KizwReVJRJ6xCbbbwwAzco=",
+    "h1:Ri2/VLdD1hk6k2moC6FyzqfvbpTlhYW0FJ+0EDvrN6I=",
+    "h1:nC5cZMBn1vOxhMXype2nWBNZxqdXhqM+3DJwQOqyDaU=",
+    "h1:yxfxPvU+9EqjTNTY2SPtiAnuGdoykea08ndMBvfzQ+M=",
+    "zh:3badc65a1db565ede0254f2b3ec9c91a9549871a19838c58bce8abd5e8ac4640",
+    "zh:55828c887613c780c689af4376db4f5ea9aec83d9038adf5a6144cef388176a4",
+    "zh:577638450e62aa9ebd83ec6064757093ad3f70d5b990c8e441ac2cf066276bef",
+    "zh:70e1ce1ab43e20c0b9a5d0e2dd6f8c52462c802b5ebe5f76bbee27ade96aad8a",
+    "zh:75759a518ebd9342da7b5fd1d4d4fb8a0e06445c5540391bd05fd65da6bd07ca",
     "zh:890df766e9b839623b1f0437355032a3c006226a6c200cd911e15ee1a9014e9f",
-    "zh:db05022113841a00174bba5e24cfc77195bbc03d24339c5e8ac4346069901e45",
-    "zh:dcc7792a24c74890081a96ba2bc360d90ab71a4d25232ca18046d9868c835e21",
-    "zh:f2e67a298d20bf52cb208611767b420962d3f0d518e89cf41cc432551b1faf63",
-    "zh:f7e587814506c7e74fc1d80b29465c8e4b7bdbf803f7f8c0a8bb498968cdd58d",
+    "zh:9747470b9b9f647a50e3bae9fadc33879e2a4e9a49304d239ffc9f857c2bdc4e",
+    "zh:f1f760b632852242b17e3576e7b631bb3726157590321026f09d18e819e939fb",
   ]
 }
 
