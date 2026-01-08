@@ -10,7 +10,7 @@ runs:
     - uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3.5.1
       with:
         github_token: ${{ inputs.GITHUB_TOKEN }}
-        version: 2025.10.11
-        sha256: ${{ runner.os == 'Linux' && runner.arch == 'X64' && '589cac941160e404d13be6f5699a25ffdb25b732084430338bc384df9f0a4438' ||
-                 runner.os == 'Linux' && runner.arch == 'ARM64' && '4f9cb0ad59bd8d118f58812fc8baa3c09a732d01e10c650d49c6d0910b77e24d' ||
-                 runner.os == 'macOS' && runner.arch == 'ARM64' && 'ece0e7d3f50240fcdd562c3f4e2263596ba9162444e439617103c4a73a12409b' }}
+        version: 2026.1.1
+        sha256: ${{ runner.os == 'Linux' && runner.arch == 'X64' && '986e4630dfdfaae41d09c0317507e252c7403d72839fc66844b534c120a3dc57' ||
+                 runner.os == 'Linux' && runner.arch == 'ARM64' && 'cd17c59a6298c3bceb50a2c5b21fe56360c0d00ecdc91c3de84411c79405f93a' ||
+                 runner.os == 'macOS' && runner.arch == 'ARM64' && '0ca7b8750b95866a551de3c39ecfe4584679aec6e41664e81099a971fa21c4ec' }}
