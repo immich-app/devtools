@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.1.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.1.0...multi-runner-build-workflow-v2.1.1) (2026-01-09)
+
+
+### Chores
+
+* **deps:** update 1password/install-cli-action action to v2 ([#1175](https://github.com/immich-app/devtools/issues/1175)) ([53723aa](https://github.com/immich-app/devtools/commit/53723aa0bc4cbdd927c5bad5096a40f496f431c7))
+* **deps:** update actions/checkout action to v6 ([#1195](https://github.com/immich-app/devtools/issues/1195)) ([9dee897](https://github.com/immich-app/devtools/commit/9dee89708d4ced9aab55072da591cb7964c97aac))
+* **deps:** update actions/download-artifact action to v7 ([#1236](https://github.com/immich-app/devtools/issues/1236)) ([e776640](https://github.com/immich-app/devtools/commit/e77664050bf2a2d431a5d64a55ed63a389ebc7c6))
+* **deps:** update allenporter/flux-local action to v8 ([#1186](https://github.com/immich-app/devtools/issues/1186)) ([8fcee53](https://github.com/immich-app/devtools/commit/8fcee530cdaa81d90a1e1840f8a97b6a6531e9fe))
+* **deps:** update fluxcd ([#1178](https://github.com/immich-app/devtools/issues/1178)) ([97e044a](https://github.com/immich-app/devtools/commit/97e044a3059038426ec874b5518b6784618dea8b))
+* **deps:** update fluxcd to v8.1.0 ([#1243](https://github.com/immich-app/devtools/issues/1243)) ([a8248b8](https://github.com/immich-app/devtools/commit/a8248b879a46aa668d7f844269fafdae795b5c8a))
+* **deps:** update github-actions ([#1193](https://github.com/immich-app/devtools/issues/1193)) ([844d1bc](https://github.com/immich-app/devtools/commit/844d1bcefd336843acbc7977d84890d91c9a6730))
+* **deps:** update github-actions ([#1208](https://github.com/immich-app/devtools/issues/1208)) ([4d01846](https://github.com/immich-app/devtools/commit/4d01846953d34890f06b13416f91b445155097f1))
+* **deps:** update github-actions ([#1229](https://github.com/immich-app/devtools/issues/1229)) ([79cbc66](https://github.com/immich-app/devtools/commit/79cbc660941ef559e92ef6c1082648997594fe39))
+* **deps:** update github/codeql-action action to v3.31.4 ([#1181](https://github.com/immich-app/devtools/issues/1181)) ([7555018](https://github.com/immich-app/devtools/commit/7555018c1db638dc4c64969e34ddaa6e2a9b07e8))
+* **deps:** update github/codeql-action action to v4 ([#1201](https://github.com/immich-app/devtools/issues/1201)) ([a408aa2](https://github.com/immich-app/devtools/commit/a408aa2c635889ca61707564642577a2a4eb7ad0))
+
 ## [2.1.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.0.1...multi-runner-build-workflow-v2.1.0) (2025-11-20)
 
 
