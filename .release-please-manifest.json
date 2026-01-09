@@ -4,5 +4,5 @@
   "actions/use-mise": "1.1.1",
   ".github/workflows": "2.1.0",
   "actions/pre-job": "2.0.0",
-  "actions/create-workflow-token": "1.0.0"
+  "actions/create-workflow-token": "1.0.1"
 }
