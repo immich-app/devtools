@@ -97,7 +97,7 @@ jobs:
           persist-credentials: false
           token: ${{ secrets.GITHUB_APP_TOKEN || github.token }}
 
-      - uses: immich-app/devtools/actions/image-build@bde1992fe1920f15ebc50839b2cf4164e2494ed2 # image-build-action-v0.1.2
+      - uses: immich-app/devtools/actions/image-build@454d193072c47aba463ef75c87ce15af8c4ca4c1 # image-build-action-v0.1.3
         with:
           context: ${{ inputs.context }}
           dockerfile: ${{ inputs.dockerfile }}
@@ -114,7 +114,7 @@ jobs:
     if: ${{ !github.event.pull_request.head.repo.fork }}
     steps:
       - name: Install uv
-        uses: astral-sh/setup-uv@681c641aba71e4a1c380be3ab5e12ad51f415867 # v7.1.6
+        uses: astral-sh/setup-uv@61cb8a9741eeb8a550a1b8544337180c0fc8476b # v7.2.0
 
       - name: Download digests
         uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
