@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.2.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.1.1...multi-runner-build-workflow-v2.2.0) (2026-01-18)
+
+
+### Features
+
+* use upstream python-on-whales release ([#1258](https://github.com/immich-app/devtools/issues/1258)) ([7b77b18](https://github.com/immich-app/devtools/commit/7b77b182bc390a207a813fbe4d9366af53916f25))
+
+
+### Chores
+
+* **deps:** update github-actions ([#1265](https://github.com/immich-app/devtools/issues/1265)) ([40ce6bd](https://github.com/immich-app/devtools/commit/40ce6bdb7a54d873ade18457eeaf32e364fe3b07))
+
 ## [2.1.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.1.0...multi-runner-build-workflow-v2.1.1) (2026-01-09)
 
 
