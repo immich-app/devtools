@@ -14,7 +14,6 @@ ENV HOMEBREW_NO_ANALYTICS=1 \
 USER root
 
 RUN \
-    add-apt-repository ppa:rmescandon/yq \
     && apt-get update && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
@@ -28,10 +27,11 @@ RUN \
         g++ \
         cmake \
         libgl1 \
-        yq \
         xz-utils \
         ninja-build \
         zstd \
+    && wget https://github.com/mikefarah/yq/releases/download/v4.50.1/yq_linux_amd64 -O /usr/local/bin/yq \
+    && chmod +x /usr/local/bin/yq \
     && mkdir -p -m 755 /etc/apt/keyrings \
         && out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
         && cat $out | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
