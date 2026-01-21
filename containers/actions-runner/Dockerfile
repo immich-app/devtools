@@ -2,7 +2,7 @@
 # https://github.com/onedr0p/containers/blob/main/apps/actions-runner/Dockerfile
 
 # This base image is patched for the local actions-cache
-FROM ghcr.io/falcondev-oss/actions-runner:2.329.0@sha256:ba047997f69563d3b388743763b5891c5b7272e54dbf0fc7f0c129bdabe96122
+FROM ghcr.io/falcondev-oss/actions-runner:2.331.0@sha256:f5ca4484a2ba1598f78253483e17cdcec323cc343cc7510ca1687b529dd533d3
 
 ENV HOMEBREW_NO_ANALYTICS=1 \
     HOMEBREW_NO_ENV_HINTS=1 \
@@ -14,8 +14,7 @@ ENV HOMEBREW_NO_ANALYTICS=1 \
 USER root
 
 RUN \
-    add-apt-repository ppa:rmescandon/yq \
-    && apt-get update && apt-get upgrade -y \
+    apt-get update && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
         gcc \
@@ -28,10 +27,11 @@ RUN \
         g++ \
         cmake \
         libgl1 \
-        yq \
         xz-utils \
         ninja-build \
         zstd \
+    && wget https://github.com/mikefarah/yq/releases/download/v4.50.1/yq_linux_amd64 -O /usr/local/bin/yq \
+    && chmod +x /usr/local/bin/yq \
     && mkdir -p -m 755 /etc/apt/keyrings \
         && out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
         && cat $out | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
