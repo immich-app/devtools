@@ -14,7 +14,7 @@ ENV HOMEBREW_NO_ANALYTICS=1 \
 USER root
 
 RUN \
-    && apt-get update && apt-get upgrade -y \
+    apt-get update && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
         gcc \
