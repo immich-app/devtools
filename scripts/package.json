@@ -2,8 +2,9 @@
   "name": "@immich/scripts",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "type": "module",
   "scripts": {
-    "album-creator": "tsx src/album-creator.ts",
+    "seed-demo": "tsx src/seed-demo.ts",
     "build": "tsc",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",

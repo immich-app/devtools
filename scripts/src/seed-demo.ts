@@ -2,22 +2,54 @@
 import {
   addAssetsToAlbum,
   createAlbum,
+  createUserAdmin,
   getAllAlbums,
   init,
   searchAssets,
   searchSmart,
+  searchUsersAdmin,
   updateAlbumInfo,
+  updateUserAdmin,
+  type UserAdminCreateDto,
 } from '@immich/sdk';
 import { DateTime } from 'luxon';
 
 const baseUrl = process.argv[2] || process.env.IMMICH_BASE_URL;
 const apiKey = process.argv[3] || process.env.IMMICH_API_KEY;
 if (!baseUrl || !apiKey) {
-  console.log('Usage: npx src/album-creator.ts <baseUrl> <apiKey>');
+  console.log('Usage: npx src/seed-demo.ts <baseUrl> <apiKey>');
   process.exit(1);
 }
 
+const defaultPassword = process.env.IMMICH_DEFAULT_PASSWORD || 'password';
+
 init({ baseUrl, apiKey });
+
+const upsertUsers = async () => {
+  const users: UserAdminCreateDto[] = ['Alex', 'Zack', 'Jason', 'Mich', 'Alice', 'Bob'].map((name) => ({
+    name,
+    email: `${name.toLowerCase()}@immich.app`,
+    password: defaultPassword,
+    shouldChangePassword: false,
+  }));
+
+  const response = await searchUsersAdmin({});
+
+  for (const user of users) {
+    const existing = response.find(({ email }) => user.email === email);
+    if (existing) {
+      console.log(`Updated user ${user.name}`);
+      await updateUserAdmin({
+        id: existing.id,
+        userAdminUpdateDto: { name: user.name, password: user.password, shouldChangePassword: false },
+      });
+      continue;
+    }
+
+    console.log(`Creating user ${user.name} with email ${user.email}`);
+    await createUserAdmin({ userAdminCreateDto: user });
+  }
+};
 
 const getAlbumName = (date: DateTime) => `${date.year}'${date.toFormat('LL')} - ${date.toFormat('MMMM')}'s Pictures`;
 const getAlbumDescription = (date: DateTime) => `Pictures and videos for the month of ${date.toFormat('MMMM')}`;
@@ -146,6 +178,7 @@ const createQueryAlbum = async () => {
 };
 
 const main = async () => {
+  await upsertUsers();
   await createMonthAlbums();
   await createQueryAlbum();
 };
