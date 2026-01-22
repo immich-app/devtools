@@ -90,7 +90,7 @@ spec:
         spec:
           chart: immich
           # renovate: datasource=github-releases depName=immich-app/immich-charts
-          version: "0.9.3"
+          version: "0.10.3"
           sourceRef:
             kind: HelmRepository
             name: immich-charts
@@ -99,39 +99,42 @@ spec:
       values:
         postgres:
           enabled: false
-        redis:
+        valkey:
           enabled: true
         immich:
           persistence:
             library:
               existingClaim: << $ctx.name >>-preview-library
-        env:
-          DB_HOSTNAME:
-            valueFrom:
-              secretKeyRef:
-                name: << $ctx.name >>-preview-database-superuser
-                key: host
-          DB_USERNAME:
-            valueFrom:
-              secretKeyRef:
-                name: << $ctx.name >>-preview-database-superuser
-                key: user
-          DB_PASSWORD:
-            valueFrom:
-              secretKeyRef:
-                name: << $ctx.name >>-preview-database-superuser
-                key: password
-          DB_DATABASE_NAME:
-            valueFrom:
-              secretKeyRef:
-                name: << $ctx.name >>-preview-database-app
-                key: dbname
-          LOG_LEVEL: verbose
-        image:
-          tag: << $ctx.tag >>
+        controllers:
+          main:
+            containers:
+              main:
+                env:
+                  DB_HOSTNAME:
+                    valueFrom:
+                      secretKeyRef:
+                        name: << $ctx.name >>-preview-database-superuser
+                        key: host
+                  DB_USERNAME:
+                    valueFrom:
+                      secretKeyRef:
+                        name: << $ctx.name >>-preview-database-superuser
+                        key: user
+                  DB_PASSWORD:
+                    valueFrom:
+                      secretKeyRef:
+                        name: << $ctx.name >>-preview-database-superuser
+                        key: password
+                  DB_DATABASE_NAME:
+                    valueFrom:
+                      secretKeyRef:
+                        name: << $ctx.name >>-preview-database-app
+                        key: dbname
+                  LOG_LEVEL: verbose
+                image:
+                  tag: << $ctx.tag >>
+                  pullPolicy: Always
         server:
-          image:
-            pullPolicy: Always
           ingress:
             main:
               enabled: true
@@ -148,7 +151,4 @@ spec:
                 - hosts:
                     - << $ctx.name >>.preview.internal.immich.build
                   secretName: << $ctx.name >>-preview-tls
-        machine-learning:
-          image:
-            pullPolicy: Always
 
