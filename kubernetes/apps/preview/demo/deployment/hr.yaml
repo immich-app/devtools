@@ -48,6 +48,7 @@ spec:
                     name: demo-database-app
                     key: dbname
               LOG_LEVEL: verbose
+              MACHINE_LEARNING_PRELOAD__CLIP__TEXTUAL: ViT-SO400M-16-SigLIP2-384__webli
             image:
               tag: release
     server:
