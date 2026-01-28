@@ -2,25 +2,20 @@ locals {
   secrets = concat(
     var.secrets.global != null ? [
       for name in var.secrets.global : {
-        manual_vault = data.onepassword_vault.manual
-        vault        = data.onepassword_vault.tf
+        manual_vault = data.onepassword_vault.manual_global
+        vault        = data.onepassword_vault.copy_global
         name         = name
       }
     ] : [],
-    var.secrets.dev != null ? [
-      for name in var.secrets.dev : {
-        manual_vault = data.onepassword_vault.manual_dev
-        vault        = data.onepassword_vault.tf_dev
-        name         = name
-      }
-    ] : [],
-    var.secrets.prod != null ? [
-      for name in var.secrets.prod : {
-        manual_vault = data.onepassword_vault.manual_prod
-        vault        = data.onepassword_vault.tf_prod
-        name         = name
-      }
-    ] : []
+    var.secrets.scoped != null ? flatten([
+      for manual_vault, copy_vault in var.scoped_vaults : [
+        for name in var.secrets.scoped : {
+          manual_vault = data.onepassword_vault.manual_scoped[manual_vault]
+          vault        = data.onepassword_vault.copy_scoped[manual_vault]
+          name         = name
+        }
+      ]
+    ]) : []
   )
 }
 
