@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.2.0...multi-runner-build-workflow-v2.2.1) (2026-01-29)
+
+
+### Chores
+
+* **deps:** update github-actions ([#1293](https://github.com/immich-app/devtools/issues/1293)) ([453bdc4](https://github.com/immich-app/devtools/commit/453bdc4808b9afa06235aeaffa96685fade65bf0))
+
 ## [2.2.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.1.1...multi-runner-build-workflow-v2.2.0) (2026-01-20)
 
 
