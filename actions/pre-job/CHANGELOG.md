@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/immich-app/devtools/compare/pre-job-action-v2.0.1...pre-job-action-v2.0.2) (2026-02-10)
+
+
+### Chores
+
+* **deps:** update github-actions ([#1293](https://github.com/immich-app/devtools/issues/1293)) ([453bdc4](https://github.com/immich-app/devtools/commit/453bdc4808b9afa06235aeaffa96685fade65bf0))
+
 ## [2.0.1](https://github.com/immich-app/devtools/compare/pre-job-action-v2.0.0...pre-job-action-v2.0.1) (2026-01-09)
 
 
