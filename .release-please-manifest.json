@@ -2,7 +2,7 @@
   "actions/image-build": "0.1.4",
   "actions/success-check": "0.0.5",
   "actions/use-mise": "1.1.2",
-  ".github/workflows": "2.2.0",
+  ".github/workflows": "2.2.1",
   "actions/pre-job": "2.0.2",
   "actions/create-workflow-token": "1.0.1"
 }
