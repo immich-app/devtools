@@ -124,6 +124,11 @@ variable "repositories" {
       name               = "pokedex",
       description        = "Pokedex is the Immich team's Kubernetes cluster for hardware testing, developer tools, and more"
       require_codeowners = true
+    },
+    {
+      name          = "walkrs"
+      description   = "Fast file tree walker for Node.js, built with ripgrep's ignore crate"
+      collaborators = true
     }
   ]
 }
