@@ -1,14 +1,14 @@
 [tools]
 flux2 = "2.7.5"
-"go:github.com/cloudnative-pg/cloudnative-pg/cmd/kubectl-cnpg" = "1.28.0"
-helm = "4.1.0"
+"go:github.com/cloudnative-pg/cloudnative-pg/cmd/kubectl-cnpg" = "1.28.1"
+helm = "4.1.1"
 jq = "1.8.1"
-kubectl = "1.35.0"
+kubectl = "1.35.1"
 opentofu = "1.11.4"
 "pipx:flux-local" = "8.1.0"
 terragrunt = "0.98.0"
-usage = "2.16.1"
-uv = "0.9.30"
+usage = "2.16.2"
+uv = "0.10.2"
 yamlfmt = "0.21.0"
 
 [env]
