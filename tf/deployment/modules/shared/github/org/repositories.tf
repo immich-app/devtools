@@ -71,6 +71,7 @@ variable "repositories" {
     {
       name          = "ui",
       description   = "Svelte components for Immich"
+      license       = "MIT"
       url           = "https://ui.immich.app",
       collaborators = true
     },
