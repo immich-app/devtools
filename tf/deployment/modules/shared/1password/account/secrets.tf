@@ -43,12 +43,7 @@ module "manual-secrets" {
       "IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION",
       "IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION"
     ]
-    dev = [
-      "MONITORING_GRAFANA_TF_AUTH_TOKEN",
-      "MONITORING_GRAFANA_URL",
-      "IMMICH_DISCORD_SERVER_ID",
-    ]
-    prod = [
+    scoped = [
       "MONITORING_GRAFANA_TF_AUTH_TOKEN",
       "MONITORING_GRAFANA_URL",
       "IMMICH_DISCORD_SERVER_ID",
@@ -75,12 +70,7 @@ module "generated-secrets" {
       { name = "OAUTH2_PROXY_COOKIE_SECRET", length = 32 },
       { name = "IMMICH_GITHUB_ACTION_CHECKS_WEBHOOK_SECRET" }
     ]
-    dev = [
-      { name = "METRICS_READ_TOKEN" },
-      { name = "METRICS_WRITE_TOKEN" },
-      { name = "METRICS_ADMIN_TOKEN" }
-    ]
-    prod = [
+    scoped = [
       { name = "METRICS_READ_TOKEN" },
       { name = "METRICS_WRITE_TOKEN" },
       { name = "METRICS_ADMIN_TOKEN" },
