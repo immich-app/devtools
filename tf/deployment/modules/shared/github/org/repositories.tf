@@ -65,7 +65,7 @@ variable "repositories" {
     },
     {
       name        = "data.immich.app",
-      description = "Graphs and charts for Immich data"
+      description = "Graphs and charts for Immich data",
       url         = "https://data.immich.app",
     },
     {
@@ -76,6 +76,7 @@ variable "repositories" {
     },
     {
       name        = "sql-tools",
+      license     = "MIT",
       description = "A collection of tools and utilities to help manage SQL migrations"
     },
     {
@@ -85,6 +86,7 @@ variable "repositories" {
     },
     {
       name        = "justified-layout",
+      license     = "MIT",
       description = "A blazingly fast implementation of the justified layout gallery view popularized by Flickr, written in Rust and exported to WebAssembly."
     },
     {
@@ -126,7 +128,8 @@ variable "repositories" {
       require_codeowners = true
     },
     {
-      name          = "walkrs"
+      name          = "walkrs",
+      license       = "MIT",
       description   = "Fast file tree walker for Node.js, built with ripgrep's ignore crate"
       collaborators = true
     }
