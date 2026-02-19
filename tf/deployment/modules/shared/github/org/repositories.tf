@@ -78,7 +78,7 @@ variable "repositories" {
     {
       name        = "sql-tools",
       license     = "MIT",
-      description = "A collection of tools and utilities to help manage SQL migrations"
+      description = "Kysely-based tools and utilities for managing postgres schema"
     },
     {
       name        = "native_video_player",
