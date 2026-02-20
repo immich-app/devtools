@@ -76,11 +76,6 @@ variable "repositories" {
       collaborators = true
     },
     {
-      name        = "sql-tools",
-      license     = "MIT",
-      description = "Kysely-based tools and utilities for managing postgres schema"
-    },
-    {
       name        = "native_video_player",
       description = "A Flutter widget to play videos on iOS and Android using a native implementation.",
       fork        = true
@@ -133,6 +128,11 @@ variable "repositories" {
       license       = "MIT",
       description   = "Fast file tree walker for Node.js, built with ripgrep's ignore crate"
       collaborators = true
+    },
+    {
+      name        = "packages",
+      license     = "MIT",
+      description = "A collection of libraries around the Immich project"
     }
   ]
 }
