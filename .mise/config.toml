@@ -51,7 +51,6 @@ description = "Format kubernetes manifests"
 [tasks."kube:auth"]
 run = "op inject -i .mise/kube-exec-credential.json | jq '.status.[] |= @base64d'"
 description = "Retrieve kubectl auth key"
-silent = true
 hide = true
 
 [tasks."kube:diff"]
