@@ -589,5 +589,38 @@
       "id": 135843138492170241
     },
     "role": "support"
+  },
+  {
+    "github": {
+      "username": "onedr0p",
+      "id": 213795
+    },
+    "discord": {
+      "username": "onedr0p",
+      "id": 261368074328997888
+    },
+    "role": "yucca"
+  },
+  {
+    "github": {
+      "username": "nutgood",
+      "id": 38678863
+    },
+    "discord": {
+      "username": "nutgood",
+      "id": 129782158972813312
+    },
+    "role": "yucca"
+  },
+  {
+    "github": {
+      "username": "nirokato",
+      "id": 3781232
+    },
+    "discord": {
+      "username": "nirokato",
+      "id": 269581865881436170
+    },
+    "role": "yucca"
   }
 ]
