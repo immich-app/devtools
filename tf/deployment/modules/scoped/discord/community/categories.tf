@@ -21,22 +21,24 @@ data "discord_permission" "category" {
 
 module "category_perms" {
   source = "./channel-perms"
-  channel_ids = [
-    discord_category_channel.immich.id,
-    discord_category_channel.community.id,
-    discord_category_channel.development.id,
-    discord_category_channel.team.id,
-    discord_category_channel.yucca.id,
-    discord_category_channel.leadership.id,
-    discord_category_channel.third_parties.id,
-    discord_category_channel.off_topic.id,
-    discord_category_channel.voice.id,
-    discord_category_channel.archive.id
-  ]
-  role_ids = [discord_role_everyone.everyone.id]
-  allow    = data.discord_permission.category.allow_bits
-  deny     = data.discord_permission.category.deny_bits
-  public   = true
+  channels = {
+    immich        = discord_category_channel.immich.id
+    community     = discord_category_channel.community.id
+    development   = discord_category_channel.development.id
+    team          = discord_category_channel.team.id
+    yucca         = discord_category_channel.yucca.id
+    leadership    = discord_category_channel.leadership.id
+    third_parties = discord_category_channel.third_parties.id
+    off_topic     = discord_category_channel.off_topic.id
+    voice         = discord_category_channel.voice.id
+    archive       = discord_category_channel.archive.id
+  }
+  roles = {
+    everyone = discord_role_everyone.everyone.id
+  }
+  allow  = data.discord_permission.category.allow_bits
+  deny   = data.discord_permission.category.deny_bits
+  public = true
 }
 
 resource "discord_category_channel" "immich" {

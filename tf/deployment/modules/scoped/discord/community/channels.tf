@@ -1,90 +1,114 @@
 locals {
-  channel_order = [
-    # No Category - Top Level
-    "rules",
-    "welcome",
-    "announcements",
-    "poll",
-    # Immich Category
-    "help_desk_support",
-    "package_maintainers",
-    "focus_discussion",
-    "contributing",
-    "translations",
-    "immich",
-    "merch",
-    # Community Category
-    "imagegenius_aio",
-    "immich_go",
-    "immich_frame",
-    "immich_kiosk",
-    "immich_power_tools",
-    "truenas",
-    "unraid",
-    # Support Crew Category
-    "support_crew",
-    "draft_announcements",
-    # Development Category
-    "dev",
-    "dev_off_topic",
-    "dev_focus_topic",
-    # Team Category
-    "team",
-    "team_off_topic",
-    "team_focus_topic",
-    "team_purchases",
-    "team_alerts",
-    # Yucca Category
-    "yucca",
-    "yucca_off_topic",
-    "yucca_focus_topic",
-    "yucca_alerts",
-    "yucca_alerts_testing",
-    "yucca_alerts_dev",
-    # Leadership Category
-    "leadership",
-    "leadership_off_topic",
-    "leadership_alerts",
-    "leadership_focus_topic",
-    "moderator_only",
-    # Third Parties Category
-    "developer_updates",
-    "cloudflare_status",
-    "github_status",
-    "github_issues_and_discussion",
-    "github_pull_requests",
-    "github_releases",
-    # Off Topic Category
-    "bot_spam",
-    "emotes",
-    "off_topic",
-    # Voice Category
-    "immich_voice",
-    "dev_voice",
-    "team_voice",
-    "team_voice_2",
-    "yucca_voice",
-    "leadership_voice",
+  channel_order = {
+    # Top Level
+    top_level = [
+      "rules",
+      "welcome",
+      "announcements",
+      "poll",
+    ]
+    # Immich
+    immich = [
+      "help_desk_support",
+      "package_maintainers",
+      "focus_discussion",
+      "contributing",
+      "translations",
+      "immich",
+      "merch",
+    ]
+    # Community
+    community = [
+      "imagegenius_aio",
+      "immich_go",
+      "immich_frame",
+      "immich_kiosk",
+      "immich_power_tools",
+      "truenas",
+      "unraid"
+    ]
+    # Support Crew
+    support_crew = [
+      "support_crew",
+      "draft_announcements",
+    ]
+    # Development
+    development = [
+      "dev",
+      "dev_off_topic",
+      "dev_focus_topic",
+    ]
+    # Team
+    team = [
+      "team",
+      "team_off_topic",
+      "team_focus_topic",
+      "team_purchases",
+      "team_alerts",
+    ]
+    # Yucca
+    yucca = [
+      "yucca",
+      "yucca_off_topic",
+      "yucca_focus_topic",
+      "yucca_alerts",
+      "yucca_alerts_testing",
+      "yucca_alerts_dev",
+    ]
+    # Leadership
+    leadership = [
+      "leadership",
+      "leadership_off_topic",
+      "leadership_alerts",
+      "leadership_focus_topic",
+      "moderator_only",
+    ]
+    # Third Parties
+    third_parties = [
+      "developer_updates",
+      "cloudflare_status",
+      "github_status",
+      "github_issues_and_discussion",
+      "github_pull_requests",
+      "github_releases",
+    ]
+    # Off Topic
+    off_topic = [
+      "bot_spam",
+      "emotes",
+      "off_topic",
+    ]
+    # Voice
+    voice = [
+      "immich_voice",
+      "dev_voice",
+      "team_voice",
+      "team_voice_2",
+      "yucca_voice",
+      "leadership_voice",
+    ]
     # Archive
-    "dev_fosdem",
-    "fosdem_2025",
-    "dev_server",
-    "conference_room",
-    "branding",
-    "dev_ml",
-    "futo",
-    "immich_nix",
-    "dev_mobile",
-    "dev_roles",
-    "dev_security",
-    "dev_ops",
-    "futo_discussion_old",
-    "dev_web",
-    "dev_cli",
-    "jasons_adventures_with_unraid_docker_and_networking",
-    "build_status",
-    "the_main_stage"
-  ]
+    archive = [
+      "dev_fosdem",
+      "fosdem_2025",
+      "dev_server",
+      "conference_room",
+      "branding",
+      "dev_ml",
+      "futo",
+      "immich_nix",
+      "dev_mobile",
+      "dev_roles",
+      "dev_security",
+      "dev_ops",
+      "futo_discussion_old",
+      "dev_web",
+      "dev_cli",
+      "jasons_adventures_with_unraid_docker_and_networking",
+      "build_status",
+      "the_main_stage",
+    ]
+  }
 }
 
 data "discord_permission" "view_channel" {
@@ -124,68 +148,77 @@ data "discord_permission" "write_channel" {
 
 module "everyone_channels_read" {
   source = "./channel-perms"
-  channel_ids = [
-    discord_text_channel.rules.id,
-    discord_text_channel.welcome.id,
-    discord_text_channel.developer_updates.id,
-    discord_text_channel.cloudflare_status.id,
-    discord_text_channel.github_status.id,
-    discord_text_channel.github_issues_and_discussion.id,
-    discord_text_channel.github_pull_requests.id,
-    discord_text_channel.fosdem_2025.id,
-    discord_text_channel.immich_nix.id,
-  ]
-  role_ids = [discord_role_everyone.everyone.id]
-  allow    = data.discord_permission.view_channel.allow_bits
-  deny     = data.discord_permission.view_channel.deny_bits
-  public   = true
+  channels = {
+    rules                        = discord_text_channel.rules.id
+    welcome                      = discord_text_channel.welcome.id
+    developer_updates            = discord_text_channel.developer_updates.id
+    cloudflare_status            = discord_text_channel.cloudflare_status.id
+    github_status                = discord_text_channel.github_status.id
+    github_issues_and_discussion = discord_text_channel.github_issues_and_discussion.id
+    github_pull_requests         = discord_text_channel.github_pull_requests.id
+    fosdem_2025                  = discord_text_channel.fosdem_2025.id
+    immich_nix                   = discord_text_channel.immich_nix.id
+  }
+  roles = {
+    everyone = discord_role_everyone.everyone.id
+  }
+  allow  = data.discord_permission.view_channel.allow_bits
+  deny   = data.discord_permission.view_channel.deny_bits
+  public = true
 }
 
 module "everyone_channels_write_threads" {
   source = "./channel-perms"
-  channel_ids = [
-    discord_news_channel.announcements.id,
-    discord_news_channel.poll.id,
-    discord_news_channel.github_releases.id,
-  ]
-  role_ids = [discord_role_everyone.everyone.id]
-  allow    = data.discord_permission.read_channel_write_threads.allow_bits
-  deny     = data.discord_permission.read_channel_write_threads.deny_bits
-  public   = true
+  channels = {
+    announcements   = discord_news_channel.announcements.id
+    poll            = discord_news_channel.poll.id
+    github_releases = discord_news_channel.github_releases.id
+  }
+  roles = {
+    everyone = discord_role_everyone.everyone.id
+  }
+  allow  = data.discord_permission.read_channel_write_threads.allow_bits
+  deny   = data.discord_permission.read_channel_write_threads.deny_bits
+  public = true
 }
 
 module "everyone_channels_write" {
   source = "./channel-perms"
-  channel_ids = [
-    discord_forum_channel.help_desk_support.id,
-    discord_forum_channel.focus_discussion.id,
-    discord_text_channel.contributing.id,
-    discord_text_channel.translations.id,
-    discord_text_channel.immich.id,
-    discord_text_channel.merch.id,
-    discord_text_channel.imagegenius_aio.id,
-    discord_text_channel.immich_go.id,
-    discord_text_channel.immich_frame.id,
-    discord_text_channel.immich_kiosk.id,
-    discord_text_channel.immich_power_tools.id,
-    discord_text_channel.truenas.id,
-    discord_text_channel.unraid.id,
-    discord_text_channel.off_topic.id,
-    discord_voice_channel.immich_voice.id,
-  ]
-  role_ids = [discord_role_everyone.everyone.id]
-  allow    = data.discord_permission.write_channel.allow_bits
-  deny     = data.discord_permission.write_channel.deny_bits
-  public   = true
+  channels = {
+    help_desk_support  = discord_forum_channel.help_desk_support.id
+    focus_discussion   = discord_forum_channel.focus_discussion.id
+    contributing       = discord_text_channel.contributing.id
+    translations       = discord_text_channel.translations.id
+    immich             = discord_text_channel.immich.id
+    merch              = discord_text_channel.merch.id
+    imagegenius_aio    = discord_text_channel.imagegenius_aio.id
+    immich_go          = discord_text_channel.immich_go.id
+    immich_frame       = discord_text_channel.immich_frame.id
+    immich_kiosk       = discord_text_channel.immich_kiosk.id
+    immich_power_tools = discord_text_channel.immich_power_tools.id
+    truenas            = discord_text_channel.truenas.id
+    unraid             = discord_text_channel.unraid.id
+    off_topic          = discord_text_channel.off_topic.id
+    immich_voice       = discord_voice_channel.immich_voice.id
+  }
+  roles = {
+    everyone = discord_role_everyone.everyone.id
+  }
+  allow  = data.discord_permission.write_channel.allow_bits
+  deny   = data.discord_permission.write_channel.deny_bits
+  public = true
 }
 
 module "support_channels_write" {
   source = "./channel-perms"
-  channel_ids = [
-    discord_text_channel.support_crew.id,
-    discord_forum_channel.draft_announcements.id,
-  ]
-  role_ids    = [discord_role.support_crew.id, discord_role.contributor.id]
+  channels = {
+    support_crew        = discord_text_channel.support_crew.id
+    draft_announcements = discord_forum_channel.draft_announcements.id
+  }
+  roles = {
+    support_crew = discord_role.support_crew.id
+    contributor  = discord_role.contributor.id
+  }
   allow       = data.discord_permission.write_channel.allow_bits
   everyone_id = discord_role_everyone.everyone.id
   public      = false
@@ -193,10 +226,13 @@ module "support_channels_write" {
 
 module "package_maintainers_write" {
   source = "./channel-perms"
-  channel_ids = [
-    discord_text_channel.package_maintainers.id
-  ]
-  role_ids    = [discord_role.package_maintainer.id, discord_role.contributor.id]
+  channels = {
+    package_maintainers = discord_text_channel.package_maintainers.id
+  }
+  roles = {
+    package_maintainer = discord_role.package_maintainer.id
+    contributor        = discord_role.contributor.id
+  }
   allow       = data.discord_permission.write_channel.allow_bits
   everyone_id = discord_role_everyone.everyone.id
   public      = false
@@ -204,20 +240,22 @@ module "package_maintainers_write" {
 
 module "contributor_channels_read" {
   source = "./channel-perms"
-  channel_ids = [
-    discord_text_channel.dev_fosdem.id,
-    discord_text_channel.dev_server.id,
-    discord_text_channel.conference_room.id,
-    discord_text_channel.branding.id,
-    discord_text_channel.dev_ml.id,
-    discord_text_channel.dev_mobile.id,
-    discord_text_channel.dev_roles.id,
-    discord_text_channel.dev_security.id,
-    discord_text_channel.dev_ops.id,
-    discord_text_channel.dev_web.id,
-    discord_text_channel.dev_cli.id,
-  ]
-  role_ids    = [discord_role.contributor.id]
+  channels = {
+    dev_fosdem      = discord_text_channel.dev_fosdem.id
+    dev_server      = discord_text_channel.dev_server.id
+    conference_room = discord_text_channel.conference_room.id
+    branding        = discord_text_channel.branding.id
+    dev_ml          = discord_text_channel.dev_ml.id
+    dev_mobile      = discord_text_channel.dev_mobile.id
+    dev_roles       = discord_text_channel.dev_roles.id
+    dev_security    = discord_text_channel.dev_security.id
+    dev_ops         = discord_text_channel.dev_ops.id
+    dev_web         = discord_text_channel.dev_web.id
+    dev_cli         = discord_text_channel.dev_cli.id
+  }
+  roles = {
+    contributor = discord_role.contributor.id
+  }
   allow       = data.discord_permission.view_channel.allow_bits
   deny        = data.discord_permission.view_channel.deny_bits
   everyone_id = discord_role_everyone.everyone.id
@@ -226,13 +264,15 @@ module "contributor_channels_read" {
 
 module "contributor_channels_write" {
   source = "./channel-perms"
-  channel_ids = [
-    discord_text_channel.dev.id,
-    discord_text_channel.dev_off_topic.id,
-    discord_forum_channel.dev_focus_topic.id,
-    discord_voice_channel.dev_voice.id,
-  ]
-  role_ids    = [discord_role.contributor.id]
+  channels = {
+    dev             = discord_text_channel.dev.id
+    dev_off_topic   = discord_text_channel.dev_off_topic.id
+    dev_focus_topic = discord_forum_channel.dev_focus_topic.id
+    dev_voice       = discord_voice_channel.dev_voice.id
+  }
+  roles = {
+    contributor = discord_role.contributor.id
+  }
   allow       = data.discord_permission.write_channel.allow_bits
   everyone_id = discord_role_everyone.everyone.id
   public      = false
@@ -240,15 +280,17 @@ module "contributor_channels_write" {
 
 module "futo_channels_write" {
   source = "./channel-perms"
-  channel_ids = [
-    discord_text_channel.team.id,
-    discord_forum_channel.team_focus_topic.id,
-    discord_text_channel.team_purchases.id,
-    discord_text_channel.yucca.id,
-    discord_forum_channel.yucca_focus_topic.id,
-    discord_text_channel.yucca_alerts.id,
-  ]
-  role_ids    = [discord_role.futo.id]
+  channels = {
+    team              = discord_text_channel.team.id
+    team_focus_topic  = discord_forum_channel.team_focus_topic.id
+    team_purchases    = discord_text_channel.team_purchases.id
+    yucca             = discord_text_channel.yucca.id
+    yucca_focus_topic = discord_forum_channel.yucca_focus_topic.id
+    yucca_alerts      = discord_text_channel.yucca_alerts.id
+  }
+  roles = {
+    futo = discord_role.futo.id
+  }
   allow       = data.discord_permission.write_channel.allow_bits
   everyone_id = discord_role_everyone.everyone.id
   public      = false
@@ -256,11 +298,13 @@ module "futo_channels_write" {
 
 module "team_channels_read" {
   source = "./channel-perms"
-  channel_ids = [
-    discord_text_channel.futo.id,
-    discord_text_channel.futo_discussion_old.id,
-  ]
-  role_ids    = [discord_role.team.id]
+  channels = {
+    futo                = discord_text_channel.futo.id
+    futo_discussion_old = discord_text_channel.futo_discussion_old.id
+  }
+  roles = {
+    team = discord_role.team.id
+  }
   allow       = data.discord_permission.view_channel.allow_bits
   deny        = data.discord_permission.view_channel.deny_bits
   everyone_id = discord_role_everyone.everyone.id
@@ -269,25 +313,27 @@ module "team_channels_read" {
 
 module "team_channels_write" {
   source = "./channel-perms"
-  channel_ids = [
-    discord_text_channel.team.id,
-    discord_text_channel.team_off_topic.id,
-    discord_forum_channel.team_focus_topic.id,
-    discord_text_channel.team_purchases.id,
-    discord_text_channel.team_alerts.id,
-    discord_text_channel.bot_spam.id,
-    discord_text_channel.emotes.id,
-    discord_voice_channel.team_voice.id,
-    discord_voice_channel.team_voice_2.id,
-    discord_text_channel.yucca.id,
-    discord_text_channel.yucca_off_topic.id,
-    discord_forum_channel.yucca_focus_topic.id,
-    discord_text_channel.yucca_alerts.id,
-    discord_text_channel.yucca_alerts_testing.id,
-    discord_text_channel.yucca_alerts_dev.id,
-    discord_voice_channel.yucca_voice.id,
-  ]
-  role_ids    = [discord_role.team.id]
+  channels = {
+    team                 = discord_text_channel.team.id
+    team_off_topic       = discord_text_channel.team_off_topic.id
+    team_focus_topic     = discord_forum_channel.team_focus_topic.id
+    team_purchases       = discord_text_channel.team_purchases.id
+    team_alerts          = discord_text_channel.team_alerts.id
+    bot_spam             = discord_text_channel.bot_spam.id
+    emotes               = discord_text_channel.emotes.id
+    team_voice           = discord_voice_channel.team_voice.id
+    team_voice_2         = discord_voice_channel.team_voice_2.id
+    yucca                = discord_text_channel.yucca.id
+    yucca_off_topic      = discord_text_channel.yucca_off_topic.id
+    yucca_focus_topic    = discord_forum_channel.yucca_focus_topic.id
+    yucca_alerts         = discord_text_channel.yucca_alerts.id
+    yucca_alerts_testing = discord_text_channel.yucca_alerts_testing.id
+    yucca_alerts_dev     = discord_text_channel.yucca_alerts_dev.id
+    yucca_voice          = discord_voice_channel.yucca_voice.id
+  }
+  roles = {
+    team = discord_role.team.id
+  }
   allow       = data.discord_permission.write_channel.allow_bits
   everyone_id = discord_role_everyone.everyone.id
   public      = false
@@ -295,17 +341,19 @@ module "team_channels_write" {
 
 module "admin_channels_write" {
   source = "./channel-perms"
-  channel_ids = [
-    discord_text_channel.leadership.id,
-    discord_text_channel.leadership_off_topic.id,
-    discord_text_channel.leadership_alerts.id,
-    discord_forum_channel.leadership_focus_topic.id,
-    discord_text_channel.moderator_only.id,
-    discord_voice_channel.leadership_voice.id,
-    discord_text_channel.jasons_adventures_with_unraid_docker_and_networking.id,
-    discord_text_channel.build_status.id,
-  ]
-  role_ids    = [discord_role.admin.id]
+  channels = {
+    leadership                                          = discord_text_channel.leadership.id
+    leadership_off_topic                                = discord_text_channel.leadership_off_topic.id
+    leadership_alerts                                   = discord_text_channel.leadership_alerts.id
+    leadership_focus_topic                              = discord_forum_channel.leadership_focus_topic.id
+    moderator_only                                      = discord_text_channel.moderator_only.id
+    leadership_voice                                    = discord_voice_channel.leadership_voice.id
+    jasons_adventures_with_unraid_docker_and_networking = discord_text_channel.jasons_adventures_with_unraid_docker_and_networking.id
+    build_status                                        = discord_text_channel.build_status.id
+  }
+  roles = {
+    admin = discord_role.admin.id
+  }
   allow       = data.discord_permission.write_channel.allow_bits
   everyone_id = discord_role_everyone.everyone.id
   public      = false
@@ -313,20 +361,22 @@ module "admin_channels_write" {
 
 module "admin_channels_write_public" {
   source = "./channel-perms"
-  channel_ids = [
-    discord_text_channel.rules.id,
-    discord_text_channel.welcome.id,
-    discord_news_channel.announcements.id,
-    discord_news_channel.poll.id,
-  ]
-  role_ids = [discord_role.admin.id]
-  allow    = data.discord_permission.write_channel.allow_bits
-  public   = true
+  channels = {
+    rules         = discord_text_channel.rules.id
+    welcome       = discord_text_channel.welcome.id
+    announcements = discord_news_channel.announcements.id
+    poll          = discord_news_channel.poll.id
+  }
+  roles = {
+    admin = discord_role.admin.id
+  }
+  allow  = data.discord_permission.write_channel.allow_bits
+  public = true
 }
 
 resource "discord_text_channel" "rules" {
   name                     = "rules"
-  position                 = index(local.channel_order, "rules")
+  position                 = index(local.channel_order.top_level, "rules")
   server_id                = discord_server.server.id
   sync_perms_with_category = false
   lifecycle {
@@ -336,7 +386,7 @@ resource "discord_text_channel" "rules" {
 
 resource "discord_text_channel" "welcome" {
   name                     = "welcome"
-  position                 = index(local.channel_order, "welcome")
+  position                 = index(local.channel_order.top_level, "welcome")
   server_id                = discord_server.server.id
   sync_perms_with_category = false
   lifecycle {
@@ -346,7 +396,7 @@ resource "discord_text_channel" "welcome" {
 
 resource "discord_news_channel" "announcements" {
   name                     = "announcements"
-  position                 = index(local.channel_order, "announcements")
+  position                 = index(local.channel_order.top_level, "announcements")
   server_id                = discord_server.server.id
   sync_perms_with_category = false
   lifecycle {
@@ -357,7 +407,7 @@ resource "discord_news_channel" "announcements" {
 resource "discord_news_channel" "poll" {
   name                     = "poll"
   topic                    = "Community driven choices"
-  position                 = index(local.channel_order, "poll")
+  position                 = index(local.channel_order.top_level, "poll")
   server_id                = discord_server.server.id
   sync_perms_with_category = false
   lifecycle {
@@ -367,10 +417,13 @@ resource "discord_news_channel" "poll" {
 
 resource "discord_forum_channel" "help_desk_support" {
   name                     = "help-desk-support"
-  position                 = index(local.channel_order, "help_desk_support")
+  position                 = index(local.channel_order.immich, "help_desk_support")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.immich.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -380,7 +433,7 @@ import {
 
 resource "discord_text_channel" "support_crew" {
   name                     = "support-crew"
-  position                 = index(local.channel_order, "support_crew")
+  position                 = index(local.channel_order.support_crew, "support_crew")
   category                 = discord_category_channel.support_crew.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
@@ -391,7 +444,7 @@ resource "discord_text_channel" "support_crew" {
 
 resource "discord_text_channel" "package_maintainers" {
   name                     = "package-maintainers"
-  position                 = index(local.channel_order, "package_maintainers")
+  position                 = index(local.channel_order.immich, "package_maintainers")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.immich.id
   sync_perms_with_category = false
@@ -402,10 +455,13 @@ resource "discord_text_channel" "package_maintainers" {
 
 resource "discord_forum_channel" "focus_discussion" {
   name                     = "focus-discussion"
-  position                 = index(local.channel_order, "focus_discussion")
+  position                 = index(local.channel_order.immich, "focus_discussion")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.immich.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -416,7 +472,7 @@ import {
 resource "discord_text_channel" "contributing" {
   name                     = "contributing"
   topic                    = "Discuss technical topics on contributing to the Immich codebase. Not for support/troubleshooting."
-  position                 = index(local.channel_order, "contributing")
+  position                 = index(local.channel_order.immich, "contributing")
   category                 = discord_category_channel.immich.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
@@ -428,7 +484,7 @@ resource "discord_text_channel" "contributing" {
 resource "discord_text_channel" "translations" {
   name                     = "translations"
   topic                    = "https://hosted.weblate.org/projects/immich/immich/"
-  position                 = index(local.channel_order, "translations")
+  position                 = index(local.channel_order.immich, "translations")
   category                 = discord_category_channel.immich.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
@@ -440,7 +496,7 @@ resource "discord_text_channel" "translations" {
 resource "discord_text_channel" "immich" {
   name                     = "immich"
   topic                    = "General discussion about everything Immich"
-  position                 = index(local.channel_order, "immich")
+  position                 = index(local.channel_order.immich, "immich")
   category                 = discord_category_channel.immich.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
@@ -452,7 +508,7 @@ resource "discord_text_channel" "immich" {
 resource "discord_text_channel" "merch" {
   name                     = "merch"
   topic                    = "https://immich.store"
-  position                 = index(local.channel_order, "merch")
+  position                 = index(local.channel_order.immich, "merch")
   category                 = discord_category_channel.immich.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
@@ -464,7 +520,7 @@ resource "discord_text_channel" "merch" {
 resource "discord_text_channel" "imagegenius_aio" {
   name                     = "imagegenius-aio"
   topic                    = "Discussion channel for the all-in-one image - https://github.com/imagegenius/docker-immich"
-  position                 = index(local.channel_order, "imagegenius_aio")
+  position                 = index(local.channel_order.community, "imagegenius_aio")
   category                 = discord_category_channel.community.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
@@ -476,7 +532,7 @@ resource "discord_text_channel" "imagegenius_aio" {
 resource "discord_text_channel" "immich_go" {
   name                     = "immich-go"
   topic                    = "Discussion channel for the immich-go upload tool - https://github.com/simulot/immich-go"
-  position                 = index(local.channel_order, "immich_go")
+  position                 = index(local.channel_order.community, "immich_go")
   category                 = discord_category_channel.community.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
@@ -488,7 +544,7 @@ resource "discord_text_channel" "immich_go" {
 resource "discord_text_channel" "immich_frame" {
   name                     = "immich-frame"
   topic                    = "Discussion for the https://github.com/immichFrame/ImmichFrame project"
-  position                 = index(local.channel_order, "immich_frame")
+  position                 = index(local.channel_order.community, "immich_frame")
   category                 = discord_category_channel.community.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
@@ -500,7 +556,7 @@ resource "discord_text_channel" "immich_frame" {
 resource "discord_text_channel" "immich_kiosk" {
   name                     = "immich-kiosk"
   topic                    = "https://github.com/damongolding/immich-kiosk"
-  position                 = index(local.channel_order, "immich_kiosk")
+  position                 = index(local.channel_order.community, "immich_kiosk")
   category                 = discord_category_channel.community.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
@@ -512,7 +568,7 @@ resource "discord_text_channel" "immich_kiosk" {
 resource "discord_text_channel" "immich_power_tools" {
   name                     = "immich-power-tools"
   topic                    = "Discussion channel for the immich power tools — https://github.com/varun-raj/immich-power-tools"
-  position                 = index(local.channel_order, "immich_power_tools")
+  position                 = index(local.channel_order.community, "immich_power_tools")
   category                 = discord_category_channel.community.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
@@ -524,7 +580,7 @@ resource "discord_text_channel" "immich_power_tools" {
 resource "discord_text_channel" "truenas" {
   name                     = "truenas"
   topic                    = "Discussion channel for the truenas immich app"
-  position                 = index(local.channel_order, "truenas")
+  position                 = index(local.channel_order.community, "truenas")
   category                 = discord_category_channel.community.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
@@ -536,7 +592,7 @@ resource "discord_text_channel" "truenas" {
 resource "discord_text_channel" "unraid" {
   name                     = "unraid"
   topic                    = "Discussion channel for Immich on unraid"
-  position                 = index(local.channel_order, "unraid")
+  position                 = index(local.channel_order.community, "unraid")
   category                 = discord_category_channel.community.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
@@ -547,7 +603,7 @@ resource "discord_text_channel" "unraid" {
 
 resource "discord_text_channel" "dev" {
   name                     = "dev"
-  position                 = index(local.channel_order, "dev")
+  position                 = index(local.channel_order.development, "dev")
   category                 = discord_category_channel.development.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
@@ -559,7 +615,7 @@ resource "discord_text_channel" "dev" {
 resource "discord_text_channel" "dev_off_topic" {
   name                     = "dev-off-topic"
   topic                    = "Development parking lot conversation"
-  position                 = index(local.channel_order, "dev_off_topic")
+  position                 = index(local.channel_order.development, "dev_off_topic")
   category                 = discord_category_channel.development.id
   server_id                = discord_server.server.id
   sync_perms_with_category = false
@@ -570,10 +626,13 @@ resource "discord_text_channel" "dev_off_topic" {
 
 resource "discord_forum_channel" "draft_announcements" {
   name                     = "draft-announcements"
-  position                 = index(local.channel_order, "draft_announcements")
+  position                 = index(local.channel_order.support_crew, "draft_announcements")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.support_crew.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -583,10 +642,13 @@ import {
 
 resource "discord_forum_channel" "dev_focus_topic" {
   name                     = "dev-focus-topic"
-  position                 = index(local.channel_order, "dev_focus_topic")
+  position                 = index(local.channel_order.development, "dev_focus_topic")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.development.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -596,7 +658,7 @@ import {
 
 resource "discord_text_channel" "team" {
   name                     = "team"
-  position                 = index(local.channel_order, "team")
+  position                 = index(local.channel_order.team, "team")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.team.id
   sync_perms_with_category = false
@@ -607,7 +669,7 @@ resource "discord_text_channel" "team" {
 
 resource "discord_text_channel" "team_off_topic" {
   name                     = "team-off-topic"
-  position                 = index(local.channel_order, "team_off_topic")
+  position                 = index(local.channel_order.team, "team_off_topic")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.team.id
   sync_perms_with_category = false
@@ -618,10 +680,13 @@ resource "discord_text_channel" "team_off_topic" {
 
 resource "discord_forum_channel" "team_focus_topic" {
   name                     = "team-focus-topic"
-  position                 = index(local.channel_order, "team_focus_topic")
+  position                 = index(local.channel_order.team, "team_focus_topic")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.team.id
   sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
 }
 
 import {
@@ -631,7 +696,7 @@ import {
 
 resource "discord_text_channel" "team_alerts" {
   name                     = "team-alerts"
-  position                 = index(local.channel_order, "team_alerts")
+  position                 = index(local.channel_order.team, "team_alerts")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.team.id
   sync_perms_with_category = false
@@ -642,7 +707,7 @@ resource "discord_text_channel" "team_alerts" {
 
 resource "discord_text_channel" "team_purchases" {
   name                     = "team-purchases"
-  position                 = index(local.channel_order, "team_purchases")
+  position                 = index(local.channel_order.team, "team_purchases")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.team.id
   sync_perms_with_category = false
@@ -653,7 +718,7 @@ resource "discord_text_channel" "team_purchases" {
 
 resource "discord_text_channel" "yucca" {
   name                     = "yucca"
-  position                 = index(local.channel_order, "yucca")
+  position                 = index(local.channel_order.yucca, "yucca")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.yucca.id
   sync_perms_with_category = false
@@ -664,68 +729,63 @@ resource "discord_text_channel" "yucca" {
 
 resource "discord_text_channel" "yucca_off_topic" {
   name                     = "yucca-off-topic"
-  position                 = index(local.channel_order, "yucca_off_topic")
+  position                 = index(local.channel_order.yucca, "yucca_off_topic")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.yucca.id
   sync_perms_with_category = false
   lifecycle {
     ignore_changes = [sync_perms_with_category]
   }
-  depends_on = [discord_text_channel.yucca]
 }
 
 resource "discord_forum_channel" "yucca_focus_topic" {
   name                     = "yucca-focus-topic"
-  position                 = index(local.channel_order, "yucca_focus_topic")
+  position                 = index(local.channel_order.yucca, "yucca_focus_topic")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.yucca.id
   sync_perms_with_category = false
   lifecycle {
     ignore_changes = [sync_perms_with_category]
   }
-  depends_on = [discord_text_channel.yucca_off_topic]
 }
 
 resource "discord_text_channel" "yucca_alerts" {
   name                     = "yucca-alerts"
-  position                 = index(local.channel_order, "yucca_alerts")
+  position                 = index(local.channel_order.yucca, "yucca_alerts")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.yucca.id
   sync_perms_with_category = false
   lifecycle {
     ignore_changes = [sync_perms_with_category]
   }
-  depends_on = [discord_forum_channel.yucca_focus_topic]
 }
 
 resource "discord_text_channel" "yucca_alerts_testing" {
   name                     = "yucca-alerts-testing"
-  position                 = index(local.channel_order, "yucca_alerts_testing")
+  position                 = index(local.channel_order.yucca, "yucca_alerts_testing")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.yucca.id
   sync_perms_with_category = false
   lifecycle {
     ignore_changes = [sync_perms_with_category]
   }
-  depends_on = [discord_text_channel.yucca_alerts]
 }
 
 resource "discord_text_channel" "yucca_alerts_dev" {
   name                     = "yucca-alerts-dev"
-  position                 = index(local.channel_order, "yucca_alerts_dev")
+  position                 = index(local.channel_order.yucca, "yucca_alerts_dev")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.yucca.id
   sync_perms_with_category = false
   lifecycle {
     ignore_changes = [sync_perms_with_category]
   }
-  depends_on = [discord_text_channel.yucca_alerts_testing]
 }
 
 resource "discord_text_channel" "leadership" {
   name                     = "leadership"
   topic                    = "The place we make decisions that we know nothing about"
-  position                 = index(local.channel_order, "leadership")
+  position                 = index(local.channel_order.leadership, "leadership")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.leadership.id
   sync_perms_with_category = false
@@ -736,7 +796,7 @@ resource "discord_text_channel" "leadership" {
 
 resource "discord_text_channel" "leadership_off_topic" {
   name                     = "leadership-off-topic"
-  position                 = index(local.channel_order, "leadership_off_topic")
+  position                 = index(local.channel_order.leadership, "leadership_off_topic")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.leadership.id
   sync_perms_with_category = false
@@ -747,7 +807,7 @@ resource "discord_text_channel" "leadership_off_topic" {
 
 resource "discord_text_channel" "leadership_alerts" {
   name                     = "leadership-alerts"
-  position                 = index(local.channel_order, "leadership_alerts")
+  position                 = index(local.channel_order.leadership, "leadership_alerts")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.leadership.id
   sync_perms_with_category = false
@@ -758,7 +818,7 @@ resource "discord_text_channel" "leadership_alerts" {
 
 resource "discord_forum_channel" "leadership_focus_topic" {
   name                     = "leadership-focus-topic"
-  position                 = index(local.channel_order, "leadership_focus_topic")
+  position                 = index(local.channel_order.leadership, "leadership_focus_topic")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.leadership.id
   sync_perms_with_category = false
@@ -771,7 +831,7 @@ import {
 
 resource "discord_text_channel" "moderator_only" {
   name                     = "moderator-only"
-  position                 = index(local.channel_order, "moderator_only")
+  position                 = index(local.channel_order.leadership, "moderator_only")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.leadership.id
   sync_perms_with_category = false
@@ -782,7 +842,7 @@ resource "discord_text_channel" "moderator_only" {
 
 resource "discord_text_channel" "developer_updates" {
   name                     = "developer-updates"
-  position                 = index(local.channel_order, "developer_updates")
+  position                 = index(local.channel_order.third_parties, "developer_updates")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.third_parties.id
   sync_perms_with_category = false
@@ -793,7 +853,7 @@ resource "discord_text_channel" "developer_updates" {
 
 resource "discord_text_channel" "cloudflare_status" {
   name                     = "cloudflare-status"
-  position                 = index(local.channel_order, "cloudflare_status")
+  position                 = index(local.channel_order.third_parties, "cloudflare_status")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.third_parties.id
   sync_perms_with_category = false
@@ -805,7 +865,7 @@ resource "discord_text_channel" "cloudflare_status" {
 resource "discord_text_channel" "github_status" {
   name                     = "github-status"
   topic                    = "https://www.githubstatus.com"
-  position                 = index(local.channel_order, "github_status")
+  position                 = index(local.channel_order.third_parties, "github_status")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.third_parties.id
   sync_perms_with_category = false
@@ -817,7 +877,7 @@ resource "discord_text_channel" "github_status" {
 resource "discord_text_channel" "github_issues_and_discussion" {
   name                     = "github-issues-and-discussion"
   topic                    = "New GitHub issue and discussion thread"
-  position                 = index(local.channel_order, "github_issues_and_discussion")
+  position                 = index(local.channel_order.third_parties, "github_issues_and_discussion")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.third_parties.id
   sync_perms_with_category = false
@@ -828,7 +888,7 @@ resource "discord_text_channel" "github_issues_and_discussion" {
 
 resource "discord_text_channel" "github_pull_requests" {
   name                     = "github-pull-requests"
-  position                 = index(local.channel_order, "github_pull_requests")
+  position                 = index(local.channel_order.third_parties, "github_pull_requests")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.third_parties.id
   sync_perms_with_category = false
@@ -839,7 +899,7 @@ resource "discord_text_channel" "github_pull_requests" {
 
 resource "discord_news_channel" "github_releases" {
   name                     = "github-releases"
-  position                 = index(local.channel_order, "github_releases")
+  position                 = index(local.channel_order.third_parties, "github_releases")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.third_parties.id
   sync_perms_with_category = false
@@ -850,7 +910,7 @@ resource "discord_news_channel" "github_releases" {
 
 resource "discord_text_channel" "bot_spam" {
   name                     = "bot-spam"
-  position                 = index(local.channel_order, "bot_spam")
+  position                 = index(local.channel_order.off_topic, "bot_spam")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.off_topic.id
   sync_perms_with_category = false
@@ -861,7 +921,7 @@ resource "discord_text_channel" "bot_spam" {
 
 resource "discord_text_channel" "emotes" {
   name                     = "emotes"
-  position                 = index(local.channel_order, "emotes")
+  position                 = index(local.channel_order.off_topic, "emotes")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.off_topic.id
   sync_perms_with_category = false
@@ -873,7 +933,7 @@ resource "discord_text_channel" "emotes" {
 resource "discord_text_channel" "off_topic" {
   name                     = "off-topic"
   topic                    = "Your retro chatroom with an Immich theme"
-  position                 = index(local.channel_order, "off_topic")
+  position                 = index(local.channel_order.off_topic, "off_topic")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.off_topic.id
   sync_perms_with_category = false
@@ -884,7 +944,7 @@ resource "discord_text_channel" "off_topic" {
 
 resource "discord_voice_channel" "immich_voice" {
   name                     = "immich-voice"
-  position                 = index(local.channel_order, "immich_voice")
+  position                 = index(local.channel_order.voice, "immich_voice")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.voice.id
   sync_perms_with_category = false
@@ -895,7 +955,7 @@ resource "discord_voice_channel" "immich_voice" {
 
 resource "discord_voice_channel" "dev_voice" {
   name                     = "dev-voice"
-  position                 = index(local.channel_order, "dev_voice")
+  position                 = index(local.channel_order.voice, "dev_voice")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.voice.id
   bitrate                  = var.env == "prod" ? 384000 : 64000
@@ -907,7 +967,7 @@ resource "discord_voice_channel" "dev_voice" {
 
 resource "discord_voice_channel" "team_voice" {
   name                     = "team-voice"
-  position                 = index(local.channel_order, "team_voice")
+  position                 = index(local.channel_order.voice, "team_voice")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.voice.id
   bitrate                  = var.env == "prod" ? 384000 : 64000
@@ -919,7 +979,7 @@ resource "discord_voice_channel" "team_voice" {
 
 resource "discord_voice_channel" "team_voice_2" {
   name                     = "team-voice-2"
-  position                 = index(local.channel_order, "team_voice_2")
+  position                 = index(local.channel_order.voice, "team_voice_2")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.voice.id
   sync_perms_with_category = false
@@ -930,7 +990,7 @@ resource "discord_voice_channel" "team_voice_2" {
 
 resource "discord_voice_channel" "yucca_voice" {
   name                     = "yucca-voice"
-  position                 = index(local.channel_order, "yucca_voice")
+  position                 = index(local.channel_order.voice, "yucca_voice")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.voice.id
   bitrate                  = var.env == "prod" ? 384000 : 64000
@@ -942,7 +1002,7 @@ resource "discord_voice_channel" "yucca_voice" {
 
 resource "discord_voice_channel" "leadership_voice" {
   name                     = "leadership-voice"
-  position                 = index(local.channel_order, "leadership_voice")
+  position                 = index(local.channel_order.voice, "leadership_voice")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.voice.id
   bitrate                  = var.env == "prod" ? 384000 : 64000
@@ -954,7 +1014,7 @@ resource "discord_voice_channel" "leadership_voice" {
 
 resource "discord_text_channel" "dev_fosdem" {
   name                     = "dev-fosdem"
-  position                 = index(local.channel_order, "dev_fosdem")
+  position                 = index(local.channel_order.archive, "dev_fosdem")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -970,7 +1030,7 @@ import {
 
 resource "discord_text_channel" "fosdem_2025" {
   name                     = "fosdem-2025"
-  position                 = index(local.channel_order, "fosdem_2025")
+  position                 = index(local.channel_order.archive, "fosdem_2025")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -986,7 +1046,7 @@ import {
 
 resource "discord_text_channel" "dev_server" {
   name                     = "dev-server"
-  position                 = index(local.channel_order, "dev_server")
+  position                 = index(local.channel_order.archive, "dev_server")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -1002,7 +1062,7 @@ import {
 
 resource "discord_text_channel" "conference_room" {
   name                     = "conference-room"
-  position                 = index(local.channel_order, "conference_room")
+  position                 = index(local.channel_order.archive, "conference_room")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -1018,7 +1078,7 @@ import {
 
 resource "discord_text_channel" "branding" {
   name                     = "branding"
-  position                 = index(local.channel_order, "branding")
+  position                 = index(local.channel_order.archive, "branding")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -1034,7 +1094,7 @@ import {
 
 resource "discord_text_channel" "dev_ml" {
   name                     = "dev-ml"
-  position                 = index(local.channel_order, "dev_ml")
+  position                 = index(local.channel_order.archive, "dev_ml")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -1050,7 +1110,7 @@ import {
 
 resource "discord_text_channel" "futo" {
   name                     = "futo"
-  position                 = index(local.channel_order, "futo")
+  position                 = index(local.channel_order.archive, "futo")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -1066,7 +1126,7 @@ import {
 
 resource "discord_text_channel" "immich_nix" {
   name                     = "immich-nix"
-  position                 = index(local.channel_order, "immich_nix")
+  position                 = index(local.channel_order.archive, "immich_nix")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -1082,7 +1142,7 @@ import {
 
 resource "discord_text_channel" "dev_mobile" {
   name                     = "dev-mobile"
-  position                 = index(local.channel_order, "dev_mobile")
+  position                 = index(local.channel_order.archive, "dev_mobile")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -1098,7 +1158,7 @@ import {
 
 resource "discord_text_channel" "dev_roles" {
   name                     = "dev-roles"
-  position                 = index(local.channel_order, "dev_roles")
+  position                 = index(local.channel_order.archive, "dev_roles")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -1114,7 +1174,7 @@ import {
 
 resource "discord_text_channel" "dev_security" {
   name                     = "dev-security"
-  position                 = index(local.channel_order, "dev_security")
+  position                 = index(local.channel_order.archive, "dev_security")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -1130,7 +1190,7 @@ import {
 
 resource "discord_text_channel" "dev_ops" {
   name                     = "dev-ops"
-  position                 = index(local.channel_order, "dev_ops")
+  position                 = index(local.channel_order.archive, "dev_ops")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -1146,7 +1206,7 @@ import {
 
 resource "discord_text_channel" "futo_discussion_old" {
   name                     = "futo-discussion-old"
-  position                 = index(local.channel_order, "futo_discussion_old")
+  position                 = index(local.channel_order.archive, "futo_discussion_old")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -1162,7 +1222,7 @@ import {
 
 resource "discord_text_channel" "dev_web" {
   name                     = "dev-web"
-  position                 = index(local.channel_order, "dev_web")
+  position                 = index(local.channel_order.archive, "dev_web")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -1178,7 +1238,7 @@ import {
 
 resource "discord_text_channel" "dev_cli" {
   name                     = "dev-cli"
-  position                 = index(local.channel_order, "dev_cli")
+  position                 = index(local.channel_order.archive, "dev_cli")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -1194,7 +1254,7 @@ import {
 
 resource "discord_text_channel" "jasons_adventures_with_unraid_docker_and_networking" {
   name                     = "jasons-adventures-with-unraid-docker-and-networking"
-  position                 = index(local.channel_order, "jasons_adventures_with_unraid_docker_and_networking")
+  position                 = index(local.channel_order.archive, "jasons_adventures_with_unraid_docker_and_networking")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false
@@ -1210,7 +1270,7 @@ import {
 
 resource "discord_text_channel" "build_status" {
   name                     = "build-status"
-  position                 = index(local.channel_order, "build_status")
+  position                 = index(local.channel_order.archive, "build_status")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.archive.id
   sync_perms_with_category = false

@@ -1,11 +1,11 @@
-variable "channel_ids" {
-  description = "The ID of the channel to set permissions for."
-  type        = set(string)
+variable "channels" {
+  description = "Map of channel name to channel ID to set permissions for."
+  type        = map(string)
 }
 
-variable "role_ids" {
-  description = "The ID of the roles to set permissions for."
-  type        = set(string)
+variable "roles" {
+  description = "Map of role name to role ID to set permissions for."
+  type        = map(string)
 }
 
 variable "everyone_id" {
