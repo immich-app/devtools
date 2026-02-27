@@ -7,3 +7,17 @@ spec:
   storage:
     size: 10Gi
     storageClass: zfs
+  backup:
+    retentionPolicy: "14d"
+    barmanObjectStore:
+      destinationPath: s3://${bucket_name}
+      endpointURL: ${api_endpoint}
+      wal:
+        compression: bzip2
+      s3Credentials:
+        accessKeyId:
+          name: discord-bot-db-backup-secret
+          key: id
+        secretAccessKey:
+          name: discord-bot-db-backup-secret
+          key: secret
