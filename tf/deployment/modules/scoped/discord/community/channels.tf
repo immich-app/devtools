@@ -43,6 +43,7 @@ locals {
       "team",
       "team_off_topic",
       "team_focus_topic",
+      "team_pull_requests",
       "team_purchases",
       "team_alerts",
     ]
@@ -317,6 +318,7 @@ module "team_channels_write" {
     team                 = discord_text_channel.team.id
     team_off_topic       = discord_text_channel.team_off_topic.id
     team_focus_topic     = discord_forum_channel.team_focus_topic.id
+    team_pull_requests   = discord_forum_channel.team_pull_requests.id,
     team_purchases       = discord_text_channel.team_purchases.id
     team_alerts          = discord_text_channel.team_alerts.id
     bot_spam             = discord_text_channel.bot_spam.id
@@ -692,6 +694,14 @@ resource "discord_forum_channel" "team_focus_topic" {
 import {
   id = 1330248543721754746
   to = discord_forum_channel.team_focus_topic
+}
+
+resource "discord_forum_channel" "team_pull_requests" {
+  name                     = "team-pull-requests"
+  position                 = index(local.channel_order.team, "team_pull_requests")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.team.id
+  sync_perms_with_category = false
 }
 
 resource "discord_text_channel" "team_alerts" {
