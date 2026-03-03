@@ -112,29 +112,3 @@ resource "zitadel_trigger_actions" "map_roles" {
   trigger_type = "TRIGGER_TYPE_PRE_USERINFO_CREATION"
   flow_type    = "FLOW_TYPE_CUSTOMISE_TOKEN"
 }
-
-resource "zitadel_action" "saml_map_roles" {
-  org_id          = zitadel_org.immich.id
-  name            = "samlMapRoles"
-  script          = <<-EOT
-    function samlMapRoles(ctx, api) {
-      if (ctx.v1.user.grants == undefined || ctx.v1.user.grants.count == 0) {
-        return;
-      }
-      let roles = [];
-      ctx.v1.user.grants.grants.forEach(grant => {
-        roles.push(grant.roles)
-      })
-      api.v1.attributes.setCustomAttribute('Roles', '', ...roles)
-    }
-    EOT
-  allowed_to_fail = false
-  timeout         = "10s"
-}
-
-resource "zitadel_trigger_actions" "saml_map_roles" {
-  org_id       = zitadel_org.immich.id
-  action_ids   = [zitadel_action.saml_map_roles.id]
-  trigger_type = "TRIGGER_TYPE_PRE_SAML_RESPONSE_CREATION"
-  flow_type    = "FLOW_TYPE_COMPLEMENT_SAML_RESPONSE"
-}
