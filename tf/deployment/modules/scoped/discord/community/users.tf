@@ -9,31 +9,31 @@ resource "discord_member_roles" "roles" {
   user_id   = each.value.discord.id
   role {
     role_id  = discord_role.admin.id
-    has_role = contains(["admin"], each.value.role)
+    has_role = contains(each.value.roles, "admin")
   }
 
   role {
     role_id  = discord_role.team.id
-    has_role = contains(["yucca", "team", "admin"], each.value.role)
+    has_role = length(setintersection(toset(each.value.roles), toset(["yucca", "team", "admin"]))) > 0
   }
 
   role {
     role_id  = discord_role.contributor.id
-    has_role = contains(["contributor", "futo", "yucca", "team", "admin"], each.value.role)
+    has_role = length(setintersection(toset(each.value.roles), toset(["contributor", "futo", "yucca", "team", "admin"]))) > 0
   }
 
   role {
     role_id  = discord_role.futo.id
-    has_role = contains(["futo", "yucca", "team", "admin"], each.value.role)
+    has_role = length(setintersection(toset(each.value.roles), toset(["futo", "yucca", "team", "admin"]))) > 0
   }
 
   role {
     role_id  = discord_role.support_crew.id
-    has_role = contains(["support"], each.value.role)
+    has_role = contains(each.value.roles, "support")
   }
 
   role {
     role_id  = discord_role.yucca.id
-    has_role = contains(["yucca"], each.value.role) || contains(try(each.value.discord.extra_roles, []), "yucca")
+    has_role = contains(each.value.roles, "yucca")
   }
 }
