@@ -44,5 +44,5 @@ resource "zitadel_user_metadata" "role" {
   org_id  = zitadel_org.immich.id
   user_id = zitadel_human_user.users[each.key].id
   key     = "role"
-  value   = jsonencode(each.value.roles)
+  value   = each.value.role
 }
