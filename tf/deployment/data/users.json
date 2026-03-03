@@ -167,8 +167,9 @@
     ]
   },
   {
-    "github": {
-      "username": "",
+    "github": null,
+    "gitlab": {
+      "username": "eronwolf",
       "id": 0
     },
     "discord": {

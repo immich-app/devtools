@@ -62,9 +62,53 @@ resource "zitadel_action" "map_github_oauth" {
   timeout         = "10s"
 }
 
-resource "zitadel_trigger_actions" "map_github_oauth" {
+resource "zitadel_action" "map_gitlab_oauth" {
+  org_id          = zitadel_org.immich.id
+  name            = "mapGitLabOAuth"
+  script          = <<-EOT
+    let logger = require("zitadel/log");
+
+    function mapGitLabOAuth(ctx, api) {
+      if (ctx.v1.externalUser.externalIdpId !== "${zitadel_idp_gitlab_self_hosted.gitlab.id}") {
+        return;
+      }
+
+      // GitLab uses OIDC so email is available via providerInfo
+      if (ctx.v1.providerInfo.email) {
+        api.setEmail(ctx.v1.providerInfo.email);
+        api.setEmailVerified(ctx.v1.providerInfo.email_verified || false);
+      } else {
+        logger.warn("No email found in GitLab response for user: " + ctx.v1.externalUser.human.displayName);
+      }
+
+      let firstName = ctx.v1.providerInfo.nickname || ctx.v1.providerInfo.preferred_username;
+      let lastName = " ";
+
+      const name = ctx.v1.providerInfo.name || "";
+      const nameParts = name.trim().split(" ");
+      if (nameParts.length > 0 && nameParts[0].length > 0) {
+        firstName = nameParts[0];
+      }
+      if (nameParts.length > 1) {
+        lastName = nameParts.slice(1).join(" ");
+      }
+
+      api.setFirstName(firstName);
+      api.setLastName(lastName);
+    }
+    EOT
+  allowed_to_fail = true
+  timeout         = "10s"
+}
+
+moved {
+  from = zitadel_trigger_actions.map_github_oauth
+  to   = zitadel_trigger_actions.map_external_oauth
+}
+
+resource "zitadel_trigger_actions" "map_external_oauth" {
   org_id       = zitadel_org.immich.id
-  action_ids   = [zitadel_action.map_github_oauth.id]
+  action_ids   = [zitadel_action.map_github_oauth.id, zitadel_action.map_gitlab_oauth.id]
   trigger_type = "TRIGGER_TYPE_POST_AUTHENTICATION"
   flow_type    = "FLOW_TYPE_EXTERNAL_AUTHENTICATION"
 }
