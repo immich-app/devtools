@@ -15,7 +15,7 @@ locals {
           project_name   = project.name
           role_key       = zitadel_role
           github_user_id = user.github.id
-        } if contains(immich_roles, user.role) && user.github.username != null && user.github.username != ""]
+        } if length(setintersection(toset(immich_roles), toset(user.roles))) > 0 && user.github.username != null && user.github.username != ""]
       ]
     ]
   ])
