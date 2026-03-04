@@ -10,42 +10,47 @@ locals {
   projects_data = [
     {
       name         = "Grafana Monitoring Prod"
-      roles        = { "GrafanaAdmin" : ["admin"], "Editor" : ["team"] }
+      roles        = [{ key = "GrafanaAdmin", grants_to = ["admin"] }, { key = "Editor", grants_to = ["team"] }]
       redirectUris = ["https://monitoring.immich.cloud/login/generic_oauth"]
     },
     {
       name         = "Grafana Monitoring Dev"
-      roles        = { "GrafanaAdmin" : ["admin"], "Editor" : ["team"] }
+      roles        = [{ key = "GrafanaAdmin", grants_to = ["admin"] }, { key = "Editor", grants_to = ["team"] }]
       redirectUris = ["https://monitoring.dev.immich.cloud/login/generic_oauth"]
     },
     {
       name         = "Grafana Data Prod"
-      roles        = { "GrafanaAdmin" : ["admin"], "Editor" : ["team"] }
+      roles        = [{ key = "GrafanaAdmin", grants_to = ["admin"] }, { key = "Editor", grants_to = ["team"] }]
       redirectUris = ["https://grafana.data.immich.cloud/login/generic_oauth"]
     },
     {
-      name         = "Outline"
-      roles        = { "Leadership" : ["admin"], "Team" : ["team"], "Contributor" : ["contributor"], "Support Crew" : ["support"] }
+      name = "Outline"
+      roles = [
+        { key = "Leadership", grants_to = ["admin"] },
+        { key = "Team", grants_to = ["team"] },
+        { key = "Contributor", grants_to = ["contributor"] },
+        { key = "Support Crew", grants_to = ["support"] }
+      ]
       authMethod   = "BASIC"
       redirectUris = ["https://outline.immich.cloud/auth/oidc.callback"]
     },
     {
       name = "ContainerSSH"
-      roles = {
-        "Granted" : ["admin", "team", "contributor"]
-      }
+      roles = [
+        { key = "Granted", grants_to = ["admin", "team", "contributor"] }
+      ]
       appType    = "NATIVE"
       grantTypes = ["DEVICE_CODE"]
     },
     {
       name         = "OAuth2 Proxy"
-      roles        = { "Granted" : ["admin", "team"] }
+      roles        = [{ key = "Granted", grants_to = ["admin", "team"] }]
       redirectUris = ["https://oauth2-proxy.internal.immich.cloud/oauth2/callback"]
     },
     {
       name        = "OVHCloud"
       protocol    = "saml"
-      roles       = { "DEFAULT" : ["team"], "ADMIN" : ["admin", "yucca"] }
+      roles       = [{ key = "ADMIN", grants_to = ["admin", "yucca"] }, { key = "DEFAULT", grants_to = ["team"] }]
       metadataUrl = "https://auth.eu.ovhcloud.com/sso/saml/sp/metadata.xml"
     }
   ]
