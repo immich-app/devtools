@@ -24,21 +24,6 @@ provider "registry.opentofu.org/1password/onepassword" {
   ]
 }
 
-provider "registry.opentofu.org/lucky3028/discord" {
-  version = "2.4.0"
-  hashes = [
-    "h1:41nnrVu8+FD3/3DNPOPfMFQXvpLyDCJwkvVAUG2Y7s0=",
-    "zh:02bb7284c37830a76999ede8a6bb3664eaca81a8acf1a2f64c92fdc2e0b874c1",
-    "zh:22aad2828a393d9a2c2f44fb37f2292b12c75b3ef64b4a960494cf344fd8a684",
-    "zh:25e78b0e88e922cc99ac635f98bd820ddba04d04d9aea1382440d3534fd9e8e8",
-    "zh:64e1ce03929f1ab666b0da7bedb50193b898e81530485769c69d68dd9df6f569",
-    "zh:677f16a526a2f30a77d6b6f1d8de75889b618fc4eeb7fc4d7e1504ef6d1a5244",
-    "zh:849d3a36d10e1ad31b1920f229ed92019e7513a2ac83c787ed1f0cabb4671b5a",
-    "zh:8ba850225e1441e3c7e963af8914952ca27979b0c17be312c0a5a50fa2b5da75",
-    "zh:90caaa5df125a7f4c65d631a83249416268be15bdf2f01bd8095393ad72fd29c",
-  ]
-}
-
 provider "registry.terraform.io/zp-forks/discord" {
   version     = "3.2.0"
   constraints = "~> 3.2"
