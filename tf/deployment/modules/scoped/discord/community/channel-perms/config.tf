@@ -4,7 +4,7 @@ terraform {
   required_providers {
     discord = {
       source  = "registry.terraform.io/zp-forks/discord"
-      version = "~> 3"
+      version = "~> 3.2"
     }
   }
 }

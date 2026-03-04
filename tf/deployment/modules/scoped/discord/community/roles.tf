@@ -55,6 +55,8 @@ data "discord_permission" "support_crew" {
   manage_messages  = "allow"
   move_members     = "allow"
   manage_threads   = "allow"
+  pin_messages     = "allow"
+  bypass_slowmode  = "allow"
 }
 
 resource "discord_role" "support_crew" {
@@ -167,6 +169,8 @@ data "discord_permission" "team" {
   create_events             = "allow"
   manage_events             = "allow"
   view_audit_log            = "allow"
+  pin_messages              = "allow"
+  bypass_slowmode           = "allow"
 }
 
 data "discord_color" "yucca" {

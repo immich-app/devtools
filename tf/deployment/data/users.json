@@ -50,6 +50,42 @@
   },
   {
     "github": {
+      "username": "onedr0p",
+      "id": 213795
+    },
+    "discord": {
+      "username": "onedr0p",
+      "id": 261368074328997888,
+      "extra_roles": ["yucca"]
+    },
+    "role": "team"
+  },
+  {
+    "github": {
+      "username": "nutgood",
+      "id": 38678863
+    },
+    "discord": {
+      "username": "nutgood",
+      "id": 129782158972813312,
+      "extra_roles": ["yucca"]
+    },
+    "role": "team"
+  },
+  {
+    "github": {
+      "username": "nirokato",
+      "id": 3781232
+    },
+    "discord": {
+      "username": "nirokato",
+      "id": 269581865881436170,
+      "extra_roles": ["yucca"]
+    },
+    "role": "team"
+  },
+  {
+    "github": {
       "username": "danieldietzler",
       "id": 36593685
     },

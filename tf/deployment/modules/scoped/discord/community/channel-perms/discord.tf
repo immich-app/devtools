@@ -1,8 +1,8 @@
 locals {
   role_channel_combinations = flatten([
-    for role_id in var.role_ids : [
-      for channel_id in var.channel_ids : {
-        key        = "${role_id}_${channel_id}"
+    for role_key, role_id in var.roles : [
+      for channel_key, channel_id in var.channels : {
+        key        = "${role_key}/${channel_key}"
         role_id    = role_id
         channel_id = channel_id
       }
@@ -26,7 +26,7 @@ data "discord_permission" "deny_channel" {
 }
 
 resource "discord_channel_permission" "private" {
-  for_each = var.public ? toset([]) : toset(var.channel_ids)
+  for_each = var.public ? {} : var.channels
 
   channel_id   = each.value
   type         = "role"
