@@ -1,22 +1,23 @@
 locals {
   project_to_displaynames = flatten([
     for project in local.projects : [
-      for role in keys(project.roles) : {
+      for role in project.roles : {
         project_name = project.name
-        role_key     = role
+        role_key     = role.key
       }
     ]
   ])
 
-  project_to_zitadel_role_to_immich_role = flatten([
+  # For each user+project, grant only the highest-priority role (first match in the ordered list)
+  project_user_grants = flatten([
     for project in local.projects : [
-      for zitadel_role, immich_roles in project.roles : [
-        [for user in local.users_data : {
-          project_name   = project.name
-          role_key       = zitadel_role
-          github_user_id = user.github.id
-        } if contains(immich_roles, user.role) && user.github.username != null && user.github.username != ""]
-      ]
+      for user in local.users_data : {
+        project_name   = project.name
+        role_key       = [for role in project.roles : role.key if length(setintersection(toset(role.grants_to), toset(user.roles))) > 0][0]
+        github_user_id = user.github.id
+      }
+      if length([for role in project.roles : role.key if length(setintersection(toset(role.grants_to), toset(user.roles))) > 0]) > 0
+      && user.github.username != null && user.github.username != ""
     ]
   ])
 }
@@ -35,7 +36,7 @@ resource "zitadel_project_role" "project_roles" {
 
 resource "zitadel_user_grant" "project_grants" {
   for_each = {
-    for user_role in local.project_to_zitadel_role_to_immich_role : "${user_role.project_name}_${user_role.role_key}_${user_role.github_user_id}" => user_role
+    for grant in local.project_user_grants : "${grant.project_name}_${grant.github_user_id}" => grant
   }
   depends_on = [zitadel_project_role.project_roles]
 

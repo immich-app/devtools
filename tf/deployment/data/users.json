@@ -8,7 +8,9 @@
       "username": "alex.tran1502",
       "id": 285511635735543828
     },
-    "role": "admin"
+    "roles": [
+      "admin"
+    ]
   },
   {
     "github": {
@@ -19,7 +21,9 @@
       "username": "jrasm91",
       "id": 613523742479483183
     },
-    "role": "admin",
+    "roles": [
+      "admin"
+    ],
     "dev": true
   },
   {
@@ -29,10 +33,12 @@
     },
     "discord": {
       "username": "bo0tzz",
-      "id": 324007594262003722,
-      "extra_roles": ["yucca"]
+      "id": 324007594262003722
     },
-    "role": "admin",
+    "roles": [
+      "admin",
+      "yucca"
+    ],
     "dev": true
   },
   {
@@ -42,10 +48,12 @@
     },
     "discord": {
       "username": "zackpollard",
-      "id": 185097470215192579,
-      "extra_roles": ["yucca"]
+      "id": 185097470215192579
     },
-    "role": "admin",
+    "roles": [
+      "admin",
+      "yucca"
+    ],
     "dev": true
   },
   {
@@ -55,10 +63,12 @@
     },
     "discord": {
       "username": "onedr0p",
-      "id": 261368074328997888,
-      "extra_roles": ["yucca"]
+      "id": 261368074328997888
     },
-    "role": "team"
+    "roles": [
+      "team",
+      "yucca"
+    ]
   },
   {
     "github": {
@@ -67,10 +77,12 @@
     },
     "discord": {
       "username": "nutgood",
-      "id": 129782158972813312,
-      "extra_roles": ["yucca"]
+      "id": 129782158972813312
     },
-    "role": "team"
+    "roles": [
+      "team",
+      "yucca"
+    ]
   },
   {
     "github": {
@@ -79,10 +91,12 @@
     },
     "discord": {
       "username": "nirokato",
-      "id": 269581865881436170,
-      "extra_roles": ["yucca"]
+      "id": 269581865881436170
     },
-    "role": "team"
+    "roles": [
+      "team",
+      "yucca"
+    ]
   },
   {
     "github": {
@@ -93,7 +107,9 @@
       "username": "ddietzler",
       "id": 273458650557841408
     },
-    "role": "team",
+    "roles": [
+      "team"
+    ],
     "dev": true
   },
   {
@@ -105,7 +121,9 @@
       "username": ".eleman.",
       "id": 1110388960842219662
     },
-    "role": "team"
+    "roles": [
+      "team"
+    ]
   },
   {
     "github": {
@@ -116,7 +134,9 @@
       "username": "shenlong",
       "id": 879025674214584330
     },
-    "role": "team",
+    "roles": [
+      "team"
+    ],
     "dev": true
   },
   {
@@ -128,7 +148,9 @@
       "username": "bwees",
       "id": 172431702465970176
     },
-    "role": "team"
+    "roles": [
+      "team"
+    ]
   },
   {
     "github": {
@@ -137,10 +159,12 @@
     },
     "discord": {
       "username": "insert",
-      "id": 99765584266264576,
-      "extra_roles": ["yucca"]
+      "id": 99765584266264576
     },
-    "role": "team"
+    "roles": [
+      "team",
+      "yucca"
+    ]
   },
   {
     "github": {
@@ -151,7 +175,9 @@
       "username": "eronwolf",
       "id": 264509889018068994
     },
-    "role": "futo"
+    "roles": [
+      "futo"
+    ]
   },
   {
     "github": {
@@ -162,7 +188,9 @@
       "username": "kennyfuto",
       "id": 1402320140938510398
     },
-    "role": "futo"
+    "roles": [
+      "futo"
+    ]
   },
   {
     "github": {
@@ -173,7 +201,9 @@
       "username": "",
       "id": 0
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -184,7 +214,9 @@
       "username": "adamantike",
       "id": 820328828580134953
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -195,7 +227,9 @@
       "username": "arnolicious",
       "id": 261816135387709441
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -206,7 +240,9 @@
       "username": "hungrypandas",
       "id": 391059578743160832
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -217,7 +253,9 @@
       "username": "benmccann",
       "id": 709488329003106344
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -228,7 +266,9 @@
       "username": "brighteyed",
       "id": 638460185228345345
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -239,7 +279,9 @@
       "username": "keinfalschparker",
       "id": 1270365817304912046
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -250,7 +292,9 @@
       "username": "etnoy",
       "id": 1084581712702472252
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -261,7 +305,9 @@
       "username": "zody",
       "id": 145524839938129920
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -272,7 +318,9 @@
       "username": "exonintrendo",
       "id": 281866662007799809
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -283,7 +331,9 @@
       "username": "jbaez",
       "id": 900373145020678194
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -294,7 +344,9 @@
       "username": "martabal",
       "id": 261069120416514059
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -305,7 +357,9 @@
       "username": "matthinc",
       "id": 335669624576278540
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -316,7 +370,9 @@
       "username": "michelheusschen",
       "id": 234061895865204737
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -327,7 +383,9 @@
       "username": "starl1ghtshad0w",
       "id": 851188544294092831
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -338,7 +396,9 @@
       "username": "trustfullama",
       "id": 477906816022609940
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -349,7 +409,9 @@
       "username": "pixeljonas",
       "id": 160439962502692864
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -360,7 +422,9 @@
       "username": "samholton",
       "id": 334878799223193611
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -371,7 +435,9 @@
       "username": "snowknight26",
       "id": 287636133876334613
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -382,7 +448,9 @@
       "username": "theflamingchicken",
       "id": 720985629323952151
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -393,7 +461,9 @@
       "username": "uhhthomas",
       "id": 105750004563509248
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -404,7 +474,9 @@
       "username": "cjpeckover",
       "id": 425761443120545814
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -415,7 +487,9 @@
       "username": "yarossyubayev",
       "id": 519561606175129600
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -426,7 +500,9 @@
       "username": "idubnori",
       "id": 1425067440223682772
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -437,7 +513,9 @@
       "username": "mees74",
       "id": 681497453307887617
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -448,7 +526,9 @@
       "username": "timonthegoat",
       "id": 970963099400159233
     },
-    "role": "contributor"
+    "roles": [
+      "contributor"
+    ]
   },
   {
     "github": {
@@ -459,7 +539,9 @@
       "username": "aviv251",
       "id": 360064066527690753
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   },
   {
     "github": {
@@ -470,7 +552,9 @@
       "username": "crushedasian255",
       "id": 386612331288723469
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   },
   {
     "github": {
@@ -481,7 +565,9 @@
       "username": "ddshd",
       "id": 271815201290977288
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   },
   {
     "github": {
@@ -492,7 +578,9 @@
       "username": "winterharris",
       "id": 330256861980786688
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   },
   {
     "github": {
@@ -503,7 +591,9 @@
       "username": "icedragon2002002",
       "id": 303309066246291459
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   },
   {
     "github": {
@@ -514,7 +604,9 @@
       "username": "lifeofvio",
       "id": 191602681280724992
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   },
   {
     "github": {
@@ -525,7 +617,9 @@
       "username": "mraedis",
       "id": 145451920557867008
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   },
   {
     "github": {
@@ -536,7 +630,9 @@
       "username": "nicholasflamy",
       "id": 404750535342686209
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   },
   {
     "github": {
@@ -547,7 +643,9 @@
       "username": "questionario",
       "id": 573858858221699092
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   },
   {
     "github": {
@@ -558,7 +656,9 @@
       "username": "schuhbacca1",
       "id": 275064456210284546
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   },
   {
     "github": {
@@ -569,7 +669,9 @@
       "username": "solid256",
       "id": 1142920273851592814
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   },
   {
     "github": {
@@ -580,7 +682,9 @@
       "username": "zzzeus.",
       "id": 304729090064252948
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   },
   {
     "github": {
@@ -591,7 +695,9 @@
       "username": "nomachine",
       "id": 662674908492333056
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   },
   {
     "github": {
@@ -602,7 +708,9 @@
       "username": "skatsubo",
       "id": 1347560736079085599
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   },
   {
     "github": {
@@ -613,7 +721,9 @@
       "username": "xiticks",
       "id": 218413626061619201
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   },
   {
     "github": {
@@ -624,6 +734,8 @@
       "username": "isamu4919",
       "id": 135843138492170241
     },
-    "role": "support"
+    "roles": [
+      "support"
+    ]
   }
 ]
