@@ -4,6 +4,6 @@ metadata:
   name: discord-bot-db-daily-backup
   namespace: tools
 spec:
-  schedule: "0 18 * * *"
+  schedule: "0 0 18 * * *"
   cluster:
     name: discord-bot-db
