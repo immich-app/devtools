@@ -1,0 +1,9 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: discord-bot-db-daily-backup
+  namespace: tools
+spec:
+  schedule: "0 0 18 * * *"
+  cluster:
+    name: discord-bot-db

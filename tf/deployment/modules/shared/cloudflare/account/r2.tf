@@ -58,6 +58,19 @@ module "victorialogs_volsync_backups" {
   allowed_cidrs         = local.mich_cidrs
 }
 
+module "discord_bot_db_backups" {
+  source = "./shared/modules/cloudflare-r2-bucket"
+  providers = {
+    cloudflare.api_keys = cloudflare.api_keys
+  }
+
+  bucket_name           = "discord-bot-db-backups"
+  cloudflare_account_id = var.cloudflare_account_id
+  onepassword_vault_id  = data.onepassword_vault.tf.uuid
+  item_name             = "DISCORD_BOT_DB_BACKUP_BUCKET"
+  allowed_cidrs         = local.mich_cidrs
+}
+
 resource "cloudflare_r2_bucket" "static" {
   account_id = var.cloudflare_account_id
   name       = "static"
