@@ -12,6 +12,7 @@ variable "repositories" {
     require_codeowners     = optional(bool, false)
     license                = optional(string, "AGPL")
     collaborator_overrides = optional(map(string), {})
+    visibility             = optional(string, "public")
   }))
   default = [
     {
@@ -133,6 +134,11 @@ variable "repositories" {
       name        = "packages",
       license     = "MIT",
       description = "A collection of libraries around the Immich project"
+    },
+    {
+      name        = "yucca-slop",
+      description = "yucca-slop",
+      visibility  = "private"
     }
   ]
 }
@@ -154,6 +160,7 @@ resource "github_repository" "repositories" {
   has_downloads             = true
   has_projects              = each.value.projects
   has_wiki                  = false
+  visibility                = each.value.visibility
   vulnerability_alerts      = !each.value.archived
   homepage_url              = coalesce(each.value.url, "https://immich.app")
   squash_merge_commit_title = "PR_TITLE"
