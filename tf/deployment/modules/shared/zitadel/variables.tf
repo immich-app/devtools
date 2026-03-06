@@ -13,3 +13,11 @@ variable "zitadel_github_client_id" {}
 variable "zitadel_github_client_secret" {
   sensitive = true
 }
+
+variable "zitadel_gitlab_client_id" {}
+variable "zitadel_gitlab_client_secret" {
+  sensitive = true
+}
+variable "zitadel_gitlab_issuer" {
+  description = "The base URL of the FUTO self-hosted GitLab instance"
+}

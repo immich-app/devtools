@@ -167,9 +167,10 @@
     ]
   },
   {
-    "github": {
-      "username": "",
-      "id": 0
+    "github": null,
+    "gitlab": {
+      "username": "eron",
+      "id": 2
     },
     "discord": {
       "username": "eronwolf",
