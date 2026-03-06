@@ -216,7 +216,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": false
   },
   {
     "github": {
@@ -229,7 +230,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -242,7 +244,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -255,7 +258,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -268,7 +272,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": false
   },
   {
     "github": {
@@ -281,7 +286,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -294,7 +300,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -307,7 +314,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": false
   },
   {
     "github": {
@@ -320,7 +328,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": false
   },
   {
     "github": {
@@ -333,7 +342,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": false
   },
   {
     "github": {
@@ -346,7 +356,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": false
   },
   {
     "github": {
@@ -359,7 +370,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": false
   },
   {
     "github": {
@@ -372,7 +384,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -385,7 +398,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -398,7 +412,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": false
   },
   {
     "github": {
@@ -411,7 +426,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": false
   },
   {
     "github": {
@@ -424,7 +440,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": false
   },
   {
     "github": {
@@ -437,7 +454,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -450,7 +468,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": false
   },
   {
     "github": {
@@ -463,7 +482,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -476,7 +496,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -489,7 +510,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -502,7 +524,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -515,7 +538,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -528,7 +552,8 @@
     },
     "roles": [
       "contributor"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -541,7 +566,8 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -554,7 +580,8 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -567,7 +594,8 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": false
   },
   {
     "github": {
@@ -580,7 +608,8 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": false
   },
   {
     "github": {
@@ -593,7 +622,8 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -606,7 +636,8 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -619,7 +650,8 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -632,7 +664,8 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -645,7 +678,8 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -658,7 +692,8 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -671,7 +706,8 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -684,7 +720,8 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -697,7 +734,8 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -710,7 +748,8 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -723,7 +762,8 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": true
   },
   {
     "github": {
@@ -736,6 +776,7 @@
     },
     "roles": [
       "support"
-    ]
+    ],
+    "active": true
   }
 ]
