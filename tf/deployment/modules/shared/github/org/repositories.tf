@@ -325,6 +325,11 @@ import {
 }
 
 import {
+  id = "devtools:renovate.json:"
+  to = github_repository_file.init_files["devtools/renovate.json"]
+}
+
+import {
   id = "base-images:renovate.json:"
   to = github_repository_file.init_files["base-images/renovate.json"]
 }
