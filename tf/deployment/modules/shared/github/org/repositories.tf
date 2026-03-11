@@ -286,6 +286,114 @@ resource "github_repository_file" "default_files" {
   }
 }
 
+resource "github_repository_file" "init_files" {
+  for_each = {
+    for combination in flatten([
+      for repo in var.repositories : [
+        for file in fileset("${path.module}/repo-init-files", "**") : {
+          repo = repo
+          file = file
+        }
+        # Ignore all .terragrunt files in any child directory
+        if !can(regex(".*terragrunt.*", file))
+      ]
+      if !coalesce(repo.archived, false)
+    ]) : "${combination.repo.name}/${combination.file}" => combination
+  }
+  repository          = each.value.repo.name
+  file                = each.value.file
+  content             = file("${path.module}/repo-init-files/${each.value.file}")
+  commit_message      = "chore: create ${each.value.file}"
+  overwrite_on_create = false
+
+  depends_on = [github_repository.repositories]
+
+  lifecycle {
+    ignore_changes = [
+      commit_message,
+      commit_email,
+      commit_author,
+      overwrite_on_create,
+      content
+    ]
+  }
+}
+
+import {
+  id = "immich:renovate.json:"
+  to = github_repository_file.init_files["immich/renovate.json"]
+}
+
+import {
+  id = "base-images:renovate.json:"
+  to = github_repository_file.init_files["base-images/renovate.json"]
+}
+
+import {
+  id = "yucca-o11y:renovate.json:"
+  to = github_repository_file.init_files["yucca-o11y/renovate.json"]
+}
+
+import {
+  id = "packages:renovate.json:"
+  to = github_repository_file.init_files["packages/renovate.json"]
+}
+
+import {
+  id = "geoshenanigans:renovate.json:"
+  to = github_repository_file.init_files["geoshenanigans/renovate.json"]
+}
+
+import {
+  id = "data.immich.app:renovate.json:"
+  to = github_repository_file.init_files["data.immich.app/renovate.json"]
+}
+
+import {
+  id = "static-pages:renovate.json:"
+  to = github_repository_file.init_files["static-pages/renovate.json"]
+}
+
+import {
+  id = "ui:renovate.json:"
+  to = github_repository_file.init_files["ui/renovate.json"]
+}
+
+import {
+  id = "discord-bot:renovate.json:"
+  to = github_repository_file.init_files["discord-bot/renovate.json"]
+}
+
+import {
+  id = "yucca:renovate.json:"
+  to = github_repository_file.init_files["yucca/renovate.json"]
+}
+
+import {
+  id = "ml-models:renovate.json:"
+  to = github_repository_file.init_files["ml-models/renovate.json"]
+}
+
+import {
+  id = "immich-charts:renovate.json:"
+  to = github_repository_file.init_files["immich-charts/renovate.json"]
+}
+
+import {
+  id = "justified-layout:renovate.json:"
+  to = github_repository_file.init_files["justified-layout/renovate.json"]
+}
+
+import {
+  id = "sqlite-libs:renovate.json:"
+  to = github_repository_file.init_files["sqlite-libs/renovate.json"]
+}
+
+import {
+  id = "restic-wrapper-ts:renovate.json:"
+  to = github_repository_file.init_files["restic-wrapper-ts/renovate.json"]
+}
+
 resource "github_repository_file" "license_files" {
   for_each = {
     for repo in var.repositories : repo.name => repo
