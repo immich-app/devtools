@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.5](https://github.com/immich-app/devtools/compare/image-build-action-v0.1.4...image-build-action-v0.1.5) (2026-03-19)
+
+
+### Chores
+
+* **deps:** update actions/upload-artifact action to v7 ([#1397](https://github.com/immich-app/devtools/issues/1397)) ([da5dd1a](https://github.com/immich-app/devtools/commit/da5dd1a0b2e5a0b2ac6a42d2575c3e67ad731bdb))
+* **deps:** update github-actions ([#1347](https://github.com/immich-app/devtools/issues/1347)) ([cf9ba79](https://github.com/immich-app/devtools/commit/cf9ba79f5e112849166f84c8a05c70e05672c770))
+
 ## [0.1.4](https://github.com/immich-app/devtools/compare/image-build-action-v0.1.3...image-build-action-v0.1.4) (2026-02-10)
 
 
