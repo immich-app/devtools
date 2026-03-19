@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.3](https://github.com/immich-app/devtools/compare/use-mise-action-v1.1.2...use-mise-action-v1.1.3) (2026-03-19)
+
+
+### Chores
+
+* **deps:** update github-actions ([#1392](https://github.com/immich-app/devtools/issues/1392)) ([9e8a3f9](https://github.com/immich-app/devtools/commit/9e8a3f926a478b3c82b3ef70e2598e6350b76052))
+* **deps:** update github-actions ([#1402](https://github.com/immich-app/devtools/issues/1402)) ([f852dea](https://github.com/immich-app/devtools/commit/f852dea251d00397830d83977184b6551e84589c))
+
 ## [1.1.2](https://github.com/immich-app/devtools/compare/use-mise-action-v1.1.1...use-mise-action-v1.1.2) (2026-02-10)
 
 
