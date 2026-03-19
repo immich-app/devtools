@@ -1,23 +1,17 @@
-data "onepassword_vault" "manual" {
-  name = "tf_manual"
+data "onepassword_vault" "manual_global" {
+  name = var.global_vault
 }
 
-data "onepassword_vault" "manual_dev" {
-  name = "tf_dev_manual"
+data "onepassword_vault" "manual_scoped" {
+  for_each = var.scoped_vaults
+  name     = each.key
 }
 
-data "onepassword_vault" "manual_prod" {
-  name = "tf_prod_manual"
+data "onepassword_vault" "copy_global" {
+  name = var.copy_global_vault
 }
 
-data "onepassword_vault" "tf" {
-  name = "tf"
-}
-
-data "onepassword_vault" "tf_dev" {
-  name = "tf_dev"
-}
-
-data "onepassword_vault" "tf_prod" {
-  name = "tf_prod"
+data "onepassword_vault" "copy_scoped" {
+  for_each = var.scoped_vaults
+  name     = each.value
 }
