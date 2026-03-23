@@ -45,7 +45,7 @@ resource "null_resource" "convert_certificates" {
   for_each = onepassword_item.manual
 
   triggers = {
-    always_run = timestamp()
+    pem_value = each.value.section[0].field[0].value
   }
 
   provisioner "local-exec" {
