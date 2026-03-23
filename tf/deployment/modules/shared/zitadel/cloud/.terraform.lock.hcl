@@ -62,20 +62,7 @@ provider "registry.opentofu.org/zitadel/zitadel" {
   version     = "2.11.0"
   constraints = "2.11.0"
   hashes = [
-    "h1:/T7r+rRgZuHydNP0PQsRPW+uCzRa5iSSJpnzb+QLS8M=",
-    "h1:ACO8SshXQUptrfssVQoHeWivYKDKzyjOWV/9EzFGpAQ=",
-    "h1:N0JU9Ep89EivABRgDlVz6DpqGjx3kOW7rqu0DCd17ZY=",
-    "h1:U7wbBsz9P97eC5eaR4SOySbZy0ySaAYeBHSGYKYSyfA=",
     "h1:XWUneYGIknoLcQm+1sgDClk5rVlwhJZoE4GDJFNBjgU=",
-    "h1:YsSfBXg0O5fi3iWxWSf3VFWaVR66GPYCAulSo/iCng8=",
-    "h1:cLA3gatpR9ugn/mfTqfa70f+/dSKjPSG+RMaPnDftxA=",
-    "h1:eTGZ9T8D83SF/s5up1BfeHZ/Z3Jqpwg22JIjW/qpepM=",
-    "h1:hS6oB2LjXczqLf8GFCfooBONGixuAcB9ATHKMc0BNYI=",
-    "h1:lNfSCg29xt2nWqxw6LkBGDnVlwSeP4QMYkv7Ji7Yl0o=",
-    "h1:nENoFFoUZ47W/Bdinw8vVg+f/1bOOctYHu0B40FYCus=",
-    "h1:nuG/nq+97VzV1/cvPCWPDNGn8IbGTp3QZBJvUjmeeGA=",
-    "h1:yj/PcQOFUoyHmfANRAQ7rmes0eEtYGVihPCzOp+dvDU=",
-    "h1:ywQnFtVfWEDKmmrtIQGu84t+T79ZYee3OymqwWVAE8s=",
     "zh:16788403d68f913e855154cec382622c40986e3d99adfe700ad35fcc11c09c15",
     "zh:26cabaeb684ded24034269b50532ae42df5b9fd7310ab76e4a4f0beecc639ee2",
     "zh:306292464ed9996cc80373b0fcfeb3980ce8fd9a8f7bb8085e3f0f7e247ba047",
