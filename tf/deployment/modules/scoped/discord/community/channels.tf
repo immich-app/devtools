@@ -41,6 +41,7 @@ locals {
     # Team
     team = [
       "team",
+      "team_slop",
       "team_off_topic",
       "team_focus_topic",
       "team_pull_requests",
@@ -316,6 +317,7 @@ module "team_channels_write" {
   source = "./channel-perms"
   channels = {
     team                 = discord_text_channel.team.id
+    team_slop            = discord_text_channel.team_slop.id
     team_off_topic       = discord_text_channel.team_off_topic.id
     team_focus_topic     = discord_forum_channel.team_focus_topic.id
     team_pull_requests   = discord_forum_channel.team_pull_requests.id,
@@ -661,6 +663,17 @@ import {
 resource "discord_text_channel" "team" {
   name                     = "team"
   position                 = index(local.channel_order.team, "team")
+  server_id                = discord_server.server.id
+  category                 = discord_category_channel.team.id
+  sync_perms_with_category = false
+  lifecycle {
+    ignore_changes = [sync_perms_with_category]
+  }
+}
+
+resource "discord_text_channel" "team_slop" {
+  name                     = "team-slop"
+  position                 = index(local.channel_order.team, "team_slop")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.team.id
   sync_perms_with_category = false
