@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.7](https://github.com/immich-app/devtools/compare/image-build-action-v0.1.6...image-build-action-v0.1.7) (2026-03-24)
+
+
+### Chores
+
+* **deps:** update docker/setup-buildx-action action to v4 ([#1441](https://github.com/immich-app/devtools/issues/1441)) ([d1661c1](https://github.com/immich-app/devtools/commit/d1661c190db17be6136a02adbf7c0dbbaae0f11e))
+
 ## [0.1.6](https://github.com/immich-app/devtools/compare/image-build-action-v0.1.5...image-build-action-v0.1.6) (2026-03-24)
 
 
