@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.3](https://github.com/immich-app/devtools/compare/pre-job-action-v2.0.2...pre-job-action-v2.0.3) (2026-03-24)
+
+
+### Chores
+
+* **deps:** update dorny/paths-filter action to v4 ([#1434](https://github.com/immich-app/devtools/issues/1434)) ([3e12a55](https://github.com/immich-app/devtools/commit/3e12a552facc8ab2fade787d176a5fd653a86dd5))
+* **deps:** update github-actions ([#1418](https://github.com/immich-app/devtools/issues/1418)) ([2526860](https://github.com/immich-app/devtools/commit/2526860b563bf04efeae00fb06e5dbb325b723ec))
+
 ## [2.0.2](https://github.com/immich-app/devtools/compare/pre-job-action-v2.0.1...pre-job-action-v2.0.2) (2026-02-10)
 
 
