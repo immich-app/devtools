@@ -47,7 +47,8 @@ jobs:
 
       - name: Check terraform fmt
         env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_DEV_ENV }}
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_DEV }}
           ENVIRONMENT: dev
         run: mise run tf fmt -- -diff -check
   plan:
@@ -72,21 +73,24 @@ jobs:
       - name: Plan Shared
         working-directory: ${{ env.working_dir }}/modules/shared
         env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_PROD }}
           ENVIRONMENT: prod
         run: mise run tf:plan
 
       - name: Plan Dev
         working-directory: ${{ env.working_dir }}/modules/scoped
         env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_DEV_ENV }}
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_DEV }}
           ENVIRONMENT: dev
         run: mise run tf:plan
 
       - name: Plan Prod
         working-directory: ${{ env.working_dir }}/modules/scoped
         env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_PROD }}
           ENVIRONMENT: prod
         run: |
           mise run tf:init
@@ -114,21 +118,24 @@ jobs:
       - name: Deploy Shared
         working-directory: ${{ env.working_dir }}/modules/shared
         env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_PROD }}
           ENVIRONMENT: prod
         run: mise run tf:apply
 
       - name: Deploy Dev
         working-directory: ${{ env.working_dir }}/modules/scoped
         env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_DEV_ENV }}
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_DEV }}
           ENVIRONMENT: dev
         run: mise run tf:apply
 
       - name: Deploy Prod
         working-directory: ${{ env.working_dir }}/modules/scoped
         env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_TF_PROD_ENV }}
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_PROD }}
           ENVIRONMENT: prod
         run: |
           mise run tf:init
