@@ -241,7 +241,7 @@ runs:
     - name: Run force paths filter
       if: ${{ steps.check-conditions.outputs.needs_path_filtering == 'true' && inputs.force-filters != '' }}
       id: force_paths_filter
-      uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590 # v3.0.3
+      uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
       with:
         filters: ${{ steps.force_paths.outputs.force-paths-yaml }}
         token: ${{ inputs.github-token }}
@@ -249,7 +249,7 @@ runs:
     - name: Check main paths
       if: ${{ steps.check-conditions.outputs.needs_path_filtering == 'true' && (inputs.force-filters == '' || steps.force_paths_filter.outputs.force-paths != 'true') }}
       id: main_paths
-      uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590 # v3.0.3
+      uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
       with:
         filters: ${{ inputs.filters }}
         token: ${{ inputs.github-token }}
