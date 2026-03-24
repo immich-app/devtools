@@ -1,0 +1,72 @@
+name: Test use-mise
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  pre-job:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+    steps:
+      - name: Check what should run
+        id: check
+        uses: immich-app/devtools/actions/pre-job@eed0f8b8165ffcb951f2ba854b2dd031935e1d73 # pre-job-action-v2.0.2
+        with:
+          github-token: ${{ github.token }}
+          filters: |
+            use_mise:
+              - 'actions/use-mise/**'
+          force-filters: |
+            - '.github/workflows/test-use-mise.yml'
+
+  test-use-mise:
+    name: Test use-mise (${{ matrix.os }}, ${{ matrix.arch }})
+    needs: pre-job
+    if: ${{ fromJSON(needs.pre-job.outputs.should_run).use_mise == true }}
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: Linux
+            arch: X64
+            runner: ubuntu-latest
+          - os: Linux
+            arch: ARM64
+            runner: ubuntu-24.04-arm
+          - os: macOS
+            arch: ARM64
+            runner: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Use Mise
+        uses: ./actions/use-mise
+        with:
+          github-token: ${{ github.token }}
+
+      - name: Verify mise version matches pinned version
+        run: |
+          expected=$(yq '.runs.steps[0].with.version' actions/use-mise/action.yml)
+          actual=$(mise --version | awk '{print $1}')
+          echo "Expected: $expected"
+          echo "Actual:   $actual"
+          if [ "$expected" != "$actual" ]; then
+            echo "::error::mise version mismatch: expected $expected, got $actual"
+            exit 1
+          fi
