@@ -32,7 +32,7 @@ spec:
           main:
             image:
               repository: quay.io/oauth2-proxy/oauth2-proxy
-              tag: v7.14.2@sha256:121cdc6520a02d7a2ddd181af6dbdc0f11f7d0c0d9353a999a69c3998cbfe37e
+              tag: v7.15.1@sha256:39f08531587045a5443db43299bf8495696c99ed8d0e1fdcbe60534f7c02ce14
             env:
               OAUTH2_PROXY_PROVIDER: "oidc"
               OAUTH2_PROXY_USER_ID_CLAIM: "sub"
