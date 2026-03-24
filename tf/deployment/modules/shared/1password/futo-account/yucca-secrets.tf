@@ -29,7 +29,9 @@ module "generated-secrets" {
   source = "./shared/modules/secrets/generated"
 
   secrets = {
-    global = []
+    global = [
+      "GRAFANA_ADMIN_PASSWORD"
+    ]
     scoped = []
   }
 
