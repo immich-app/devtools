@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.6](https://github.com/immich-app/devtools/compare/image-build-action-v0.1.5...image-build-action-v0.1.6) (2026-03-24)
+
+
+### Chores
+
+* **deps:** update docker/metadata-action action to v6 ([#1433](https://github.com/immich-app/devtools/issues/1433)) ([32ba7e9](https://github.com/immich-app/devtools/commit/32ba7e9fa094a233da776cd09870bb1d53c4e8f7))
+
 ## [0.1.5](https://github.com/immich-app/devtools/compare/image-build-action-v0.1.4...image-build-action-v0.1.5) (2026-03-24)
 
 
