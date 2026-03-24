@@ -1,5 +1,33 @@
 # Changelog
 
+## [2.3.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.2.1...multi-runner-build-workflow-v2.3.0) (2026-03-24)
+
+
+### Features
+
+* workflow to test use-mise action ([#1438](https://github.com/immich-app/devtools/issues/1438)) ([f2098f3](https://github.com/immich-app/devtools/commit/f2098f34ddd3bdedd81f448b8bf8ca9f315dfd3b))
+
+
+### Chores
+
+* **deps:** update actions/create-github-app-token action to v3 ([#1426](https://github.com/immich-app/devtools/issues/1426)) ([22723b2](https://github.com/immich-app/devtools/commit/22723b2320e7c0e4d15983c3fbd3de0671f91511))
+* **deps:** update actions/download-artifact action to v8 ([#1396](https://github.com/immich-app/devtools/issues/1396)) ([5555e72](https://github.com/immich-app/devtools/commit/5555e729fc97ce305c1b9fd130d56ae4e67c3ec0))
+* **deps:** update docker/build-push-action action to v7 ([#1429](https://github.com/immich-app/devtools/issues/1429)) ([3355b1e](https://github.com/immich-app/devtools/commit/3355b1e34cd6c78eeeef71144195438cbb999de4))
+* **deps:** update docker/login-action action to v4 ([#1430](https://github.com/immich-app/devtools/issues/1430)) ([f96b61f](https://github.com/immich-app/devtools/commit/f96b61f6cd8a73fe3422294b78c22e156e61f469))
+* **deps:** update docker/metadata-action action to v6 ([#1433](https://github.com/immich-app/devtools/issues/1433)) ([32ba7e9](https://github.com/immich-app/devtools/commit/32ba7e9fa094a233da776cd09870bb1d53c4e8f7))
+* **deps:** update docker/setup-buildx-action action to v4 ([#1441](https://github.com/immich-app/devtools/issues/1441)) ([d1661c1](https://github.com/immich-app/devtools/commit/d1661c190db17be6136a02adbf7c0dbbaae0f11e))
+* **deps:** update fluxcd ([#1375](https://github.com/immich-app/devtools/issues/1375)) ([98d2c6b](https://github.com/immich-app/devtools/commit/98d2c6b36f3930316e44f26d812bfd0e5b98923a))
+* **deps:** update fluxcd to v2.8.3 ([#1417](https://github.com/immich-app/devtools/issues/1417)) ([367f836](https://github.com/immich-app/devtools/commit/367f8362fe7f1657c0a5dfec94fa751ba2b63faa))
+* **deps:** update github-actions ([#1347](https://github.com/immich-app/devtools/issues/1347)) ([cf9ba79](https://github.com/immich-app/devtools/commit/cf9ba79f5e112849166f84c8a05c70e05672c770))
+* **deps:** update github-actions ([#1392](https://github.com/immich-app/devtools/issues/1392)) ([9e8a3f9](https://github.com/immich-app/devtools/commit/9e8a3f926a478b3c82b3ef70e2598e6350b76052))
+* **deps:** update github-actions ([#1402](https://github.com/immich-app/devtools/issues/1402)) ([f852dea](https://github.com/immich-app/devtools/commit/f852dea251d00397830d83977184b6551e84589c))
+* **deps:** update github-actions ([#1418](https://github.com/immich-app/devtools/issues/1418)) ([2526860](https://github.com/immich-app/devtools/commit/2526860b563bf04efeae00fb06e5dbb325b723ec))
+* **deps:** update github-actions ([#1444](https://github.com/immich-app/devtools/issues/1444)) ([2a983a1](https://github.com/immich-app/devtools/commit/2a983a141c9e77e04fd302f228fa315ab38ca601))
+* **deps:** update github/codeql-action action to v4.32.3 ([#1356](https://github.com/immich-app/devtools/issues/1356)) ([f00c3a6](https://github.com/immich-app/devtools/commit/f00c3a6b8130ac4d126dc7c3ae712c3f7cd68f20))
+* **deps:** update github/codeql-action action to v4.32.4 ([#1369](https://github.com/immich-app/devtools/issues/1369)) ([f3064a6](https://github.com/immich-app/devtools/commit/f3064a61548064b0542d4ebdbc8f80d9efd3ee1e))
+* **deps:** update image-build-action to 0.1.7 ([#1453](https://github.com/immich-app/devtools/issues/1453)) ([de2ae8b](https://github.com/immich-app/devtools/commit/de2ae8b2c1c3c53264234a7900e59354b13c6f2c))
+* **deps:** update mshick/add-pr-comment action to v3 ([#1436](https://github.com/immich-app/devtools/issues/1436)) ([4d3432f](https://github.com/immich-app/devtools/commit/4d3432fbe3baae41e7d37612c82dce7f6084959b))
+
 ## [2.2.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.2.0...multi-runner-build-workflow-v2.2.1) (2026-02-10)
 
 
