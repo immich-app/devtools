@@ -16,8 +16,8 @@ yamlfmt = "0.21.0"
 KUBECONFIG = "{{config_root}}/.mise/kube.config"
 
 [tasks.tg]
-run = "op run '--env-file={{config_root}}/tf/deployment/.env' -- terragrunt"
-description = "Wrapper for terragrunt"
+run = "op run '--env-file={{config_root}}/tf/deployment/.env' -- env -u OP_CONNECT_HOST -u OP_CONNECT_TOKEN -u OP_SERVICE_ACCOUNT_TOKEN -- terragrunt"
+description = "Wrapper for terragrunt, op run resolves secrets then env -u strips op auth vars so they don't conflict with terraform providers"
 dir = "{{cwd}}"
 
 [tasks."tg:fmt"]
