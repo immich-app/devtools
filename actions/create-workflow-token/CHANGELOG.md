@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/immich-app/devtools/compare/create-workflow-token-action-v1.0.1...create-workflow-token-action-v1.0.2) (2026-03-24)
+
+
+### Chores
+
+* **deps:** update actions/create-github-app-token action to v3 ([#1426](https://github.com/immich-app/devtools/issues/1426)) ([22723b2](https://github.com/immich-app/devtools/commit/22723b2320e7c0e4d15983c3fbd3de0671f91511))
+
 ## [1.0.1](https://github.com/immich-app/devtools/compare/create-workflow-token-action-v1.0.0...create-workflow-token-action-v1.0.1) (2026-01-09)
 
 
