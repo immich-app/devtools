@@ -30,7 +30,7 @@ module "generated-secrets" {
 
   secrets = {
     global = [
-      "GRAFANA_ADMIN_PASSWORD"
+      { name = "GRAFANA_ADMIN_PASSWORD" }
     ]
     scoped = []
   }
