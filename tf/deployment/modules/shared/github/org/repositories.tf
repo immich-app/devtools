@@ -139,8 +139,18 @@ variable "repositories" {
       name        = "yucca-slop",
       description = "yucca-slop",
       visibility  = "private"
+    },
+    {
+      name        = "retro",
+      description = "ISO generator for the Immich Retro Demo DVD",
+      license     = "MIT"
     }
   ]
+}
+
+import {
+  id = "retro"
+  to = github_repository.repositories["retro"]
 }
 
 resource "github_repository" "repositories" {
