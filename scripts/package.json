@@ -4,6 +4,7 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
+    "check-activity": "tsx src/check-activity.ts",
     "seed-demo": "tsx src/seed-demo.ts",
     "build": "tsc",
     "format": "prettier --check .",
@@ -17,10 +18,17 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "dependencies": {
+    "@discordjs/rest": "^2.4.3",
+    "@octokit/graphql": "^8.2.1",
+    "discord-api-types": "^0.37.119",
+    "json-bigint": "^1.0.0"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.20.0",
     "@immich/sdk": "^2.0.0",
+    "@types/json-bigint": "^1.0.4",
     "@types/luxon": "^3.4.2",
     "@types/node": "^24.12.0",
     "@typescript-eslint/eslint-plugin": "^8.24.0",
@@ -29,12 +37,12 @@
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-unicorn": "^62.0.0",
+    "globals": "^17.1.0",
     "luxon": "^3.5.0",
     "prettier": "^3.5.0",
     "prettier-plugin-organize-imports": "^4.1.0",
     "tsx": "^4.19.4",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.24.0",
-    "globals": "^17.1.0"
+    "typescript-eslint": "^8.24.0"
   }
 }
