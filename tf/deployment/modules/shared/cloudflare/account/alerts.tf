@@ -28,7 +28,7 @@ resource "cloudflare_notification_policy" "r2_storage_usage_alert" {
   }
 
   webhooks_integration {
-    id   = cloudflare_notification_policy_webhooks.discord_leadership_alert.id
+    id   = replace(cloudflare_notification_policy_webhooks.discord_leadership_alert.id, "-", "")
     name = cloudflare_notification_policy_webhooks.discord_leadership_alert.name
   }
 }
@@ -50,7 +50,7 @@ resource "cloudflare_notification_policy" "r2_class_a_operations_alert" {
   }
 
   webhooks_integration {
-    id   = cloudflare_notification_policy_webhooks.discord_leadership_alert.id
+    id   = replace(cloudflare_notification_policy_webhooks.discord_leadership_alert.id, "-", "")
     name = cloudflare_notification_policy_webhooks.discord_leadership_alert.name
   }
 }
@@ -72,7 +72,7 @@ resource "cloudflare_notification_policy" "r2_class_b_operations_alert" {
   }
 
   webhooks_integration {
-    id   = cloudflare_notification_policy_webhooks.discord_leadership_alert.id
+    id   = replace(cloudflare_notification_policy_webhooks.discord_leadership_alert.id, "-", "")
     name = cloudflare_notification_policy_webhooks.discord_leadership_alert.name
   }
 }
