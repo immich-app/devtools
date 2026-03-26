@@ -56,6 +56,7 @@ jobs:
     if: github.ref != 'refs/heads/main'
     permissions:
       contents: read
+      pull-requests: write
     steps:
       - name: 'Checkout'
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -76,7 +77,7 @@ jobs:
           OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_PROD }}
           ENVIRONMENT: prod
-        run: mise run tf:plan
+        run: mise run tf:plan 2>&1 | tee "$RUNNER_TEMP/plan-shared.txt"
 
       - name: Plan Dev
         working-directory: ${{ env.working_dir }}/modules/scoped
@@ -84,7 +85,7 @@ jobs:
           OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_DEV }}
           ENVIRONMENT: dev
-        run: mise run tf:plan
+        run: mise run tf:plan 2>&1 | tee "$RUNNER_TEMP/plan-dev.txt"
 
       - name: Plan Prod
         working-directory: ${{ env.working_dir }}/modules/scoped
@@ -94,7 +95,33 @@ jobs:
           ENVIRONMENT: prod
         run: |
           mise run tf:init
-          mise run tf:plan
+          mise run tf:plan 2>&1 | tee "$RUNNER_TEMP/plan-prod.txt"
+
+      - name: Comment PR
+        if: always() && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          {
+            echo "## Terraform Plan"
+            echo ""
+            bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-shared.txt" "Shared"
+            bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-dev.txt" "Scoped (dev)"
+            bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-prod.txt" "Scoped (prod)"
+          } > "$RUNNER_TEMP/plan-comment.md"
+
+          char_count=$(wc -c < "$RUNNER_TEMP/plan-comment.md")
+          if [ "$char_count" -gt 65536 ]; then
+            echo "## Terraform Plan" > "$RUNNER_TEMP/plan-comment.md"
+            echo "" >> "$RUNNER_TEMP/plan-comment.md"
+            echo "Plan output exceeded GitHub's comment character limit (${char_count} / 65536)." >> "$RUNNER_TEMP/plan-comment.md"
+            echo "" >> "$RUNNER_TEMP/plan-comment.md"
+            echo "[View full plan output in the action run](${RUN_URL})" >> "$RUNNER_TEMP/plan-comment.md"
+          fi
+
+          gh pr comment "${{ github.event.pull_request.number }}" --body-file "$RUNNER_TEMP/plan-comment.md" --edit-last 2>/dev/null || \
+          gh pr comment "${{ github.event.pull_request.number }}" --body-file "$RUNNER_TEMP/plan-comment.md"
 
   deploy:
     runs-on: ubuntu-latest
