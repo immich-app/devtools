@@ -15,7 +15,7 @@ resource "zitadel_default_login_policy" "default" {
   default_redirect_uri          = ""
   second_factors                = []
   multi_factors                 = []
-  idps                          = [zitadel_idp_github.github.id]
+  idps                          = [zitadel_idp_github.github.id, zitadel_idp_gitlab_self_hosted.gitlab.id]
   allow_domain_discovery        = false
   disable_login_with_email      = true
   disable_login_with_phone      = true
@@ -40,8 +40,8 @@ resource "zitadel_project" "zitadel" {
 
 resource "zitadel_instance_member" "superusers" {
   for_each = {
-    for user in local.users_data : user.github.id => user
-    if user.github.username != null && user.github.username != "" && contains(user.roles, "admin")
+    for key, user in local.zitadel_users : key => user
+    if contains(user.roles, "admin")
   }
   user_id = zitadel_human_user.users[each.key].id
   roles   = ["IAM_OWNER"]
@@ -56,8 +56,8 @@ resource "zitadel_project_role" "zitadel_admin" {
 
 resource "zitadel_user_grant" "superusers" {
   for_each = {
-    for user in local.users_data : user.github.id => user
-    if user.github.username != null && user.github.username != "" && contains(user.roles, "admin")
+    for key, user in local.zitadel_users : key => user
+    if contains(user.roles, "admin")
   }
   org_id     = zitadel_project.zitadel.org_id
   project_id = zitadel_project.zitadel.id

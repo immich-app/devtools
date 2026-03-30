@@ -5,7 +5,7 @@ locals {
 resource "random_password" "zitadel_user_initial_password" {
   for_each = {
     for user in local.users_data : user.github.id => user
-    if user.github.username != null && user.github.username != ""
+    if try(user.github.username, "") != ""
   }
   length  = 64
   special = true
@@ -14,7 +14,7 @@ resource "random_password" "zitadel_user_initial_password" {
 resource "zitadel_human_user" "users" {
   for_each = {
     for user in local.users_data : user.github.id => user
-    if user.github.username != null && user.github.username != ""
+    if try(user.github.username, "") != ""
   }
   email                        = "${each.value.github.id}+${each.value.github.username}@users.noreply.github.com"
   first_name                   = each.value.github.username
@@ -39,7 +39,7 @@ resource "zitadel_human_user" "users" {
 resource "zitadel_user_metadata" "role" {
   for_each = {
     for user in local.users_data : user.github.id => user
-    if user.github.username != null && user.github.username != ""
+    if try(user.github.username, "") != ""
   }
   org_id  = zitadel_org.immich.id
   user_id = zitadel_human_user.users[each.key].id

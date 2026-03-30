@@ -17,7 +17,7 @@ locals {
         github_user_id = user.github.id
       }
       if length([for role in project.roles : role.key if length(setintersection(toset(role.grants_to), toset(user.roles))) > 0]) > 0
-      && user.github.username != null && user.github.username != ""
+      && try(user.github.username, "") != ""
     ]
   ])
 }
