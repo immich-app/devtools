@@ -120,8 +120,18 @@ jobs:
             echo "[View full plan output in the action run](${RUN_URL})" >> "$RUNNER_TEMP/plan-comment.md"
           fi
 
-          gh pr comment "${{ github.event.pull_request.number }}" --body-file "$RUNNER_TEMP/plan-comment.md" --edit-last 2>/dev/null || \
-          gh pr comment "${{ github.event.pull_request.number }}" --body-file "$RUNNER_TEMP/plan-comment.md"
+          COMMENT_ID=$(gh api "repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments" \
+            --jq '.[] | select(.body | startswith("<!-- tf-plan -->")) | .id' | head -1)
+
+          # Prepend hidden marker for future lookups
+          sed -i '1s/^/<!-- tf-plan -->\n/' "$RUNNER_TEMP/plan-comment.md"
+
+          if [ -n "$COMMENT_ID" ]; then
+            gh api "repos/${{ github.repository }}/issues/comments/$COMMENT_ID" \
+              -X PATCH -F "body=@$RUNNER_TEMP/plan-comment.md"
+          else
+            gh pr comment "${{ github.event.pull_request.number }}" --body-file "$RUNNER_TEMP/plan-comment.md"
+          fi
 
   deploy:
     runs-on: ubuntu-latest
