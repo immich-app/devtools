@@ -1,4 +1,4 @@
-module "yucca-manual-secrets" {
+module "o11y-manual-secrets" {
   source = "./shared/modules/secrets/manual"
 
   secrets = {
@@ -16,32 +16,29 @@ module "yucca-manual-secrets" {
     ]
     scoped = []
   }
-  global_vault      = "yucca_tf_manual"
-  copy_global_vault = "yucca_tf"
+  global_vault      = "o11y_tf_manual"
+  copy_global_vault = "o11y_tf"
   scoped_vaults = {
-    "yucca_tf_prod_manual"    = "yucca_tf_prod"
-    "yucca_tf_staging_manual" = "yucca_tf_staging"
-    "yucca_tf_dev_manual"     = "yucca_tf_dev"
+    "o11y_tf_prod_manual"    = "o11y_tf_prod"
+    "o11y_tf_staging_manual" = "o11y_tf_staging"
+    "o11y_tf_dev_manual"     = "o11y_tf_dev"
   }
 }
 
-moved {
-  from = module.generated-secrets
-  to   = module.yucca-generated-secrets
-}
-
-module "yucca-generated-secrets" {
+module "o11y-generated-secrets" {
   source = "./shared/modules/secrets/generated"
 
   secrets = {
-    global = []
+    global = [
+      { name = "GRAFANA_ADMIN_PASSWORD" }
+    ]
     scoped = []
   }
 
-  global_vault = "yucca_tf"
+  global_vault = "o11y_tf"
   scoped_vaults = toset([
-    "yucca_tf_prod",
-    "yucca_tf_staging",
-    "yucca_tf_dev",
+    "o11y_tf_prod",
+    "o11y_tf_staging",
+    "o11y_tf_dev",
   ])
 }
