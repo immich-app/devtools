@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.4.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.3.0...multi-runner-build-workflow-v2.4.0) (2026-03-30)
+
+
+### Features
+
+* add terraform plan pr comments separated by module ([#1460](https://github.com/immich-app/devtools/issues/1460)) ([464be4a](https://github.com/immich-app/devtools/commit/464be4a34cf24db195553b91983174e21cc5d55b))
+* migrate 1pass provider to use connect server ([#1454](https://github.com/immich-app/devtools/issues/1454)) ([402f24d](https://github.com/immich-app/devtools/commit/402f24dfa41911c6dccc2ee55cf1fbcbf8704aad))
+
+
+### Bug Fixes
+
+* edit existing terraform plan PR comment instead of posting new ones ([#1464](https://github.com/immich-app/devtools/issues/1464)) ([08c368e](https://github.com/immich-app/devtools/commit/08c368e665e0d906d2fe478ff096fdb94089891c))
+
 ## [2.3.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.2.1...multi-runner-build-workflow-v2.3.0) (2026-03-24)
 
 
