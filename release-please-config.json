@@ -19,6 +19,9 @@
     "actions/create-workflow-token": {
       "component": "create-workflow-token-action"
     },
+    "services/outline-role-sync": {
+      "component": "outline-role-sync"
+    },
     ".github/workflows": {
       "component": "multi-runner-build-workflow",
       "exclude-paths": [
