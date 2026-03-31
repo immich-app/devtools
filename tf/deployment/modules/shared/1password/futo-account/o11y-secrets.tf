@@ -12,9 +12,13 @@ module "o11y-manual-secrets" {
       "OVH_APPLICATION_SECRET",
       "OVH_CONSUMER_KEY",
       "TAILSCALE_API_KEY",
-      "TAILSCALE_TAILNET_ID"
+      "TAILSCALE_TAILNET_ID",
+      "1PASS_CONNECT_SERVER_CREDENTIALS_FILE",
+      "1PASS_CONNECT_O11Y_SUPERUSER"
     ]
-    scoped = []
+    scoped = [
+      "1PASS_CONNECT_O11Y_READ",
+    ]
   }
   global_vault      = "o11y_tf_manual"
   copy_global_vault = "o11y_tf"
