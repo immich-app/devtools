@@ -384,6 +384,42 @@ resource "github_actions_organization_secret" "STATIC_BUCKET_REGION" {
   visibility      = "all"
 }
 
+data "github_repository" "geoshenanigans" {
+  full_name = "immich-app/geoshenanigans"
+}
+
+data "onepassword_item" "TIGRIS_WRITE_KEY_ID" {
+  title = "TIGRIS_WRITE_KEY_ID"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "TIGRIS_WRITE_KEY_ID" {
+  secret_name     = "TIGRIS_WRITE_KEY_ID"
+  plaintext_value = data.onepassword_item.TIGRIS_WRITE_KEY_ID.password
+  visibility      = "selected"
+}
+
+resource "github_actions_organization_secret_repositories" "TIGRIS_WRITE_KEY_ID" {
+  secret_name             = github_actions_organization_secret.TIGRIS_WRITE_KEY_ID.secret_name
+  selected_repository_ids = [data.github_repository.geoshenanigans.repo_id]
+}
+
+data "onepassword_item" "TIGRIS_WRITE_ACCESS_KEY" {
+  title = "TIGRIS_WRITE_ACCESS_KEY"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "TIGRIS_WRITE_ACCESS_KEY" {
+  secret_name     = "TIGRIS_WRITE_ACCESS_KEY"
+  plaintext_value = data.onepassword_item.TIGRIS_WRITE_ACCESS_KEY.password
+  visibility      = "selected"
+}
+
+resource "github_actions_organization_secret_repositories" "TIGRIS_WRITE_ACCESS_KEY" {
+  secret_name             = github_actions_organization_secret.TIGRIS_WRITE_ACCESS_KEY.secret_name
+  selected_repository_ids = [data.github_repository.geoshenanigans.repo_id]
+}
+
 data "onepassword_item" "OUTLINE_API_KEY" {
   title = "OUTLINE_API_KEY"
   vault = data.onepassword_vault.tf.name
