@@ -7,7 +7,7 @@ variable "repositories" {
     projects               = optional(bool, false)
     issues                 = optional(bool, true)
     archived               = optional(bool, false)
-    fork                   = optional(bool, false)
+    fork_source            = optional(string)
     collaborators          = optional(bool, false)
     require_codeowners     = optional(bool, false)
     license                = optional(string, "AGPL")
@@ -79,7 +79,7 @@ variable "repositories" {
     {
       name        = "native_video_player",
       description = "A Flutter widget to play videos on iOS and Android using a native implementation.",
-      fork        = true
+      fork_source = "albemala/native_video_player"
     },
     {
       name        = "justified-layout",
@@ -174,6 +174,10 @@ resource "github_repository" "repositories" {
   vulnerability_alerts      = !each.value.archived
   homepage_url              = coalesce(each.value.url, "https://immich.app")
   squash_merge_commit_title = "PR_TITLE"
+
+  fork         = each.value.fork_source != null
+  source_owner = each.value.fork_source != null ? split("/", each.value.fork_source)[0] : null
+  source_repo  = each.value.fork_source != null ? split("/", each.value.fork_source)[1] : null
 
   lifecycle {
     ignore_changes = [
@@ -412,7 +416,7 @@ import {
 resource "github_repository_file" "license_files" {
   for_each = {
     for repo in var.repositories : repo.name => repo
-    if !coalesce(repo.fork, false) && !coalesce(repo.archived, false)
+    if repo.fork_source == null && !coalesce(repo.archived, false)
   }
   repository          = each.value.name
   file                = "LICENSE"
