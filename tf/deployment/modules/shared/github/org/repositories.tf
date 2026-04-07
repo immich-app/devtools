@@ -144,6 +144,12 @@ variable "repositories" {
       name        = "retro",
       description = "ISO generator for the Immich Retro Demo DVD",
       license     = "MIT"
+    },
+    {
+      name        = "drift",
+      description = "Drift is an easy to use, reactive, typesafe persistence library for Dart & Flutter.",
+      fork_source = "simolus3/drift",
+      url         = "https://pub.dev/packages/drift"
     }
   ]
 }
@@ -151,6 +157,11 @@ variable "repositories" {
 import {
   id = "retro"
   to = github_repository.repositories["retro"]
+}
+
+import {
+  id = "drift"
+  to = github_repository.repositories["drift"]
 }
 
 resource "github_repository" "repositories" {
