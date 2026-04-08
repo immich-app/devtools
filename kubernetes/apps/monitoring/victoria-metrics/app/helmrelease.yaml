@@ -47,13 +47,19 @@ spec:
     vmsingle:
       spec:
         extraArgs:
-          search.maxUniqueTimeseries: "600000"
+          search.logSlowQueryDuration: "3s"
         resources:
+          requests:
+            cpu: 2000m
+            memory: 32Gi
           limits:
-            memory: 8Gi
+            memory: 32Gi
     vmagent:
       spec:
         resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
           limits:
             cpu: 2000m
             memory: 1Gi
