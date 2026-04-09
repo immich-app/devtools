@@ -9,7 +9,8 @@
       "id": 285511635735543828
     },
     "roles": [
-      "admin"
+      "admin",
+      "immich"
     ]
   },
   {
@@ -22,7 +23,8 @@
       "id": 613523742479483183
     },
     "roles": [
-      "admin"
+      "admin",
+      "immich"
     ],
     "dev": true
   },
@@ -37,7 +39,8 @@
     },
     "roles": [
       "admin",
-      "yucca"
+      "yucca",
+      "immich"
     ],
     "dev": true
   },
@@ -52,7 +55,8 @@
     },
     "roles": [
       "admin",
-      "yucca"
+      "yucca",
+      "immich"
     ],
     "dev": true
   },
@@ -108,7 +112,8 @@
       "id": 273458650557841408
     },
     "roles": [
-      "team"
+      "team",
+      "immich"
     ],
     "dev": true
   },
@@ -122,7 +127,8 @@
       "id": 1110388960842219662
     },
     "roles": [
-      "team"
+      "team",
+      "immich"
     ]
   },
   {
@@ -135,7 +141,8 @@
       "id": 879025674214584330
     },
     "roles": [
-      "team"
+      "team",
+      "immich"
     ],
     "dev": true
   },
@@ -149,7 +156,8 @@
       "id": 172431702465970176
     },
     "roles": [
-      "team"
+      "team",
+      "immich"
     ]
   },
   {
@@ -162,7 +170,8 @@
       "id": 535188881604214804
     },
     "roles": [
-      "team"
+      "team",
+      "immich"
     ]
   },
   {

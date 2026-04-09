@@ -18,6 +18,11 @@ resource "discord_member_roles" "roles" {
   }
 
   role {
+    role_id  = discord_role.immich.id
+    has_role = contains(each.value.roles, "immich")
+  }
+
+  role {
     role_id  = discord_role.contributor.id
     has_role = length(setintersection(toset(each.value.roles), toset(["contributor", "futo", "yucca", "team", "admin"]))) > 0
   }
