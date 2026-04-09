@@ -4,6 +4,7 @@ locals {
     "hidden_admin",
     "head_down",
     "team",
+    "immich",
     "yucca",
     "futo",
     "contributor",
@@ -112,6 +113,17 @@ resource "discord_role" "contributor" {
   permissions = data.discord_permission.contributor.allow_bits
   color       = data.discord_color.contributor.dec
   hoist       = true
+}
+
+data "discord_color" "immich" {
+  hex = "#4250AF"
+}
+
+resource "discord_role" "immich" {
+  server_id   = discord_server.server.id
+  name        = "Immich"
+  permissions = data.discord_permission.team.allow_bits
+  color       = data.discord_color.immich.dec
 }
 
 data "discord_color" "futo" {
