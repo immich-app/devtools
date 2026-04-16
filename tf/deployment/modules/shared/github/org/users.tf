@@ -45,7 +45,7 @@ resource "github_team_members" "team" {
     }
     content {
       username = members.value.github.username
-      role     = contains(members.value.roles, "admin") ? "maintainer" : "member"
+      role     = contains(members.value.roles, "immich_admin") ? "maintainer" : "member"
     }
   }
 }
@@ -55,11 +55,11 @@ resource "github_team_members" "leadership" {
   dynamic "members" {
     for_each = {
       for user in local.github_users : user.github.username => user
-      if contains(user.roles, "admin")
+      if contains(user.roles, "immich_admin")
     }
     content {
       username = members.value.github.username
-      role     = contains(members.value.roles, "admin") ? "maintainer" : "member"
+      role     = contains(members.value.roles, "immich_admin") ? "maintainer" : "member"
     }
   }
 }
@@ -67,11 +67,11 @@ resource "github_team_members" "leadership" {
 resource "github_membership" "org_members" {
   for_each = {
     for user in local.github_users : user.github.username => user
-    if length(setintersection(toset(user.roles), toset(["team", "yucca", "admin"]))) > 0
+    if length(setintersection(toset(user.roles), toset(["team", "yucca", "immich_admin"]))) > 0
   }
 
   username = each.key
-  role     = contains(each.value.roles, "admin") ? "admin" : "member"
+  role     = contains(each.value.roles, "immich_admin") ? "admin" : "member"
 }
 
 resource "github_repository_collaborators" "repo_collaborators" {

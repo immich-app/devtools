@@ -9,8 +9,10 @@
       "id": 285511635735543828
     },
     "roles": [
-      "admin",
-      "immich"
+      "immich_admin",
+      "futo_admin",
+      "immich",
+      "futo"
     ]
   },
   {
@@ -23,10 +25,10 @@
       "id": 613523742479483183
     },
     "roles": [
-      "admin",
-      "immich"
-    ],
-    "dev": true
+      "immich_admin",
+      "immich",
+      "futo"
+    ]
   },
   {
     "github": {
@@ -38,11 +40,11 @@
       "id": 324007594262003722
     },
     "roles": [
-      "admin",
+      "immich_admin",
       "yucca",
-      "immich"
-    ],
-    "dev": true
+      "immich",
+      "futo"
+    ]
   },
   {
     "github": {
@@ -54,11 +56,12 @@
       "id": 185097470215192579
     },
     "roles": [
-      "admin",
+      "immich_admin",
+      "futo_admin",
       "yucca",
-      "immich"
-    ],
-    "dev": true
+      "immich",
+      "futo"
+    ]
   },
   {
     "github": {
@@ -71,7 +74,8 @@
     },
     "roles": [
       "team",
-      "yucca"
+      "yucca",
+      "futo"
     ]
   },
   {
@@ -85,7 +89,8 @@
     },
     "roles": [
       "team",
-      "yucca"
+      "yucca",
+      "futo"
     ]
   },
   {
@@ -99,7 +104,8 @@
     },
     "roles": [
       "team",
-      "yucca"
+      "yucca",
+      "futo"
     ]
   },
   {
@@ -113,9 +119,9 @@
     },
     "roles": [
       "team",
-      "immich"
-    ],
-    "dev": true
+      "immich",
+      "futo"
+    ]
   },
   {
     "github": {
@@ -128,7 +134,8 @@
     },
     "roles": [
       "team",
-      "immich"
+      "immich",
+      "futo"
     ]
   },
   {
@@ -142,9 +149,9 @@
     },
     "roles": [
       "team",
-      "immich"
-    ],
-    "dev": true
+      "immich",
+      "futo"
+    ]
   },
   {
     "github": {
@@ -157,7 +164,8 @@
     },
     "roles": [
       "team",
-      "immich"
+      "immich",
+      "futo"
     ]
   },
   {
@@ -171,7 +179,8 @@
     },
     "roles": [
       "team",
-      "immich"
+      "immich",
+      "futo"
     ]
   },
   {
@@ -185,7 +194,8 @@
     },
     "roles": [
       "team",
-      "yucca"
+      "yucca",
+      "futo"
     ]
   },
   {
@@ -212,7 +222,8 @@
       "id": 1402320140938510398
     },
     "roles": [
-      "futo"
+      "futo",
+      "futo_admin"
     ]
   },
   {
@@ -223,6 +234,36 @@
     "discord": {
       "username": "",
       "id": 0
+    },
+    "roles": [
+      "futo"
+    ]
+  },
+  {
+    "github": null,
+    "discord": {
+      "username": "thekinocorner",
+      "id": 407763616528334848
+    },
+    "roles": [
+      "futo"
+    ]
+  },
+  {
+    "github": null,
+    "discord": {
+      "username": "orhan_08299",
+      "id": 1450543861108838491
+    },
+    "roles": [
+      "futo"
+    ]
+  },
+  {
+    "github": null,
+    "discord": {
+      "username": "somewhatjustin",
+      "id": 396114422906486784
     },
     "roles": [
       "futo"
