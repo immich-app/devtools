@@ -11,9 +11,9 @@ terraform {
       source  = "1Password/onepassword"
       version = "~> 2.1"
     }
-    http = {
-      source  = "hashicorp/http"
-      version = "~> 3.5"
+    external = {
+      source  = "hashicorp/external"
+      version = "~> 2.3"
     }
   }
 }

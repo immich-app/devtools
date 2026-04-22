@@ -7,23 +7,19 @@ locals {
   }
 }
 
-data "http" "member_check" {
-  for_each = local.candidate_users
-  url      = "https://discord.com/api/v10/guilds/${discord_server.server.id}/members/${each.value.discord.id}"
-  request_headers = {
-    Authorization = "Bot ${var.discord_token}"
-  }
-  retry {
-    attempts     = 5
-    min_delay_ms = 1000
-    max_delay_ms = 10000
+data "external" "members" {
+  program = ["${path.module}/scripts/check-members.sh"]
+  query = {
+    token     = var.discord_token
+    server_id = discord_server.server.id
+    user_ids  = join(",", [for user in local.candidate_users : user.discord.id])
   }
 }
 
 resource "discord_member_roles" "roles" {
   for_each = {
     for id, user in local.candidate_users : id => user
-    if data.http.member_check[id].status_code == 200
+    if contains(jsondecode(data.external.members.result.member_ids), id)
   }
 
   server_id = discord_server.server.id
