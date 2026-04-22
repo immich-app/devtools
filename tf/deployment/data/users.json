@@ -250,7 +250,10 @@
     ]
   },
   {
-    "github": null,
+    "github": {
+      "username": "orhan98",
+      "id": 234065310
+    },
     "discord": {
       "username": "orhan_08299",
       "id": 1450543861108838491
