@@ -41,7 +41,7 @@ resource "zitadel_project" "zitadel" {
 resource "zitadel_instance_member" "superusers" {
   for_each = {
     for user in local.users_data : user.github.id => user
-    if try(user.github.username, "") != "" && contains(user.roles, "admin")
+    if try(user.github.username, "") != "" && contains(user.roles, "immich_admin")
   }
   user_id = zitadel_human_user.users[each.key].id
   roles   = ["IAM_OWNER"]
@@ -57,7 +57,7 @@ resource "zitadel_project_role" "zitadel_admin" {
 resource "zitadel_user_grant" "superusers" {
   for_each = {
     for user in local.users_data : user.github.id => user
-    if try(user.github.username, "") != "" && contains(user.roles, "admin")
+    if try(user.github.username, "") != "" && contains(user.roles, "immich_admin")
   }
   org_id     = zitadel_project.zitadel.org_id
   project_id = zitadel_project.zitadel.id
