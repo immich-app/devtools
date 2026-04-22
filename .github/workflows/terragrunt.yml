@@ -23,6 +23,10 @@ env:
   TG_NON_INTERACTIVE: 'true'
 permissions: {}
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   check:
     runs-on: ubuntu-latest
