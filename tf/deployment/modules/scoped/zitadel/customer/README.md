@@ -85,9 +85,9 @@ Logo / icon assets live under `assets/`:
 - `assets/logo.svg` — the FUTO wordmark (blue gradient SVG lifted from the
   futo.tech header). Transparent background. Used for both light and dark
   themes via `logo_path` / `logo_dark_path` so it adapts to either.
-- `assets/icon.png` — 400×400 FUTO icon with alpha-blended edges
-  (white-background composite unblended into transparent RGBA). Used for both
-  themes via `icon_path` / `icon_dark_path`.
+- `assets/icon.svg` — square FUTO "O" symbol extracted from the wordmark
+  (same blue gradient, centred in a 24×24 viewBox). Transparent by design.
+  Used for both themes via `icon_path` / `icon_dark_path`.
 
 To swap an asset, drop the new file into `assets/` keeping the same filename;
 the `filemd5(...)` hash in `branding.tf` will detect the change and re-upload

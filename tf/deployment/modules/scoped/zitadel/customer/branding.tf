@@ -24,11 +24,11 @@ resource "zitadel_default_label_policy" "default" {
   logo_dark_path = "${path.module}/assets/logo.svg"
   logo_dark_hash = filemd5("${path.module}/assets/logo.svg")
 
-  icon_path = "${path.module}/assets/icon.png"
-  icon_hash = filemd5("${path.module}/assets/icon.png")
+  icon_path = "${path.module}/assets/icon.svg"
+  icon_hash = filemd5("${path.module}/assets/icon.svg")
 
-  icon_dark_path = "${path.module}/assets/icon.png"
-  icon_dark_hash = filemd5("${path.module}/assets/icon.png")
+  icon_dark_path = "${path.module}/assets/icon.svg"
+  icon_dark_hash = filemd5("${path.module}/assets/icon.svg")
 
   set_active = true
 }
