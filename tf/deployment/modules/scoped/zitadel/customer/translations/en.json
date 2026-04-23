@@ -1,0 +1,13 @@
+{
+  "common": {
+    "title": "Login with FUTO"
+  },
+  "register": {
+    "description": "Create your FUTO account."
+  },
+  "device": {
+    "request": {
+      "disclaimer": "By clicking Allow, you allow {appName} to use your information in accordance with its respective terms of service and privacy policy. You can revoke this access at any time."
+    }
+  }
+}
