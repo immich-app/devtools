@@ -28,6 +28,8 @@ locals {
           "http://localhost:5173/auth/callback",
           "http://localhost:8080/auth/callback",
           "http://127.0.0.1:3000/auth/callback",
+          "http://localhost:5173/api/auth/oidc/callback",
+          "http://localhost:22676/api/yucca/auth/oidc/callback",
         ]
         postLogoutRedirectUris = [
           "http://localhost:3000/",

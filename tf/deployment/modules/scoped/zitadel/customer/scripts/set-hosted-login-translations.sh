@@ -30,13 +30,15 @@ fi
 
 # -- base64url helpers ------------------------------------------------------
 b64url() {
-  # Stream in -> base64url out (no padding)
-  base64 -w0 | tr '+/' '-_' | tr -d '='
+  # Stream in -> base64url out (no padding). `tr -d '\n'` instead of GNU `base64 -w0`
+  # so this works on macOS/BSD base64 too.
+  base64 | tr -d '\n' | tr '+/' '-_' | tr -d '='
 }
 
 # -- parse profile JSON -----------------------------------------------------
-profile_tmp=$(mktemp)
+profile_tmp=""; key_tmp=""; signing_tmp=""; sig_tmp=""
 trap 'rm -f "$profile_tmp" "$key_tmp" "$signing_tmp" "$sig_tmp"' EXIT
+profile_tmp=$(mktemp)
 echo "$ZITADEL_PROFILE_JSON" >"$profile_tmp"
 
 key_id=$(jq -r '.keyId' "$profile_tmp")

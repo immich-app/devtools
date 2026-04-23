@@ -6,6 +6,7 @@ provider "registry.opentofu.org/1password/onepassword" {
   constraints = "~> 2.1"
   hashes = [
     "h1:CosIqZ6jkgylvF23rLyNixIecZAAhFyb61sLl6GrEsc=",
+    "h1:aH5pZUimlQdiGnDLHRC49W4xnkx52wfd8XRLt69+764=",
     "zh:025709a6b5f1b3685d277f2c48f7cb8b53d14b3699c1123d7e9a2135c099c533",
     "zh:037fc89d150063a8aacdcab08ba26038b489fe2468d509b842d298ea59096ca6",
     "zh:233777182b25faf1658e8ce171b684460983bb41cff79fb243662f3f9dc5ca6c",
@@ -28,6 +29,7 @@ provider "registry.opentofu.org/hashicorp/null" {
   version     = "3.2.4"
   constraints = "~> 3.2"
   hashes = [
+    "h1:i+WKhUHL2REY5EGmiHjfUljJB8UKZ9QdhdM5uTeUhC4=",
     "h1:jsKjBiLb+v3OIC3xuDiY4sR0r1OHUMSWPYKult9MhT0=",
     "zh:1769783386610bed8bb1e861a119fe25058be41895e3996d9216dd6bb8a7aee3",
     "zh:32c62a9387ad0b861b5262b41c5e9ed6e940eda729c2a0e58100e6629af27ddb",
@@ -47,6 +49,7 @@ provider "registry.opentofu.org/zitadel/zitadel" {
   constraints = "2.11.0"
   hashes = [
     "h1:XWUneYGIknoLcQm+1sgDClk5rVlwhJZoE4GDJFNBjgU=",
+    "h1:nENoFFoUZ47W/Bdinw8vVg+f/1bOOctYHu0B40FYCus=",
     "zh:16788403d68f913e855154cec382622c40986e3d99adfe700ad35fcc11c09c15",
     "zh:26cabaeb684ded24034269b50532ae42df5b9fd7310ab76e4a4f0beecc639ee2",
     "zh:306292464ed9996cc80373b0fcfeb3980ce8fd9a8f7bb8085e3f0f7e247ba047",
