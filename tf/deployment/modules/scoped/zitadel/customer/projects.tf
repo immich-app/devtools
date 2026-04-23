@@ -55,7 +55,7 @@ resource "zitadel_project" "projects" {
   name                   = each.value.name
   org_id                 = zitadel_org.customers.id
   project_role_check     = false
-  project_role_assertion = false
+  project_role_assertion = true
   has_project_check      = false
 }
 
@@ -73,4 +73,8 @@ resource "zitadel_application_oidc" "applications" {
   auth_method_type          = "OIDC_AUTH_METHOD_TYPE_${each.value.authMethod}"
   access_token_type         = "OIDC_TOKEN_TYPE_JWT"
   dev_mode                  = each.value.devMode
+
+  id_token_role_assertion     = true
+  id_token_userinfo_assertion = true
+  access_token_role_assertion = true
 }
