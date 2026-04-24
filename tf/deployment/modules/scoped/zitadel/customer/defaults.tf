@@ -55,11 +55,22 @@ resource "zitadel_instance_restrictions" "default" {
   disallow_public_org_registration = true
 }
 
-// Without this, the v2 hosted login UI can't resolve an org when a user
-// reaches the login/reset URL directly (no OIDC authRequest context) and the
-// RSC render errors. This makes the UI fall back to zitadel_org.customers.
+// login_default_org: without this, the v2 hosted login UI can't resolve an
+// org when a user reaches the login/reset URL directly (no OIDC authRequest
+// context) and the RSC render errors. This makes the UI fall back to
+// zitadel_org.customers.
+//
+// login_v2.required: route every customer app through the new v2 hosted login
+// UI regardless of the application's own login_version preference. The v2 UI
+// is what actually prompts users to register a passkey after first login and
+// hosts our custom translations; the v1 UI silently ignores both.
 resource "zitadel_instance_features" "default" {
   login_default_org = true
+
+  login_v2 {
+    required = true
+    base_uri = "${data.onepassword_item.customer_zitadel_domain.password}/ui/v2/login"
+  }
 }
 
 // ZITADEL's default email-code expiries are tight (minutes). Give customers
