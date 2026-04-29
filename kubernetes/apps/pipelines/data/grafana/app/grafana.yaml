@@ -9,6 +9,8 @@ spec:
   config:
     server:
       root_url: https://grafana.data.immich.cloud/
+    database:
+      wal: "true"
     auth.generic_oauth:
       enabled: "true"
       client_id: ${quote}${GRAFANA_OAUTH_CLIENT_ID}${quote}
