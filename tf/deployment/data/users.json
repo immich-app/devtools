@@ -199,6 +199,21 @@
     ]
   },
   {
+    "github": {
+      "username": "benbeckford",
+      "id": 186883809
+    },
+    "discord": {
+      "username": "benbeckford",
+      "id": 1302776481067569286
+    },
+    "roles": [
+      "team",
+      "immich",
+      "futo"
+    ]
+  },
+  {
     "github": null,
     "gitlab": {
       "username": "eron",
