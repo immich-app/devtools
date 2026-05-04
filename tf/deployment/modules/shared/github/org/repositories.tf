@@ -71,8 +71,9 @@ variable "repositories" {
     },
     {
       name          = "ui",
-      description   = "Svelte components for Immich"
-      license       = "MIT"
+      description   = "Svelte components for Immich",
+      archived      = true,
+      license       = "MIT",
       url           = "https://ui.immich.app",
       collaborators = true
     },
@@ -133,6 +134,7 @@ variable "repositories" {
     {
       name        = "packages",
       license     = "MIT",
+      archived    = true,
       description = "A collection of libraries around the Immich project"
     },
     {
@@ -365,16 +367,6 @@ import {
 }
 
 import {
-  id = "packages:renovate.json:"
-  to = github_repository_file.init_files["packages/renovate.json"]
-}
-
-import {
-  id = "geoshenanigans:renovate.json:"
-  to = github_repository_file.init_files["geoshenanigans/renovate.json"]
-}
-
-import {
   id = "data.immich.app:renovate.json:"
   to = github_repository_file.init_files["data.immich.app/renovate.json"]
 }
@@ -382,11 +374,6 @@ import {
 import {
   id = "static-pages:renovate.json:"
   to = github_repository_file.init_files["static-pages/renovate.json"]
-}
-
-import {
-  id = "ui:renovate.json:"
-  to = github_repository_file.init_files["ui/renovate.json"]
 }
 
 import {
