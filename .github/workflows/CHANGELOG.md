@@ -1,5 +1,39 @@
 # Changelog
 
+## [2.4.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.3.0...multi-runner-build-workflow-v2.4.0) (2026-05-05)
+
+
+### Features
+
+* add futo discord ([#1517](https://github.com/immich-app/devtools/issues/1517)) ([686f931](https://github.com/immich-app/devtools/commit/686f9317d6dcb35af078eb7f6cea86d4a6fff2d2))
+* add terraform plan pr comments separated by module ([#1460](https://github.com/immich-app/devtools/issues/1460)) ([464be4a](https://github.com/immich-app/devtools/commit/464be4a34cf24db195553b91983174e21cc5d55b))
+* migrate 1pass provider to use connect server ([#1454](https://github.com/immich-app/devtools/issues/1454)) ([402f24d](https://github.com/immich-app/devtools/commit/402f24dfa41911c6dccc2ee55cf1fbcbf8704aad))
+* **zitadel:** gitlab oauth and role mapping ([#1383](https://github.com/immich-app/devtools/issues/1383)) ([5d02b07](https://github.com/immich-app/devtools/commit/5d02b075c652fe225c3e95c896739d85e7d7659a))
+
+
+### Bug Fixes
+
+* edit existing terraform plan PR comment instead of posting new ones ([#1464](https://github.com/immich-app/devtools/issues/1464)) ([08c368e](https://github.com/immich-app/devtools/commit/08c368e665e0d906d2fe478ff096fdb94089891c))
+
+
+### Chores
+
+* **deps:** update 1password/install-cli-action action to v3 ([#1509](https://github.com/immich-app/devtools/issues/1509)) ([c8b2a07](https://github.com/immich-app/devtools/commit/c8b2a0710264f633cdd61203fc6eb382e99c0fed))
+* **deps:** update actions/github-script action to v9 ([#1551](https://github.com/immich-app/devtools/issues/1551)) ([c5d7b00](https://github.com/immich-app/devtools/commit/c5d7b00c091f5c3825900079358e87fbb9661a78))
+* **deps:** update actions/setup-node action to v6.4.0 ([#1531](https://github.com/immich-app/devtools/issues/1531)) ([2939c46](https://github.com/immich-app/devtools/commit/2939c4625d28c2d88002636f225052973bf683ca))
+* **deps:** update astral-sh/setup-uv action to v8 ([#1510](https://github.com/immich-app/devtools/issues/1510)) ([cd0bd4a](https://github.com/immich-app/devtools/commit/cd0bd4affb7f47ebea6a07b2e1f3f3590b255f6a))
+* **deps:** update docker/build-push-action action to v7 ([#1559](https://github.com/immich-app/devtools/issues/1559)) ([11ee5d8](https://github.com/immich-app/devtools/commit/11ee5d874c51415d659bc25bb5ccb92911bcebb3))
+* **deps:** update docker/login-action action to v4 ([#1560](https://github.com/immich-app/devtools/issues/1560)) ([7667c6f](https://github.com/immich-app/devtools/commit/7667c6f2b2cc0fa8481a0f8be6b2382864432b3f))
+* **deps:** update docker/metadata-action action to v6 ([#1561](https://github.com/immich-app/devtools/issues/1561)) ([ac48f6d](https://github.com/immich-app/devtools/commit/ac48f6df82c90e6bf9d412d93e0e583eb5004a31))
+* **deps:** update fluxcd ([#1505](https://github.com/immich-app/devtools/issues/1505)) ([1485179](https://github.com/immich-app/devtools/commit/1485179ae8de19d28252488780b35bd1d03e6670))
+* **deps:** update fluxcd ([#1530](https://github.com/immich-app/devtools/issues/1530)) ([c439cc5](https://github.com/immich-app/devtools/commit/c439cc5acec3ecf0211074195e9999fca916614c))
+* **deps:** update github-actions ([#1465](https://github.com/immich-app/devtools/issues/1465)) ([69f73e1](https://github.com/immich-app/devtools/commit/69f73e1ed377d875dbf1c150e7dc5170ab01b2aa))
+* **deps:** update github-actions ([#1488](https://github.com/immich-app/devtools/issues/1488)) ([2ee2888](https://github.com/immich-app/devtools/commit/2ee288826ca7aa1ac44809ebabb69a7e32b4c1f9))
+* **deps:** update github-actions ([#1520](https://github.com/immich-app/devtools/issues/1520)) ([1eb354f](https://github.com/immich-app/devtools/commit/1eb354f462483fdd62189aa90c1a4129aa824666))
+* **deps:** update googleapis/release-please-action action to v4.4.1 ([#1498](https://github.com/immich-app/devtools/issues/1498)) ([edf768a](https://github.com/immich-app/devtools/commit/edf768a76eea5bd36cb6d0980c9ee7b8e6b34c6f))
+* **deps:** update googleapis/release-please-action action to v5 ([#1562](https://github.com/immich-app/devtools/issues/1562)) ([f04f74e](https://github.com/immich-app/devtools/commit/f04f74eea3b4e6f0201254da3e597be18b4418a9))
+* **deps:** update mshick/add-pr-comment action to v3.11.0 ([#1547](https://github.com/immich-app/devtools/issues/1547)) ([73033f7](https://github.com/immich-app/devtools/commit/73033f702f6250bddd15ab0f7a789f2d5d60c6f1))
+
 ## [2.3.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.2.1...multi-runner-build-workflow-v2.3.0) (2026-03-24)
 
 
