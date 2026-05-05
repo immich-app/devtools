@@ -5,5 +5,5 @@
   "services/outline-role-sync": "1.0.0",
   ".github/workflows": "2.3.0",
   "actions/pre-job": "2.0.3",
-  "actions/create-workflow-token": "1.0.2"
+  "actions/create-workflow-token": "1.0.3"
 }
