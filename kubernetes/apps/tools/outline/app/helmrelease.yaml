@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: docker.io/outlinewiki/outline
-              tag: 1.7.0@sha256:b13ccd15653513a79eb66283bfa91287f5e3d0944d8cb056d5288b8565992de5
+              tag: 1.7.1@sha256:361df7040e6f0d7abac768b99f40122197921626a7e69501aabb5fcb496fc1b4
             env:
               #ref https://github.com/outline/outline/blob/d3c8224839f09fbff601e4a3e7fd8ff1a6b2ba08/.env.sample
               URL: "https://outline.immich.cloud"
