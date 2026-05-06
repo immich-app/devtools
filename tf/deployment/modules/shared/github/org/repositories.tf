@@ -151,7 +151,8 @@ variable "repositories" {
       name        = "drift",
       description = "Drift is an easy to use, reactive, typesafe persistence library for Dart & Flutter.",
       fork_source = "simolus3/drift",
-      url         = "https://pub.dev/packages/drift"
+      url         = "https://pub.dev/packages/drift",
+      archived    = true
     }
   ]
 }
