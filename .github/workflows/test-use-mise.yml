@@ -58,7 +58,7 @@ jobs:
       - name: Use Mise
         uses: ./actions/use-mise
         with:
-          github-token: ${{ github.token }}
+          github_token: ${{ github.token }}
 
       - name: Verify github_token was forwarded to mise-action
         run: |
