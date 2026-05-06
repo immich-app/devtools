@@ -60,9 +60,16 @@ jobs:
         with:
           github-token: ${{ github.token }}
 
+      - name: Verify github_token was forwarded to mise-action
+        run: |
+          if [ -z "${MISE_GITHUB_TOKEN:-}" ]; then
+            echo "::error::MISE_GITHUB_TOKEN is unset — use-mise did not forward github_token to jdx/mise-action"
+            exit 1
+          fi
+
       - name: Verify mise version matches pinned version
         run: |
-          expected=$(yq '.runs.steps[0].with.version' actions/use-mise/action.yml)
+          expected=$(yq '(.runs.steps[] | select(.uses | test("^jdx/mise-action"))).with.version' actions/use-mise/action.yml)
           actual=$(mise --version | awk '{print $1}')
           echo "Expected: $expected"
           echo "Actual:   $actual"
