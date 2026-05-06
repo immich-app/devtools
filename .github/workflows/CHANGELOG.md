@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.0.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.4.0...multi-runner-build-workflow-v3.0.0) (2026-05-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* properly pass github_token in use-mise ([#1568](https://github.com/immich-app/devtools/issues/1568))
+
+### Bug Fixes
+
+* properly pass github_token in use-mise ([#1568](https://github.com/immich-app/devtools/issues/1568)) ([fc38a2f](https://github.com/immich-app/devtools/commit/fc38a2f8d54849944c43f3f07db89d8f96a22855))
+
+
+### Chores
+
+* switch push-o-matic auth from app-id to client-id ([#1573](https://github.com/immich-app/devtools/issues/1573)) ([4e5ef4c](https://github.com/immich-app/devtools/commit/4e5ef4cb773ab652316a78c0f440c97cd24727b8))
+
 ## [2.4.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.3.0...multi-runner-build-workflow-v2.4.0) (2026-05-05)
 
 
