@@ -50,6 +50,7 @@ data "onepassword_item" "push_o_matic_app" {
 locals {
   push_o_matic_fields = {
     app_id          = [for field in data.onepassword_item.push_o_matic_app.section[0].field : field.value if field.label == "app_id"][0]
+    client_id       = [for field in data.onepassword_item.push_o_matic_app.section[0].field : field.value if field.label == "client_id"][0]
     installation_id = [for field in data.onepassword_item.push_o_matic_app.section[0].field : field.value if field.label == "installation_id"][0]
   }
 }
@@ -85,6 +86,12 @@ resource "github_actions_organization_secret" "push_o_matic_app_key" {
 import {
   to = github_actions_organization_secret.push_o_matic_app_key
   id = "PUSH_O_MATIC_APP_KEY"
+}
+
+resource "github_actions_organization_secret" "push_o_matic_app_client_id" {
+  secret_name     = "PUSH_O_MATIC_APP_CLIENT_ID"
+  plaintext_value = local.push_o_matic_fields.client_id
+  visibility      = "all"
 }
 
 resource "github_actions_organization_secret" "docker_hub_read_token" {
