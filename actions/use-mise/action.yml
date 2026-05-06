@@ -1,7 +1,7 @@
 name: 'Use Mise'
 description: 'Use Mise with a pinned version'
 inputs:
-  github-token:
+  github_token:
     description: 'Github token to use'
     required: true
   working_directory:
@@ -12,7 +12,7 @@ runs:
   steps:
     - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
       with:
-        github_token: ${{ inputs.GITHUB_TOKEN }}
+        github_token: ${{ inputs.github_token }}
         working_directory: ${{ inputs.working_directory }}
         version: 2026.3.13
         sha256: ${{ runner.os == 'Linux' && runner.arch == 'X64' && '806790b4a71c93d20e027c40ddf38470fa6e26555275b1181a3c2ccc082ef56f' ||
