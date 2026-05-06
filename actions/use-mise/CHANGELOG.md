@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/immich-app/devtools/compare/use-mise-action-v1.2.0...use-mise-action-v2.0.0) (2026-05-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* properly pass github_token in use-mise ([#1568](https://github.com/immich-app/devtools/issues/1568))
+
+### Bug Fixes
+
+* properly pass github_token in use-mise ([#1568](https://github.com/immich-app/devtools/issues/1568)) ([fc38a2f](https://github.com/immich-app/devtools/commit/fc38a2f8d54849944c43f3f07db89d8f96a22855))
+
 ## [1.2.0](https://github.com/immich-app/devtools/compare/use-mise-action-v1.1.3...use-mise-action-v1.2.0) (2026-05-06)
 
 
