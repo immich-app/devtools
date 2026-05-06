@@ -25,8 +25,19 @@
     ".github/workflows": {
       "component": "multi-runner-build-workflow",
       "exclude-paths": [
+        ".github/workflows/build-actions-runner.yaml",
+        ".github/workflows/build-mdq.yml",
+        ".github/workflows/build-outline-role-sync.yml",
+        ".github/workflows/flux-diff.yml",
+        ".github/workflows/org-pr-require-conventional-commit.yml",
+        ".github/workflows/org-zizmor.yml",
         ".github/workflows/release-please.yml",
-        ".github/workflows/zizmor.yaml"
+        ".github/workflows/scripts.yml",
+        ".github/workflows/shared-pr-require-conventional-commit.yml",
+        ".github/workflows/shared-required-approval.yml",
+        ".github/workflows/shared-zizmor.yml",
+        ".github/workflows/terragrunt.yml",
+        ".github/workflows/test-use-mise.yml"
       ]
     }
   },
