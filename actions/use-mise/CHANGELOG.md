@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/immich-app/devtools/compare/use-mise-action-v1.1.3...use-mise-action-v1.2.0) (2026-05-06)
+
+
+### Features
+
+* expose working_directory to mise-action ([#1565](https://github.com/immich-app/devtools/issues/1565)) ([8d016aa](https://github.com/immich-app/devtools/commit/8d016aa8c3e11df563f343b788dc37870fa703b5))
+
 ## [1.1.3](https://github.com/immich-app/devtools/compare/use-mise-action-v1.1.2...use-mise-action-v1.1.3) (2026-03-24)
 
 
