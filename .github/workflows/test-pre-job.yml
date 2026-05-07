@@ -1,0 +1,122 @@
+name: Test pre-job
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  pre-job:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Check what should run
+        id: check
+        uses: ./actions/pre-job
+        with:
+          github-token: ${{ github.token }}
+          filters: |
+            pre_job:
+              - 'actions/pre-job/**'
+          force-filters: |
+            - '.github/workflows/test-pre-job.yml'
+
+  tests:
+    needs: pre-job
+    if: ${{ fromJSON(needs.pre-job.outputs.should_run).pre_job == true }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Self-detection (per-rule path matching)
+        id: self-detection
+        if: github.event_name != 'workflow_dispatch'
+        uses: ./actions/pre-job
+        with:
+          github-token: ${{ github.token }}
+          filters: |
+            self:
+              - 'actions/pre-job/**'
+            other:
+              - 'definitely-does-not-exist/**'
+      - name: Assert self-detection
+        if: github.event_name != 'workflow_dispatch'
+        env:
+          RESULTS: ${{ steps.self-detection.outputs.should_run }}
+        run: |
+          echo "got: $RESULTS"
+          echo "$RESULTS" | jq -e '.self == true' > /dev/null || { echo "::error::self filter should be true"; exit 1; }
+          echo "$RESULTS" | jq -e '.other == false' > /dev/null || { echo "::error::other filter should be false"; exit 1; }
+
+      - name: Force-events short-circuit (workflow_dispatch only)
+        id: force-event
+        if: github.event_name == 'workflow_dispatch'
+        uses: ./actions/pre-job
+        with:
+          github-token: ${{ github.token }}
+          filters: |
+            anything:
+              - 'never-matches-anything/**'
+          force-events: 'workflow_dispatch'
+      - name: Assert force-events
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          RESULTS: ${{ steps.force-event.outputs.should_run }}
+        run: |
+          echo "got: $RESULTS"
+          echo "$RESULTS" | jq -e '.anything == true' > /dev/null || { echo "::error::force-events should have triggered"; exit 1; }
+
+      - name: Custom force input
+        id: force-input
+        uses: ./actions/pre-job
+        with:
+          github-token: ${{ github.token }}
+          filters: |
+            anything:
+              - 'never-matches-anything/**'
+          force: 'true'
+      - name: Assert force input
+        env:
+          RESULTS: ${{ steps.force-input.outputs.should_run }}
+        run: |
+          echo "got: $RESULTS"
+          echo "$RESULTS" | jq -e '.anything == true' > /dev/null || { echo "::error::force input should have triggered"; exit 1; }
+
+      - name: Object-form filter (paths/paths-ignore/status)
+        id: object-form
+        if: github.event_name != 'workflow_dispatch'
+        uses: ./actions/pre-job
+        with:
+          github-token: ${{ github.token }}
+          filters: |
+            object:
+              paths: ['actions/pre-job/**']
+              paths-ignore: ['actions/pre-job/this-path-never-exists/**']
+              status: [added, modified, deleted, renamed]
+      - name: Assert object-form
+        if: github.event_name != 'workflow_dispatch'
+        env:
+          RESULTS: ${{ steps.object-form.outputs.should_run }}
+        run: |
+          echo "got: $RESULTS"
+          echo "$RESULTS" | jq -e '.object == true' > /dev/null || { echo "::error::object-form filter should be true"; exit 1; }
