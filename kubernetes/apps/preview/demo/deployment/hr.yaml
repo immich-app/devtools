@@ -118,7 +118,7 @@ spec:
                 set $block_delete 1;
               }
               if ($uri ~ ^/api/(admin/users/.*)$) {
-                set $block_delete "${block_post}1";
+                set $block_delete "${block_delete}1";
               }
               if ($block_delete = 11) {
                 return 403;
