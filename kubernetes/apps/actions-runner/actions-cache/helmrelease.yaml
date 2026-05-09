@@ -35,9 +35,10 @@ spec:
               repository: ghcr.io/falcondev-oss/github-actions-cache-server
               tag: 9.4.7@sha256:318a568e4eba358dbe5978338353a4101b527996a076746ba781a32c6ed19543
             env:
-              API_BASE_URL: "http://actions-cache.actions-cache.svc.cluster.local:3000"
-              STORAGE_FILESYSTEM_PATH: "/data/cache"
-              DB_SQLITE_PATH: "/data/sqlite.db"
+              API_BASE_URL: 'http://actions-cache.actions-cache.svc.cluster.local:3000'
+              CACHE_CLEANUP_OLDER_THAN_DAYS: '30'
+              STORAGE_FILESYSTEM_PATH: '/data/cache'
+              DB_SQLITE_PATH: '/data/sqlite.db'
     service:
       main:
         ports:
@@ -47,5 +48,5 @@ spec:
       data:
         enabled: true
         storageClass: zfs
-        size: 100Gi
+        size: 200Gi
         accessMode: ReadWriteOnce
