@@ -43,9 +43,8 @@ spec:
           - --enable-capacity=true
           - --capacity-ownerref-level=1
 
-      # distributed support is not yet ready
       externalResizer:
-        enabled: false
+        enabled: true
 
       externalSnapshotter:
         enabled: true
