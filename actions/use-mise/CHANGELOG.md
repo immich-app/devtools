@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/immich-app/devtools/compare/use-mise-action-v2.0.0...use-mise-action-v2.0.1) (2026-05-09)
+
+
+### Bug Fixes
+
+* mise windows ([#1580](https://github.com/immich-app/devtools/issues/1580)) ([801c2de](https://github.com/immich-app/devtools/commit/801c2def53de0342a57ddedc9575226fcdba58a8))
+
 ## [2.0.0](https://github.com/immich-app/devtools/compare/use-mise-action-v1.2.0...use-mise-action-v2.0.0) (2026-05-06)
 
 
