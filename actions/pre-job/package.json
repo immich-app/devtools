@@ -1,0 +1,44 @@
+{
+  "name": "@immich/pre-job-action",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Determines which jobs should run based on changed paths",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "ncc build src/main.ts -o dist --license licenses.txt",
+    "check": "tsc --noEmit",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\" --max-warnings 0",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "PRE_JOB_SKIP_AUTORUN=1 node --test --experimental-strip-types --no-warnings 'test/**/*.test.ts'",
+    "check:all": "npm run format && npm run lint && npm run check && npm run test"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^9.1.1",
+    "js-yaml": "^4.1.0",
+    "picomatch": "^4.0.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^10.0.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^24.12.2",
+    "@types/picomatch": "^4.0.2",
+    "@typescript-eslint/eslint-plugin": "^8.24.0",
+    "@typescript-eslint/parser": "^8.24.0",
+    "@vercel/ncc": "^0.38.4",
+    "eslint": "^10.0.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-unicorn": "^63.0.0",
+    "globals": "^17.1.0",
+    "prettier": "^3.5.0",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "typescript": "^6.0.0",
+    "typescript-eslint": "^8.24.0"
+  }
+}

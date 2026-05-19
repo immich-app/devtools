@@ -37,6 +37,7 @@
         ".github/workflows/shared-required-approval.yml",
         ".github/workflows/shared-zizmor.yml",
         ".github/workflows/terragrunt.yml",
+        ".github/workflows/test-pre-job.yml",
         ".github/workflows/test-use-mise.yml"
       ]
     }

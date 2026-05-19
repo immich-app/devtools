@@ -147,3 +147,4 @@ terragrunt-debug.tfvars.json
 
 scripts/node_modules/
 scripts/dist/
+actions/pre-job/node_modules/
