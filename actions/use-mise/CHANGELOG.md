@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/immich-app/devtools/compare/use-mise-action-v2.0.1...use-mise-action-v2.0.2) (2026-05-19)
+
+
+### Chores
+
+* bump use-mise version to 2026.5.12 ([#1614](https://github.com/immich-app/devtools/issues/1614)) ([72b432a](https://github.com/immich-app/devtools/commit/72b432a9c7460a3ab88929c3495bd0f17cc23406))
+
 ## [2.0.1](https://github.com/immich-app/devtools/compare/use-mise-action-v2.0.0...use-mise-action-v2.0.1) (2026-05-09)
 
 
