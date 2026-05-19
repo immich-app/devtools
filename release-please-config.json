@@ -19,6 +19,9 @@
     "actions/create-workflow-token": {
       "component": "create-workflow-token-action"
     },
+    "actions/sticky-comment": {
+      "component": "sticky-comment-action"
+    },
     "services/outline-role-sync": {
       "component": "outline-role-sync"
     },
@@ -37,7 +40,8 @@
         ".github/workflows/shared-required-approval.yml",
         ".github/workflows/shared-zizmor.yml",
         ".github/workflows/terragrunt.yml",
-        ".github/workflows/test-use-mise.yml"
+        ".github/workflows/test-use-mise.yml",
+        ".github/workflows/test-sticky-comment.yml"
       ]
     }
   },

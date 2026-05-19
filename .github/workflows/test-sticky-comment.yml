@@ -1,0 +1,96 @@
+name: Test sticky-comment
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  pre-job:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+    steps:
+      - name: Check what should run
+        id: check
+        uses: immich-app/devtools/actions/pre-job@91f342bb4477c4bc10c576ae739da875d85aa164 # pre-job-action-v2.0.4
+        with:
+          github-token: ${{ github.token }}
+          filters: |
+            sticky_comment:
+              - 'actions/sticky-comment/**'
+          force-filters: |
+            - '.github/workflows/test-sticky-comment.yml'
+
+  build-check:
+    name: Verify dist is up to date
+    needs: pre-job
+    if: ${{ fromJSON(needs.pre-job.outputs.should_run).sticky_comment == true }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: ./actions/sticky-comment
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version-file: './actions/sticky-comment/.nvmrc'
+
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+
+      - name: Verify dist/ matches source
+        working-directory: .
+        run: |
+          if ! git diff --exit-code actions/sticky-comment/dist; then
+            echo "::error::dist/ is out of date. Run 'npm run build' in actions/sticky-comment and commit the result."
+            exit 1
+          fi
+
+  smoke:
+    name: Smoke test
+    needs: pre-job
+    if: ${{ fromJSON(needs.pre-job.outputs.should_run).sticky_comment == true && !github.event.pull_request.head.repo.fork }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Pre-clean (exercise delete path)
+        uses: ./actions/sticky-comment
+        with:
+          id: smoke-test
+          delete: true
+
+      - name: Create comment (exercise create path)
+        uses: ./actions/sticky-comment
+        with:
+          id: smoke-test
+          body: |
+            Smoke test for sticky-comment action — created by run ${{ github.run_id }}.
+
+      - name: Update comment (exercise update path)
+        uses: ./actions/sticky-comment
+        with:
+          id: smoke-test
+          body: |
+            ✅ Smoke test for sticky-comment action passed — run ${{ github.run_id }}.
