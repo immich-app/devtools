@@ -14,6 +14,7 @@ runs:
       with:
         github_token: ${{ inputs.github_token }}
         working_directory: ${{ inputs.working_directory }}
+        install_args: "--locked"
         version: 2026.5.12
         sha256:
           ${{ runner.os == 'Linux' && runner.arch == 'X64' && 'a238972a3162d710b85b28c324372e96ca4e4b486c81fe78695000d9fbc77c48' ||
