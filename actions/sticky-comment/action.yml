@@ -1,0 +1,25 @@
+name: 'Sticky Comment'
+description: 'Maintain a single comment on a PR or issue, keyed by id.'
+
+inputs:
+  id:
+    description: 'Unique identifier for this sticky comment. Multiple ids can coexist on the same PR/issue.'
+    required: true
+  body:
+    description: 'Comment body. Required unless `delete` is true.'
+    required: false
+  delete:
+    description: 'If true, delete all matching comments and ignore `body`.'
+    required: false
+    default: 'false'
+  number:
+    description: 'Issue or PR number. Defaults to the number from the triggering event payload.'
+    required: false
+  token:
+    description: 'GitHub token used for API calls.'
+    required: false
+    default: ${{ github.token }}
+
+runs:
+  using: 'node24'
+  main: 'dist/index.js'

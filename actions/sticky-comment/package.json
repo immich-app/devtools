@@ -1,0 +1,21 @@
+{
+  "name": "@immich/sticky-comment-action",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "GitHub Action to maintain a single comment on a PR or issue, keyed by id.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "ncc build src/main.ts -o dist --license licenses.txt",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@actions/core": "^3.0.1",
+    "@actions/github": "^9.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@vercel/ncc": "^0.38.4",
+    "typescript": "^6.0.3"
+  }
+}
