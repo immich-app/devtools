@@ -14,9 +14,9 @@ runs:
       with:
         github_token: ${{ inputs.github_token }}
         working_directory: ${{ inputs.working_directory }}
-        version: 2026.3.13
+        version: 2026.5.12
         sha256:
-          ${{ runner.os == 'Linux' && runner.arch == 'X64' && '806790b4a71c93d20e027c40ddf38470fa6e26555275b1181a3c2ccc082ef56f' ||
-          runner.os == 'Linux' && runner.arch == 'ARM64' && 'c1f56fd3c44a219bbb7064af240b4d3c3e4697b4d88377b8c52576f9a572627e' ||
-          runner.os == 'macOS' && runner.arch == 'ARM64' && '04d637c1334974b98064f059f86081e55d39be0a338578ce79db4b0ea4bb5e68' ||
-          runner.os == 'Windows' && runner.arch == 'X64' && 'f97ccdf7f4a65a96c8671011045dc8b4581f474f112e3fe7c980af19df3b761e' }}
+          ${{ runner.os == 'Linux' && runner.arch == 'X64' && 'a238972a3162d710b85b28c324372e96ca4e4b486c81fe78695000d9fbc77c48' ||
+          runner.os == 'Linux' && runner.arch == 'ARM64' && 'fd2d5227a8ad0b1e359c70527a8345a9ada72077f8dcbb559371653c3d95464f' ||
+          runner.os == 'macOS' && runner.arch == 'ARM64' && 'e777070540ffe22cf8b2b9f88aed88b461d0887d940c4f1c1a97359463cde6e1' ||
+          runner.os == 'Windows' && runner.arch == 'X64' && 'adf1b4c9f51e7d15cff723056fcd8fd51f40ebacadcca97fd5758c44d469d5ea' }}
