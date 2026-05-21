@@ -64,3 +64,4 @@ description = "Format all files"
 
 [settings]
 experimental = true
+lockfile = true
