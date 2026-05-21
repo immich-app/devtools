@@ -37,7 +37,7 @@ spec:
               tag: release
             env:
               OUTLINE_BASE_URL: "https://outline.immich.cloud"
-              ZITADEL_BASE_URL: "https://zitadel.internal.immich.cloud"
+              ZITADEL_BASE_URL: "https://auth.internal.futo.org"
               PORT: "8080"
             envFrom:
               - secretRef:
