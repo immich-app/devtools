@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: victoria-metrics-operator
-      version: 0.62.1
+      version: 0.63.1
       interval: 15m
       sourceRef:
         kind: HelmRepository
