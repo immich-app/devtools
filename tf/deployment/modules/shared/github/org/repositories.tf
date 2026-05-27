@@ -28,8 +28,9 @@ variable "repositories" {
     },
     {
       name          = "static-pages",
-      description   = "Redirect urls to personal, hosted, instances of Immich.",
-      url           = "https://buy.immich.app",
+      description   = "Sites and packages for Immich",
+      url           = "https://immich.app",
+      license       = "MIT",
       collaborators = true
     },
     {
