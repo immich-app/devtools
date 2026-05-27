@@ -31,4 +31,4 @@ spec:
   url: https://github.com/immich-app/immich
   filter:
     semver: ">=2.0.0"
-    limit: 5
+    limit: 10
