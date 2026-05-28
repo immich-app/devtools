@@ -12,7 +12,9 @@ module "yucca-manual-secrets" {
       "OVH_APPLICATION_SECRET",
       "OVH_CONSUMER_KEY",
       "TAILSCALE_API_KEY",
-      "TAILSCALE_TAILNET_ID"
+      "TAILSCALE_TAILNET_ID",
+      "CLOUDFLARE_ACCOUNT_ID",
+      "CLOUDFLARE_API_TOKEN",
     ]
     scoped = [
       "CUSTOMER_ZITADEL_DOMAIN",
