@@ -9,7 +9,7 @@ opentofu = "1.11.8"
 "pipx:flux-local" = "8.2.0"
 terragrunt = "1.0.4"
 usage = "3.3.0"
-uv = "0.11.14"
+uv = "0.11.16"
 yamlfmt = "0.21.0"
 
 [env]
