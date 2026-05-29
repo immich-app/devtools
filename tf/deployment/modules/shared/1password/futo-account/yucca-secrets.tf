@@ -46,6 +46,8 @@ module "yucca-generated-secrets" {
     global = []
     scoped = [
       { name = "VICTORIAMETRICS_VMAUTH_PASSWORD" },
+      { name = "POSTGRES_SUPERUSER_PASSWORD" },
+      { name = "POSTGRES_GRAFANA_PASSWORD" },
     ]
   }
 
