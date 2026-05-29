@@ -48,6 +48,7 @@ module "yucca-generated-secrets" {
       { name = "VICTORIAMETRICS_VMAUTH_PASSWORD" },
       { name = "POSTGRES_SUPERUSER_PASSWORD" },
       { name = "POSTGRES_GRAFANA_PASSWORD" },
+      { name = "GRAFANA_SECRET_KEY" },
     ]
   }
 
