@@ -44,7 +44,9 @@ module "yucca-generated-secrets" {
 
   secrets = {
     global = []
-    scoped = []
+    scoped = [
+      { name = "VICTORIAMETRICS_VMAUTH_PASSWORD" },
+    ]
   }
 
   global_vault = "yucca_tf"
