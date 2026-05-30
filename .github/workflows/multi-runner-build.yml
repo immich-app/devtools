@@ -161,9 +161,9 @@ jobs:
             # Tag with long commit sha hash
             type=sha,format=long,prefix=commit-
             # Release version tags
-            type=semver,pattern=v{{version}},enabled=${{ inputs.release-tag-type == 'semver' }}
-            type=semver,pattern=v{{major}},enabled=${{ inputs.release-tag-type == 'semver' }}
-            type=ref,event=tag,enabled=${{ inputs.release-tag-type == 'git-tag' }}
+            type=semver,pattern={{version}},prefix=v,enable=${{ inputs.release-tag-type == 'semver' }}
+            type=semver,pattern={{major}},prefix=v,enable=${{ inputs.release-tag-type == 'semver' }}
+            type=ref,event=tag,enable=${{ inputs.release-tag-type == 'git-tag' }}
             type=raw,value=release,enable=${{ github.event_name == 'release' && github.event.release.prerelease == false }}
 
       - name: Create manifest list and push
