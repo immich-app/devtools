@@ -3,7 +3,7 @@
   "actions/success-check": "0.0.6",
   "actions/use-mise": "2.0.2",
   "services/outline-role-sync": "1.0.0",
-  ".github/workflows": "2.4.0",
+  ".github/workflows": "3.0.0",
   "actions/pre-job": "2.0.4",
   "actions/create-workflow-token": "2.0.1",
   "actions/sticky-comment": "1.0.0"
