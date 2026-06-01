@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.9](https://github.com/immich-app/devtools/compare/image-build-action-v0.1.8...image-build-action-v0.1.9) (2026-06-01)
+
+
+### Chores
+
+* **deps:** update zizmorcore/zizmor-action action to v0.5.6 ([#1632](https://github.com/immich-app/devtools/issues/1632)) ([f313c19](https://github.com/immich-app/devtools/commit/f313c192f9186bcd436667f0c93d67e5c8d1f94c))
+
 ## [0.1.8](https://github.com/immich-app/devtools/compare/image-build-action-v0.1.7...image-build-action-v0.1.8) (2026-05-05)
 
 
