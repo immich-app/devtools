@@ -214,6 +214,21 @@
     ]
   },
   {
+    "github": {
+      "username": "staticdog",
+      "id": 90420132
+    },
+    "discord": {
+      "username": "beakdog",
+      "id": 313724669989617674
+    },
+    "roles": [
+      "team",
+      "immich",
+      "futo"
+    ]
+  },
+  {
     "github": null,
     "gitlab": {
       "username": "eron",
