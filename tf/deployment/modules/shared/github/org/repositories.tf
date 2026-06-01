@@ -71,14 +71,6 @@ variable "repositories" {
       url         = "https://data.immich.app",
     },
     {
-      name          = "ui",
-      description   = "Svelte components for Immich",
-      archived      = true,
-      license       = "MIT",
-      url           = "https://ui.immich.app",
-      collaborators = true
-    },
-    {
       name        = "native_video_player",
       description = "A Flutter widget to play videos on iOS and Android using a native implementation.",
       fork_source = "albemala/native_video_player"
@@ -133,12 +125,6 @@ variable "repositories" {
       collaborators = true
     },
     {
-      name        = "packages",
-      license     = "MIT",
-      archived    = true,
-      description = "A collection of libraries around the Immich project"
-    },
-    {
       name        = "yucca-slop",
       description = "yucca-slop",
       visibility  = "private"
@@ -181,7 +167,6 @@ resource "github_repository" "repositories" {
   delete_branch_on_merge    = true
   has_discussions           = each.value.discussions
   has_issues                = each.value.issues
-  has_downloads             = true
   has_projects              = each.value.projects
   has_wiki                  = false
   visibility                = each.value.visibility
