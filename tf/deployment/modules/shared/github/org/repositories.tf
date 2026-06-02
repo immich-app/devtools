@@ -299,6 +299,33 @@ resource "github_repository_file" "default_files" {
   }
 }
 
+# Community health files (CODE_OF_CONDUCT, SECURITY, FUNDING) only need to live in the
+# org's `.github` repository — GitHub will serve them as defaults to any child repo that
+# does not provide its own copy. See
+# https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/creating-a-default-community-health-file
+resource "github_repository_file" "org_meta_files" {
+  for_each = toset([
+    for file in fileset("${path.module}/org-meta-files", "**") : file
+    if !can(regex(".*terragrunt.*", file))
+  ])
+  repository          = github_repository.repositories[".github"].name
+  file                = each.value
+  content             = file("${path.module}/org-meta-files/${each.value}")
+  commit_message      = "chore: inherit ${each.value} from org-level .github repo"
+  overwrite_on_create = true
+
+  depends_on = [github_repository.repositories]
+
+  lifecycle {
+    ignore_changes = [
+      commit_message,
+      commit_email,
+      commit_author,
+      overwrite_on_create
+    ]
+  }
+}
+
 resource "github_repository_file" "init_files" {
   for_each = {
     for combination in flatten([
