@@ -33,10 +33,14 @@ module "o11y-generated-secrets" {
   source = "./shared/modules/secrets/generated"
 
   secrets = {
-    global = [
-      { name = "GRAFANA_ADMIN_PASSWORD" }
+    global = []
+    scoped = [
+      { name = "VICTORIAMETRICS_VMAUTH_PASSWORD" },
+      { name = "GRAFANA_ADMIN_PASSWORD" },
+      { name = "GRAFANA_POSTGRES_PASSWORD" },
+      { name = "GRAFANA_POSTGRES_SUPERUSER_PASSWORD" },
+      { name = "GRAFANA_SECRET_KEY" },
     ]
-    scoped = []
   }
 
   global_vault = "o11y_tf"
