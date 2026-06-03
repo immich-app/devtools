@@ -34,6 +34,24 @@ resource "cloudflare_record" "immich_cloud_a_mich" {
   zone_id = cloudflare_zone.immich_cloud.id
 }
 
+resource "cloudflare_record" "immich_cloud_a_pokedex" {
+  name    = "pokedex"
+  proxied = false
+  ttl     = 1
+  type    = "A"
+  content = local.pokedex_ip
+  zone_id = cloudflare_zone.immich_cloud.id
+}
+
+resource "cloudflare_record" "immich_cloud_cname_loopdedupe_internal" {
+  name    = "loopdedupe.internal"
+  proxied = false
+  ttl     = 1
+  type    = "CNAME"
+  content = "pokedex.immich.cloud"
+  zone_id = cloudflare_zone.immich_cloud.id
+}
+
 resource "cloudflare_record" "immich_cloud_a_kube_pokedex_internal_brock" {
   name    = "kube.pokedex.internal"
   proxied = false
