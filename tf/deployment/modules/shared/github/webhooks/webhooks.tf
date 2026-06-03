@@ -79,3 +79,27 @@ import {
   to = github_repository_webhook.fluxcd[0]
   id = "devtools/541139511"
 }
+
+data "onepassword_item" "loopdedupe_webhook_url" {
+  title = "LOOPDEDUPE_GITHUB_WEBHOOK_URL"
+  vault = data.onepassword_vault.tf.name
+}
+
+data "onepassword_item" "loopdedupe_webhook_secret" {
+  title = "LOOPDEDUPE_GITHUB_WEBHOOK_SECRET"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_repository_webhook" "loopdedupe" {
+  count = data.onepassword_item.loopdedupe_webhook_url.password != "REPLACE_ME" ? 1 : 0
+  events = [
+    "issues",
+    "discussion"
+  ]
+  repository = "immich"
+  configuration {
+    url          = data.onepassword_item.loopdedupe_webhook_url.password
+    secret       = data.onepassword_item.loopdedupe_webhook_secret.password
+    content_type = "json"
+  }
+}

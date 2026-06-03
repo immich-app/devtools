@@ -51,6 +51,7 @@ module "manual-secrets" {
       "IMMICH_GITHUB_OAUTH_APP_INTERNAL_FUTO_ZITADEL_CLIENT_ID",
       "IMMICH_GITHUB_OAUTH_APP_INTERNAL_FUTO_ZITADEL_CLIENT_SECRET",
       "FUTO_ZITADEL_PROFILE_JSON",
+      "LOOPDEDUPE_GITHUB_WEBHOOK_URL",
       "LOOPDEDUPE_VOYAGE_API_KEY",
     ]
     scoped = [
@@ -82,6 +83,7 @@ module "generated-secrets" {
       { name = "OAUTH2_PROXY_COOKIE_SECRET", length = 32 },
       { name = "IMMICH_GITHUB_ACTION_CHECKS_WEBHOOK_SECRET" },
       { name = "OUTLINE_ROLE_SYNC_WEBHOOK_SECRET" },
+      { name = "LOOPDEDUPE_GITHUB_WEBHOOK_SECRET" },
       { name = "LOOPDEDUPE_SECRET_KEY_BASE", length = 64 }
     ]
     scoped = [
