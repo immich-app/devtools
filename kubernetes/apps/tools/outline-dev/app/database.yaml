@@ -4,6 +4,8 @@ metadata:
   name: outline-dev-db
   namespace: outline-dev
 spec:
+  # Must match the prod major version; a physical restore can't cross majors.
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.0
   storage:
     size: 10Gi
     storageClass: zfs

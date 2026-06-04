@@ -26,6 +26,9 @@ spec:
   values:
     controllers:
       outline:
+        pod:
+          securityContext:
+            fsGroup: 1001
         containers:
           app:
             image:
@@ -55,8 +58,6 @@ spec:
                   name: outline-secret-keys
               - secretRef:
                   name: outline-oauth-client
-            securityContext:
-              fsGroup: 1001
       valkey:
         containers:
           app:
