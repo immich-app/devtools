@@ -1,0 +1,27 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: outline-dev-db
+  namespace: outline-dev
+spec:
+  storage:
+    size: 10Gi
+    storageClass: zfs
+  bootstrap:
+    recovery:
+      source: outline-db
+  externalClusters:
+    - name: outline-db
+      barmanObjectStore:
+        serverName: outline-db
+        destinationPath: s3://${bucket_name}
+        endpointURL: ${api_endpoint}
+        wal:
+          compression: bzip2
+        s3Credentials:
+          accessKeyId:
+            name: outline-database-backup-secret
+            key: id
+          secretAccessKey:
+            name: outline-database-backup-secret
+            key: secret
