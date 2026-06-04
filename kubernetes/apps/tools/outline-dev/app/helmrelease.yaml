@@ -1,0 +1,101 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: outline-dev
+  namespace: outline-dev
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      outline:
+        containers:
+          app:
+            image:
+              repository: docker.io/outlinewiki/outline
+              tag: 1.7.1@sha256:361df7040e6f0d7abac768b99f40122197921626a7e69501aabb5fcb496fc1b4
+            env:
+              #ref https://github.com/outline/outline/blob/d3c8224839f09fbff601e4a3e7fd8ff1a6b2ba08/.env.sample
+              URL: "https://outline-dev.immich.cloud"
+              REDIS_URL: "redis://outline-dev-valkey:6379"
+              ENABLE_UPDATES: false
+              FILE_STORAGE: local
+              FILE_STORAGE_LOCAL_ROOT_DIR: /data
+              FILE_STORAGE_UPLOAD_MAX_SIZE: &upload-limit "26214400"
+              FILE_STORAGE_IMPORT_MAX_SIZE: *upload-limit
+              OIDC_SCOPES: "openid profile email"
+              OIDC_AUTH_URI: "https://auth.internal.futo.org/oauth/v2/authorize"
+              OIDC_TOKEN_URI: "https://auth.internal.futo.org/oauth/v2/token"
+              OIDC_USERINFO_URI: "https://auth.internal.futo.org/oidc/v1/userinfo"
+              WEB_CONCURRENCY: 10
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: outline-dev-db-app
+                    key: uri
+            envFrom:
+              - secretRef:
+                  name: outline-secret-keys
+              - secretRef:
+                  name: outline-oauth-client
+            securityContext:
+              fsGroup: 1001
+      valkey:
+        containers:
+          app:
+            image:
+              repository: valkey/valkey
+              tag: 9.1.0@sha256:4963247afc4cd33c7d3b2d2816b9f7f8eeebab148d29056c2ca4d7cbc966f2d9
+    persistence:
+      data:
+        enabled: true
+        existingClaim: outline-dev
+        advancedMounts:
+          outline:
+            app:
+              - path: /data
+    service:
+      app:
+        controller: outline
+        ports:
+          http:
+            port: 3000
+      valkey:
+        controller: valkey
+        ports:
+          main:
+            port: 6379
+    ingress:
+      app:
+        className: nginx
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          nginx.ingress.kubernetes.io/proxy-body-size: *upload-limit
+        hosts:
+          - host: &host "outline-dev.immich.cloud"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: outline-dev-tls
