@@ -25,3 +25,10 @@ variable "zitadel_gitlab_client_secret" {
 variable "zitadel_gitlab_issuer" {
   description = "The base URL of the FUTO self-hosted GitLab instance"
 }
+
+variable "cloudflare_account_id" {}
+
+variable "zitadel_actions_worker_script_path" {
+  description = "Absolute path to the zitadel-actions worker entrypoint (injected by terragrunt via get_repo_root())."
+  type        = string
+}

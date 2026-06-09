@@ -13,9 +13,10 @@ include "root" {
 }
 
 inputs = {
-  users_data_file_path = "${get_repo_root()}/tf/deployment/data/users.json"
+  users_data_file_path               = "${get_repo_root()}/tf/deployment/data/users.json"
+  zitadel_actions_worker_script_path = "${get_repo_root()}/services/zitadel-actions/src/index.js"
 }
 
 dependencies {
-  paths = []
+  paths = ["../../cloudflare/api-keys"]
 }

@@ -1,0 +1,79 @@
+// ZITADEL Actions v2 + the Cloudflare Worker that backs them, kept together.
+//
+// Phase 1 (here): the /idp-intent webhook on RetrieveIdentityProviderIntent —
+// the worker (services/zitadel-actions) syncs the external IdP's real email +
+// name onto the ZITADEL user via the management API before the token is issued.
+// Additive: the v1 mapGitHubOAuth/mapGitLabOAuth actions stay until the worker
+// is proven in prod, then they're retired.
+//
+// Phase 2 (later): a /token REST_CALL target on the preuserinfo /
+// presamlresponse functions to replace mapRoles / samlMapRoles.
+
+locals {
+  zitadel_actions_worker_host = "zitadel-actions.internal.immich.cloud"
+}
+
+// --- ZITADEL action target + execution -----------------------------------
+
+resource "zitadel_action_target" "idp_intent" {
+  name               = "zitadel-actions-idp-intent"
+  endpoint           = "https://${local.zitadel_actions_worker_host}/idp-intent"
+  target_type        = "REST_WEBHOOK"
+  timeout            = "10s"
+  interrupt_on_error = false
+  payload_type       = "PAYLOAD_TYPE_JSON"
+}
+
+resource "zitadel_action_execution_response" "idp_intent" {
+  method     = "/zitadel.user.v2.UserService/RetrieveIdentityProviderIntent"
+  target_ids = [zitadel_action_target.idp_intent.id]
+}
+
+// --- Cloudflare Worker (provider v5: worker + version + deployment) -------
+
+resource "cloudflare_worker" "zitadel_actions" {
+  account_id = var.cloudflare_account_id
+  name       = "zitadel-actions"
+}
+
+resource "cloudflare_worker_version" "zitadel_actions" {
+  account_id         = var.cloudflare_account_id
+  worker_id          = cloudflare_worker.zitadel_actions.id
+  compatibility_date = "2026-06-01"
+  main_module        = "index.js"
+
+  modules = [{
+    name         = "index.js"
+    content_file = var.zitadel_actions_worker_script_path
+    content_type = "application/javascript+module"
+  }]
+
+  bindings = [
+    { name = "ZITADEL_DOMAIN", type = "plain_text", text = "auth.internal.futo.org" },
+    { name = "GITHUB_IDP_ID", type = "plain_text", text = zitadel_idp_github.github.id },
+    { name = "GITLAB_IDP_ID", type = "plain_text", text = zitadel_idp_gitlab_self_hosted.gitlab.id },
+    { name = "ZITADEL_TOKEN", type = "secret_text", text = zitadel_personal_access_token.zitadel_actions.token },
+    { name = "IDP_INTENT_SIGNING_KEY", type = "secret_text", text = zitadel_action_target.idp_intent.signing_key },
+  ]
+}
+
+resource "cloudflare_workers_deployment" "zitadel_actions" {
+  account_id  = var.cloudflare_account_id
+  script_name = cloudflare_worker.zitadel_actions.name
+  strategy    = "percentage"
+
+  versions = [{
+    percentage = 100
+    version_id = cloudflare_worker_version.zitadel_actions.id
+  }]
+}
+
+resource "cloudflare_workers_custom_domain" "zitadel_actions" {
+  account_id = var.cloudflare_account_id
+  hostname   = local.zitadel_actions_worker_host
+  service    = cloudflare_worker.zitadel_actions.name
+  zone_name  = "immich.cloud"
+
+  # A custom domain can only attach once the worker has a live deployment.
+  depends_on = [cloudflare_workers_deployment.zitadel_actions]
+}
