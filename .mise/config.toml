@@ -14,9 +14,14 @@ yamlfmt = "0.21.0"
 
 [env]
 KUBECONFIG = "{{config_root}}/.mise/kube.config"
+# Pin op CLI resolution to the immich account so `op run`/`op inject` aren't
+# ambiguous when other 1Password accounts are also signed in. All op:// refs in
+# this repo live in the immich account; the FUTO account is reached via service
+# tokens at the provider level, not the op CLI.
+OP_ACCOUNT = "immich.1password.com"
 
 [tasks.tg]
-run = "op run '--env-file={{config_root}}/tf/deployment/.env' -- env -u OP_CONNECT_HOST -u OP_CONNECT_TOKEN -u OP_SERVICE_ACCOUNT_TOKEN -- terragrunt"
+run = "op run '--env-file={{config_root}}/tf/deployment/.env' -- env -u OP_CONNECT_HOST -u OP_CONNECT_TOKEN -u OP_SERVICE_ACCOUNT_TOKEN -u OP_ACCOUNT -- terragrunt"
 description = "Wrapper for terragrunt, op run resolves secrets then env -u strips op auth vars so they don't conflict with terraform providers"
 dir = "{{cwd}}"
 
