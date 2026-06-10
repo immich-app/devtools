@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: victoria-metrics-k8s-stack
-      version: 0.80.0
+      version: 0.81.0
       interval: 15m
       sourceRef:
         kind: HelmRepository
@@ -35,7 +35,7 @@ spec:
     defaultDashboards:
       enabled: false
     defaultRules:
-      create: false
+      enabled: false
     victoria-metrics-operator:
       enabled: false
     prometheus-node-exporter:
