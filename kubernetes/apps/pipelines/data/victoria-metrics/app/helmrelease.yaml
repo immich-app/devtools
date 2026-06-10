@@ -35,7 +35,7 @@ spec:
     defaultDashboards:
       enabled: false
     defaultRules:
-      create: false
+      enabled: false
     victoria-metrics-operator:
       enabled: false
     prometheus-node-exporter:
