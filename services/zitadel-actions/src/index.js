@@ -162,12 +162,12 @@ async function updateHumanUser(env, userId, email, firstName, lastName) {
 // Ports the v1 mapRoles / samlMapRoles actions. Dispatched by the function the
 // execution is bound to.
 
-async function handleToken(body) {
+async function handleToken(body, env) {
   switch (body?.function) {
     case "function/preuserinfo":
       return mapRoles(body);
     case "function/presamlresponse":
-      return mapSamlRoles(body);
+      return mapSamlRoles(body, env);
     default:
       console.log(`[token] unhandled function ${body?.function}`);
       return {};
@@ -198,10 +198,31 @@ function mapRoles(body) {
 }
 
 // samlMapRoles: emit every role the user holds (across all grants) as a `Roles`
-// SAML attribute — matching the v1 action.
-function mapSamlRoles(body) {
-  const grants = body?.user_grants ?? [];
-  const roles = grants.flatMap((g) => g.roles ?? []);
+// SAML attribute — matching the v1 action. Unlike preuserinfo, the
+// presamlresponse payload carries no grants (only `user`), so fetch them from
+// the management API by user id.
+async function mapSamlRoles(body, env) {
+  const userId = body?.user?.id;
+  if (!userId) return {};
+
+  const res = await fetch(
+    `https://${env.ZITADEL_DOMAIN}/management/v1/users/grants/_search`,
+    {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${env.ZITADEL_TOKEN}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ queries: [{ userIdQuery: { userId } }] }),
+    },
+  );
+  if (!res.ok) {
+    console.warn(`[saml] grants search failed: ${res.status}`);
+    return {};
+  }
+
+  const data = await res.json();
+  const roles = [...new Set((data.result ?? []).flatMap((g) => g.roleKeys ?? []))];
   if (roles.length === 0) return {};
 
   return {
