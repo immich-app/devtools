@@ -54,21 +54,24 @@ export class ZitadelClient {
   }
 
   async getUserGrants(userId: string, projectId: string): Promise<string[]> {
+    // The per-user path (/users/{userId}/grants/_search) 405s; the grants search
+    // lives at /users/grants/_search filtered by user, then narrowed to the
+    // project client-side.
     const result = await this.request<{ result?: ZitadelUserGrant[] }>(
       "POST",
-      `/management/v1/users/${userId}/grants/_search`,
+      `/management/v1/users/grants/_search`,
       {
         queries: [
           {
-            projectIdQuery: {
-              projectId,
+            userIdQuery: {
+              userId,
             },
           },
         ],
       },
     );
 
-    const grants = result.result ?? [];
+    const grants = (result.result ?? []).filter((grant) => grant.projectId === projectId);
     return grants.flatMap((grant) => grant.roleKeys);
   }
 }
