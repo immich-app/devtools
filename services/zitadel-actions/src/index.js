@@ -159,14 +159,60 @@ async function updateHumanUser(env, userId, email, firstName, lastName) {
 }
 
 // --- /token : preuserinfo (roles) + presamlresponse (saml) ---------------
-// Phase 2: port mapRoles -> append_claims(role/roles) from body.user_grants,
-// and samlMapRoles -> Roles SAML attribute. Until then this is an inert no-op
-// (returns {}), so wiring the execution early can't change any token.
+// Ports the v1 mapRoles / samlMapRoles actions. Dispatched by the function the
+// execution is bound to.
 
 async function handleToken(body) {
-  const fn = body?.function;
-  console.log(`[token] received ${fn} — handler not yet implemented (no-op)`);
+  switch (body?.function) {
+    case "function/preuserinfo":
+      return mapRoles(body);
+    case "function/presamlresponse":
+      return mapSamlRoles(body);
+    default:
+      console.log(`[token] unhandled function ${body?.function}`);
+      return {};
+  }
+}
+
+// mapRoles: for the project this token is being issued for (identified by the
+// asserted `urn:zitadel:iam:org:project:<id>:roles` claim), emit the user's
+// roles for that project as a `role` (single grant) or `roles` (multiple)
+// claim — matching the v1 action's shape exactly.
+function mapRoles(body) {
+  const userinfo = body?.userinfo ?? {};
+  const grants = body?.user_grants ?? [];
+
+  const projectId = Object.keys(userinfo)
+    .map((k) => k.match(/urn:zitadel:iam:org:project:(\d+):roles/)?.[1])
+    .filter(Boolean)[0];
+  if (!projectId) return {};
+
+  const roles = grants.filter((g) => g.project_id === projectId).map((g) => g.roles);
+  if (roles.length === 1) {
+    return { append_claims: [{ key: "role", value: String(roles[0]) }] };
+  }
+  if (roles.length > 1) {
+    return { append_claims: [{ key: "roles", value: roles }] };
+  }
   return {};
+}
+
+// samlMapRoles: emit every role the user holds (across all grants) as a `Roles`
+// SAML attribute — matching the v1 action.
+function mapSamlRoles(body) {
+  const grants = body?.user_grants ?? [];
+  const roles = grants.flatMap((g) => g.roles ?? []);
+  if (roles.length === 0) return {};
+
+  return {
+    append_attribute: [
+      {
+        name: "Roles",
+        name_format: "urn:oasis:names:tc:SAML:2.0:attrname-format:basic",
+        value: roles,
+      },
+    ],
+  };
 }
 
 // --- signature -----------------------------------------------------------

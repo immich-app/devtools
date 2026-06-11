@@ -29,6 +29,26 @@ resource "zitadel_action_execution_response" "idp_intent" {
   target_ids = [zitadel_action_target.idp_intent.id]
 }
 
+// /token (REST_CALL) — the worker returns claim/attribute manipulation for the
+// token-customization functions. Phase 2a: preuserinfo (roles), wired additively
+// alongside the v1 mapRoles (idempotent — both set the same `role` value). The
+// presamlresponse execution is intentionally NOT wired yet: running it next to
+// the v1 samlMapRoles would emit a duplicate `Roles` attribute, so SAML is a
+// swap handled once preuserinfo is validated.
+resource "zitadel_action_target" "token" {
+  name               = "zitadel-actions-token"
+  endpoint           = "https://${local.zitadel_actions_worker_host}/token"
+  target_type        = "REST_CALL"
+  timeout            = "10s"
+  interrupt_on_error = false
+  payload_type       = "PAYLOAD_TYPE_JSON"
+}
+
+resource "zitadel_action_execution_function" "preuserinfo" {
+  name       = "preuserinfo"
+  target_ids = [zitadel_action_target.token.id]
+}
+
 // --- Cloudflare Worker (provider v5: worker + version + deployment) -------
 
 resource "cloudflare_worker" "zitadel_actions" {
@@ -54,6 +74,7 @@ resource "cloudflare_worker_version" "zitadel_actions" {
     { name = "GITLAB_IDP_ID", type = "plain_text", text = zitadel_idp_gitlab_self_hosted.gitlab.id },
     { name = "ZITADEL_TOKEN", type = "secret_text", text = zitadel_personal_access_token.zitadel_actions.token },
     { name = "IDP_INTENT_SIGNING_KEY", type = "secret_text", text = zitadel_action_target.idp_intent.signing_key },
+    { name = "TOKEN_SIGNING_KEY", type = "secret_text", text = zitadel_action_target.token.signing_key },
   ]
 }
 
