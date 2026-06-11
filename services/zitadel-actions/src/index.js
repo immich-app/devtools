@@ -125,7 +125,7 @@ async function githubPrimaryEmail(accessToken) {
 
 // Mirror the old v1 action's name split: first word is given name, the rest is
 // family name (defaulting to a single space, which ZITADEL requires non-empty).
-function splitName(login, name) {
+export function splitName(login, name) {
   let firstName = login;
   let lastName = " ";
   const parts = String(name ?? "").trim().split(" ");
@@ -178,7 +178,13 @@ async function handleToken(body, env) {
 // asserted `urn:zitadel:iam:org:project:<id>:roles` claim), emit the user's
 // roles for that project as a `role` (single grant) or `roles` (multiple)
 // claim — matching the v1 action's shape exactly.
-function mapRoles(body) {
+//
+// `roles` is one entry per GRANT, each entry being that grant's role array.
+// Quirks preserved for v1 parity: a single grant with multiple roles becomes
+// `role: "A,B"` (String() comma-joins the array); multiple grants become
+// `roles: [["A"], ["B"]]` (array of per-grant arrays). Don't "simplify" these
+// without re-checking every downstream consumer.
+export function mapRoles(body) {
   const userinfo = body?.userinfo ?? {};
   const grants = body?.user_grants ?? [];
 
@@ -201,7 +207,7 @@ function mapRoles(body) {
 // SAML attribute — matching the v1 action. Unlike preuserinfo, the
 // presamlresponse payload carries no grants (only `user`), so fetch them from
 // the management API by user id.
-async function mapSamlRoles(body, env) {
+export async function mapSamlRoles(body, env) {
   const userId = body?.user?.id;
   if (!userId) return {};
 
@@ -217,7 +223,9 @@ async function mapSamlRoles(body, env) {
     },
   );
   if (!res.ok) {
-    console.warn(`[saml] grants search failed: ${res.status}`);
+    // Loud: a failure here means the SAML assertion ships with no Roles, which
+    // can silently drop SP-side access (e.g. OVHCloud admin).
+    console.error(`[saml] grants search failed for ${userId}: ${res.status} — assertion will have no Roles`);
     return {};
   }
 
@@ -238,11 +246,21 @@ async function mapSamlRoles(body, env) {
 
 // --- signature -----------------------------------------------------------
 
-async function verifySignature(signatureHeader, rawBody, signingKey) {
+// ZITADEL signs `${timestamp}.${rawBody}`. Reject signatures whose timestamp is
+// outside this window so a captured request can't be replayed indefinitely.
+const SIGNATURE_TOLERANCE_SECONDS = 300;
+
+export async function verifySignature(signatureHeader, rawBody, signingKey) {
   const parts = signatureHeader.split(",");
   const timestamp = parts.find((e) => e.startsWith("t="))?.slice(2);
   const signature = parts.find((e) => e.startsWith("v1="))?.slice(3);
   if (!timestamp || !signature) return false;
+
+  const ts = Number(timestamp);
+  if (!Number.isFinite(ts) || Math.abs(Date.now() / 1000 - ts) > SIGNATURE_TOLERANCE_SECONDS) {
+    console.warn(`[verify] timestamp outside tolerance (t=${timestamp})`);
+    return false;
+  }
 
   const encoder = new TextEncoder();
   const key = await crypto.subtle.importKey(
@@ -256,5 +274,16 @@ async function verifySignature(signatureHeader, rawBody, signingKey) {
   const computed = Array.from(new Uint8Array(sig))
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
-  return computed === signature;
+  return timingSafeEqual(computed, signature);
+}
+
+// Constant-time comparison — both inputs are fixed-length SHA-256 hex strings,
+// so an early-exit `===` would leak signature bytes via timing.
+export function timingSafeEqual(a, b) {
+  if (a.length !== b.length) return false;
+  let mismatch = 0;
+  for (let i = 0; i < a.length; i++) {
+    mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return mismatch === 0;
 }
