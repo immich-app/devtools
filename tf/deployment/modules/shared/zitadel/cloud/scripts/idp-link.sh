@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Create or delete a single external IdP link for a user, driven by the
-# terraform_data.gitlab_idp_link resource (one invocation per user, create on
-# add, delete on remove). There is no terraform resource for IdP links.
+# Create or delete a single external IdP link (github or gitlab) for a user,
+# driven by the terraform_data.idp_link resource (one invocation per user+idp,
+# create on add, delete on remove). There is no terraform resource for IdP links.
 #
 #   idp-link.sh create   # POST   /v2/users/{USER_ID}/links
 #   idp-link.sh delete   # DELETE /v2/users/{USER_ID}/links/{IDP_ID}/{EXTERNAL_USER_ID}
@@ -32,11 +32,22 @@ case "$action" in
       --data "$body")
     status=$(tail -n1 <<<"$resp"); out=$(sed '$d' <<<"$resp")
     if [[ "$status" -ge 200 && "$status" -lt 300 ]]; then
-      echo "linked gitlab ${EXTERNAL_USER_ID} (${USER_NAME}) -> user ${USER_ID}"
+      echo "linked ${EXTERNAL_USER_ID} (${USER_NAME}) -> user ${USER_ID}"
     elif [[ "$status" -eq 409 ]] || grep -qiE "already exist|already linked|already taken" <<<"$out"; then
-      echo "gitlab ${EXTERNAL_USER_ID} (${USER_NAME}) -> user ${USER_ID} already linked"
+      # The external identity is already linked to *some* user. Confirm it's this
+      # user — otherwise a wrong id in users.json would silently bind the wrong
+      # account. ListIDPLinks returns each link's external id as `userId`.
+      links=$(curl -sS -X POST "${base}/v2/users/${USER_ID}/links/_search" \
+        -H "Authorization: Bearer ${ZITADEL_TOKEN}" -H "Content-Type: application/json" --data '{}')
+      if jq -e --arg idp "$IDP_ID" --arg ext "$EXTERNAL_USER_ID" \
+           '.result[]? | select(.idpId == $idp and .userId == $ext)' >/dev/null 2>&1 <<<"$links"; then
+        echo "${EXTERNAL_USER_ID} (${USER_NAME}) -> user ${USER_ID} already linked"
+      else
+        echo "FAILED: external id ${EXTERNAL_USER_ID} (idp ${IDP_ID}) is already linked to a DIFFERENT user, not ${USER_ID}" >&2
+        exit 1
+      fi
     else
-      echo "FAILED create gitlab ${EXTERNAL_USER_ID} -> user ${USER_ID}: HTTP ${status} ${out}" >&2
+      echo "FAILED create ${EXTERNAL_USER_ID} -> user ${USER_ID}: HTTP ${status} ${out}" >&2
       exit 1
     fi
     ;;
@@ -46,11 +57,11 @@ case "$action" in
       -H "Authorization: Bearer ${ZITADEL_TOKEN}")
     status=$(tail -n1 <<<"$resp"); out=$(sed '$d' <<<"$resp")
     if [[ "$status" -ge 200 && "$status" -lt 300 ]]; then
-      echo "unlinked gitlab ${EXTERNAL_USER_ID} from user ${USER_ID}"
+      echo "unlinked ${EXTERNAL_USER_ID} from user ${USER_ID}"
     elif [[ "$status" -eq 404 ]]; then
-      echo "gitlab ${EXTERNAL_USER_ID} link on user ${USER_ID} already gone"
+      echo "${EXTERNAL_USER_ID} link on user ${USER_ID} already gone"
     else
-      echo "FAILED delete gitlab ${EXTERNAL_USER_ID} -> user ${USER_ID}: HTTP ${status} ${out}" >&2
+      echo "FAILED delete ${EXTERNAL_USER_ID} -> user ${USER_ID}: HTTP ${status} ${out}" >&2
       exit 1
     fi
     ;;
