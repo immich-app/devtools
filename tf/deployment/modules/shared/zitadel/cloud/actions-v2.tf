@@ -66,10 +66,13 @@ resource "cloudflare_worker_version" "zitadel_actions" {
   compatibility_date = "2026-06-01"
   main_module        = "index.js"
 
+  # content_base64 (not content_file): content_file is just a path, so a changed
+  # script produces no config diff and terraform never cuts a new version —
+  # embedding the content makes a code change force a new version + redeploy.
   modules = [{
-    name         = "index.js"
-    content_file = var.zitadel_actions_worker_script_path
-    content_type = "application/javascript+module"
+    name           = "index.js"
+    content_base64 = filebase64(var.zitadel_actions_worker_script_path)
+    content_type   = "application/javascript+module"
   }]
 
   bindings = [
