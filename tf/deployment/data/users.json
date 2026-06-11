@@ -229,6 +229,21 @@
     ]
   },
   {
+    "github": {
+      "username": "agg23",
+      "id": 238679
+    },
+    "discord": {
+      "username": "agg23",
+      "id": 160419937825980416
+    },
+    "roles": [
+      "team",
+      "immich",
+      "futo"
+    ]
+  },
+  {
     "github": null,
     "gitlab": {
       "username": "eron",
