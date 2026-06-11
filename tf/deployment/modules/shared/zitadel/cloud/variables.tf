@@ -28,7 +28,7 @@ variable "zitadel_gitlab_issuer" {
 
 variable "cloudflare_account_id" {}
 
-variable "zitadel_actions_worker_script_path" {
-  description = "Absolute path to the zitadel-actions worker entrypoint (injected by terragrunt via get_repo_root())."
+variable "zitadel_actions_worker_dir" {
+  description = "Absolute path to the zitadel-actions worker service directory (injected by terragrunt via get_repo_root()); its scripts/build.ts transpiles the TS worker for deployment."
   type        = string
 }

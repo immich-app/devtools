@@ -55,6 +55,13 @@ resource "zitadel_action_execution_function" "presamlresponse" {
 
 // --- Cloudflare Worker (provider v5: worker + version + deployment) -------
 
+# The worker source is TypeScript; Cloudflare runs JS. Transpile it at plan time
+# (deno, provided via mise) so the deployed content is always in sync with the
+# source — build.ts prints {"js": "..."} on stdout.
+data "external" "zitadel_actions_worker_build" {
+  program = ["deno", "run", "--allow-read", "--allow-net", "--allow-env", "${var.zitadel_actions_worker_dir}/scripts/build.ts"]
+}
+
 resource "cloudflare_worker" "zitadel_actions" {
   account_id = var.cloudflare_account_id
   name       = "zitadel-actions"
@@ -66,12 +73,11 @@ resource "cloudflare_worker_version" "zitadel_actions" {
   compatibility_date = "2026-06-01"
   main_module        = "index.js"
 
-  # content_base64 (not content_file): content_file is just a path, so a changed
-  # script produces no config diff and terraform never cuts a new version —
-  # embedding the content makes a code change force a new version + redeploy.
+  # Embed the transpiled content (not a file path) so a code change produces a
+  # config diff and terraform cuts a new version + redeploys.
   modules = [{
     name           = "index.js"
-    content_base64 = filebase64(var.zitadel_actions_worker_script_path)
+    content_base64 = base64encode(data.external.zitadel_actions_worker_build.result.js)
     content_type   = "application/javascript+module"
   }]
 

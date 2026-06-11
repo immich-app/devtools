@@ -12,10 +12,27 @@
 //                       Replaces mapRoles / samlMapRoles. (phase 2)
 //
 // Each path verifies the ZITADEL HMAC signature with that target's own signing
-// key. Secrets/config are injected as Worker bindings (see env below).
+// key. Secrets/config are injected as Worker bindings (see Env below).
+
+export interface Env {
+  ZITADEL_DOMAIN: string;
+  ZITADEL_TOKEN: string;
+  GITHUB_IDP_ID: string;
+  GITLAB_IDP_ID: string;
+  IDP_INTENT_SIGNING_KEY: string;
+  TOKEN_SIGNING_KEY: string;
+}
+
+// Manipulation returned to ZITADEL. `{}` means "no change".
+export interface Manipulation {
+  append_claims?: Array<{ key: string; value: unknown }>;
+  append_attribute?: Array<{ name: string; name_format: string; value: string[] }>;
+}
+
+type Handler = (body: unknown) => Manipulation | Promise<Manipulation>;
 
 export default {
-  async fetch(req, env) {
+  async fetch(req: Request, env: Env): Promise<Response> {
     const url = new URL(req.url);
 
     if (req.method !== "POST") {
@@ -24,9 +41,9 @@ export default {
 
     switch (url.pathname) {
       case "/idp-intent":
-        return handleVerified(req, env.IDP_INTENT_SIGNING_KEY, (body) => handleIdpIntent(body, env));
+        return handleVerified(req, env.IDP_INTENT_SIGNING_KEY, (body) => handleIdpIntent(body as IdpIntentBody, env));
       case "/token":
-        return handleVerified(req, env.TOKEN_SIGNING_KEY, (body) => handleToken(body, env));
+        return handleVerified(req, env.TOKEN_SIGNING_KEY, (body) => handleToken(body as TokenBody, env));
       default:
         return new Response("Not found", { status: 404 });
     }
@@ -37,7 +54,7 @@ export default {
 // return value into a JSON 200. A thrown handler error becomes a 500 — with
 // interrupt_on_error=false on the target, ZITADEL ignores it and the login
 // proceeds unchanged, so a worker fault can never break authentication.
-async function handleVerified(req, signingKey, handler) {
+async function handleVerified(req: Request, signingKey: string, handler: Handler): Promise<Response> {
   if (!signingKey) {
     console.error("[init] missing signing key binding");
     return new Response("Missing configuration", { status: 500 });
@@ -51,7 +68,7 @@ async function handleVerified(req, signingKey, handler) {
     return new Response("Invalid signature", { status: 400 });
   }
 
-  let body;
+  let body: unknown;
   try {
     body = JSON.parse(rawBody);
   } catch {
@@ -62,14 +79,26 @@ async function handleVerified(req, signingKey, handler) {
     const result = (await handler(body)) ?? {};
     return Response.json(result);
   } catch (e) {
-    console.error("[handler] error:", e?.stack ?? e?.message ?? e);
+    console.error("[handler] error:", e instanceof Error ? e.stack : e);
     return new Response("Internal error", { status: 500 });
   }
 }
 
 // --- /idp-intent : profile sync ------------------------------------------
 
-async function handleIdpIntent(body, env) {
+interface IdpInformation {
+  idpId: string;
+  userName?: string;
+  // deno-lint-ignore no-explicit-any -- untrusted IdP profile, shape varies
+  rawInformation?: Record<string, any>;
+  oauth?: { accessToken?: string };
+}
+
+interface IdpIntentBody {
+  response?: { userId?: string; idpInformation?: IdpInformation };
+}
+
+async function handleIdpIntent(body: IdpIntentBody, env: Env): Promise<Manipulation> {
   const idp = body?.response?.idpInformation;
   const userId = body?.response?.userId;
   if (!idp || !userId) {
@@ -78,9 +107,9 @@ async function handleIdpIntent(body, env) {
   }
 
   const raw = idp.rawInformation ?? {};
-  let email = null;
-  let firstName;
-  let lastName;
+  let email: string | null = null;
+  let firstName: string;
+  let lastName: string;
 
   if (idp.idpId === env.GITHUB_IDP_ID) {
     // GitHub: primary email comes from /user/emails (profile email may be null
@@ -106,7 +135,7 @@ async function handleIdpIntent(body, env) {
   return {};
 }
 
-async function githubPrimaryEmail(accessToken) {
+async function githubPrimaryEmail(accessToken: string | undefined): Promise<string | null> {
   if (!accessToken) return null;
   const res = await fetch("https://api.github.com/user/emails", {
     headers: {
@@ -119,14 +148,14 @@ async function githubPrimaryEmail(accessToken) {
     console.warn(`[github] /user/emails -> ${res.status}`);
     return null;
   }
-  const emails = await res.json();
+  const emails = (await res.json()) as Array<{ email: string; primary: boolean }>;
   return emails.find((e) => e.primary)?.email ?? null;
 }
 
 // Mirror the old v1 action's name split: first word is given name, the rest is
 // family name (defaulting to a single space, which ZITADEL requires non-empty).
-export function splitName(login, name) {
-  let firstName = login;
+export function splitName(login: string | undefined, name: unknown): { firstName: string; lastName: string } {
+  let firstName = login ?? "";
   let lastName = " ";
   const parts = String(name ?? "").trim().split(" ");
   if (parts.length > 0 && parts[0].length > 0) firstName = parts[0];
@@ -134,7 +163,13 @@ export function splitName(login, name) {
   return { firstName, lastName };
 }
 
-async function updateHumanUser(env, userId, email, firstName, lastName) {
+async function updateHumanUser(
+  env: Env,
+  userId: string,
+  email: string,
+  firstName: string,
+  lastName: string,
+): Promise<void> {
   const res = await fetch(`https://${env.ZITADEL_DOMAIN}/v2/users/human/${userId}`, {
     method: "PUT",
     headers: {
@@ -162,7 +197,19 @@ async function updateHumanUser(env, userId, email, firstName, lastName) {
 // Ports the v1 mapRoles / samlMapRoles actions. Dispatched by the function the
 // execution is bound to.
 
-async function handleToken(body, env) {
+interface UserGrant {
+  project_id: string;
+  roles: string[];
+}
+
+interface TokenBody {
+  function?: string;
+  userinfo?: Record<string, unknown>;
+  user_grants?: UserGrant[];
+  user?: { id?: string };
+}
+
+async function handleToken(body: TokenBody, env: Env): Promise<Manipulation> {
   switch (body?.function) {
     case "function/preuserinfo":
       return mapRoles(body);
@@ -184,7 +231,7 @@ async function handleToken(body, env) {
 // `role: "A,B"` (String() comma-joins the array); multiple grants become
 // `roles: [["A"], ["B"]]` (array of per-grant arrays). Don't "simplify" these
 // without re-checking every downstream consumer.
-export function mapRoles(body) {
+export function mapRoles(body: TokenBody): Manipulation {
   const userinfo = body?.userinfo ?? {};
   const grants = body?.user_grants ?? [];
 
@@ -207,7 +254,7 @@ export function mapRoles(body) {
 // SAML attribute — matching the v1 action. Unlike preuserinfo, the
 // presamlresponse payload carries no grants (only `user`), so fetch them from
 // the management API by user id.
-export async function mapSamlRoles(body, env) {
+export async function mapSamlRoles(body: TokenBody, env: Env): Promise<Manipulation> {
   const userId = body?.user?.id;
   if (!userId) return {};
 
@@ -229,7 +276,7 @@ export async function mapSamlRoles(body, env) {
     return {};
   }
 
-  const data = await res.json();
+  const data = (await res.json()) as { result?: Array<{ roleKeys?: string[] }> };
   const roles = [...new Set((data.result ?? []).flatMap((g) => g.roleKeys ?? []))];
   if (roles.length === 0) return {};
 
@@ -250,7 +297,7 @@ export async function mapSamlRoles(body, env) {
 // outside this window so a captured request can't be replayed indefinitely.
 const SIGNATURE_TOLERANCE_SECONDS = 300;
 
-export async function verifySignature(signatureHeader, rawBody, signingKey) {
+export async function verifySignature(signatureHeader: string, rawBody: string, signingKey: string): Promise<boolean> {
   const parts = signatureHeader.split(",");
   const timestamp = parts.find((e) => e.startsWith("t="))?.slice(2);
   const signature = parts.find((e) => e.startsWith("v1="))?.slice(3);
@@ -274,16 +321,5 @@ export async function verifySignature(signatureHeader, rawBody, signingKey) {
   const computed = Array.from(new Uint8Array(sig))
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
-  return timingSafeEqual(computed, signature);
-}
-
-// Constant-time comparison — both inputs are fixed-length SHA-256 hex strings,
-// so an early-exit `===` would leak signature bytes via timing.
-export function timingSafeEqual(a, b) {
-  if (a.length !== b.length) return false;
-  let mismatch = 0;
-  for (let i = 0; i < a.length; i++) {
-    mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  }
-  return mismatch === 0;
+  return computed === signature;
 }

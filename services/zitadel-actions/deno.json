@@ -1,0 +1,10 @@
+{
+  "tasks": {
+    "test": "deno test",
+    "check": "deno check src/index.ts test/index.test.ts",
+    "build": "deno run --allow-read --allow-net --allow-env scripts/build.ts"
+  },
+  "compilerOptions": {
+    "strict": true
+  }
+}
