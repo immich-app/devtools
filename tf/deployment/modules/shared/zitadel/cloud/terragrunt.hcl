@@ -5,7 +5,7 @@ terraform {
     commands = get_terraform_commands_that_need_vars()
   }
 
-  include_in_copy = ["repo-files/*"]
+  include_in_copy = ["repo-files/*", "scripts/*"]
 }
 
 include "root" {
@@ -13,9 +13,10 @@ include "root" {
 }
 
 inputs = {
-  users_data_file_path = "${get_repo_root()}/tf/deployment/data/users.json"
+  users_data_file_path       = "${get_repo_root()}/tf/deployment/data/users.json"
+  zitadel_actions_worker_dir = "${get_repo_root()}/services/zitadel-actions"
 }
 
 dependencies {
-  paths = []
+  paths = ["../../cloudflare/api-keys"]
 }

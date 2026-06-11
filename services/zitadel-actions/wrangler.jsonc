@@ -1,0 +1,14 @@
+{
+  // ZITADEL Actions v2 handlers for the internal cloud instance.
+  // Deployed via terraform (cloudflare_workers_script) — this config is for
+  // local `wrangler dev` and as the source-of-truth for the worker name/entry.
+  // Secrets + plain-text vars (SIGNING_KEY(s), ZITADEL_TOKEN, ZITADEL_DOMAIN,
+  // GITHUB_IDP_ID, GITLAB_IDP_ID) are injected as bindings by terraform, not here.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "zitadel-actions",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-06-01",
+  "observability": {
+    "enabled": true
+  }
+}
