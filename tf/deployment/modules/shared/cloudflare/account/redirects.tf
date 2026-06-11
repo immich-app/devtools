@@ -173,3 +173,27 @@ resource "cloudflare_ruleset" "immich_cc_redirects" {
     enabled     = true
   }
 }
+
+resource "cloudflare_ruleset" "immich_ca_redirects" {
+  zone_id     = cloudflare_zone.immich_ca.id
+  name        = "immich.ca to immich.app redirects"
+  description = "Redirects immich.ca to immich.app"
+  kind        = "zone"
+  phase       = "http_request_dynamic_redirect"
+
+  rules {
+    action = "redirect"
+    action_parameters {
+      from_value {
+        status_code = 307
+        target_url {
+          value = "https://immich.app"
+        }
+        preserve_query_string = true
+      }
+    }
+    expression  = "(http.host eq \"www.immich.ca\") or (http.host eq \"immich.ca\")"
+    description = "Redirect visitors going to immich.ca links"
+    enabled     = true
+  }
+}
