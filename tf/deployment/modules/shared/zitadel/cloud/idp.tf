@@ -7,7 +7,10 @@ resource "zitadel_idp_github" "github" {
   is_auto_update      = true
   is_creation_allowed = false
   is_linking_allowed  = true
-  auto_linking        = "AUTO_LINKING_OPTION_USERNAME"
+  # Auto-linking disabled — every identity is linked explicitly by external id
+  # via terraform_data.idp_link (idp-links.tf), so a login only matches a
+  # pre-created link, never a username/email heuristic.
+  auto_linking = "AUTO_LINKING_OPTION_UNSPECIFIED"
 }
 
 resource "zitadel_idp_gitlab_self_hosted" "gitlab" {
@@ -20,5 +23,8 @@ resource "zitadel_idp_gitlab_self_hosted" "gitlab" {
   is_auto_update      = true
   is_creation_allowed = false
   is_linking_allowed  = true
-  auto_linking        = "AUTO_LINKING_OPTION_USERNAME"
+  # Auto-linking disabled — every identity is linked explicitly by external id
+  # via terraform_data.idp_link (idp-links.tf), so a login only matches a
+  # pre-created link, never a username/email heuristic.
+  auto_linking = "AUTO_LINKING_OPTION_UNSPECIFIED"
 }

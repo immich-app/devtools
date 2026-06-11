@@ -4,6 +4,10 @@
       "username": "alextran1502",
       "id": 27055614
     },
+    "gitlab": {
+      "username": "altran",
+      "id": 79
+    },
     "discord": {
       "username": "alex.tran1502",
       "id": 285511635735543828
@@ -20,6 +24,10 @@
       "username": "jrasm91",
       "id": 4334196
     },
+    "gitlab": {
+      "username": "jrasm91",
+      "id": 81
+    },
     "discord": {
       "username": "jrasm91",
       "id": 613523742479483183
@@ -34,6 +42,10 @@
     "github": {
       "username": "bo0tzz",
       "id": 11602424
+    },
+    "gitlab": {
+      "username": "boet",
+      "id": 95
     },
     "discord": {
       "username": "bo0tzz",
@@ -50,6 +62,10 @@
     "github": {
       "username": "zackpollard",
       "id": 1313578
+    },
+    "gitlab": {
+      "username": "zack",
+      "id": 80
     },
     "discord": {
       "username": "zackpollard",
@@ -68,6 +84,10 @@
       "username": "onedr0p",
       "id": 213795
     },
+    "gitlab": {
+      "username": "devin",
+      "id": 157
+    },
     "discord": {
       "username": "onedr0p",
       "id": 261368074328997888
@@ -82,6 +102,10 @@
     "github": {
       "username": "nutgood",
       "id": 38678863
+    },
+    "gitlab": {
+      "username": "antoine",
+      "id": 158
     },
     "discord": {
       "username": "nutgood",
@@ -98,6 +122,10 @@
       "username": "nirokato",
       "id": 3781232
     },
+    "gitlab": {
+      "username": "andy",
+      "id": 156
+    },
     "discord": {
       "username": "nirokato",
       "id": 269581865881436170
@@ -112,6 +140,10 @@
     "github": {
       "username": "danieldietzler",
       "id": 36593685
+    },
+    "gitlab": {
+      "username": "danield",
+      "id": 108
     },
     "discord": {
       "username": "ddietzler",
@@ -158,6 +190,10 @@
       "username": "bwees",
       "id": 12686250
     },
+    "gitlab": {
+      "username": "bwees",
+      "id": 129
+    },
     "discord": {
       "username": "bwees",
       "id": 172431702465970176
@@ -188,6 +224,10 @@
       "username": "insertish",
       "id": 38285861
     },
+    "gitlab": {
+      "username": "paulm",
+      "id": 150
+    },
     "discord": {
       "username": "insert",
       "id": 99765584266264576
@@ -202,6 +242,10 @@
     "github": {
       "username": "benbeckford",
       "id": 186883809
+    },
+    "gitlab": {
+      "username": "ben",
+      "id": 163
     },
     "discord": {
       "username": "benbeckford",
@@ -262,6 +306,10 @@
       "username": "kennyfuto",
       "id": 202023786
     },
+    "gitlab": {
+      "username": "kenny",
+      "id": 115
+    },
     "discord": {
       "username": "kennyfuto",
       "id": 1402320140938510398
@@ -275,6 +323,10 @@
     "github": {
       "username": "koen-futo",
       "id": 129423944
+    },
+    "gitlab": {
+      "username": "koen",
+      "id": 40
     },
     "discord": {
       "username": "",
@@ -299,6 +351,10 @@
       "username": "orhan98",
       "id": 234065310
     },
+    "gitlab": {
+      "username": "orhan",
+      "id": 149
+    },
     "discord": {
       "username": "orhan_08299",
       "id": 1450543861108838491
@@ -309,6 +365,10 @@
   },
   {
     "github": null,
+    "gitlab": {
+      "username": "justin",
+      "id": 105
+    },
     "discord": {
       "username": "somewhatjustin",
       "id": 396114422906486784
