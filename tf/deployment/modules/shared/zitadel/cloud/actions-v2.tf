@@ -30,11 +30,10 @@ resource "zitadel_action_execution_response" "idp_intent" {
 }
 
 // /token (REST_CALL) — the worker returns claim/attribute manipulation for the
-// token-customization functions. Phase 2a: preuserinfo (roles), wired additively
-// alongside the v1 mapRoles (idempotent — both set the same `role` value). The
-// presamlresponse execution is intentionally NOT wired yet: running it next to
-// the v1 samlMapRoles would emit a duplicate `Roles` attribute, so SAML is a
-// swap handled once preuserinfo is validated.
+// token-customization functions: preuserinfo maps project roles to the
+// role/roles claim (was mapRoles), presamlresponse emits the Roles SAML
+// attribute (was samlMapRoles). The v1 actions are removed in the same change,
+// so there's no duplicate-claim / duplicate-attribute overlap.
 resource "zitadel_action_target" "token" {
   name               = "zitadel-actions-token"
   endpoint           = "https://${local.zitadel_actions_worker_host}/token"
@@ -46,6 +45,11 @@ resource "zitadel_action_target" "token" {
 
 resource "zitadel_action_execution_function" "preuserinfo" {
   name       = "preuserinfo"
+  target_ids = [zitadel_action_target.token.id]
+}
+
+resource "zitadel_action_execution_function" "presamlresponse" {
+  name       = "presamlresponse"
   target_ids = [zitadel_action_target.token.id]
 }
 
