@@ -1,7 +1,7 @@
 [tools]
 deno = "2.8.3"
 flux2 = "2.8.8"
-go = "1.26.3"
+go = "1.26.4"
 "go:github.com/cloudnative-pg/cloudnative-pg/cmd/kubectl-cnpg" = "1.29.1"
 helm = "4.2.0"
 jq = "1.8.1"
@@ -9,8 +9,8 @@ kubectl = "1.36.1"
 opentofu = "1.11.8"
 "pipx:flux-local" = "8.2.0"
 terragrunt = "1.0.4"
-usage = "3.3.0"
-uv = "0.11.16"
+usage = "3.4.0"
+uv = "0.11.19"
 yamlfmt = "0.21.0"
 
 [env]
