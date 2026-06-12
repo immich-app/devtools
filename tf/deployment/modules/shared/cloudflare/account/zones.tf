@@ -157,6 +157,38 @@ output "immich_pro_zone_id" {
   value = cloudflare_zone.immich_pro.id
 }
 
+resource "cloudflare_zone" "immich_ca" {
+  account_id = var.cloudflare_account_id
+  zone       = "immich.ca"
+}
+
+resource "cloudflare_zone_settings_override" "immich_ca" {
+  zone_id = cloudflare_zone.immich_ca.id
+
+  settings {
+    http3            = "on"
+    zero_rtt         = "on"
+    tls_1_3          = "zrt"
+    always_use_https = "on"
+    ssl              = "strict"
+    brotli           = "on"
+    fonts            = "on"
+    early_hints      = "on"
+    rocket_loader    = "on"
+    speed_brain      = "on"
+  }
+}
+
+resource "cloudflare_tiered_cache" "immich_ca" {
+  zone_id    = cloudflare_zone.immich_ca.id
+  cache_type = "smart"
+}
+
+
+output "immich_ca_zone_id" {
+  value = cloudflare_zone.immich_ca.id
+}
+
 resource "cloudflare_zone" "immich_build" {
   account_id = var.cloudflare_account_id
   zone       = "immich.build"
