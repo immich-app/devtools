@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/immich-app/devtools/compare/use-mise-action-v2.0.2...use-mise-action-v3.0.0) (2026-06-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* enforce locked in use-mise action ([#1615](https://github.com/immich-app/devtools/issues/1615))
+
+### Features
+
+* enforce locked in use-mise action ([#1615](https://github.com/immich-app/devtools/issues/1615)) ([b69f10c](https://github.com/immich-app/devtools/commit/b69f10ca5dec2d60583f6e49bd014d501c274e05))
+
 ## [2.0.2](https://github.com/immich-app/devtools/compare/use-mise-action-v2.0.1...use-mise-action-v2.0.2) (2026-05-19)
 
 
