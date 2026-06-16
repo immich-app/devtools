@@ -15,9 +15,9 @@ runs:
         github_token: ${{ inputs.github_token }}
         working_directory: ${{ inputs.working_directory }}
         install_args: "--locked"
-        version: 2026.5.12
+        version: 2026.6.10
         sha256:
-          ${{ runner.os == 'Linux' && runner.arch == 'X64' && 'a238972a3162d710b85b28c324372e96ca4e4b486c81fe78695000d9fbc77c48' ||
-          runner.os == 'Linux' && runner.arch == 'ARM64' && 'fd2d5227a8ad0b1e359c70527a8345a9ada72077f8dcbb559371653c3d95464f' ||
-          runner.os == 'macOS' && runner.arch == 'ARM64' && 'e777070540ffe22cf8b2b9f88aed88b461d0887d940c4f1c1a97359463cde6e1' ||
-          runner.os == 'Windows' && runner.arch == 'X64' && 'adf1b4c9f51e7d15cff723056fcd8fd51f40ebacadcca97fd5758c44d469d5ea' }}
+          ${{ runner.os == 'Linux' && runner.arch == 'X64' && '656131b5d995493c18b06c2135afda193f94a1848e0a4d1cb07a1161859d0c80' ||
+          runner.os == 'Linux' && runner.arch == 'ARM64' && 'f39ef86c888efe7323c1e510a8d14614af43d030acb3d56cb1af47e66b87ef28' ||
+          runner.os == 'macOS' && runner.arch == 'ARM64' && 'bd6117d71fe5d969d91c9b7e9abfe8a1be1a1d159061a0ae42dde6e000ef3004' ||
+          runner.os == 'Windows' && runner.arch == 'X64' && '95e0d4b20b5e32b7c870f25931311226527440fa70dd54cb3bd5156704b101ba' }}
