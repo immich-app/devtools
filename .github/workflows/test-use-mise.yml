@@ -77,3 +77,14 @@ jobs:
             echo "::error::mise version mismatch: expected $expected, got $actual"
             exit 1
           fi
+
+  success-check:
+    name: Test use-mise Success
+    needs: [test-use-mise]
+    permissions: {}
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: immich-app/devtools/actions/success-check@81113db03f6d743efee81e0058c0b43f6cd6f36d # success-check-action-v0.0.6
+        with:
+          needs: ${{ toJSON(needs) }}
