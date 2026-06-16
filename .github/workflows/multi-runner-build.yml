@@ -163,6 +163,7 @@ jobs:
             # Release version tags
             type=semver,pattern={{version}},prefix=v,enable=${{ inputs.release-tag-type == 'semver' }}
             type=semver,pattern={{major}},prefix=v,enable=${{ inputs.release-tag-type == 'semver' }}
+            type=match,pattern=v(\d+),group=1,prefix=v,suffix=-rc,enable=${{ inputs.release-tag-type == 'semver' && github.event.release.prerelease == true }}
             type=ref,event=tag,enable=${{ inputs.release-tag-type == 'git-tag' }}
             type=raw,value=release,enable=${{ github.event_name == 'release' && github.event.release.prerelease == false }}
 
