@@ -9,8 +9,8 @@ kubectl = "1.36.1"
 opentofu = "1.11.8"
 "pipx:flux-local" = "8.3.0"
 terragrunt = "1.0.4"
-usage = "3.4.0"
-uv = "0.11.19"
+usage = "3.5.0"
+uv = "0.11.20"
 yamlfmt = "0.21.0"
 
 [env]
