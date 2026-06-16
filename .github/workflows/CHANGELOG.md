@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.1.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v3.0.0...multi-runner-build-workflow-v3.1.0) (2026-06-16)
+
+
+### Features
+
+* major pre-release tags ([#1690](https://github.com/immich-app/devtools/issues/1690)) ([ea1e094](https://github.com/immich-app/devtools/commit/ea1e0946308ed9651ffc02e2136bb8e7be4a13a6))
+
+
+### Chores
+
+* **deps:** update fluxcd ([#1630](https://github.com/immich-app/devtools/issues/1630)) ([8d3abd6](https://github.com/immich-app/devtools/commit/8d3abd6ba1e658b25ec771da36bcf88cd79c9cf8))
+* **deps:** update fluxcd to v8.3.0 ([#1685](https://github.com/immich-app/devtools/issues/1685)) ([539a79f](https://github.com/immich-app/devtools/commit/539a79f562d3a2f8bec552de1fcd1030b6c392a5))
+* **deps:** update github-actions ([#1668](https://github.com/immich-app/devtools/issues/1668)) ([ddbf697](https://github.com/immich-app/devtools/commit/ddbf697f019c93b07eb6c96e642ae81aa4c12bf5))
+
 ## [3.0.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.4.0...multi-runner-build-workflow-v3.0.0) (2026-06-01)
 
 
