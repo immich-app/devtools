@@ -257,7 +257,7 @@ checksum = "sha256:2c1865fa261de3b514eeca4be543a6c5e0b0f9b2e75b3488cdbf1d4e0914b
 url = "https://github.com/opentofu/opentofu/releases/download/v1.11.8/tofu_1.11.8_windows_amd64.tar.gz"
 
 [[tools."pipx:flux-local"]]
-version = "8.2.0"
+version = "8.3.0"
 backend = "pipx:flux-local"
 
 [[tools.terragrunt]]
