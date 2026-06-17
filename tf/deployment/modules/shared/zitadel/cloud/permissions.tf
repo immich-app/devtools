@@ -8,13 +8,20 @@ locals {
     ]
   ])
 
-  # For each user+project, grant only the highest-priority role (first match in the ordered list)
+  # Per user+project: multi_role projects grant every role the user matches;
+  # the rest grant only the highest-priority one (first match in the ordered list).
   project_user_grants = flatten([
     for project in local.projects : [
       for key, user in local.zitadel_users : {
         project_name = project.name
-        role_key     = [for role in project.roles : role.key if length(setintersection(toset(role.grants_to), toset(user.roles))) > 0][0]
-        user_key     = key
+        role_keys = project.multi_role ? [
+          for role in project.roles : role.key
+          if length(setintersection(toset(role.grants_to), toset(user.roles))) > 0
+          ] : [[
+            for role in project.roles : role.key
+            if length(setintersection(toset(role.grants_to), toset(user.roles))) > 0
+        ][0]]
+        user_key = key
       }
       if length([for role in project.roles : role.key if length(setintersection(toset(role.grants_to), toset(user.roles))) > 0]) > 0
     ]
@@ -42,5 +49,5 @@ resource "zitadel_user_grant" "project_grants" {
   org_id     = zitadel_org.immich.id
   project_id = zitadel_project.projects[each.value.project_name].id
   user_id    = zitadel_human_user.users[each.value.user_key].id
-  role_keys  = [each.value.role_key]
+  role_keys  = each.value.role_keys
 }
