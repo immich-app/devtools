@@ -22,7 +22,9 @@ interface ExecutionContext {
 
 interface WebhookPayload {
   event: string;
-  payload: { id: string; model: { id: string; email?: string } };
+  // Outline sends payload.id (the affected model's id) plus a presented model;
+  // for users.signin both carry the signing-in user's id.
+  payload: { id: string; model?: { id?: string; email?: string } };
 }
 
 // ZITADEL role keys on the Outline project that map 1:1 to Outline groups.
@@ -64,7 +66,11 @@ async function handleWebhook(
     return new Response("OK");
   }
 
-  const outlineUserId = webhook.payload.model.id;
+  const outlineUserId = webhook.payload.model?.id ?? webhook.payload.id;
+  if (!outlineUserId) {
+    console.error("users.signin webhook missing a user id");
+    return new Response("OK");
+  }
   console.log(`received users.signin webhook for user ${outlineUserId}`);
 
   // Reconcile after responding so Outline's webhook delivery isn't blocked.
@@ -79,9 +85,23 @@ async function handleWebhook(
 
 export async function verifySignature(
   body: string,
-  signature: string,
+  signatureHeader: string,
   secret: string,
 ): Promise<boolean> {
+  // Outline signs `${timestamp}.${body}` with HMAC-SHA256 and sends the result
+  // as `Outline-Signature: t=<timestamp>,s=<hex>`.
+  const parts = new Map<string, string>();
+  for (const part of signatureHeader.split(",")) {
+    const eq = part.indexOf("=");
+    if (eq === -1) continue;
+    parts.set(part.slice(0, eq).trim(), part.slice(eq + 1).trim());
+  }
+  const timestamp = parts.get("t");
+  const signature = parts.get("s");
+  if (!timestamp || !signature) {
+    return false;
+  }
+
   const enc = new TextEncoder();
   const key = await crypto.subtle.importKey(
     "raw",
@@ -90,11 +110,15 @@ export async function verifySignature(
     false,
     ["sign"],
   );
-  const sig = await crypto.subtle.sign("HMAC", key, enc.encode(body));
+  const sig = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    enc.encode(`${timestamp}.${body}`),
+  );
   const expected = Array.from(new Uint8Array(sig))
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
-  return `sha256=${expected}` === signature;
+  return expected === signature;
 }
 
 async function syncUserRoles(outlineUserId: string, env: Env): Promise<void> {
