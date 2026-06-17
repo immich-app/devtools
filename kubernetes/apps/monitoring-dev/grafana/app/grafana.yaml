@@ -11,6 +11,8 @@ spec:
       root_url: https://monitoring.dev.immich.cloud/
     database:
       wal: "true"
+    auth:
+      oauth_allow_insecure_email_lookup: "true"
     auth.generic_oauth:
       enabled: "true"
       client_id: ${quote}${GRAFANA_OAUTH_CLIENT_ID}${quote}
