@@ -2,7 +2,7 @@
 // content_base64 — Cloudflare runs JS, the source is TS. Invoked by the
 // data.external in actions-v2.tf, so it must print ONLY a JSON object with the
 // JS string on stdout (deno's own download/progress noise goes to stderr).
-import { transpile } from "jsr:@deno/emit";
+import { transpile } from "@deno/emit";
 
 const entry = new URL("../src/index.ts", import.meta.url);
 const result = await transpile(entry);

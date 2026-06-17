@@ -3,8 +3,11 @@
   "specifiers": {
     "jsr:@deno/cache-dir@0.13.2": "0.13.2",
     "jsr:@deno/emit@*": "0.46.0",
+    "jsr:@deno/emit@0.46": "0.46.0",
+    "jsr:@deno/graph@~0.73.1": "0.73.1",
     "jsr:@std/assert@*": "1.0.19",
     "jsr:@std/assert@0.223": "0.223.0",
+    "jsr:@std/assert@^1.0.19": "1.0.19",
     "jsr:@std/bytes@0.223": "0.223.0",
     "jsr:@std/fmt@0.223": "0.223.0",
     "jsr:@std/fs@0.223": "0.223.0",
@@ -16,6 +19,7 @@
     "@deno/cache-dir@0.13.2": {
       "integrity": "c22419dfe27ab85f345bee487aaaadba498b005cce3644e9d2528db035c5454d",
       "dependencies": [
+        "jsr:@deno/graph",
         "jsr:@std/fmt",
         "jsr:@std/fs",
         "jsr:@std/io",
@@ -28,6 +32,9 @@
         "jsr:@deno/cache-dir",
         "jsr:@std/path"
       ]
+    },
+    "@deno/graph@0.73.1": {
+      "integrity": "cd69639d2709d479037d5ce191a422eabe8d71bb68b0098344f6b07411c84d41"
     },
     "@std/assert@0.223.0": {
       "integrity": "eb8d6d879d76e1cc431205bd346ed4d88dc051c6366365b1af47034b0670be24"
@@ -63,5 +70,11 @@
         "jsr:@std/assert@0.223"
       ]
     }
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@deno/emit@0.46",
+      "jsr:@std/assert@^1.0.19"
+    ]
   }
 }
