@@ -13,8 +13,9 @@ include "root" {
 }
 
 inputs = {
-  users_data_file_path       = "${get_repo_root()}/tf/deployment/data/users.json"
-  zitadel_actions_worker_dir = "${get_repo_root()}/services/zitadel-actions"
+  users_data_file_path         = "${get_repo_root()}/tf/deployment/data/users.json"
+  zitadel_actions_worker_dir   = "${get_repo_root()}/services/zitadel-actions"
+  outline_role_sync_worker_dir = "${get_repo_root()}/services/outline-role-sync"
 }
 
 dependencies {

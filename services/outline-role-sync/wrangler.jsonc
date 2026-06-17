@@ -1,0 +1,12 @@
+{
+  // Syncs ZITADEL project roles to Outline groups on the users.signin webhook.
+  // Deployed via terraform (cloudflare_worker_version) from the zitadel cloud
+  // module; this config is for local `wrangler dev` and the worker name/entry.
+  // Bindings (OUTLINE_*/ZITADEL_*) are injected by terraform, not here.
+  "name": "outline-role-sync",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-06-01",
+  "observability": {
+    "enabled": true
+  }
+}
