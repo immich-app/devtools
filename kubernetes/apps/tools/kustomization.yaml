@@ -7,4 +7,3 @@ resources:
   - ./discord-bot/ks.yaml
   - ./containerssh/ks.yaml
   - ./outline/ks.yaml
-  - ./outline-role-sync/ks.yaml
