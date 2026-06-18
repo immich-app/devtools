@@ -48,6 +48,12 @@ locals {
       redirectUris = ["https://oauth2-proxy.internal.immich.cloud/oauth2/callback"]
     },
     {
+      name         = "LoopDedupe"
+      roles        = [{ key = "Granted", grants_to = ["immich_admin", "team", "contributor", "support"] }]
+      authMethod   = "BASIC"
+      redirectUris = ["https://loopdedupe.internal.immich.cloud/oauth2/callback"]
+    },
+    {
       name        = "OVHCloud"
       protocol    = "saml"
       roles       = [{ key = "ADMIN", grants_to = ["immich_admin", "yucca"] }, { key = "DEFAULT", grants_to = ["team"] }]
