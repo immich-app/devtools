@@ -38,7 +38,7 @@ spec:
               OAUTH2_PROXY_USER_ID_CLAIM: "sub"
               OAUTH2_PROXY_PROVIDER_DISPLAY_NAME: "ZITADEL"
               OAUTH2_PROXY_REDIRECT_URL: "https://oauth2-proxy.internal.immich.cloud/oauth2/callback"
-              OAUTH2_PROXY_OIDC_ISSUER_URL: "https://zitadel.internal.immich.cloud"
+              OAUTH2_PROXY_OIDC_ISSUER_URL: "https://auth.internal.futo.org"
               OAUTH2_PROXY_EMAIL_DOMAINS: "*"
               OAUTH2_PROXY_COOKIE_DOMAINS: ".immich.cloud"
               OAUTH2_PROXY_WHITELIST_DOMAINS: ".immich.cloud"
