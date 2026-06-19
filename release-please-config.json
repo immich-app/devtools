@@ -22,15 +22,11 @@
     "actions/sticky-comment": {
       "component": "sticky-comment-action"
     },
-    "services/outline-role-sync": {
-      "component": "outline-role-sync"
-    },
     ".github/workflows": {
       "component": "multi-runner-build-workflow",
       "exclude-paths": [
         ".github/workflows/build-actions-runner.yaml",
         ".github/workflows/build-mdq.yml",
-        ".github/workflows/build-outline-role-sync.yml",
         ".github/workflows/flux-diff.yml",
         ".github/workflows/org-pr-require-conventional-commit.yml",
         ".github/workflows/org-zizmor.yml",

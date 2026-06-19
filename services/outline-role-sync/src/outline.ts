@@ -23,7 +23,10 @@ export class OutlineClient {
     private apiToken: string,
   ) {}
 
-  private async request<T>(path: string, body: Record<string, unknown> = {}): Promise<T> {
+  private async request<T>(
+    path: string,
+    body: Record<string, unknown> = {},
+  ): Promise<T> {
     const response = await fetch(`${this.baseUrl}/api${path}`, {
       method: "POST",
       headers: {
@@ -35,7 +38,9 @@ export class OutlineClient {
 
     if (!response.ok) {
       const text = await response.text();
-      throw new Error(`Outline API error ${response.status} on ${path}: ${text}`);
+      throw new Error(
+        `Outline API error ${response.status} on ${path}: ${text}`,
+      );
     }
 
     return (await response.json() as { data: T }).data;
@@ -46,14 +51,20 @@ export class OutlineClient {
   }
 
   async getUserGroups(userId: string): Promise<OutlineGroupMembership[]> {
-    const result = await this.request<{ groups: OutlineGroupMembership[] }>("/groups.list", {
-      userId,
-    });
+    const result = await this.request<{ groups: OutlineGroupMembership[] }>(
+      "/groups.list",
+      {
+        userId,
+      },
+    );
     return result.groups;
   }
 
   async listAllGroups(): Promise<OutlineGroup[]> {
-    const result = await this.request<{ groups: OutlineGroup[] }>("/groups.list", {});
+    const result = await this.request<{ groups: OutlineGroup[] }>(
+      "/groups.list",
+      {},
+    );
     return result.groups;
   }
 
@@ -69,7 +80,16 @@ export class OutlineClient {
     await this.request("/groups.remove_user", { id: groupId, userId });
   }
 
-  async updateUserRole(userId: string, role: "admin" | "member" | "viewer"): Promise<void> {
-    await this.request("/users.update", { id: userId, role });
+  async updateUserRole(
+    userId: string,
+    role: "admin" | "member" | "viewer",
+  ): Promise<void> {
+    // Outline ignores `role` on users.update — role changes go through the
+    // dedicated promote/demote endpoints.
+    if (role === "admin") {
+      await this.request("/users.promote", { id: userId });
+    } else {
+      await this.request("/users.demote", { id: userId, to: role });
+    }
   }
 }

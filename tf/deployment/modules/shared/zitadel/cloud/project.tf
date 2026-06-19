@@ -6,6 +6,9 @@ locals {
     grantTypes   = ["AUTHORIZATION_CODE"]
     protocol     = "oidc"
     metadataUrl  = ""
+    # When true, a user is granted every role they match (not just the
+    # highest-priority one) — e.g. Outline admins land in Leadership and Team.
+    multi_role = false
   }
   projects_data = [
     {
@@ -27,10 +30,11 @@ locals {
       name = "Outline"
       roles = [
         { key = "Leadership", grants_to = ["immich_admin"] },
-        { key = "Team", grants_to = ["team"] },
+        { key = "Team", grants_to = ["team", "immich_admin"] },
         { key = "Contributor", grants_to = ["contributor"] },
         { key = "Support Crew", grants_to = ["support"] }
       ]
+      multi_role   = true
       authMethod   = "BASIC"
       redirectUris = ["https://outline.immich.cloud/auth/oidc.callback"]
     },
