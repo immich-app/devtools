@@ -5,7 +5,7 @@ terraform {
     commands = get_terraform_commands_that_need_vars()
   }
 
-  include_in_copy = ["repo-files/*", "scripts/*"]
+  include_in_copy = ["repo-files/*", "scripts/*", "assets/*", "translations/*"]
 }
 
 include "root" {
