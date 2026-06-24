@@ -39,6 +39,13 @@ locals {
           "http://127.0.0.1:3000/",
         ]
         devMode = true
+      },
+      # Public (no secret) device-authorization client for the yucca CLI/device
+      # flow. Client id -> CUSTOMER_ZITADEL_OAUTH_CLIENT_ID_DEVICE in yucca_tf_dev.
+      {
+        name       = "Device"
+        appType    = "NATIVE"
+        grantTypes = ["DEVICE_CODE"]
       }
     ] : [],
     [
