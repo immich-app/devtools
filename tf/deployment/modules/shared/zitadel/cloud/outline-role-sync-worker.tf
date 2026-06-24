@@ -5,6 +5,12 @@
 // content is embedded so a code change forces a new version.
 locals {
   outline_role_sync_worker_host = "outline-role-sync.internal.immich.cloud"
+  # The Outline project's zitadel role keys are the Outline groups the worker
+  # manages. Passing them in means adding a role to the project above is all
+  # that's needed for the worker to start syncing its group.
+  outline_role_keys = [
+    for role in one([for p in local.projects_data : p.roles if p.name == "Outline"]) : role.key
+  ]
 }
 
 # Outline API token + webhook secret live in 1Password (not created here).
@@ -43,6 +49,7 @@ resource "cloudflare_worker_version" "outline_role_sync" {
     { name = "OUTLINE_BASE_URL", type = "plain_text", text = "https://outline.immich.cloud" },
     { name = "ZITADEL_BASE_URL", type = "plain_text", text = "https://auth.internal.futo.org" },
     { name = "ZITADEL_OUTLINE_PROJECT_ID", type = "plain_text", text = zitadel_project.projects["Outline"].id },
+    { name = "ZITADEL_OUTLINE_PROJECT_ROLES", type = "plain_text", text = join(",", local.outline_role_keys) },
     { name = "ZITADEL_SERVICE_ACCOUNT_TOKEN", type = "secret_text", text = zitadel_personal_access_token.outline_role_sync.token },
     { name = "OUTLINE_API_TOKEN", type = "secret_text", text = data.onepassword_item.outline_role_sync_api_token.password },
     { name = "OUTLINE_WEBHOOK_SECRET", type = "secret_text", text = data.onepassword_item.outline_role_sync_webhook_secret.password },

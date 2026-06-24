@@ -12,6 +12,9 @@ export interface Env {
   ZITADEL_BASE_URL: string;
   ZITADEL_SERVICE_ACCOUNT_TOKEN: string;
   ZITADEL_OUTLINE_PROJECT_ID: string;
+  // Comma-separated Outline project role keys; these are the Outline groups the
+  // worker manages (one group per zitadel role on the project).
+  ZITADEL_OUTLINE_PROJECT_ROLES: string;
 }
 
 // Minimal shape of the Workers execution context (for ctx.waitUntil).
@@ -26,9 +29,6 @@ interface WebhookPayload {
   // for users.signin both carry the signing-in user's id.
   payload: { id: string; model?: { id?: string; email?: string } };
 }
-
-// ZITADEL role keys on the Outline project that map 1:1 to Outline groups.
-const MANAGED_GROUPS = ["Leadership", "Team", "Contributor", "Support Crew"];
 
 export default {
   async fetch(
@@ -158,8 +158,15 @@ async function syncUserRoles(outlineUserId: string, env: Env): Promise<void> {
   const userGroups = await outline.getUserGroups(outlineUserId);
   const currentGroupNames = new Set(userGroups.map((g) => g.name));
 
+  // Groups the worker manages = the Outline project's zitadel role keys.
+  const managedGroups = new Set(
+    env.ZITADEL_OUTLINE_PROJECT_ROLES.split(",")
+      .map((role) => role.trim())
+      .filter((role) => role.length > 0),
+  );
+
   const targetGroupNames = new Set(
-    zitadelRoles.filter((role) => MANAGED_GROUPS.includes(role)),
+    zitadelRoles.filter((role) => managedGroups.has(role)),
   );
 
   // Create any target group that doesn't exist yet.
@@ -184,7 +191,7 @@ async function syncUserRoles(outlineUserId: string, env: Env): Promise<void> {
   // Remove the user from managed groups they should no longer be in.
   for (const group of userGroups) {
     if (
-      MANAGED_GROUPS.includes(group.name) && !targetGroupNames.has(group.name)
+      managedGroups.has(group.name) && !targetGroupNames.has(group.name)
     ) {
       console.log(`removing ${user.email} from ${group.name}`);
       await outline.removeUserFromGroup(group.id, outlineUserId);
