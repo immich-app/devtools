@@ -37,3 +37,5 @@ variable "outline_role_sync_worker_dir" {
   description = "Absolute path to the outline-role-sync worker service directory (injected by terragrunt via get_repo_root()); its scripts/build.ts bundles the TS worker for deployment."
   type        = string
 }
+
+variable "futo_op_service_account_token" {}
