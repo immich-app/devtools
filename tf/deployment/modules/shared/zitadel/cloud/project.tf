@@ -27,6 +27,12 @@ locals {
       redirectUris = ["https://grafana.data.immich.cloud/login/generic_oauth"]
     },
     {
+      name = "Grafana O11y"
+      # redirectUris intentionally empty for now — add the o11y grafana host
+      # (https://<host>/login/generic_oauth) once it's finalised
+      roles = [{ key = "GrafanaAdmin", grants_to = ["immich_admin"] }, { key = "Editor", grants_to = ["team", "yucca"] }]
+    },
+    {
       name = "Outline"
       roles = [
         { key = "Leadership", grants_to = ["immich_admin"] },
@@ -56,6 +62,12 @@ locals {
       roles        = [{ key = "Granted", grants_to = ["immich_admin", "team", "contributor", "support"] }]
       authMethod   = "BASIC"
       redirectUris = ["https://loopdedupe.internal.immich.cloud/oauth2/callback"]
+    },
+    {
+      name = "Yucca Internal Tooling"
+      # redirectUris intentionally empty for now — public/PKCE client
+      # (authMethod defaults to NONE); add the callback URL when known
+      roles = [{ key = "Granted", grants_to = ["yucca"] }]
     },
     {
       name        = "OVHCloud"
