@@ -40,12 +40,16 @@ locals {
         ]
         devMode = true
       },
-      # Public (no secret) device-authorization client for the yucca CLI/device
-      # flow. Client id -> CUSTOMER_ZITADEL_OAUTH_CLIENT_ID_DEVICE in yucca_tf_dev.
+      # Public (no secret) device-code client for yucca orchestrator login.
+      # Client id -> CUSTOMER_ZITADEL_OAUTH_CLIENT_ID_YUCCA_ORCHESTRATOR in yucca_tf_dev.
       {
-        name       = "Device"
-        appType    = "NATIVE"
-        grantTypes = ["DEVICE_CODE"]
+        name                   = "Yucca Orchestrator"
+        authMethod             = "NONE"
+        appType                = "NATIVE"
+        grantTypes             = ["DEVICE_CODE"]
+        redirectUris           = []
+        postLogoutRedirectUris = []
+        devMode                = false
       }
     ] : [],
     [
