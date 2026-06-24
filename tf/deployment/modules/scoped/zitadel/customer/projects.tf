@@ -30,6 +30,7 @@ locals {
           "http://127.0.0.1:3000/auth/callback",
           "http://localhost:5173/api/auth/oidc/callback",
           "http://localhost:22676/api/yucca/auth/oidc/callback",
+          "https://staging.backups.futo.cloud/api/auth/oidc/callback",
         ]
         postLogoutRedirectUris = [
           "http://localhost:3000/",
