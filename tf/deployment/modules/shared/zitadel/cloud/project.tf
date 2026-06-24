@@ -38,7 +38,8 @@ locals {
         { key = "Leadership", grants_to = ["immich_admin"] },
         { key = "Team", grants_to = ["team", "immich_admin"] },
         { key = "Contributor", grants_to = ["contributor"] },
-        { key = "Support Crew", grants_to = ["support"] }
+        { key = "Support Crew", grants_to = ["support"] },
+        { key = "FUTO", grants_to = ["futo", "team"] }
       ]
       multi_role   = true
       authMethod   = "BASIC"
