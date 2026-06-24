@@ -338,6 +338,34 @@
   },
   {
     "github": null,
+    "gitlab": {
+      "username": "michael",
+      "id": 39
+    },
+    "discord": {
+      "username": "",
+      "id": 0
+    },
+    "roles": [
+      "futo"
+    ]
+  },
+  {
+    "github": null,
+    "gitlab": {
+      "username": "dec05eba",
+      "id": 152
+    },
+    "discord": {
+      "username": "",
+      "id": 0
+    },
+    "roles": [
+      "futo"
+    ]
+  },
+  {
+    "github": null,
     "discord": {
       "username": "thekinocorner",
       "id": 407763616528334848
