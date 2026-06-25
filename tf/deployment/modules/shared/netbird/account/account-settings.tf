@@ -23,7 +23,7 @@ resource "netbird_account_settings" "default" {
   groups_propagation_enabled = true
 
   # Custom address range NetBird assigns peer IPs from.
-  network_range = "10.10.254.0/15"
+  network_range = "10.254.0.0/15"
 
   # Custom DNS domain peers are addressable under (e.g. <peer>.futo.network).
   dns_domain = "futo.network"
