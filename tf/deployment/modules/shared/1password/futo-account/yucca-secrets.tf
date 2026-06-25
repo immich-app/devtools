@@ -17,6 +17,7 @@ module "yucca-manual-secrets" {
       "CLOUDFLARE_API_TOKEN",
       "TAILSCALE_OAUTH_CLIENT_ID",
       "TAILSCALE_OAUTH_CLIENT_SECRET",
+      "NETBOX_API_TOKEN",
     ]
     scoped = [
       "CUSTOMER_ZITADEL_DOMAIN",
