@@ -27,6 +27,7 @@ module "yucca-manual-secrets" {
       "CUSTOMER_ZITADEL_SMTP_SENDER_ADDRESS",
       "HETZNER_WEBSERVICE_API_USER",
       "HETZNER_WEBSERVICE_API_PASSWORD",
+      "NET_SWITCHES_TERRAFORM_SSH_PRIVATE_KEY",
     ]
   }
   global_vault      = "yucca_tf_manual"
