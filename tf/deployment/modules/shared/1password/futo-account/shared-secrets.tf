@@ -1,0 +1,17 @@
+module "shared-manual-secrets" {
+  source = "./shared/modules/secrets/manual"
+
+  secrets = {
+    global = [
+      "NETBIRD_TF_PAT",
+    ]
+    scoped = []
+  }
+  global_vault      = "shared_tf_manual"
+  copy_global_vault = "shared_tf"
+  scoped_vaults = {
+    "shared_tf_prod_manual"    = "shared_tf_prod"
+    "shared_tf_staging_manual" = "shared_tf_staging"
+    "shared_tf_dev_manual"     = "shared_tf_dev"
+  }
+}
