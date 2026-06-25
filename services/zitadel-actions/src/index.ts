@@ -21,9 +21,6 @@ export interface Env {
   GITLAB_IDP_ID: string;
   IDP_INTENT_SIGNING_KEY: string;
   TOKEN_SIGNING_KEY: string;
-  // Project whose roles are additionally emitted as a flat `groups` claim for
-  // NetBird's JWT-group sync. Other projects' token shapes are left untouched.
-  NETBIRD_PROJECT_ID: string;
 }
 
 // Manipulation returned to ZITADEL. `{}` means "no change".
@@ -248,9 +245,7 @@ interface TokenBody {
 async function handleToken(body: TokenBody, env: Env): Promise<Manipulation> {
   switch (body?.function) {
     case "function/preuserinfo":
-      return mapRoles(body, env);
-    case "function/preaccesstoken":
-      return mapAccessTokenGroups(body, env);
+      return mapRoles(body);
     case "function/presamlresponse":
       return await mapSamlRoles(body, env);
     default:
@@ -269,7 +264,7 @@ async function handleToken(body: TokenBody, env: Env): Promise<Manipulation> {
 // `role: "A,B"` (String() comma-joins the array); multiple grants become
 // `roles: [["A"], ["B"]]` (array of per-grant arrays). Don't "simplify" these
 // without re-checking every downstream consumer.
-export function mapRoles(body: TokenBody, env: Env): Manipulation {
+export function mapRoles(body: TokenBody): Manipulation {
   const userinfo = body?.userinfo ?? {};
   const grants = body?.user_grants ?? [];
 
@@ -281,42 +276,13 @@ export function mapRoles(body: TokenBody, env: Env): Manipulation {
   const roles = grants.filter((g) => g.project_id === projectId).map((g) =>
     g.roles
   );
-
-  const claims: Array<{ key: string; value: unknown }> = [];
-
-  // NetBird's JWT-group sync reads a flat, deduped array of group names. Emit it
-  // only for the NetBird project so every other app keeps its role/roles shape.
-  if (projectId === env.NETBIRD_PROJECT_ID) {
-    const groups = [...new Set(roles.flat())];
-    if (groups.length > 0) claims.push({ key: "groups", value: groups });
-  }
-
   if (roles.length === 1) {
-    claims.push({ key: "role", value: String(roles[0]) });
-  } else if (roles.length > 1) {
-    claims.push({ key: "roles", value: roles });
+    return { append_claims: [{ key: "role", value: String(roles[0]) }] };
   }
-
-  return claims.length > 0 ? { append_claims: claims } : {};
-}
-
-// mapAccessTokenGroups: NetBird reads group membership from the JWT access
-// token, so the flat `groups` claim has to be added there too (preuserinfo only
-// reaches the userinfo/ID token). preaccesstoken fires solely for JWT access
-// tokens — only the NetBird app issues those — and the payload carries
-// user_grants directly, so we gate on the NetBird project id rather than the
-// asserted-roles claim used by mapRoles.
-export function mapAccessTokenGroups(body: TokenBody, env: Env): Manipulation {
-  const grants = body?.user_grants ?? [];
-  const groups = [
-    ...new Set(
-      grants
-        .filter((g) => g.project_id === env.NETBIRD_PROJECT_ID)
-        .flatMap((g) => g.roles),
-    ),
-  ];
-  if (groups.length === 0) return {};
-  return { append_claims: [{ key: "groups", value: groups }] };
+  if (roles.length > 1) {
+    return { append_claims: [{ key: "roles", value: roles }] };
+  }
+  return {};
 }
 
 // samlMapRoles: emit every role the user holds (across all grants) as a `Roles`

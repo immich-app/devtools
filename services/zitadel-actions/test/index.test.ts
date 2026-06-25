@@ -1,7 +1,6 @@
 import { assertEquals } from "@std/assert";
 import {
   type Env,
-  mapAccessTokenGroups,
   mapRoles,
   mapSamlRoles,
   splitName,
@@ -15,9 +14,6 @@ const ENV: Env = {
   GITLAB_IDP_ID: "gl",
   IDP_INTENT_SIGNING_KEY: "i",
   TOKEN_SIGNING_KEY: "t",
-  // Distinct from the project 123 used in the role/roles cases below, so those
-  // assert the non-NetBird path (no groups claim).
-  NETBIRD_PROJECT_ID: "456",
 };
 
 // --- splitName ---
@@ -56,7 +52,7 @@ Deno.test("mapRoles: single grant -> role claim", () => {
     userinfo: { [URN]: {} },
     user_grants: [{ project_id: "123", roles: ["Leadership"] }],
   };
-  assertEquals(mapRoles(body, ENV), {
+  assertEquals(mapRoles(body), {
     append_claims: [{ key: "role", value: "Leadership" }],
   });
 });
@@ -66,7 +62,7 @@ Deno.test("mapRoles: no project-roles claim -> {}", () => {
     mapRoles({
       userinfo: {},
       user_grants: [{ project_id: "123", roles: ["X"] }],
-    }, ENV),
+    }),
     {},
   );
 });
@@ -76,7 +72,7 @@ Deno.test("mapRoles: grant for a different project is ignored", () => {
     userinfo: { [URN]: {} },
     user_grants: [{ project_id: "999", roles: ["Other"] }],
   };
-  assertEquals(mapRoles(body, ENV), {});
+  assertEquals(mapRoles(body), {});
 });
 
 Deno.test("mapRoles: multiple grants -> roles array (v1 nested shape)", () => {
@@ -87,68 +83,9 @@ Deno.test("mapRoles: multiple grants -> roles array (v1 nested shape)", () => {
       roles: ["B"],
     }],
   };
-  assertEquals(mapRoles(body, ENV), {
+  assertEquals(mapRoles(body), {
     append_claims: [{ key: "roles", value: [["A"], ["B"]] }],
   });
-});
-
-// --- mapRoles: NetBird project also emits a flat `groups` claim ---
-
-const NB_URN = "urn:zitadel:iam:org:project:456:roles";
-
-Deno.test("mapRoles: netbird project emits a flat groups claim", () => {
-  const body = {
-    userinfo: { [NB_URN]: {} },
-    user_grants: [{ project_id: "456", roles: ["team", "futo"] }],
-  };
-  assertEquals(mapRoles(body, ENV), {
-    append_claims: [
-      { key: "groups", value: ["team", "futo"] },
-      { key: "role", value: "team,futo" },
-    ],
-  });
-});
-
-Deno.test("mapRoles: netbird groups are deduped across grants", () => {
-  const body = {
-    userinfo: { [NB_URN]: {} },
-    user_grants: [
-      { project_id: "456", roles: ["team", "futo"] },
-      { project_id: "456", roles: ["futo", "yucca"] },
-    ],
-  };
-  assertEquals(mapRoles(body, ENV), {
-    append_claims: [
-      { key: "groups", value: ["team", "futo", "yucca"] },
-      { key: "roles", value: [["team", "futo"], ["futo", "yucca"]] },
-    ],
-  });
-});
-
-// --- mapAccessTokenGroups (preaccesstoken: groups into the JWT access token) ---
-
-Deno.test("mapAccessTokenGroups: emits deduped groups for the netbird project", () => {
-  const body = {
-    function: "function/preaccesstoken",
-    user_grants: [
-      { project_id: "456", roles: ["team", "futo"] },
-      { project_id: "456", roles: ["futo", "yucca"] },
-    ],
-  };
-  assertEquals(mapAccessTokenGroups(body, ENV), {
-    append_claims: [{ key: "groups", value: ["team", "futo", "yucca"] }],
-  });
-});
-
-Deno.test("mapAccessTokenGroups: ignores grants for other projects", () => {
-  const body = {
-    user_grants: [{ project_id: "123", roles: ["Leadership"] }],
-  };
-  assertEquals(mapAccessTokenGroups(body, ENV), {});
-});
-
-Deno.test("mapAccessTokenGroups: no grants -> {}", () => {
-  assertEquals(mapAccessTokenGroups({ user_grants: [] }, ENV), {});
 });
 
 // --- mapSamlRoles (grants fetched from the management API) ---

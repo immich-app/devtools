@@ -13,15 +13,6 @@ resource "netbird_account_settings" "default" {
   # connect to the network (NetBird Cloud only).
   peer_approval_enabled = false
 
-  # Derive NetBird group membership from the Zitadel SSO token. The zitadel-actions
-  # worker flattens the user's NetBird-project roles into a `groups` string array
-  # (gated to the NetBird project); NetBird auto-creates those groups and assigns
-  # the user. groups_propagation pushes them onto the user's peers so network
-  # policies can target them.
-  jwt_groups_enabled         = true
-  jwt_groups_claim_name      = "groups"
-  groups_propagation_enabled = true
-
   # Custom address range NetBird assigns peer IPs from.
   network_range = "10.254.0.0/15"
 
