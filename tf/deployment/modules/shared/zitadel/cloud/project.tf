@@ -9,6 +9,7 @@ locals {
     metadataUrl              = ""
     accessTokenType          = "BEARER"
     accessTokenRoleAssertion = false
+    idTokenUserinfoAssertion = false
     # When true, a user is granted every role they match (not just the
     # highest-priority one) — e.g. Outline admins land in Leadership and Team.
     multi_role = false
@@ -86,6 +87,9 @@ locals {
       # claim to it via the preaccesstoken function.
       accessTokenType          = "JWT"
       accessTokenRoleAssertion = true
+      # NetBird reads the `groups` claim from the ID token; preuserinfo claims
+      # only reach the ID token when userinfo is asserted into it.
+      idTokenUserinfoAssertion = true
       redirectUris             = ["https://login.netbird.io/login/callback"]
       postLogoutRedirectUris   = ["https://app.netbird.io"]
     },
@@ -139,6 +143,7 @@ resource "zitadel_application_oidc" "applications" {
   auth_method_type            = "OIDC_AUTH_METHOD_TYPE_${each.value.authMethod}"
   access_token_type           = "OIDC_TOKEN_TYPE_${each.value.accessTokenType}"
   access_token_role_assertion = each.value.accessTokenRoleAssertion
+  id_token_userinfo_assertion = each.value.idTokenUserinfoAssertion
 }
 
 resource "onepassword_item" "application_client_id" {
