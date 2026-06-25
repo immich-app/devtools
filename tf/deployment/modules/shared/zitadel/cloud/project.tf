@@ -1,11 +1,12 @@
 locals {
   project_defaults = {
-    authMethod   = "NONE"
-    appType      = "WEB"
-    redirectUris = []
-    grantTypes   = ["AUTHORIZATION_CODE"]
-    protocol     = "oidc"
-    metadataUrl  = ""
+    authMethod             = "NONE"
+    appType                = "WEB"
+    redirectUris           = []
+    postLogoutRedirectUris = []
+    grantTypes             = ["AUTHORIZATION_CODE"]
+    protocol               = "oidc"
+    metadataUrl            = ""
     # When true, a user is granted every role they match (not just the
     # highest-priority one) — e.g. Outline admins land in Leadership and Team.
     multi_role = false
@@ -65,6 +66,13 @@ locals {
       redirectUris = ["https://loopdedupe.internal.immich.cloud/oauth2/callback"]
     },
     {
+      name                   = "NetBird"
+      roles                  = [{ key = "Granted", grants_to = ["immich_admin", "team", "futo", "yucca"] }]
+      authMethod             = "BASIC"
+      redirectUris           = ["https://login.netbird.io/login/callback"]
+      postLogoutRedirectUris = ["https://app.netbird.io"]
+    },
+    {
       name = "Yucca Internal Tooling"
       # redirectUris intentionally empty for now — public/PKCE client
       # (authMethod defaults to NONE); add the callback URL when known
@@ -106,11 +114,12 @@ resource "zitadel_application_oidc" "applications" {
   org_id     = zitadel_org.immich.id
   project_id = zitadel_project.projects[each.key].id
 
-  redirect_uris    = each.value.redirectUris
-  response_types   = ["OIDC_RESPONSE_TYPE_CODE"]
-  grant_types      = [for grant_type in each.value.grantTypes : "OIDC_GRANT_TYPE_${grant_type}"]
-  app_type         = "OIDC_APP_TYPE_${each.value.appType}"
-  auth_method_type = "OIDC_AUTH_METHOD_TYPE_${each.value.authMethod}"
+  redirect_uris             = each.value.redirectUris
+  post_logout_redirect_uris = each.value.postLogoutRedirectUris
+  response_types            = ["OIDC_RESPONSE_TYPE_CODE"]
+  grant_types               = [for grant_type in each.value.grantTypes : "OIDC_GRANT_TYPE_${grant_type}"]
+  app_type                  = "OIDC_APP_TYPE_${each.value.appType}"
+  auth_method_type          = "OIDC_AUTH_METHOD_TYPE_${each.value.authMethod}"
 }
 
 resource "onepassword_item" "application_client_id" {
