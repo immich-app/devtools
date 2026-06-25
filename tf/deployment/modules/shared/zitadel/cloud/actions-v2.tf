@@ -85,6 +85,8 @@ resource "cloudflare_worker_version" "zitadel_actions" {
     { name = "ZITADEL_DOMAIN", type = "plain_text", text = "auth.internal.futo.org" },
     { name = "GITHUB_IDP_ID", type = "plain_text", text = zitadel_idp_github.github.id },
     { name = "GITLAB_IDP_ID", type = "plain_text", text = zitadel_idp_gitlab_self_hosted.gitlab.id },
+    # Used by mapRoles to gate the flat `groups` claim to the NetBird project only.
+    { name = "NETBIRD_PROJECT_ID", type = "plain_text", text = zitadel_project.projects["NetBird"].id },
     { name = "ZITADEL_TOKEN", type = "secret_text", text = zitadel_personal_access_token.zitadel_actions.token },
     { name = "IDP_INTENT_SIGNING_KEY", type = "secret_text", text = zitadel_action_target.idp_intent.signing_key },
     { name = "TOKEN_SIGNING_KEY", type = "secret_text", text = zitadel_action_target.token.signing_key },

@@ -66,8 +66,18 @@ locals {
       redirectUris = ["https://loopdedupe.internal.immich.cloud/oauth2/callback"]
     },
     {
-      name                   = "NetBird"
-      roles                  = [{ key = "Granted", grants_to = ["immich_admin", "team", "futo", "yucca"] }]
+      name = "NetBird"
+      # Role keys double as NetBird group names: the zitadel-actions worker emits
+      # them as a flat `groups` claim (gated to this project) and NetBird
+      # auto-creates the groups. multi_role so a user lands in every category they
+      # match, not just the highest-priority one.
+      roles = [
+        { key = "immich_admin", grants_to = ["immich_admin"] },
+        { key = "team", grants_to = ["team"] },
+        { key = "futo", grants_to = ["futo"] },
+        { key = "yucca", grants_to = ["yucca"] },
+      ]
+      multi_role             = true
       authMethod             = "BASIC"
       redirectUris           = ["https://login.netbird.io/login/callback"]
       postLogoutRedirectUris = ["https://app.netbird.io"]
