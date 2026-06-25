@@ -249,6 +249,8 @@ async function handleToken(body: TokenBody, env: Env): Promise<Manipulation> {
   switch (body?.function) {
     case "function/preuserinfo":
       return mapRoles(body, env);
+    case "function/preaccesstoken":
+      return mapAccessTokenGroups(body, env);
     case "function/presamlresponse":
       return await mapSamlRoles(body, env);
     default:
@@ -296,6 +298,25 @@ export function mapRoles(body: TokenBody, env: Env): Manipulation {
   }
 
   return claims.length > 0 ? { append_claims: claims } : {};
+}
+
+// mapAccessTokenGroups: NetBird reads group membership from the JWT access
+// token, so the flat `groups` claim has to be added there too (preuserinfo only
+// reaches the userinfo/ID token). preaccesstoken fires solely for JWT access
+// tokens — only the NetBird app issues those — and the payload carries
+// user_grants directly, so we gate on the NetBird project id rather than the
+// asserted-roles claim used by mapRoles.
+export function mapAccessTokenGroups(body: TokenBody, env: Env): Manipulation {
+  const grants = body?.user_grants ?? [];
+  const groups = [
+    ...new Set(
+      grants
+        .filter((g) => g.project_id === env.NETBIRD_PROJECT_ID)
+        .flatMap((g) => g.roles),
+    ),
+  ];
+  if (groups.length === 0) return {};
+  return { append_claims: [{ key: "groups", value: groups }] };
 }
 
 // samlMapRoles: emit every role the user holds (across all grants) as a `Roles`

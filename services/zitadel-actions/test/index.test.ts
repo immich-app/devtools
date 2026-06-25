@@ -1,6 +1,7 @@
 import { assertEquals } from "@std/assert";
 import {
   type Env,
+  mapAccessTokenGroups,
   mapRoles,
   mapSamlRoles,
   splitName,
@@ -122,6 +123,32 @@ Deno.test("mapRoles: netbird groups are deduped across grants", () => {
       { key: "roles", value: [["team", "futo"], ["futo", "yucca"]] },
     ],
   });
+});
+
+// --- mapAccessTokenGroups (preaccesstoken: groups into the JWT access token) ---
+
+Deno.test("mapAccessTokenGroups: emits deduped groups for the netbird project", () => {
+  const body = {
+    function: "function/preaccesstoken",
+    user_grants: [
+      { project_id: "456", roles: ["team", "futo"] },
+      { project_id: "456", roles: ["futo", "yucca"] },
+    ],
+  };
+  assertEquals(mapAccessTokenGroups(body, ENV), {
+    append_claims: [{ key: "groups", value: ["team", "futo", "yucca"] }],
+  });
+});
+
+Deno.test("mapAccessTokenGroups: ignores grants for other projects", () => {
+  const body = {
+    user_grants: [{ project_id: "123", roles: ["Leadership"] }],
+  };
+  assertEquals(mapAccessTokenGroups(body, ENV), {});
+});
+
+Deno.test("mapAccessTokenGroups: no grants -> {}", () => {
+  assertEquals(mapAccessTokenGroups({ user_grants: [] }, ENV), {});
 });
 
 // --- mapSamlRoles (grants fetched from the management API) ---

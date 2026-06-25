@@ -1,12 +1,14 @@
 locals {
   project_defaults = {
-    authMethod             = "NONE"
-    appType                = "WEB"
-    redirectUris           = []
-    postLogoutRedirectUris = []
-    grantTypes             = ["AUTHORIZATION_CODE"]
-    protocol               = "oidc"
-    metadataUrl            = ""
+    authMethod               = "NONE"
+    appType                  = "WEB"
+    redirectUris             = []
+    postLogoutRedirectUris   = []
+    grantTypes               = ["AUTHORIZATION_CODE"]
+    protocol                 = "oidc"
+    metadataUrl              = ""
+    accessTokenType          = "BEARER"
+    accessTokenRoleAssertion = false
     # When true, a user is granted every role they match (not just the
     # highest-priority one) — e.g. Outline admins land in Leadership and Team.
     multi_role = false
@@ -77,10 +79,15 @@ locals {
         { key = "futo", grants_to = ["futo"] },
         { key = "yucca", grants_to = ["yucca"] },
       ]
-      multi_role             = true
-      authMethod             = "BASIC"
-      redirectUris           = ["https://login.netbird.io/login/callback"]
-      postLogoutRedirectUris = ["https://app.netbird.io"]
+      multi_role = true
+      authMethod = "BASIC"
+      # NetBird reads groups from the JWT access token, so this app must issue
+      # JWTs (not opaque) with roles asserted; the worker adds the flat `groups`
+      # claim to it via the preaccesstoken function.
+      accessTokenType          = "JWT"
+      accessTokenRoleAssertion = true
+      redirectUris             = ["https://login.netbird.io/login/callback"]
+      postLogoutRedirectUris   = ["https://app.netbird.io"]
     },
     {
       name = "Yucca Internal Tooling"
@@ -124,12 +131,14 @@ resource "zitadel_application_oidc" "applications" {
   org_id     = zitadel_org.immich.id
   project_id = zitadel_project.projects[each.key].id
 
-  redirect_uris             = each.value.redirectUris
-  post_logout_redirect_uris = each.value.postLogoutRedirectUris
-  response_types            = ["OIDC_RESPONSE_TYPE_CODE"]
-  grant_types               = [for grant_type in each.value.grantTypes : "OIDC_GRANT_TYPE_${grant_type}"]
-  app_type                  = "OIDC_APP_TYPE_${each.value.appType}"
-  auth_method_type          = "OIDC_AUTH_METHOD_TYPE_${each.value.authMethod}"
+  redirect_uris               = each.value.redirectUris
+  post_logout_redirect_uris   = each.value.postLogoutRedirectUris
+  response_types              = ["OIDC_RESPONSE_TYPE_CODE"]
+  grant_types                 = [for grant_type in each.value.grantTypes : "OIDC_GRANT_TYPE_${grant_type}"]
+  app_type                    = "OIDC_APP_TYPE_${each.value.appType}"
+  auth_method_type            = "OIDC_AUTH_METHOD_TYPE_${each.value.authMethod}"
+  access_token_type           = "OIDC_TOKEN_TYPE_${each.value.accessTokenType}"
+  access_token_role_assertion = each.value.accessTokenRoleAssertion
 }
 
 resource "onepassword_item" "application_client_id" {

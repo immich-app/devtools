@@ -48,6 +48,13 @@ resource "zitadel_action_execution_function" "preuserinfo" {
   target_ids = [zitadel_action_target.token.id]
 }
 
+# preaccesstoken fires only for JWT access tokens (the NetBird app); the worker
+# adds the flat `groups` claim NetBird reads from the access token.
+resource "zitadel_action_execution_function" "preaccesstoken" {
+  name       = "preaccesstoken"
+  target_ids = [zitadel_action_target.token.id]
+}
+
 resource "zitadel_action_execution_function" "presamlresponse" {
   name       = "presamlresponse"
   target_ids = [zitadel_action_target.token.id]
