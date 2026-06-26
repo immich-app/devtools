@@ -1,26 +1,30 @@
-# NetBird groups and access policies are managed here.
+# NetBird groups, mirrored from the maintainer roles in
+# tf/deployment/data/users.json.
 #
-# Nothing is defined yet, so a plan against a fresh module is a no-op. Add real
-# resources below as the NetBird Cloud account is brought under IaC management.
-# See https://registry.terraform.io/providers/netbirdio/netbird/latest/docs.
+# Each distinct internal role (team, futo, immich, yucca, *_admin) becomes a
+# NetBird group so access policies and Zitadel SSO group sync can target them.
+# The community-facing contributor/support roles are intentionally excluded.
+# Group membership is driven by SSO claims at login, not managed here — this
+# only declares the groups themselves.
 #
-# Example — a group plus an access policy that allows traffic within it:
-#
-# resource "netbird_group" "team" {
-#   name = "Team"
-# }
-#
-# resource "netbird_policy" "team_access" {
-#   name    = "Team Access"
-#   enabled = true
-#
-#   rule {
-#     name          = "Team Access"
-#     action        = "accept"
-#     bidirectional = true
-#     enabled       = true
-#     protocol      = "all"
-#     sources       = [netbird_group.team.id]
-#     destinations  = [netbird_group.team.id]
-#   }
-# }
+# Add access policies with netbird_policy, using netbird_group.role[<role>].id
+# as sources/destinations. See
+# https://registry.terraform.io/providers/netbirdio/netbird/latest/docs.
+locals {
+  users_data = jsondecode(file(var.users_data_file_path))
+
+  # Community-facing roles that should not become NetBird groups.
+  excluded_roles = ["contributor", "support"]
+
+  # Distinct set of internal roles across all users.
+  netbird_roles = toset([
+    for role in flatten([for user in local.users_data : user.roles]) :
+    role if !contains(local.excluded_roles, role)
+  ])
+}
+
+resource "netbird_group" "role" {
+  for_each = local.netbird_roles
+
+  name = each.value
+}
