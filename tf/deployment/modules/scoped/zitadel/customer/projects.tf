@@ -39,6 +39,7 @@ locals {
           "http://127.0.0.1:3000/",
         ]
         devMode = true
+        userInfoAssertion = true
       },
       # Public (no secret) device-code client for yucca orchestrator login.
       # Client id -> CUSTOMER_ZITADEL_OAUTH_CLIENT_ID_YUCCA_ORCHESTRATOR in yucca_tf_dev.
@@ -50,6 +51,7 @@ locals {
         redirectUris           = []
         postLogoutRedirectUris = []
         devMode                = false
+        userInfoAssertion      = true
       }
     ] : [],
     [
@@ -77,14 +79,13 @@ resource "zitadel_application_oidc" "applications" {
   org_id     = zitadel_org.customers.id
   project_id = zitadel_project.projects[each.key].id
 
-  redirect_uris             = each.value.redirectUris
-  post_logout_redirect_uris = each.value.postLogoutRedirectUris
-  response_types            = ["OIDC_RESPONSE_TYPE_CODE"]
-  grant_types               = [for grant_type in each.value.grantTypes : "OIDC_GRANT_TYPE_${grant_type}"]
-  app_type                  = "OIDC_APP_TYPE_${each.value.appType}"
-  auth_method_type          = "OIDC_AUTH_METHOD_TYPE_${each.value.authMethod}"
-  access_token_type         = "OIDC_TOKEN_TYPE_JWT"
-  dev_mode                  = each.value.devMode
-
-  id_token_userinfo_assertion = true
+  redirect_uris               = each.value.redirectUris
+  post_logout_redirect_uris   = each.value.postLogoutRedirectUris
+  response_types              = ["OIDC_RESPONSE_TYPE_CODE"]
+  grant_types                 = [for grant_type in each.value.grantTypes : "OIDC_GRANT_TYPE_${grant_type}"]
+  app_type                    = "OIDC_APP_TYPE_${each.value.appType}"
+  auth_method_type            = "OIDC_AUTH_METHOD_TYPE_${each.value.authMethod}"
+  access_token_type           = "OIDC_TOKEN_TYPE_JWT"
+  dev_mode                    = each.value.devMode
+  id_token_userinfo_assertion = each.value.userInfoAssertion
 }
