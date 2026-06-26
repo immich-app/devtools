@@ -5,7 +5,14 @@ products. Separate from the internal staff SSO instances under
 `modules/shared/zitadel/`.
 
 One Cloud instance per environment (same Cloud account as the internal FUTO
-instance), with state and secrets scoped per `TF_VAR_env` (`dev`, `prod`).
+instance), with state and secrets scoped per `TF_VAR_env` (`dev`, `staging`,
+`prod`).
+
+Unlike `dev`/`prod`, the `staging` environment is **not** part of the
+`modules/scoped` `run --all` sweep (that would also touch `discord/community`
+and `monitoring/grafana`). The `terragrunt.yml` `Plan/Deploy Staging` steps run
+this module on its own, with `ENVIRONMENT: staging` and
+`OP_CONNECT_TOKEN_STAGING`.
 
 ## Bootstrap (manual, once per environment)
 
@@ -13,10 +20,11 @@ The ZITADEL provider needs an existing instance + a machine-user JWT profile
 before Terraform can run. Do this in the ZITADEL Cloud console and 1Password:
 
 1. Create a new instance for customer auth in the FUTO ZITADEL Cloud account.
-   One per env — prod first, dev later (or vice versa).
+   One per env — prod first, dev/staging later (or vice versa).
 2. Add the custom domain:
-   - prod → `auth.futo.tech`
-   - dev  → `auth.dev.futo.tech` (or chosen equivalent)
+   - prod    → `auth.futo.tech`
+   - staging → `auth.staging.futo.tech` (or chosen equivalent)
+   - dev     → `auth.dev.futo.tech` (or chosen equivalent)
 
    DNS is managed via the existing Cloudflare modules.
 3. In each instance, create a machine user with role `IAM_OWNER`, generate a
@@ -40,6 +48,23 @@ before Terraform can run. Do this in the ZITADEL Cloud console and 1Password:
    `.env` changes required for these, since the `onepassword` provider here
    uses `service_account_token = var.futo_op_service_account_token` which is
    already globally wired in `tf/deployment/.env`.
+5. **Only when standing up a brand-new env** (e.g. `staging` — already done for
+   `dev`/`prod`): the env-level plumbing that `tf/deployment/.env` and CI rely
+   on must exist before this module can deploy:
+   - In the **immich** 1Password account, create vaults `tf_${env}` and
+     `tf_${env}_manual`, then add `tf_${env}` (and `tf_${env}_manual`) to the
+     `scoped_vaults` of both modules in
+     `modules/shared/1password/account/secrets.tf`. Applying `shared` seeds the
+     env-scoped stubs (`MONITORING_GRAFANA_*`, `*_DISCORD_SERVER_ID`, …) — these
+     are unused by this module but must exist so `op run` can resolve every
+     `op://tf_${env}/...` ref in `.env`.
+   - Manually add a `yucca_futo_1pass_superuser_service_account` item to
+     `tf_${env}` holding a FUTO-account service-account token with access to
+     `yucca_tf_${env}` — this is what `var.futo_op_service_account_token`
+     resolves to.
+   - Mint a 1Password Connect token scoped to the immich `tf` + `tf_${env}`
+     vaults and add it as the `OP_CONNECT_TOKEN_${ENV^^}` GitHub Actions secret
+     used by the `Plan/Deploy Staging` steps in `.github/workflows/terragrunt.yml`.
 
 ## Adding a new product OIDC client
 
