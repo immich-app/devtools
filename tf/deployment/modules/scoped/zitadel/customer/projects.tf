@@ -85,4 +85,6 @@ resource "zitadel_application_oidc" "applications" {
   auth_method_type          = "OIDC_AUTH_METHOD_TYPE_${each.value.authMethod}"
   access_token_type         = "OIDC_TOKEN_TYPE_JWT"
   dev_mode                  = each.value.devMode
+
+  id_token_userinfo_assertion = true
 }
