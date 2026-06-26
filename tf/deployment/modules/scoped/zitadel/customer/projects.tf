@@ -6,6 +6,7 @@ locals {
     postLogoutRedirectUris = []
     grantTypes             = ["AUTHORIZATION_CODE"]
     devMode                = false
+    userInfoAssertion      = false
   }
 
   // Customer-facing OIDC applications. Add an entry per FUTO product that
