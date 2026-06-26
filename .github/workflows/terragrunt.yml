@@ -117,6 +117,18 @@ jobs:
           mise run tf:init
           mise run tf:plan 2>&1 | tee "$RUNNER_TEMP/plan-prod.txt"
 
+      # Staging only runs the customer ZITADEL module, not the whole scoped
+      # suite — hence the deeper working-directory rather than ENVIRONMENT alone.
+      - name: Plan Staging (zitadel customer)
+        working-directory: ${{ env.working_dir }}/modules/scoped/zitadel/customer
+        env:
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_STAGING }}
+          ENVIRONMENT: staging
+        run: |
+          mise run tf:init
+          mise run tf:plan 2>&1 | tee "$RUNNER_TEMP/plan-staging.txt"
+
       - name: Comment PR
         if: always() && github.event_name == 'pull_request'
         env:
@@ -129,6 +141,7 @@ jobs:
             bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-shared.txt" "Shared"
             bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-dev.txt" "Scoped (dev)"
             bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-prod.txt" "Scoped (prod)"
+            bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-staging.txt" "Scoped (staging — zitadel customer)"
           } > "$RUNNER_TEMP/plan-comment.md"
 
           char_count=$(wc -c < "$RUNNER_TEMP/plan-comment.md")
@@ -202,6 +215,18 @@ jobs:
           OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_PROD }}
           ENVIRONMENT: prod
+        run: |
+          mise run tf:init
+          mise run tf:apply
+
+      # Staging only runs the customer ZITADEL module, not the whole scoped
+      # suite — hence the deeper working-directory rather than ENVIRONMENT alone.
+      - name: Deploy Staging (zitadel customer)
+        working-directory: ${{ env.working_dir }}/modules/scoped/zitadel/customer
+        env:
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_STAGING }}
+          ENVIRONMENT: staging
         run: |
           mise run tf:init
           mise run tf:apply
