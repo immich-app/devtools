@@ -62,6 +62,12 @@ module "manual-secrets" {
       "FUTO_DISCORD_SERVER_ID",
     ]
   }
+
+  scoped_vaults = {
+    "tf_prod_manual"    = "tf_prod"
+    "tf_staging_manual" = "tf_staging"
+    "tf_dev_manual"     = "tf_dev"
+  }
 }
 
 module "generated-secrets" {
@@ -93,6 +99,8 @@ module "generated-secrets" {
       { name = "LOGS_WRITE_TOKEN" }
     ]
   }
+
+  scoped_vaults = ["tf_prod", "tf_staging", "tf_dev"]
 }
 
 locals {
