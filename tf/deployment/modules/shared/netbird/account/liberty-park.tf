@@ -81,3 +81,30 @@ resource "netbird_network_resource" "liberty_park_server_monitoring" {
   groups      = [netbird_group.liberty_park_server_monitoring.id]
   enabled     = true
 }
+
+# Built-in "All" group — every peer in the account.
+data "netbird_group" "all" {
+  name = "All"
+}
+
+# Allow everyone and everything to reach all of red's exposed Liberty Park
+# subnets. Bidirectional so the routed hosts can also initiate back to peers.
+resource "netbird_policy" "liberty_park_all_access" {
+  name    = "Liberty Park - All Access"
+  enabled = true
+
+  rule {
+    name          = "Liberty Park - All Access"
+    action        = "accept"
+    bidirectional = true
+    enabled       = true
+    protocol      = "all"
+    sources       = [data.netbird_group.all.id]
+    destinations = [
+      netbird_group.liberty_park_servers.id,
+      netbird_group.liberty_park_compute.id,
+      netbird_group.liberty_park_services.id,
+      netbird_group.liberty_park_server_monitoring.id,
+    ]
+  }
+}
