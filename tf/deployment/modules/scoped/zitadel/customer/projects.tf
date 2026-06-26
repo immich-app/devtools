@@ -39,7 +39,7 @@ locals {
           "http://localhost:8080/",
           "http://127.0.0.1:3000/",
         ]
-        devMode = true
+        devMode           = true
         userInfoAssertion = true
       },
       # Public (no secret) device-code client for yucca orchestrator login.
