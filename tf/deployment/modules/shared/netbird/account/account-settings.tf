@@ -18,4 +18,9 @@ resource "netbird_account_settings" "default" {
 
   # Custom DNS domain peers are addressable under (e.g. <peer>.futo.network).
   dns_domain = "futo.network"
+
+  # Force peers to re-authenticate (SSO login) periodically. After this much
+  # time since last login a peer's session expires and it must log in again.
+  peer_login_expiration_enabled = true
+  peer_login_expiration         = 7 * 24 * 60 * 60 # 7 days, in seconds
 }
