@@ -31,7 +31,8 @@ resource "netbird_network_router" "liberty_park" {
 # One resource per advertised subnet. Each gets its own group so access policies
 # can target subnets individually later.
 resource "netbird_group" "liberty_park_servers" {
-  name = "Liberty Park Servers"
+  name  = "Liberty Park Servers"
+  peers = [data.netbird_peer.red.id]
 }
 
 resource "netbird_network_resource" "liberty_park_servers" {
