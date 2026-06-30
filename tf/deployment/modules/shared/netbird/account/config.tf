@@ -12,7 +12,7 @@ terraform {
     # default registry. See futo-org/terraform-provider-netbird.
     netbird = {
       source  = "registry.terraform.io/futo-org/netbird"
-      version = "1.0.1"
+      version = "1.0.2"
     }
     onepassword = {
       source  = "1Password/onepassword"
