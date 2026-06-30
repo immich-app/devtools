@@ -30,7 +30,7 @@ spec:
           main:
             image:
               repository: docker.io/grafana/grafana-image-renderer
-              tag: v5.8.10@sha256:d88e6bf688a6daa43ca712975f8a132ae72796822c38bed2a20285ce029a5d47
+              tag: v5.9.0@sha256:23f89faeeeebb8450a62d44a3063df5c795748b496a39c836a73be3d715a7c82
     service:
       main:
         controller: main
