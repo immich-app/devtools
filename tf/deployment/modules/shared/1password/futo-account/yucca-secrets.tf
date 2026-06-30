@@ -29,6 +29,7 @@ module "yucca-manual-secrets" {
       "HETZNER_WEBSERVICE_API_USER",
       "HETZNER_WEBSERVICE_API_PASSWORD",
       "NET_SWITCHES_TERRAFORM_SSH_PRIVATE_KEY",
+      "HCLOUD_API_TOKEN"
     ]
   }
   global_vault      = "yucca_tf_manual"
