@@ -4,6 +4,8 @@ module "shared-manual-secrets" {
   secrets = {
     global = [
       "NETBIRD_TF_PAT",
+      "CLOUDFLARE_ACCOUNT_ID",
+      "CLOUDFLARE_API_TOKEN",
     ]
     scoped = []
   }
