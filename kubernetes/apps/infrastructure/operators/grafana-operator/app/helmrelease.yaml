@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: grafana-operator
-      version: 5.22.2
+      version: 5.24.0
       interval: 15m
       sourceRef:
         kind: HelmRepository
