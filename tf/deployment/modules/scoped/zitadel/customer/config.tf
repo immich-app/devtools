@@ -7,6 +7,10 @@ terraform {
       source  = "zitadel/zitadel"
       version = "2.12.8"
     }
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "5.21.1"
+    }
     onepassword = {
       source  = "1Password/onepassword"
       version = "~> 2.1"

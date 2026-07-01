@@ -21,12 +21,11 @@ before Terraform can run. Do this in the ZITADEL Cloud console and 1Password:
 
 1. Create a new instance for customer auth in the FUTO ZITADEL Cloud account.
    One per env — prod first, dev/staging later (or vice versa).
-2. Add the custom domain:
-   - prod    → `auth.futo.tech`
-   - staging → `auth.staging.futo.tech` (or chosen equivalent)
-   - dev     → `auth.dev.futo.tech` (or chosen equivalent)
-
-   DNS is managed via the existing Cloudflare modules.
+2. Custom domain — **prod only**: `auth.futo.cloud`. Add it on the instance in
+   the ZITADEL Cloud console. The `auth.futo.cloud` CNAME → the prod instance
+   URL is managed by this module (`dns.tf`, in the futo `futo.cloud` zone), so
+   no manual DNS is needed. dev/staging have no custom domain — they use the
+   generated `<name>.zitadel.cloud` instance URL directly.
 3. In each instance, create a machine user with role `IAM_OWNER`, generate a
    JWT key, and download the profile JSON.
 4. Apply `modules/shared/1password/futo-account` — the manual-secrets module
@@ -40,8 +39,9 @@ before Terraform can run. Do this in the ZITADEL Cloud console and 1Password:
    - `CUSTOMER_ZITADEL_SMTP_SENDER_ADDRESS`
 
    Replace each stub password in `yucca_tf_${env}_manual` with the real value
-   (custom domain from step 2, profile JSON from step 3, SMTP credentials
-   for the chosen provider, and sender address e.g. `no-reply@futo.tech`).
+   (`CUSTOMER_ZITADEL_DOMAIN` = the instance URL `<name>.zitadel.cloud`, profile
+   JSON from step 3, SMTP credentials for the chosen provider, and sender
+   address e.g. `no-reply@futo.cloud`).
    Re-apply `shared/1password/futo-account` so the copy-secrets module
    mirrors each value into the `yucca_tf_${env}` vault that this module
    reads from via `data "onepassword_item"` lookups at plan/apply time. No
