@@ -13,17 +13,22 @@ data "cloudflare_zone" "futo_cloud" {
   }
 }
 
-# Prod only: auth.futo.cloud -> the prod instance URL, which is exactly what
-# CUSTOMER_ZITADEL_DOMAIN holds (the provider connects to it). dev/staging use
-# the generated <name>.zitadel.cloud URL directly with no custom domain.
-# DNS-only so ZITADEL terminates TLS for the custom domain.
+locals {
+  # CUSTOMER_ZITADEL_DOMAIN is stored as a URL (https://host/); Cloudflare needs
+  # a bare hostname as CNAME content.
+  customer_zitadel_host = trimsuffix(trimprefix(data.onepassword_item.customer_zitadel_domain.password, "https://"), "/")
+}
+
+# Prod only: auth.futo.cloud -> the prod ZITADEL Cloud instance host from
+# CUSTOMER_ZITADEL_DOMAIN. dev/staging use the generated <name>.zitadel.cloud URL
+# directly with no custom domain. DNS-only so ZITADEL terminates TLS.
 resource "cloudflare_dns_record" "customer_auth" {
   count = var.env == "prod" ? 1 : 0
 
   zone_id = data.cloudflare_zone.futo_cloud.id
   name    = "auth.futo.cloud"
   type    = "CNAME"
-  content = data.onepassword_item.customer_zitadel_domain.password
+  content = local.customer_zitadel_host
   ttl     = 1
   proxied = false
 }
