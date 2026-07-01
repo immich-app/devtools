@@ -27,5 +27,5 @@ remote_state {
 }
 
 dependencies {
-  paths = []
+  paths = ["../../../shared/cloudflare/futo-api-keys"]
 }
