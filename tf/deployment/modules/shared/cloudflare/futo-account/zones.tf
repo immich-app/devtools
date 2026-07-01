@@ -21,6 +21,56 @@ resource "cloudflare_zone" "as402421_net" {
   type    = "full"
 }
 
+# Reverse-DNS (PTR) zones for the 69.48.224.0/22 range we own: 69.48.224.0/24
+# through 69.48.227.0/24. Already present in the FUTO Cloudflare account, so each
+# is brought in via an import block. Deliberately NOT added to local.zones — the
+# HTTP/TLS zone settings and tiered cache fanned out over that map (http3, ssl,
+# rocket_loader, …) are meaningless for reverse-DNS zones. The PTR records live in
+# dns-reverse.tf.
+resource "cloudflare_zone" "reverse_69_48_224" {
+  account = { id = local.cloudflare_account_id }
+  name    = "224.48.69.in-addr.arpa"
+  type    = "full"
+}
+
+import {
+  to = cloudflare_zone.reverse_69_48_224
+  id = "189e491aec974c2a87d1bcc378475f41"
+}
+
+resource "cloudflare_zone" "reverse_69_48_225" {
+  account = { id = local.cloudflare_account_id }
+  name    = "225.48.69.in-addr.arpa"
+  type    = "full"
+}
+
+import {
+  to = cloudflare_zone.reverse_69_48_225
+  id = "2198b38e98f27f5cd4aa744f88f2e98e"
+}
+
+resource "cloudflare_zone" "reverse_69_48_226" {
+  account = { id = local.cloudflare_account_id }
+  name    = "226.48.69.in-addr.arpa"
+  type    = "full"
+}
+
+import {
+  to = cloudflare_zone.reverse_69_48_226
+  id = "52fb8d9ee1e6d4453fef836e6f77cace"
+}
+
+resource "cloudflare_zone" "reverse_69_48_227" {
+  account = { id = local.cloudflare_account_id }
+  name    = "227.48.69.in-addr.arpa"
+  type    = "full"
+}
+
+import {
+  to = cloudflare_zone.reverse_69_48_227
+  id = "9e63a9c563bab55d0e8415995cb2df4a"
+}
+
 locals {
   zones = {
     futo_cloud   = cloudflare_zone.futo_cloud.id
