@@ -6,11 +6,11 @@ resource "zitadel_default_login_policy" "default" {
   force_mfa_local_only          = false
   passwordless_type             = "PASSWORDLESS_TYPE_NOT_ALLOWED"
   hide_password_reset           = "true"
-  password_check_lifetime       = "240h0m0s"
-  external_login_check_lifetime = "720h0m0s"
-  multi_factor_check_lifetime   = "24h0m0s"
+  password_check_lifetime       = "2160h0m0s"
+  external_login_check_lifetime = "2160h0m0s"
+  multi_factor_check_lifetime   = "2160h0m0s"
   mfa_init_skip_lifetime        = "720h0m0s"
-  second_factor_check_lifetime  = "24h0m0s"
+  second_factor_check_lifetime  = "2160h0m0s"
   ignore_unknown_usernames      = true
   default_redirect_uri          = ""
   second_factors                = []
@@ -24,7 +24,7 @@ resource "zitadel_default_login_policy" "default" {
 resource "zitadel_default_oidc_settings" "default" {
   access_token_lifetime         = "12h0m0s"
   id_token_lifetime             = "12h0m0s"
-  refresh_token_expiration      = "720h0m0s"
+  refresh_token_expiration      = "2160h0m0s"
   refresh_token_idle_expiration = "2160h0m0s"
 }
 
