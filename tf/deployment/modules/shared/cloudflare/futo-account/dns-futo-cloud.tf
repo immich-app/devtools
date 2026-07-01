@@ -49,7 +49,7 @@ resource "cloudflare_dns_record" "futo_cloud_txt_spf" {
   zone_id = cloudflare_zone.futo_cloud.id
   name    = "futo.cloud"
   type    = "TXT"
-  content = "v=spf1 include:spf.messagingengine.com -all"
+  content = "\"v=spf1 include:spf.messagingengine.com -all\""
   ttl     = 1
   proxied = false
 }
@@ -58,7 +58,7 @@ resource "cloudflare_dns_record" "futo_cloud_txt_dmarc" {
   zone_id = cloudflare_zone.futo_cloud.id
   name    = "_dmarc.futo.cloud"
   type    = "TXT"
-  content = "v=DMARC1; p=reject; rua=mailto:bd9ccdafc3b44a88968d1f9889c853d9@dmarc-reports.cloudflare.net"
+  content = "\"v=DMARC1; p=reject; rua=mailto:bd9ccdafc3b44a88968d1f9889c853d9@dmarc-reports.cloudflare.net\""
   ttl     = 1
   proxied = false
 }
