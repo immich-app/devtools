@@ -6,6 +6,7 @@ module "shared-manual-secrets" {
       "NETBIRD_TF_PAT",
       "CLOUDFLARE_ACCOUNT_ID",
       "CLOUDFLARE_API_TOKEN",
+      "BUNNY_API_KEY",
     ]
     scoped = []
   }
