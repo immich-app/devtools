@@ -62,3 +62,16 @@ resource "cloudflare_dns_record" "as402421_net_txt_dmarc" {
   ttl     = 1
   proxied = false
 }
+
+# Delegate rdns.as402421.net to bunny.net, where the reverse-DNS forward (FCrDNS)
+# names are managed (see bunny/futo-account).
+resource "cloudflare_dns_record" "as402421_net_ns_rdns" {
+  for_each = toset(["kiki.bunny.net", "coco.bunny.net"])
+
+  zone_id = cloudflare_zone.as402421_net.id
+  name    = "rdns.as402421.net"
+  type    = "NS"
+  content = each.value
+  ttl     = 1
+  proxied = false
+}
