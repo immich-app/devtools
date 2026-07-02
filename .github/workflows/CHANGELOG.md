@@ -1,5 +1,28 @@
 # Changelog
 
+## [3.2.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v3.1.0...multi-runner-build-workflow-v3.2.0) (2026-07-02)
+
+
+### Features
+
+* add customer zitadel staging deployment ([#1739](https://github.com/immich-app/devtools/issues/1739)) ([9c1b9d4](https://github.com/immich-app/devtools/commit/9c1b9d495d72bbde07f137cbd47f9a6c29ac798e))
+* run outline-role-sync as a cloudflare worker ([#1698](https://github.com/immich-app/devtools/issues/1698)) ([2057325](https://github.com/immich-app/devtools/commit/2057325ec6302b71fd9933de980a85b850da74b7))
+
+
+### Bug Fixes
+
+* post terragrunt plan comment even when parsing fails ([#1773](https://github.com/immich-app/devtools/issues/1773)) ([e93e230](https://github.com/immich-app/devtools/commit/e93e230cdf7543c73a68e9ef67804eee497b8461))
+* scope zitadel customer tf plan to parent folder ([#1774](https://github.com/immich-app/devtools/issues/1774)) ([91f3931](https://github.com/immich-app/devtools/commit/91f39311fdb889481d3ad68242857298609a3e49))
+
+
+### Chores
+
+* deno ci type checks and linting ([#1694](https://github.com/immich-app/devtools/issues/1694)) ([2a0f12c](https://github.com/immich-app/devtools/commit/2a0f12c4ef714d0cebdf83511bbe57bd4c6dcfaf))
+* **deps:** update 1password/install-cli-action action to v4 ([#1715](https://github.com/immich-app/devtools/issues/1715)) ([6d05d9f](https://github.com/immich-app/devtools/commit/6d05d9fc7d37782c2cd2218ee2a0a3bbfd5c323d))
+* **deps:** update immich-app/devtools action to v3 ([#1717](https://github.com/immich-app/devtools/issues/1717)) ([104fd69](https://github.com/immich-app/devtools/commit/104fd6946967c8937dc30f37108acbaa3d39a4c6))
+* success-check for terragrunt workflow ([#1775](https://github.com/immich-app/devtools/issues/1775)) ([3fa2802](https://github.com/immich-app/devtools/commit/3fa28029767d6d7cd40d659ed0363f9521c019a4))
+* success-check for test-use-mise workflow ([#1687](https://github.com/immich-app/devtools/issues/1687)) ([807a734](https://github.com/immich-app/devtools/commit/807a734c9c24b6fec68356b0d840fe5aee405dfc))
+
 ## [3.1.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v3.0.0...multi-runner-build-workflow-v3.1.0) (2026-06-16)
 
 
