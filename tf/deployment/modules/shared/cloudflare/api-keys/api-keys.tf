@@ -9,6 +9,7 @@ resource "cloudflare_api_token" "terraform_cloudflare_account" {
       data.cloudflare_api_token_permission_groups.all.zone["Zone Write"],
       data.cloudflare_api_token_permission_groups.all.zone["Zone Settings Write"],
       data.cloudflare_api_token_permission_groups.all.zone["Dynamic URL Redirects Write"],
+      data.cloudflare_api_token_permission_groups.all.zone["Zone Transform Rules Write"],
       data.cloudflare_api_token_permission_groups.all.account["Workers R2 Storage Write"],
       data.cloudflare_api_token_permission_groups.all.account["Notifications Read"],
       data.cloudflare_api_token_permission_groups.all.account["Notifications Write"],
