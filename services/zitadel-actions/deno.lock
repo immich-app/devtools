@@ -2,10 +2,8 @@
   "version": "5",
   "specifiers": {
     "jsr:@deno/cache-dir@0.13.2": "0.13.2",
-    "jsr:@deno/emit@*": "0.46.0",
     "jsr:@deno/emit@0.46": "0.46.0",
     "jsr:@deno/graph@~0.73.1": "0.73.1",
-    "jsr:@std/assert@*": "1.0.19",
     "jsr:@std/assert@0.223": "0.223.0",
     "jsr:@std/assert@^1.0.19": "1.0.19",
     "jsr:@std/bytes@0.223": "0.223.0",
