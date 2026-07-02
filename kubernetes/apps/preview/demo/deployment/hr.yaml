@@ -5,16 +5,10 @@ metadata:
   namespace: preview
 spec:
   interval: 5m
-  chart:
-    spec:
-      chart: immich
-      # renovate: datasource=github-releases depName=immich-app/immich-charts
-      version: "0.10.3"
-      sourceRef:
-        kind: HelmRepository
-        name: immich-charts
-        namespace: flux-system
-      interval: 1m
+  chartRef:
+    kind: OCIRepository
+    name: immich-charts
+    namespace: flux-system
   values:
     valkey:
       enabled: true
