@@ -9,6 +9,15 @@ spec:
   filter:
     labels:
       - "preview"
+# Sample inputs so flate can render this ResourceSet offline (the live provider
+# resolves real inputs from the GitHub API). status is a subresource, so this is
+# dropped on apply and never reaches the cluster.
+status:
+  exportedInputs:
+    - id: "1"
+      author: example
+      branch: example-pr
+      sha: "0000000000000000000000000000000000000000"
 ---
 apiVersion: fluxcd.controlplane.io/v1
 kind: ResourceSetInputProvider
@@ -20,6 +29,11 @@ spec:
   url: https://github.com/immich-app/immich
   filter:
     includeBranch: "^main$"
+# Sample input for offline flate rendering; dropped on apply (status subresource).
+status:
+  exportedInputs:
+    - branch: main
+      sha: "0000000000000000000000000000000000000000"
 ---
 apiVersion: fluxcd.controlplane.io/v1
 kind: ResourceSetInputProvider
@@ -32,3 +46,8 @@ spec:
   filter:
     semver: ">=2.0.0"
     limit: 10
+# Sample input for offline flate rendering; dropped on apply (status subresource).
+status:
+  exportedInputs:
+    - tag: v2.0.0
+      sha: "0000000000000000000000000000000000000000"

@@ -121,6 +121,10 @@ url = "https://dl.google.com/go/go1.26.4.windows-amd64.zip"
 version = "1.29.1"
 backend = "go:github.com/cloudnative-pg/cloudnative-pg/cmd/kubectl-cnpg"
 
+[[tools."go:github.com/home-operations/flate/cmd/flate"]]
+version = "0.4.10"
+backend = "go:github.com/home-operations/flate/cmd/flate"
+
 [[tools.helm]]
 version = "4.2.2"
 backend = "aqua:helm/helm"
@@ -255,10 +259,6 @@ url = "https://github.com/opentofu/opentofu/releases/download/v1.11.8/tofu_1.11.
 [tools.opentofu."platforms.windows-x64"]
 checksum = "sha256:2c1865fa261de3b514eeca4be543a6c5e0b0f9b2e75b3488cdbf1d4e0914b07c"
 url = "https://github.com/opentofu/opentofu/releases/download/v1.11.8/tofu_1.11.8_windows_amd64.tar.gz"
-
-[[tools."pipx:flux-local"]]
-version = "8.3.0"
-backend = "pipx:flux-local"
 
 [[tools.terragrunt]]
 version = "1.0.4"
