@@ -13,27 +13,33 @@ jobs:
       contents: read
       packages: read
       pull-requests: write
-    strategy:
-      matrix:
-        resource: ["helmrelease", "kustomization"]
     steps:
-      - name: Setup Flux CLI
-        uses: fluxcd/flux2/action@1fd61a06264d71cf445ed55c4f14d401d26a1c64 # v2.8.8
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          fetch-depth: 0
+
+      - name: Setup flate
+        uses: home-operations/flate/action@0fc37fae10cf3c265294f6adebc6d6c100c74ea5 # v0.4.10
+        with:
+          base: "origin/${{ github.event.pull_request.base.ref }}"
+          cache: true
 
       - name: Diff Resources
-        uses: allenporter/flux-local/action/diff@88f56a2113aeda1551111d446734e9f4a4bee7d4 # 8.3.0
         id: diff
-        with:
-          path: "./kubernetes"
-          live-branch: "${{ github.event.pull_request.base.ref }}"
-          resource: "${{ matrix.resource }}"
-          skip-crds: "false"
+        run: |
+          flate diff all --path ./kubernetes --allow-missing-secrets -o github > diff.txt
+          {
+            echo 'diff<<DIFF_EOF'
+            cat diff.txt
+            echo 'DIFF_EOF'
+          } >> "${GITHUB_OUTPUT}"
 
       - if: ${{ steps.diff.outputs.diff != '' }}
         name: Add comment
         uses: immich-app/devtools/actions/sticky-comment@0135acd12ad9f3369b94a2aa3c0ae8c835a4e926 # sticky-comment-action-v1.0.0
         with:
-          id: "flux-diff/${{ matrix.path }}/${{ matrix.resource }}"
+          id: "flux-diff"
           body: |
             ```diff
             ${{ steps.diff.outputs.diff }}
