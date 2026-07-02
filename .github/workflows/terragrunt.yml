@@ -135,13 +135,16 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
+          # Collect parse failures instead of aborting so the comment is
+          # always posted; the step still fails at the end if any parse broke.
+          parse_failed=0
           {
             echo "## Terraform Plan"
             echo ""
-            bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-shared.txt" "Shared"
-            bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-dev.txt" "Scoped (dev)"
-            bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-prod.txt" "Scoped (prod)"
-            bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-staging.txt" "Scoped (staging — zitadel customer)"
+            bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-shared.txt" "Shared" || parse_failed=1
+            bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-dev.txt" "Scoped (dev)" || parse_failed=1
+            bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-prod.txt" "Scoped (prod)" || parse_failed=1
+            bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-staging.txt" "Scoped (staging — zitadel customer)" || parse_failed=1
           } > "$RUNNER_TEMP/plan-comment.md"
 
           char_count=$(wc -c < "$RUNNER_TEMP/plan-comment.md")
@@ -165,6 +168,8 @@ jobs:
           else
             gh pr comment "${{ github.event.pull_request.number }}" --body-file "$RUNNER_TEMP/plan-comment.md"
           fi
+
+          exit "$parse_failed"
 
   deploy:
     runs-on: ubuntu-latest
