@@ -18,3 +18,21 @@ module "shared-manual-secrets" {
     "shared_tf_dev_manual"     = "shared_tf_dev"
   }
 }
+
+module "shared-generated-secrets" {
+  source = "./shared/modules/secrets/generated"
+
+  secrets = {
+    global = []
+    scoped = [
+      { name = "O11Y_VICTORIAMETRICS_VMAUTH_PASSWORD" },
+    ]
+  }
+
+  global_vault = "shared_tf"
+  scoped_vaults = toset([
+    "shared_tf_prod",
+    "shared_tf_staging",
+    "shared_tf_dev",
+  ])
+}

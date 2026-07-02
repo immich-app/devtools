@@ -37,7 +37,6 @@ module "o11y-generated-secrets" {
   secrets = {
     global = []
     scoped = [
-      { name = "VICTORIAMETRICS_VMAUTH_PASSWORD" },
       { name = "GRAFANA_ADMIN_PASSWORD" },
       { name = "GRAFANA_POSTGRES_PASSWORD" },
       { name = "GRAFANA_POSTGRES_SUPERUSER_PASSWORD" },
