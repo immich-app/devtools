@@ -120,7 +120,7 @@ jobs:
       # Staging only runs the customer ZITADEL module, not the whole scoped
       # suite — hence the deeper working-directory rather than ENVIRONMENT alone.
       - name: Plan Staging (zitadel customer)
-        working-directory: ${{ env.working_dir }}/modules/scoped/zitadel/customer
+        working-directory: ${{ env.working_dir }}/modules/scoped/zitadel
         env:
           OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_STAGING }}
