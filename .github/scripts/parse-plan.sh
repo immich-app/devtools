@@ -19,7 +19,8 @@ echo ""
 
 # Extract unique module names from terragrunt log prefixes
 # Format: "HH:MM:SS.mmm (INFO|STDOUT|STDERR) [module/name] ..."
-modules=$(grep -oP '\d+:\d+:\d+\.\d+\s+(?:INFO|STDOUT|STDERR)\s+\[\K[\w/-]+(?=\])' "$FILE" | sort -u)
+# A single-unit run (terragrunt invoked from inside the unit) logs as "[.]"
+modules=$(grep -oP '\d+:\d+:\d+\.\d+\s+(?:INFO|STDOUT|STDERR)\s+\[\K[\w./-]+(?=\])' "$FILE" | sort -u)
 
 if [ -z "$modules" ]; then
   echo "⚠️ No modules detected in plan output — the output format may have changed."
@@ -28,20 +29,25 @@ if [ -z "$modules" ]; then
 fi
 
 for module in $modules; do
+  # Module names only contain [\w./-], so a dot is the only regex-special char
+  module_re=${module//./\\.}
+  display=$module
+  [ "$module" = "." ] && display="(root)"
+
   # Extract tofu output lines for this module, stripping everything up to "tofu: "
-  module_output=$(grep -P "(?:STDOUT|STDERR)\s+\[$module\] tofu: " "$FILE" | sed "s#.*\[$module\] tofu: ##")
+  module_output=$(grep -P "(?:STDOUT|STDERR)\s+\[$module_re\] tofu: " "$FILE" | sed "s#.*\[$module_re\] tofu: ##")
 
   if [ -z "$module_output" ]; then
-    echo "<details><summary>ℹ️ <code>$module</code> — No plan output</summary></details>"
+    echo "<details><summary>ℹ️ <code>$display</code> — No plan output</summary></details>"
     echo ""
     continue
   fi
 
   if echo "$module_output" | grep -q "No changes"; then
-    echo "<details><summary>✅ <code>$module</code> — No changes</summary></details>"
+    echo "<details><summary>✅ <code>$display</code> — No changes</summary></details>"
     echo ""
   elif echo "$module_output" | grep -qE "Error:|error:"; then
-    echo "<details><summary>❌ <code>$module</code> — Error</summary>"
+    echo "<details><summary>❌ <code>$display</code> — Error</summary>"
     echo ""
     echo '```'
     echo "$module_output" | grep -A5 -E "Error:|error:"
@@ -57,7 +63,7 @@ for module in $modules; do
       'Initializing|Downloading|Installing |Installed |Found |Locking |Lock |Using |Reusing|Successfully configured|successfully initialized|providers\.lock|find_in_parent|includes|Reading\.\.\.|Read complete|Refreshing state|backend|OpenTofu will|use this backend|Upgrading|terraform\.io|registry\.opentofu|has been successfully|copying configuration|Copied!|Acquiring state lock|^\s*$' \
     )
 
-    echo "<details><summary>⚠️ <code>$module</code> — ${summary:-Changes detected}</summary>"
+    echo "<details><summary>⚠️ <code>$display</code> — ${summary:-Changes detected}</summary>"
     echo ""
     echo '```hcl'
     echo "$plan_output"
