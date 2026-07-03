@@ -7,6 +7,18 @@ inputs:
   private-key:
     description: 'The GitHub App private key (PEM format)'
     required: false
+  permission-contents:
+    description: "Access level for repository contents. 'read' or 'write'."
+    required: false
+  permission-pull-requests:
+    description: "Access level for pull requests. 'read' or 'write'."
+    required: false
+  permission-issues:
+    description: "Access level for issues. 'read' or 'write'."
+    required: false
+  permission-actions:
+    description: "Access level for GitHub Actions. 'read' or 'write'."
+    required: false
 
 outputs:
   token:
@@ -16,6 +28,16 @@ outputs:
 runs:
   using: 'composite'
   steps:
+    - name: Require at least one permission
+      shell: bash
+      env:
+        PERMISSIONS: '${{ inputs.permission-contents }}${{ inputs.permission-pull-requests }}${{ inputs.permission-issues }}${{ inputs.permission-actions }}'
+      run: |
+        if [ -z "$PERMISSIONS" ]; then
+          echo "::error::create-workflow-token requires at least one permission-* input"
+          exit 1
+        fi
+
     - name: Generate a token
       id: app-token
       continue-on-error: true
@@ -23,6 +45,11 @@ runs:
       with:
         client-id: ${{ inputs.client-id }}
         private-key: ${{ inputs.private-key }}
+        permission-contents: ${{ inputs.permission-contents }}
+        permission-pull-requests: ${{ inputs.permission-pull-requests }}
+        permission-issues: ${{ inputs.permission-issues }}
+        permission-actions: ${{ inputs.permission-actions }}
+
     - name: Set output
       id: output
       shell: bash
@@ -34,4 +61,3 @@ runs:
           echo "Falling back to github.token"
           echo "token=${{ github.token }}" >> $GITHUB_OUTPUT
         fi
-
