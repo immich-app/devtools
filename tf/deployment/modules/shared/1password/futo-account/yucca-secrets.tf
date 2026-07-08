@@ -18,7 +18,8 @@ module "yucca-manual-secrets" {
       "TAILSCALE_OAUTH_CLIENT_ID",
       "TAILSCALE_OAUTH_CLIENT_SECRET",
       "NETBOX_API_TOKEN",
-      "NETBOX_URL"
+      "NETBOX_URL",
+      "POSTMARK_API_TOKEN"
     ]
     scoped = [
       "CUSTOMER_ZITADEL_DOMAIN",
