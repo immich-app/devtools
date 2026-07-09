@@ -317,9 +317,43 @@
   },
   {
     "github": null,
+    "gitlab": {
+      "username": "michaelm",
+      "id": 85
+    },
     "discord": {
       "username": "mmmm3_65901",
       "id": 1255930378041167965
+    },
+    "roles": [
+      "futo"
+    ]
+  },
+  {
+    "github": null,
+    "gitlab": {
+      "username": "cory",
+      "id": 146
+    },
+    "roles": [
+      "futo"
+    ]
+  },
+  {
+    "github": null,
+    "gitlab": {
+      "username": "steve",
+      "id": 127
+    },
+    "roles": [
+      "futo"
+    ]
+  },
+  {
+    "github": null,
+    "gitlab": {
+      "username": "razibk",
+      "id": 125
     },
     "roles": [
       "futo"
