@@ -74,6 +74,12 @@ locals {
       postLogoutRedirectUris = ["https://app.netbird.io"]
     },
     {
+      name         = "Mattermost"
+      roles        = [{ key = "Granted", grants_to = ["immich_admin", "team", "futo"] }]
+      authMethod   = "BASIC"
+      redirectUris = ["https://mattermost.futo.tech/signup/openid/complete"]
+    },
+    {
       name = "Yucca Internal Tooling"
       # redirectUris intentionally empty for now — public/PKCE client
       # (authMethod defaults to NONE); add the callback URL when known
