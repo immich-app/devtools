@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" entityID="https://www.ovhcloud.com/eu/auth/">
+  <SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <KeyDescriptor>
+      <KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <X509Data>
+          <X509Certificate>MIIFVzCCAz+gAwIBAgIUQSUwSIh9zUNgNtP/FhkGdy7bEPYwDQYJKoZIhvcNAQELBQAwOzEdMBsGA1UEAwwUYXV0aC5ldS5vdmhjbG91ZC5jb20xCzAJBgNVBAsMAlNQMQ0wCwYDVQQKDARTQU1MMB4XDTI0MDExMjE0MTYzM1oXDTM0MDEwOTE0MTYzM1owOzEdMBsGA1UEAwwUYXV0aC5ldS5vdmhjbG91ZC5jb20xCzAJBgNVBAsMAlNQMQ0wCwYDVQQKDARTQU1MMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA0RWhT7fEM8NLiLeEe9Burk15IJUVHvHXJFySOr4lGhbpUWXgnRQZKP8klr3Jd9jZwv9ss+NhsbT/64lqB6WINozk11fGefdyrO6TbIioQnTOcwtF7NCTy9ypuBZiseqMxA67g6VDRqtRuZCtHVFOBJxMzux0h6sGS5t/a3aaHR+0xw9dhhHE0+sNiZUehl0BuNafoelar1nK6Q1ZfXWmoC5zJjxxJAE2DH+kNZaWOdkbPCWpD5G1maZlNL+tEFHzAAmCjj5re4C9enMs4/XPnxqS4wLzsuAEU2/7917+wdgPTpF7RHsqYgFD+gff00IkpY1+H8oqsEtf/iebIvoy0EYD0KozPnSolKNHhOEqSFcxehtCDOPdVq92Ie5FzMPLEeZoO1UvPIlKm2043BjGbNtYNBcFOTP6jdMInGau7KLXz/Bh5g/8mBI+UyCTbZaSoB1GkfzJJpP5j+VPYXcum/s/Y0AJUwNBXujQnu7EkNwQeE8QkjfrHXSC0wI6QYzpcc4DyMk1TNWg+4dn2EdU0TJS+zO/ohaAO1L1O9Pw6+JfHrXcNy5E7iPeRyMhkRMEhWyHxh6PlO7c2Hydo1WVAuV1BqQJmjMYP3D4dzcdmaZiy6JElV4fvkGBh/J3+jRGqeQtb0vplz0d3Dj5Zeto07xi79XtaItk4e9a6KPVds8CAwEAAaNTMFEwHQYDVR0OBBYEFJ/VldqCVgz9XObIdmTtzX+7qo9JMB8GA1UdIwQYMBaAFJ/VldqCVgz9XObIdmTtzX+7qo9JMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggIBACVM09u+blp3PDDjJsSJM0WyAq40bamTxncfyqZG1P+pN+K/Y38XU+F874FpiglFn1U1ZNekPA8HHj9SpRK1iZKqohB2r6ivwMqcwOJJM3LPNuPxs/RnNXAuup7KfnkEocnIYfad4KUr5QZoWfAyzMGiiRUF9mY4mLvRii1627XsTeQiDN2NJKvl/8FzXSWy2X61nA6kjw7erx5n6QoOprrXbG4Lmq2dRGdO3fqKtSByXrr5pLvHQgduoCtwbJn2mJHEnNSM8h7EDcszMRsgagQuUxT/XdGA8jqzs/qL38XHPxSmdaVzLO1pIxGXH5mZ+emDPGFN/Yd3WA/63qQ+Ig+ctu5gKJGDHaVLXmHE/cQXWs9tYoEen2iSL4nTf9hdH9hz7osQ1q9tNyJkHPwxYYvV9po6ui6jivd/OrasO54SzkoIEIlz0GpaZ4+sVfxWxoaHguQjmbesrppMXwdj8rc8fzKq70nMUm/T3hlehFXsBeH1lZygfKpb1EtpSbmStrQ/pY6xPB0oa4syj9kAnLfVWWsogg4RnIJ3QBZmk5qqwkf1Nq07fnXxIHRxmt5c1PS4hqvSxvIcH/Ghq0VVDZb3yMELZYJWIN20Q52A9I78yEwbjWmtGJ9oG1hRceGlWsxVhqX6Br1fHaHvkgz8HIoTM6kwPAHT+IVxnBIkKOuC</X509Certificate>
+        </X509Data>
+      </KeyInfo>
+    </KeyDescriptor>
+    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</NameIDFormat>
+    <AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://www.ovhcloud.com/eu/auth/saml/acs" index="1"></AssertionConsumerService>
+  </SPSSODescriptor>
+</EntityDescriptor>

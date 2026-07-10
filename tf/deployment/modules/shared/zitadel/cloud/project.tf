@@ -6,7 +6,7 @@ locals {
     postLogoutRedirectUris = []
     grantTypes             = ["AUTHORIZATION_CODE"]
     protocol               = "oidc"
-    metadataUrl            = ""
+    metadataFile           = ""
     # When true, a user is granted every role they match (not just the
     # highest-priority one) — e.g. Outline admins land in Leadership and Team.
     multi_role = false
@@ -86,10 +86,15 @@ locals {
       roles = [{ key = "Granted", grants_to = ["yucca"] }]
     },
     {
-      name        = "OVHCloud"
-      protocol    = "saml"
-      roles       = [{ key = "ADMIN", grants_to = ["immich_admin", "yucca"] }, { key = "DEFAULT", grants_to = ["team"] }]
-      metadataUrl = "https://auth.eu.ovhcloud.com/sso/saml/sp/metadata.xml"
+      name     = "OVHCloud"
+      protocol = "saml"
+      roles    = [{ key = "ADMIN", grants_to = ["immich_admin", "yucca"] }, { key = "DEFAULT", grants_to = ["team"] }]
+      # SP metadata is vendored rather than fetched at plan time: OVH gates
+      # https://auth.eu.ovhcloud.com/sso/saml/sp/metadata.xml behind a CDN
+      # Set-Cookie 307-redirect-to-self that the http provider (no cookie jar)
+      # can't satisfy, so `data.http` loops to 10 redirects and fails the apply.
+      # Re-fetch with `curl -sL -c jar -b jar <url>` if OVH rotates their SP cert.
+      metadataFile = "ovhcloud-sp-metadata.xml"
     }
   ]
 
@@ -152,15 +157,10 @@ resource "onepassword_item" "application_client_secret" {
   password = each.value.client_secret
 }
 
-data "http" "saml_sp_metadata" {
-  for_each = { for project in local.saml_projects : project.name => project }
-  url      = each.value.metadataUrl
-}
-
 resource "zitadel_application_saml" "applications" {
   for_each     = { for project in local.saml_projects : project.name => project }
   name         = upper(replace(each.value.name, "/[^a-zA-Z0-9]/", "_"))
   org_id       = zitadel_org.immich.id
   project_id   = zitadel_project.projects[each.key].id
-  metadata_xml = data.http.saml_sp_metadata[each.key].response_body
+  metadata_xml = file("${path.module}/assets/${each.value.metadataFile}")
 }
