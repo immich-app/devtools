@@ -437,3 +437,14 @@ resource "github_actions_organization_secret" "OUTLINE_API_KEY" {
   plaintext_value = data.onepassword_item.OUTLINE_API_KEY.password
   visibility      = "all"
 }
+
+data "onepassword_item" "FDROID_REPO_TOKEN" {
+  title = "FDROID_REPO_TOKEN"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "FDROID_REPO_TOKEN" {
+  secret_name     = "FDROID_REPO_TOKEN"
+  plaintext_value = data.onepassword_item.FDROID_REPO_TOKEN.password
+  visibility      = "all"
+}
