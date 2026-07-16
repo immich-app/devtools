@@ -55,6 +55,40 @@ locals {
         userInfoAssertion      = true
       }
     ] : [],
+    var.env == "prod" ? [
+      # Confidential web client for the yucca (FUTO Backups) production
+      # deployment at backups.futo.cloud. client_id / client_secret ->
+      # CUSTOMER_ZITADEL_OAUTH_CLIENT_ID_YUCCA_WEB /
+      # CUSTOMER_ZITADEL_OAUTH_CLIENT_SECRET_YUCCA_WEB in yucca_tf_prod.
+      {
+        name       = "Yucca Web"
+        authMethod = "BASIC"
+        appType    = "WEB"
+        grantTypes = ["AUTHORIZATION_CODE", "REFRESH_TOKEN"]
+        redirectUris = [
+          "https://backups.futo.cloud/api/auth/oidc/callback",
+        ]
+        postLogoutRedirectUris = [
+          "https://backups.futo.cloud",
+          "https://backups.futo.cloud/",
+        ]
+        devMode           = false
+        userInfoAssertion = true
+      },
+      # Public (no secret) device-code client for yucca orchestrator login,
+      # mirroring the dev-only client above.
+      # Client id -> CUSTOMER_ZITADEL_OAUTH_CLIENT_ID_YUCCA_ORCHESTRATOR in yucca_tf_prod.
+      {
+        name                   = "Yucca Orchestrator"
+        authMethod             = "NONE"
+        appType                = "NATIVE"
+        grantTypes             = ["DEVICE_CODE"]
+        redirectUris           = []
+        postLogoutRedirectUris = []
+        devMode                = false
+        userInfoAssertion      = true
+      }
+    ] : [],
     [
       // Real products here. Append as each product onboards.
     ]
