@@ -1,0 +1,53 @@
+---
+# One-off vmalert replay Job to backfill recording rule history.
+# NOT reconciled by flux — apply manually, see README.md.
+# The initContainer replays the base group first; the main container then
+# replays the derived groups, which read the base rule series. This ordering
+# is required and enforced by the Job structure.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: version-worker-replay
+  namespace: monitoring
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: version-worker-replay
+    spec:
+      restartPolicy: Never
+      initContainers:
+        - name: replay-base
+          # Pinned to chart 0.86.0's vmalert version (Chart.yaml appVersion v1.147.0).
+          image: victoriametrics/vmalert:v1.147.0
+          args:
+            - -rule=/rules/base.yaml
+            - -datasource.url=http://vmsingle-vmetrics:8428
+            - -remoteWrite.url=http://vmsingle-vmetrics:8428
+            # EDIT ME before applying: RFC3339 start of the backfill window,
+            # normally now-31d (e.g. 2026-06-19T00:00:00Z).
+            - -replay.timeFrom=REPLACE_WITH_RFC3339_START_TIME
+            - -replay.disableProgressBar=true
+          volumeMounts:
+            - name: rules
+              mountPath: /rules
+              readOnly: true
+      containers:
+        - name: replay-derived
+          image: victoriametrics/vmalert:v1.147.0
+          args:
+            - -rule=/rules/derived.yaml
+            - -datasource.url=http://vmsingle-vmetrics:8428
+            - -remoteWrite.url=http://vmsingle-vmetrics:8428
+            # EDIT ME before applying: keep in sync with the initContainer.
+            - -replay.timeFrom=REPLACE_WITH_RFC3339_START_TIME
+            - -replay.disableProgressBar=true
+          volumeMounts:
+            - name: rules
+              mountPath: /rules
+              readOnly: true
+      volumes:
+        - name: rules
+          configMap:
+            name: version-worker-replay-rules

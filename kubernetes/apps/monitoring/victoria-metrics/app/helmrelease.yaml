@@ -39,7 +39,26 @@ spec:
     alertmanager:
       enabled: false
     vmalert:
-      enabled: false
+      enabled: true
+      spec:
+        # Only evaluate our own VMRule (recording rules). The chart's
+        # defaultRules VMRules in this namespace are alerting rules with no
+        # notifier configured, so we select explicitly by label instead of
+        # using the chart default selectAllByDefault: true.
+        selectAllByDefault: false
+        ruleSelector:
+          matchLabels:
+            immich.app/vmrule: version-worker
+        extraArgs:
+          # No alertmanager is deployed; vmalert only runs recording rules.
+          notifier.blackhole: "true"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: "1"
+            memory: 1Gi
     grafana:
       enabled: false
     kubeEtcd:
