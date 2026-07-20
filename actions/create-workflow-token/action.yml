@@ -19,6 +19,9 @@ inputs:
   permission-actions:
     description: "Access level for GitHub Actions. 'read' or 'write'."
     required: false
+  permission-workflows:
+    description: "Access level for workflows. 'read' or 'write'."
+    required: false
 
 outputs:
   token:
@@ -49,6 +52,7 @@ runs:
         permission-pull-requests: ${{ inputs.permission-pull-requests }}
         permission-issues: ${{ inputs.permission-issues }}
         permission-actions: ${{ inputs.permission-actions }}
+        permission-workflows: ${{ inputs.permission-workflows }}
 
     - name: Set output
       id: output
