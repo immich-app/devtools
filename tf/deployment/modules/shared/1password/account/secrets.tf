@@ -95,7 +95,8 @@ module "generated-secrets" {
       { name = "IMMICH_GITHUB_ACTION_CHECKS_WEBHOOK_SECRET" },
       { name = "OUTLINE_ROLE_SYNC_WEBHOOK_SECRET" },
       { name = "LOOPDEDUPE_GITHUB_WEBHOOK_SECRET" },
-      { name = "LOOPDEDUPE_SECRET_KEY_BASE", length = 64 }
+      { name = "LOOPDEDUPE_SECRET_KEY_BASE", length = 64 },
+      { name = "LOOPDEDUPE_SEARCH_API_KEY" }
     ]
     scoped = [
       { name = "METRICS_READ_TOKEN" },
