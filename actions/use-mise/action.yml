@@ -16,8 +16,3 @@ runs:
         working_directory: ${{ inputs.working_directory }}
         install_args: "--locked"
         version: 2026.6.10
-        sha256:
-          ${{ runner.os == 'Linux' && runner.arch == 'X64' && '656131b5d995493c18b06c2135afda193f94a1848e0a4d1cb07a1161859d0c80' ||
-          runner.os == 'Linux' && runner.arch == 'ARM64' && 'f39ef86c888efe7323c1e510a8d14614af43d030acb3d56cb1af47e66b87ef28' ||
-          runner.os == 'macOS' && runner.arch == 'ARM64' && 'bd6117d71fe5d969d91c9b7e9abfe8a1be1a1d159061a0ae42dde6e000ef3004' ||
-          runner.os == 'Windows' && runner.arch == 'X64' && '95e0d4b20b5e32b7c870f25931311226527440fa70dd54cb3bd5156704b101ba' }}
