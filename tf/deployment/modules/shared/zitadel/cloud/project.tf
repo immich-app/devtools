@@ -14,7 +14,7 @@ locals {
   projects_data = [
     {
       name         = "Grafana Monitoring Prod"
-      roles        = [{ key = "GrafanaAdmin", grants_to = ["immich_admin"] }, { key = "Editor", grants_to = ["team"] }]
+      roles        = [{ key = "GrafanaAdmin", grants_to = ["immich_admin"] }, { key = "Editor", grants_to = ["team"] }, { key = "Viewer", grants_to = ["futo"] }]
       redirectUris = ["https://monitoring.immich.cloud/login/generic_oauth"]
     },
     {
