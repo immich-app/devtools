@@ -28,6 +28,9 @@ data:
           - record: version:server_version_seen_vreq:count5m
             expr: |-
               count by (client_ip, user_agent) (count_over_time(version_version_request_invocation{user_agent=~"immich-server/.*"}[5m]))
+          - record: version:server_channel_seen:count5m
+            expr: |-
+              count by (client_ip, channel) (count_over_time(version_version_request_invocation{user_agent=~"immich-server/.*"}[5m]) or count_over_time(version_changelog_request_invocation{user_agent=~"immich-server/.*"}[5m]))
           - record: version:requests:count5m
             expr: |-
               sum(count_over_time(version_handle_request_invocation[5m]))
@@ -82,6 +85,9 @@ data:
           - record: version:servers_by_continent:24h
             expr: |-
               count by (continent) (count_over_time(version:server_seen_continent:count5m[24h]))
+          - record: version:servers_by_channel:24h
+            expr: |-
+              count by (channel) (count_over_time(version:server_channel_seen:count5m[24h]))
           - record: version:servers_uptodate_ratio:24h
             expr: |-
               count(count by (client_ip, user_agent) (count_over_time(version:server_version_seen_vreq:count5m[24h])) and on(user_agent) last_over_time(version_latest_version_count[3h])) / count(count_over_time(version:server_seen_vreq:count5m[24h]))
