@@ -67,4 +67,27 @@ spec:
         name: victoriametrics-backup-bucket
       - kind: Secret
         name: victoriametrics-backup-secret
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: vmetrics-replay
+  namespace: flux-system
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: vmetrics-replay
+  dependsOn:
+    - name: victoria-metrics
+  path: ./kubernetes/apps/monitoring/victoria-metrics/replay
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: immich-kubernetes
+  # wait deliberately off: the replay Job can run for a long time; flux should
+  # apply it and move on rather than flap on health-check timeouts.
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
 

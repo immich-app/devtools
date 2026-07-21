@@ -1,0 +1,103 @@
+---
+# Rule files for one-off vmalert replay (backfill of recording rule history).
+# Applied once by flux (ks.yaml: vmetrics-replay) together with job.yaml; see README.md.
+# MUST be kept in sync with app/vmrule-version-worker.yaml if rules change.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: version-worker-replay-rules
+  namespace: monitoring
+data:
+  base.yaml: |
+    groups:
+      - name: version-worker.base
+        interval: 5m
+        rules:
+          - record: version:server_seen:count5m
+            expr: |-
+              count by (client_ip) (count_over_time(version_version_request_invocation{user_agent=~"immich-server/.*"}[5m]) or count_over_time(version_changelog_request_invocation{user_agent=~"immich-server/.*"}[5m]))
+          - record: version:server_seen_vreq:count5m
+            expr: |-
+              count by (client_ip) (count_over_time(version_version_request_invocation{user_agent=~"immich-server/.*"}[5m]))
+          - record: version:server_seen_continent:count5m
+            expr: |-
+              count by (client_ip, continent) (count_over_time(version_version_request_invocation{user_agent=~"immich-server/.*"}[5m]) or count_over_time(version_changelog_request_invocation{user_agent=~"immich-server/.*"}[5m]))
+          - record: version:server_version_seen:count5m
+            expr: |-
+              count by (client_ip, user_agent) (count_over_time(version_version_request_invocation{user_agent=~"immich-server/.*"}[5m]) or count_over_time(version_changelog_request_invocation{user_agent=~"immich-server/.*"}[5m]))
+          - record: version:server_version_seen_vreq:count5m
+            expr: |-
+              count by (client_ip, user_agent) (count_over_time(version_version_request_invocation{user_agent=~"immich-server/.*"}[5m]))
+          - record: version:requests:count5m
+            expr: |-
+              sum(count_over_time(version_handle_request_invocation[5m]))
+          - record: version:requests_by_colo:count5m
+            expr: |-
+              sum by (colo) (count_over_time(version_handle_request_invocation{colo!=""}[5m]))
+          - record: version:memory_cache_hit:count5m
+            expr: |-
+              sum(count_over_time(version_memory_cache_hit_count[5m]))
+          - record: version:memory_cache_stale:count5m
+            expr: |-
+              sum(count_over_time(version_memory_cache_stale_count[5m]))
+          - record: version:memory_cache_miss:count5m
+            expr: |-
+              sum(count_over_time(version_memory_cache_miss_count[5m]))
+          - record: version:requests_immich:count5m
+            expr: |-
+              (sum(count_over_time(version_version_request_invocation{user_agent=~"immich-server/.*"}[5m])) or vector(0)) + (sum(count_over_time(version_changelog_request_invocation{user_agent=~"immich-server/.*"}[5m])) or vector(0))
+          - record: version:requests_other:count5m
+            expr: |-
+              (sum(count_over_time(version_version_request_invocation{user_agent!~"immich-server/.*",user_agent!=""}[5m])) or vector(0)) + (sum(count_over_time(version_changelog_request_invocation{user_agent!~"immich-server/.*",user_agent!=""}[5m])) or vector(0))
+  derived.yaml: |
+    groups:
+      - name: version-worker.derived
+        interval: 5m
+        eval_offset: 2m30s
+        rules:
+          - record: version:servers_unique:2h
+            expr: |-
+              count(count_over_time(version:server_seen:count5m[2h]))
+          - record: version:servers_unique:24h
+            expr: |-
+              count(count_over_time(version:server_seen:count5m[24h]))
+          - record: version:servers_new:5m
+            expr: |-
+              count(count_over_time(version:server_seen:count5m[5m]) unless count_over_time(version:server_seen:count5m[30d] offset 5m))
+          - record: version:servers_new:1h
+            expr: |-
+              count(count_over_time(version:server_seen:count5m[1h]) unless count_over_time(version:server_seen:count5m[30d] offset 1h))
+          - record: version:servers_upgrades:1h
+            expr: |-
+              count(count by (client_ip) (count_over_time(version:server_version_seen_vreq:count5m[1h]) and on(user_agent) last_over_time(version_latest_version_count[3h])) and count_over_time(version:server_seen_vreq:count5m[30d] offset 1h))
+          - record: version:servers_new_installs:1h
+            expr: |-
+              count(count by (client_ip) (count_over_time(version:server_version_seen_vreq:count5m[1h]) and on(user_agent) last_over_time(version_latest_version_count[3h])) unless count_over_time(version:server_seen_vreq:count5m[30d] offset 1h))
+          - record: version:servers_by_version:24h
+            expr: |-
+              count by (user_agent) (count_over_time(version:server_version_seen:count5m[24h]))
+          - record: version:servers_by_version_vreq:2h
+            expr: |-
+              count by (user_agent) (count_over_time(version:server_version_seen_vreq:count5m[2h]))
+          - record: version:servers_by_continent:24h
+            expr: |-
+              count by (continent) (count_over_time(version:server_seen_continent:count5m[24h]))
+          - record: version:servers_uptodate_ratio:24h
+            expr: |-
+              count(count by (client_ip, user_agent) (count_over_time(version:server_version_seen_vreq:count5m[24h])) and on(user_agent) last_over_time(version_latest_version_count[3h])) / count(count_over_time(version:server_seen_vreq:count5m[24h]))
+          - record: version:servers_ipv4:24h
+            expr: |-
+              count(count_over_time(version:server_seen:count5m{client_ip!~".*:.*",client_ip!=""}[24h]))
+          - record: version:servers_ipv6:24h
+            expr: |-
+              count(count_over_time(version:server_seen:count5m{client_ip=~".*:.*"}[24h]))
+      - name: version-worker.derived-30d
+        interval: 30m
+        eval_offset: 2m30s
+        rules:
+          - record: version:servers_unique:30d
+            expr: |-
+              count(count_over_time(version:server_seen:count5m[30d]))
+          - record: version:servers_new:1d
+            expr: |-
+              count(count_over_time(version:server_seen:count5m[1d]) unless count_over_time(version:server_seen:count5m[30d] offset 1d))
