@@ -41,13 +41,17 @@ spec:
             - -replay.disableProgressBar=true
             # The default (1000) batches 1000 evaluation points per query_range
             # request; against ~475k raw series that asks vmsingle for ~8GiB in
-            # one query and gets a 422, aborting the replay. 100 keeps the
-            # worst request well inside the ~5GiB concurrent-query budget at
-            # the cost of a longer (multi-hour) replay.
-            - -replay.maxDatapointsPerQuery=100
+            # one query and gets a 422, aborting the replay. Base rules also
+            # emit one sample per client_ip per 5m bucket, so a batch is a
+            # multi-million-sample remote-write burst: 50 points halves the
+            # burst and the queue below absorbs it.
+            - -replay.maxDatapointsPerQuery=50
             # Survive transient 422s from concurrent dashboard/rule load; a
             # rule that exhausts its retries aborts the whole replay.
             - -replay.ruleRetryAttempts=10
+            - -remoteWrite.maxQueueSize=4000000
+            - -remoteWrite.maxBatchSize=10000
+            - -remoteWrite.concurrency=4
           volumeMounts:
             - name: rules
               mountPath: /rules
@@ -63,6 +67,9 @@ spec:
             - -replay.disableProgressBar=true
             - -replay.maxDatapointsPerQuery=100
             - -replay.ruleRetryAttempts=10
+            - -remoteWrite.maxQueueSize=4000000
+            - -remoteWrite.maxBatchSize=10000
+            - -remoteWrite.concurrency=4
           volumeMounts:
             - name: rules
               mountPath: /rules
