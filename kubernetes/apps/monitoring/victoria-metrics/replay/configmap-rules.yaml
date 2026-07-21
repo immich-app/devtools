@@ -1,6 +1,6 @@
 ---
 # Rule files for one-off vmalert replay (backfill of recording rule history).
-# NOT reconciled by flux — apply manually, see README.md.
+# Applied once by flux (ks.yaml: vmetrics-replay) together with job.yaml; see README.md.
 # MUST be kept in sync with app/vmrule-version-worker.yaml if rules change.
 apiVersion: v1
 kind: ConfigMap

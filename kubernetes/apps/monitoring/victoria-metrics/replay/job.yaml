@@ -1,14 +1,24 @@
 ---
-# One-off vmalert replay Job to backfill recording rule history.
-# NOT reconciled by flux — apply manually, see README.md.
-# The initContainer replays the base group first; the main container then
-# replays the derived groups, which read the base rule series. This ordering
-# is required and enforced by the Job structure.
+# One-off vmalert replay Job to backfill recording rule history, applied once
+# by flux (ks.yaml: vmetrics-replay). Once it has completed and the rule series
+# validate, remove this directory and the vmetrics-replay Kustomization in a
+# follow-up PR — prune will delete the Job and ConfigMap.
+#
+# Ordering is required and enforced by the pod structure: the base group is
+# replayed first, then the derived groups (which read the base rule series),
+# then the vmsingle rollup result cache is reset so queries immediately see
+# the backfilled samples.
+#
+# Jobs are immutable; the force annotation makes flux delete+recreate (and
+# therefore re-run the replay) if this spec is ever changed. To re-run with a
+# different window, edit -replay.timeFrom and let flux recreate the Job.
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: version-worker-replay
   namespace: monitoring
+  annotations:
+    kustomize.toolkit.fluxcd.io/force: "true"
 spec:
   backoffLimit: 0
   template:
@@ -25,28 +35,33 @@ spec:
             - -rule=/rules/base.yaml
             - -datasource.url=http://vmsingle-vmetrics:8428
             - -remoteWrite.url=http://vmsingle-vmetrics:8428
-            # EDIT ME before applying: RFC3339 start of the backfill window,
-            # normally now-31d (e.g. 2026-06-19T00:00:00Z).
-            - -replay.timeFrom=REPLACE_WITH_RFC3339_START_TIME
+            # ~31d before the expected merge date; earlier raw data is outside
+            # retention anyway, so a stale value only yields empty early points.
+            - -replay.timeFrom=2026-06-20T00:00:00Z
             - -replay.disableProgressBar=true
           volumeMounts:
             - name: rules
               mountPath: /rules
               readOnly: true
-      containers:
         - name: replay-derived
           image: victoriametrics/vmalert:v1.147.0
           args:
             - -rule=/rules/derived.yaml
             - -datasource.url=http://vmsingle-vmetrics:8428
             - -remoteWrite.url=http://vmsingle-vmetrics:8428
-            # EDIT ME before applying: keep in sync with the initContainer.
-            - -replay.timeFrom=REPLACE_WITH_RFC3339_START_TIME
+            # Keep in sync with replay-base.
+            - -replay.timeFrom=2026-06-20T00:00:00Z
             - -replay.disableProgressBar=true
           volumeMounts:
             - name: rules
               mountPath: /rules
               readOnly: true
+      containers:
+        - name: reset-rollup-cache
+          image: curlimages/curl:8.11.1
+          args:
+            - -sf
+            - http://vmsingle-vmetrics:8428/internal/resetRollupResultCache
       volumes:
         - name: rules
           configMap:
