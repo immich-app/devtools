@@ -39,6 +39,15 @@ spec:
             # retention anyway, so a stale value only yields empty early points.
             - -replay.timeFrom=2026-06-20T00:00:00Z
             - -replay.disableProgressBar=true
+            # The default (1000) batches 1000 evaluation points per query_range
+            # request; against ~475k raw series that asks vmsingle for ~8GiB in
+            # one query and gets a 422, aborting the replay. 100 keeps the
+            # worst request well inside the ~5GiB concurrent-query budget at
+            # the cost of a longer (multi-hour) replay.
+            - -replay.maxDatapointsPerQuery=100
+            # Survive transient 422s from concurrent dashboard/rule load; a
+            # rule that exhausts its retries aborts the whole replay.
+            - -replay.ruleRetryAttempts=10
           volumeMounts:
             - name: rules
               mountPath: /rules
@@ -52,6 +61,8 @@ spec:
             # Keep in sync with replay-base.
             - -replay.timeFrom=2026-06-20T00:00:00Z
             - -replay.disableProgressBar=true
+            - -replay.maxDatapointsPerQuery=100
+            - -replay.ruleRetryAttempts=10
           volumeMounts:
             - name: rules
               mountPath: /rules
