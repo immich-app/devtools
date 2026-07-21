@@ -1,12 +1,3 @@
-data "onepassword_vault" "opentofu_vault" {
-  name = "OpenTofu"
-}
-
-data "onepassword_item" "discord_leadership_alerts" {
-  title = "discord-leadership-alerts-webhook"
-  vault = data.onepassword_vault.opentofu_vault.name
-}
-
 locals {
   alerts_email = "alerts@immich.app"
 }
@@ -77,9 +68,12 @@ resource "cloudflare_notification_policy" "r2_class_b_operations_alert" {
   }
 }
 
+// The webhook is created by the discord/community module rather than being a
+// hand-made webhook stashed in 1Password. `secret` is omitted deliberately:
+// it's optional, and Cloudflare detects the discord URL and formats the payload
+// for it, so the cf-webhook-auth header served no purpose here.
 resource "cloudflare_notification_policy_webhooks" "discord_leadership_alert" {
   account_id = var.cloudflare_account_id
   name       = "Discord Leadership Alerts"
-  url        = data.onepassword_item.discord_leadership_alerts.hostname
-  secret     = data.onepassword_item.discord_leadership_alerts.credential
+  url        = data.terraform_remote_state.discord_community.outputs.leadership_alerts_cloudflare_webhook_url
 }

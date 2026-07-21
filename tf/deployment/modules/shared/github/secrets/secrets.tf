@@ -42,9 +42,14 @@ import {
   id = "CLOUDFLARE_TILES_R2_KV_TOKEN_HASHED_VALUE"
 }
 
+// Sourced from the github-app module's converted item in the tf vault, which
+// already holds this app's credentials. This replaces the duplicate
+// "push-o-matic-app" SSH-key item that lived in the single-item "Github" vault
+// (both now retired). pkcs8 is a like-for-like swap for the old item's
+// .private_key attribute, which the provider also returns as PKCS#8.
 data "onepassword_item" "push_o_matic_app" {
-  title = "push-o-matic-app"
-  vault = data.onepassword_vault.github.name
+  title = "GITHUB_APP_IMMICH_PUSH_O_MATIC"
+  vault = data.onepassword_vault.tf.name
 }
 
 locals {
@@ -52,6 +57,7 @@ locals {
     app_id          = [for field in data.onepassword_item.push_o_matic_app.section[0].field : field.value if field.label == "app_id"][0]
     client_id       = [for field in data.onepassword_item.push_o_matic_app.section[0].field : field.value if field.label == "client_id"][0]
     installation_id = [for field in data.onepassword_item.push_o_matic_app.section[0].field : field.value if field.label == "installation_id"][0]
+    pkcs8           = [for field in data.onepassword_item.push_o_matic_app.section[0].field : field.value if field.label == "pkcs8"][0]
   }
 }
 
@@ -79,7 +85,7 @@ import {
 
 resource "github_actions_organization_secret" "push_o_matic_app_key" {
   secret_name     = "PUSH_O_MATIC_APP_KEY"
-  plaintext_value = data.onepassword_item.push_o_matic_app.private_key
+  plaintext_value = local.push_o_matic_fields.pkcs8
   visibility      = "all"
 }
 

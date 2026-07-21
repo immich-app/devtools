@@ -11,5 +11,5 @@ include "root" {
 }
 
 dependencies {
-  paths = ["../api-keys"]
+  paths = ["../api-keys", "../../../scoped/discord/community"]
 }

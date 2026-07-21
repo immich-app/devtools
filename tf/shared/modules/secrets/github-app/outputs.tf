@@ -18,6 +18,7 @@ output "certificates" {
       app_id          = item.section[0].field[2].value
       installation_id = item.section[0].field[3].value
       owner           = item.section[0].field[4].value
+      client_id       = item.section[0].field[5].value
     }
   }
   sensitive = true

@@ -34,6 +34,12 @@ resource "onepassword_item" "manual" {
       label = "owner"
       value = "CHANGE_ME"
     }
+    // Appended last on purpose: convert_certificate and the converted item below
+    // index this section positionally, so existing fields must keep their index.
+    field {
+      label = "client_id"
+      value = "CHANGE_ME"
+    }
   }
 
   lifecycle {
@@ -84,6 +90,10 @@ resource "onepassword_item" "converted" {
     field {
       label = "owner"
       value = each.value.section[0].field[3].value
+    }
+    field {
+      label = "client_id"
+      value = each.value.section[0].field[4].value
     }
   }
 

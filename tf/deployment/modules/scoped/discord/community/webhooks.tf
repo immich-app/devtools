@@ -9,6 +9,19 @@ output "leadership_alerts_grafana_webhook_url" {
   sensitive = true
 }
 
+// Consumed by cloudflare/account/alerts.tf for the R2 billing notification
+// policies. Previously a hand-created Discord webhook stored in the legacy
+// "OpenTofu" 1Password vault; terraform owns it now so there's no manual secret.
+resource "discord_webhook" "leadership_alerts_cloudflare" {
+  name       = "Cloudflare"
+  channel_id = discord_text_channel.leadership_alerts.id
+}
+
+output "leadership_alerts_cloudflare_webhook_url" {
+  value     = discord_webhook.leadership_alerts_cloudflare.url
+  sensitive = true
+}
+
 resource "discord_webhook" "team_alerts_grafana" {
   name            = "Grafana"
   channel_id      = discord_text_channel.team_alerts.id

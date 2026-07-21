@@ -25,10 +25,6 @@ data "terraform_remote_state" "cloudflare_account" {
   }
 }
 
-data "onepassword_vault" "github" {
-  name = "Github"
-}
-
 data "onepassword_vault" "tf" {
   name = "tf"
 }

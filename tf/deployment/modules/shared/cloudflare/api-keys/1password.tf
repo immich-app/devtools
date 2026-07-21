@@ -1,7 +1,3 @@
-data "onepassword_vault" "opentofu" {
-  name = "OpenTofu"
-}
-
 data "onepassword_vault" "kubernetes" {
   name = "Kubernetes"
 }

@@ -43,5 +43,9 @@ resource "onepassword_item" "github_app_shared" {
       label = "owner"
       value = module.github-apps.certificates[each.key].owner
     }
+    field {
+      label = "client_id"
+      value = module.github-apps.certificates[each.key].client_id
+    }
   }
 }
