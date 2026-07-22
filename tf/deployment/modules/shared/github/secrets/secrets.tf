@@ -449,25 +449,22 @@ resource "github_actions_organization_secret" "FDROID_REPO_TOKEN" {
   visibility      = "all"
 }
 
-# yucca-o11y Terraform CI: a read-only 1Password service-account token for the
-# infra plan workflow. Scoped to that repo only (not "all") since it can read the
-# o11y_tf* + shared_tf state/secret vaults.
 data "github_repository" "yucca_o11y" {
   full_name = "immich-app/yucca-o11y"
 }
 
-data "onepassword_item" "OP_TF_O11Y_ENV" {
-  title = "OP_TF_O11Y_ENV"
+data "onepassword_item" "OP_TF_O11Y" {
+  title = "OP_TF_O11Y"
   vault = data.onepassword_vault.tf.name
 }
 
-resource "github_actions_organization_secret" "OP_TF_O11Y_ENV" {
-  secret_name     = "OP_TF_O11Y_ENV"
-  plaintext_value = data.onepassword_item.OP_TF_O11Y_ENV.password
+resource "github_actions_organization_secret" "OP_TF_O11Y" {
+  secret_name     = "OP_TF_O11Y"
+  plaintext_value = data.onepassword_item.OP_TF_O11Y.password
   visibility      = "selected"
 }
 
-resource "github_actions_organization_secret_repositories" "OP_TF_O11Y_ENV" {
-  secret_name             = github_actions_organization_secret.OP_TF_O11Y_ENV.secret_name
+resource "github_actions_organization_secret_repositories" "OP_TF_O11Y" {
+  secret_name             = github_actions_organization_secret.OP_TF_O11Y.secret_name
   selected_repository_ids = [data.github_repository.yucca_o11y.repo_id]
 }
