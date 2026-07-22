@@ -4,41 +4,42 @@
 // still read the immich vaults and get transitioned one at a time in a later
 // step, after which the immich-side copies are removed. Same dual-write pattern
 // as github-apps-shared.tf: the default provider owns the immich items, the
-// onepassword.futo alias writes the FUTO copies.
+// onepassword.futo_immich alias writes the FUTO copies over Connect.
 //
 // Vault mapping: tf -> immich_tf, tf_<env> -> immich_tf_<env>,
 // Kubernetes -> immich_kubernetes.
 //
-// PREREQUISITE: the immich_* vaults must already exist in the FUTO account and
-// be granted to the FUTO terraform service account — the provider can't create
-// vaults (there is no onepassword_vault resource).
+// PREREQUISITE: the immich_* vaults must already exist in the FUTO account (the
+// provider can't create vaults — there is no onepassword_vault resource), and
+// immich's Connect server in that account must be created and scoped to all of
+// them, with its write token supplied as futo_immich_op_connect_token.
 //
 // NOTE: this only covers items terraform knows about. Anything in the Kubernetes
 // vault created outside terraform (other than PUSHED_ZITADEL_IAC_ADMIN_SA, which
 // is read below) has to be moved by hand.
 
 data "onepassword_vault" "immich_tf" {
-  provider = onepassword.futo
+  provider = onepassword.futo_immich
   name     = "immich_tf"
 }
 
 data "onepassword_vault" "immich_tf_prod" {
-  provider = onepassword.futo
+  provider = onepassword.futo_immich
   name     = "immich_tf_prod"
 }
 
 data "onepassword_vault" "immich_tf_staging" {
-  provider = onepassword.futo
+  provider = onepassword.futo_immich
   name     = "immich_tf_staging"
 }
 
 data "onepassword_vault" "immich_tf_dev" {
-  provider = onepassword.futo
+  provider = onepassword.futo_immich
   name     = "immich_tf_dev"
 }
 
 data "onepassword_vault" "immich_kubernetes" {
-  provider = onepassword.futo
+  provider = onepassword.futo_immich
   name     = "immich_kubernetes"
 }
 
@@ -76,7 +77,7 @@ locals {
 
 // Manual secrets (human-entered) -> immich_tf*
 resource "onepassword_item" "immich_futo_manual_copy" {
-  provider = onepassword.futo
+  provider = onepassword.futo_immich
   for_each = module.manual-secrets.secret_meta
 
   vault    = local.futo_vault_by_src[each.value.vault_name]
@@ -87,7 +88,7 @@ resource "onepassword_item" "immich_futo_manual_copy" {
 
 // Generated secrets (random_password) -> immich_tf*, by exact current value.
 resource "onepassword_item" "immich_futo_generated_copy" {
-  provider = onepassword.futo
+  provider = onepassword.futo_immich
   for_each = module.generated-secrets.secret_meta
 
   vault    = local.futo_vault_by_src[each.value.vault_name]
@@ -98,7 +99,7 @@ resource "onepassword_item" "immich_futo_generated_copy" {
 
 // Standalone ZITADEL_PROFILE_JSON (tf) -> immich_tf.
 resource "onepassword_item" "immich_futo_zitadel_profile_copy" {
-  provider = onepassword.futo
+  provider = onepassword.futo_immich
 
   vault    = data.onepassword_vault.immich_tf.uuid
   title    = "ZITADEL_PROFILE_JSON"
@@ -109,7 +110,7 @@ resource "onepassword_item" "immich_futo_zitadel_profile_copy" {
 // GitHub App converted credentials (tf) -> immich_tf. Mirrors
 // github-apps-shared.tf, sourcing the module's certificates output.
 resource "onepassword_item" "immich_futo_github_app_copy" {
-  provider = onepassword.futo
+  provider = onepassword.futo_immich
   for_each = toset([for name in local.github_app_names : "GITHUB_APP_${upper(name)}"])
 
   vault    = data.onepassword_vault.immich_tf.uuid
@@ -147,7 +148,7 @@ resource "onepassword_item" "immich_futo_github_app_copy" {
 
 // ContainerSSH host key (Kubernetes) -> immich_kubernetes.
 resource "onepassword_item" "immich_futo_containerssh_host_key_copy" {
-  provider = onepassword.futo
+  provider = onepassword.futo_immich
 
   vault    = data.onepassword_vault.immich_kubernetes.uuid
   title    = "containerssh-host-key"
@@ -165,7 +166,7 @@ resource "onepassword_item" "immich_futo_containerssh_host_key_copy" {
 
 // Grafana admin credentials (Kubernetes) -> immich_kubernetes.
 resource "onepassword_item" "immich_futo_grafana_admin_credentials_copy" {
-  provider = onepassword.futo
+  provider = onepassword.futo_immich
 
   vault    = data.onepassword_vault.immich_kubernetes.uuid
   title    = "grafana-admin-credentials"
@@ -190,7 +191,7 @@ resource "onepassword_item" "immich_futo_grafana_admin_credentials_copy" {
 // of band (terraform only reads it via data.onepassword_item), but it still has
 // to land in immich_kubernetes for the vault to be fully migrated.
 resource "onepassword_item" "immich_futo_zitadel_iac_admin_sa_copy" {
-  provider = onepassword.futo
+  provider = onepassword.futo_immich
 
   vault    = data.onepassword_vault.immich_kubernetes.uuid
   title    = "PUSHED_ZITADEL_IAC_ADMIN_SA"
@@ -201,7 +202,7 @@ resource "onepassword_item" "immich_futo_zitadel_iac_admin_sa_copy" {
 // VictoriaMetrics tokens (Kubernetes, tf_dev, tf_prod) -> immich_kubernetes /
 // immich_tf_dev / immich_tf_prod.
 resource "onepassword_item" "immich_futo_vmetrics_copy" {
-  provider = onepassword.futo
+  provider = onepassword.futo_immich
   for_each = local.futo_vmetrics_meta
 
   vault    = each.value.vault
