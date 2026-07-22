@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.2.0](https://github.com/immich-app/devtools/compare/use-mise-action-v3.1.0...use-mise-action-v3.2.0) (2026-07-22)
+
+
+### Features
+
+* drop sha pin block from use-mise action ([#1819](https://github.com/immich-app/devtools/issues/1819)) ([de37dc2](https://github.com/immich-app/devtools/commit/de37dc23fd73dda12aa344ba41c40516283482a8))
+
+
+### Chores
+
+* **deps:** update dependency jdx/mise to v2026.7.7 ([#1830](https://github.com/immich-app/devtools/issues/1830)) ([e905a40](https://github.com/immich-app/devtools/commit/e905a40e665ac69aa696299fdf0bbdf50508ce38))
+* **deps:** update github-actions ([#1707](https://github.com/immich-app/devtools/issues/1707)) ([54e2822](https://github.com/immich-app/devtools/commit/54e2822201ad112775221039a416e2f81825fcc4))
+* **deps:** update github-actions ([#1817](https://github.com/immich-app/devtools/issues/1817)) ([f5b90cb](https://github.com/immich-app/devtools/commit/f5b90cb68cb8b9d3a7bac519fc30b34356df4b0e))
+
 ## [3.1.0](https://github.com/immich-app/devtools/compare/use-mise-action-v3.0.0...use-mise-action-v3.1.0) (2026-06-16)
 
 
