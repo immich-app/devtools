@@ -15,4 +15,4 @@ runs:
         github_token: ${{ inputs.github_token }}
         working_directory: ${{ inputs.working_directory }}
         install_args: "--locked"
-        version: 2026.6.10
+        version: 2026.7.7
