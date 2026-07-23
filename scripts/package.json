@@ -20,7 +20,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^10.0.0",
-    "@immich/sdk": "^2.0.0",
+    "@immich/sdk": "^3.0.0",
     "@types/luxon": "^3.4.2",
     "@types/node": "^24.13.3",
     "@typescript-eslint/eslint-plugin": "^8.24.0",
