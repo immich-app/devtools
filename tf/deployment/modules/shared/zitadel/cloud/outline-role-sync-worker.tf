@@ -47,7 +47,7 @@ resource "cloudflare_worker_version" "outline_role_sync" {
 
   bindings = [
     { name = "OUTLINE_BASE_URL", type = "plain_text", text = "https://outline.immich.cloud" },
-    { name = "ZITADEL_BASE_URL", type = "plain_text", text = "https://auth.internal.futo.org" },
+    { name = "ZITADEL_BASE_URL", type = "plain_text", text = "https://${var.futo_zitadel_base_domain}" },
     { name = "ZITADEL_OUTLINE_PROJECT_ID", type = "plain_text", text = zitadel_project.projects["Outline"].id },
     { name = "ZITADEL_OUTLINE_PROJECT_ROLES", type = "plain_text", text = join(",", local.outline_role_keys) },
     { name = "ZITADEL_SERVICE_ACCOUNT_TOKEN", type = "secret_text", text = zitadel_personal_access_token.outline_role_sync.token },

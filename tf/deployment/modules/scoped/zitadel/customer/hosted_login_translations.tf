@@ -12,7 +12,7 @@ resource "null_resource" "hosted_login_translations" {
   triggers = {
     translations_hash = filemd5(local.hosted_login_translations_file)
     script_hash       = filemd5(local.hosted_login_translations_script)
-    domain            = data.onepassword_item.customer_zitadel_domain.password
+    domain            = data.onepassword_item.customer_zitadel_base_domain.password
     locale            = local.hosted_login_translations_locale
   }
 
@@ -20,7 +20,8 @@ resource "null_resource" "hosted_login_translations" {
     command = local.hosted_login_translations_script
 
     environment = {
-      ZITADEL_DOMAIN       = data.onepassword_item.customer_zitadel_domain.password
+      # Connect to the API via the stable base domain, not the vanity domain.
+      ZITADEL_DOMAIN       = data.onepassword_item.customer_zitadel_base_domain.password
       ZITADEL_PROFILE_JSON = data.onepassword_item.customer_zitadel_profile_json.password
       TRANSLATIONS_FILE    = local.hosted_login_translations_file
       LOCALE               = local.hosted_login_translations_locale

@@ -32,6 +32,7 @@ before Terraform can run. Do this in the ZITADEL Cloud console and 1Password:
    seeds stub items in `yucca_tf_${env}_manual` with `REPLACE_ME` passwords
    for:
    - `CUSTOMER_ZITADEL_DOMAIN`
+   - `CUSTOMER_ZITADEL_BASE_DOMAIN`
    - `CUSTOMER_ZITADEL_PROFILE_JSON`
    - `CUSTOMER_ZITADEL_SMTP_HOST`
    - `CUSTOMER_ZITADEL_SMTP_USER`
@@ -39,9 +40,17 @@ before Terraform can run. Do this in the ZITADEL Cloud console and 1Password:
    - `CUSTOMER_ZITADEL_SMTP_SENDER_ADDRESS`
 
    Replace each stub password in `yucca_tf_${env}_manual` with the real value
-   (`CUSTOMER_ZITADEL_DOMAIN` = the instance URL `<name>.zitadel.cloud`, profile
-   JSON from step 3, SMTP credentials for the chosen provider, and sender
-   address e.g. `no-reply@futo.cloud`).
+   (`CUSTOMER_ZITADEL_DOMAIN` = the public-facing auth URL — prod: the
+   `auth.futo.cloud` vanity domain, dev/staging: the generated
+   `<name>.zitadel.cloud` URL — consumed by app-side config, not this module;
+   `CUSTOMER_ZITADEL_BASE_DOMAIN` = the generated `<name>.zitadel.cloud` instance
+   host as a **bare hostname** (no `https://`, no trailing slash) in every env,
+   which this module both connects through (provider + hosted login) and targets
+   with the `auth.futo.cloud` CNAME, so the connection never depends on the
+   mutable vanity domain. Stored bare to match the internal instance's
+   `FUTO_ZITADEL_BASE_DOMAIN`. Profile JSON from step 3, SMTP
+   credentials for the chosen provider, and sender address e.g.
+   `no-reply@futo.cloud`).
    Re-apply `shared/1password/futo-account` so the copy-secrets module
    mirrors each value into the `yucca_tf_${env}` vault that this module
    reads from via `data "onepassword_item"` lookups at plan/apply time. No
