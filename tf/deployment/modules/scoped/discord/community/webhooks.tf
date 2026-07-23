@@ -42,44 +42,37 @@ output "yucca_alerts_staging_grafana_webhook_url" {
   sensitive = true
 }
 
-# Publish the yucca-alerts Grafana webhook URLs into the FUTO o11y vaults so the o11y
-# stack can consume them. The o11y_tf_* vaults live in the FUTO 1Password account, which
-# the default (immich Connect) provider cannot reach — hence provider = onepassword.futo.
+# Publish each cluster's yucca-alerts Grafana webhook URL into its FUTO o11y vault
+# (o11y_tf_<env>) so the o11y stack can consume it. The o11y_tf_* vaults live in the
+# FUTO 1Password account, which the default (immich Connect) provider cannot reach —
+# hence provider = onepassword.futo.
 #
-# Gated to the prod apply only: this module also runs in dev against the test Discord
-# server, and an ungated write would clobber the real webhook URLs with dev-server ones
-# on every dev apply (the dev-env service account may not have o11y vault access either,
-# which is also why the data sources are gated — they execute during every plan).
-# yucca-alerts-staging lives on the same prod community server, so both vault items are
-# written from the single prod apply.
-data "onepassword_vault" "o11y_tf_prod" {
-  count    = var.env == "prod" ? 1 : 0
-  provider = onepassword.futo
-  name     = "o11y_tf_prod"
+# All three yucca-alerts channels live on the community server, which only the prod
+# discord apply manages — the dev apply targets the test server and would clobber the
+# vault items with test-server URLs on every run (its service account may not have o11y
+# vault access either, and data sources execute during every plan). Hence the for_each
+# collapses to an empty map outside prod.
+locals {
+  o11y_grafana_discord_webhooks = {
+    prod    = discord_webhook.yucca_alerts_grafana.url
+    staging = discord_webhook.yucca_alerts_staging_grafana.url
+    dev     = discord_webhook.yucca_alerts_dev_grafana.url
+  }
 }
 
-data "onepassword_vault" "o11y_tf_staging" {
-  count    = var.env == "prod" ? 1 : 0
+data "onepassword_vault" "o11y_tf" {
+  for_each = { for env, url in local.o11y_grafana_discord_webhooks : env => url if var.env == "prod" }
   provider = onepassword.futo
-  name     = "o11y_tf_staging"
+  name     = "o11y_tf_${each.key}"
 }
 
-resource "onepassword_item" "o11y_prod_grafana_discord_webhook" {
-  count    = var.env == "prod" ? 1 : 0
+resource "onepassword_item" "o11y_grafana_discord_webhook" {
+  for_each = { for env, url in local.o11y_grafana_discord_webhooks : env => url if var.env == "prod" }
   provider = onepassword.futo
-  vault    = data.onepassword_vault.o11y_tf_prod[0].uuid
+  vault    = data.onepassword_vault.o11y_tf[each.key].uuid
   title    = "GRAFANA_DISCORD_WEBHOOK"
   category = "password"
-  password = discord_webhook.yucca_alerts_grafana.url
-}
-
-resource "onepassword_item" "o11y_staging_grafana_discord_webhook" {
-  count    = var.env == "prod" ? 1 : 0
-  provider = onepassword.futo
-  vault    = data.onepassword_vault.o11y_tf_staging[0].uuid
-  title    = "GRAFANA_DISCORD_WEBHOOK"
-  category = "password"
-  password = discord_webhook.yucca_alerts_staging_grafana.url
+  password = each.value
 }
 
 resource "discord_webhook" "yucca_alerts_dev_grafana" {
