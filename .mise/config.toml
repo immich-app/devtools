@@ -1,6 +1,6 @@
 [tools]
 deno = "2.9.1"
-flux2 = "2.8.8"
+flux2 = "2.9.2"
 go = "1.26.5"
 "go:github.com/cloudnative-pg/cloudnative-pg/cmd/kubectl-cnpg" = "v1.30.0"
 "go:github.com/home-operations/flate/cmd/flate" = "0.4.10"
