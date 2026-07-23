@@ -1,5 +1,7 @@
+# Connect via the stable <name>.zitadel.cloud base domain, not the
+# auth.internal.futo.org custom domain which is a mutable alias.
 provider "zitadel" {
-  domain           = "auth.internal.futo.org"
+  domain           = var.futo_zitadel_base_domain
   insecure         = false
   jwt_profile_json = var.futo_zitadel_profile_json
 }
