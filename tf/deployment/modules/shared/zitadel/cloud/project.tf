@@ -80,9 +80,16 @@ locals {
       redirectUris = ["https://mattermost.futo.tech/signup/openid/complete"]
     },
     {
-      name = "Yucca Internal Tooling"
-      # redirectUris intentionally empty for now — public/PKCE client
-      # (authMethod defaults to NONE); add the callback URL when known
+      name       = "Yucca Internal Tooling"
+      authMethod = "BASIC"
+      redirectUris = [
+        "https://admin.father.fsn.htz.yucca.futo.network/api/auth/oidc/callback",
+        "https://admin.luke.aus.int.yucca.futo.network/api/auth/oidc/callback"
+      ]
+      postLogoutRedirectUris = [
+        "https://admin.father.fsn.htz.yucca.futo.network",
+        "https://admin.luke.aus.int.yucca.futo.network"
+      ]
       roles = [{ key = "Granted", grants_to = ["yucca"] }]
     },
     {
