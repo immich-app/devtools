@@ -55,7 +55,7 @@ locals {
       "yucca_off_topic",
       "yucca_focus_topic",
       "yucca_alerts",
-      "yucca_alerts_testing",
+      "yucca_alerts_staging",
       "yucca_alerts_dev",
     ]
     # Leadership
@@ -333,7 +333,7 @@ module "team_channels_write" {
     yucca_off_topic      = discord_text_channel.yucca_off_topic.id
     yucca_focus_topic    = discord_forum_channel.yucca_focus_topic.id
     yucca_alerts         = discord_text_channel.yucca_alerts.id
-    yucca_alerts_testing = discord_text_channel.yucca_alerts_testing.id
+    yucca_alerts_staging = discord_text_channel.yucca_alerts_staging.id
     yucca_alerts_dev     = discord_text_channel.yucca_alerts_dev.id
     yucca_voice          = discord_voice_channel.yucca_voice.id
   }
@@ -796,9 +796,9 @@ resource "discord_text_channel" "yucca_alerts" {
   }
 }
 
-resource "discord_text_channel" "yucca_alerts_testing" {
-  name                     = "yucca-alerts-testing"
-  position                 = index(local.channel_order.yucca, "yucca_alerts_testing")
+resource "discord_text_channel" "yucca_alerts_staging" {
+  name                     = "yucca-alerts-staging"
+  position                 = index(local.channel_order.yucca, "yucca_alerts_staging")
   server_id                = discord_server.server.id
   category                 = discord_category_channel.yucca.id
   sync_perms_with_category = false
