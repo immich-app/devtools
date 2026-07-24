@@ -5,7 +5,7 @@ terraform {
   required_providers {
     zitadel = {
       source  = "zitadel/zitadel"
-      version = "2.12.8"
+      version = "3.3.0"
     }
     cloudflare = {
       source  = "cloudflare/cloudflare"
