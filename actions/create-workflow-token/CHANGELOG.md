@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/immich-app/devtools/compare/create-workflow-token-action-v3.0.0...create-workflow-token-action-v3.0.1) (2026-07-24)
+
+
+### Bug Fixes
+
+* add workflows permission to create-workflow-token ([#1822](https://github.com/immich-app/devtools/issues/1822)) ([77828ce](https://github.com/immich-app/devtools/commit/77828ce5860c220c9833f2ef126d7161f646175e))
+
 ## [3.0.0](https://github.com/immich-app/devtools/compare/create-workflow-token-action-v2.0.1...create-workflow-token-action-v3.0.0) (2026-07-03)
 
 
