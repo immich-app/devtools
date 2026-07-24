@@ -33,57 +33,64 @@ checksum = "sha256:ab310b4232cca207d40ffa41867e93aaf9f893802bc76756e74f486a6b21b
 url = "https://dl.deno.land/release/v2.9.1/deno-x86_64-pc-windows-msvc.zip"
 
 [[tools.flux2]]
-version = "2.8.8"
+version = "2.9.2"
 backend = "aqua:fluxcd/flux2"
 
 [tools.flux2."platforms.linux-arm64"]
-checksum = "sha256:738604ab040055ace69777988a24def98ada1aff14ae4726e733089dc8cc5e12"
-url = "https://github.com/fluxcd/flux2/releases/download/v2.8.8/flux_2.8.8_linux_arm64.tar.gz"
+checksum = "sha256:665bfe5aeb843faf907e7f77250c31840499ff2dc65a64c2479409e3728748d1"
+url = "https://github.com/fluxcd/flux2/releases/download/v2.9.2/flux_2.9.2_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/fluxcd/flux2/releases/assets/475505390"
 
 [tools.flux2."platforms.linux-arm64".provenance.slsa]
-url = "https://github.com/fluxcd/flux2/releases/download/v2.8.8/provenance.intoto.jsonl"
+url = "https://github.com/fluxcd/flux2/releases/download/v2.9.2/provenance.intoto.jsonl"
 
 [tools.flux2."platforms.linux-arm64-musl"]
-checksum = "sha256:738604ab040055ace69777988a24def98ada1aff14ae4726e733089dc8cc5e12"
-url = "https://github.com/fluxcd/flux2/releases/download/v2.8.8/flux_2.8.8_linux_arm64.tar.gz"
+checksum = "sha256:665bfe5aeb843faf907e7f77250c31840499ff2dc65a64c2479409e3728748d1"
+url = "https://github.com/fluxcd/flux2/releases/download/v2.9.2/flux_2.9.2_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/fluxcd/flux2/releases/assets/475505390"
 
 [tools.flux2."platforms.linux-arm64-musl".provenance.slsa]
-url = "https://github.com/fluxcd/flux2/releases/download/v2.8.8/provenance.intoto.jsonl"
+url = "https://github.com/fluxcd/flux2/releases/download/v2.9.2/provenance.intoto.jsonl"
 
 [tools.flux2."platforms.linux-x64"]
-checksum = "sha256:3791d8fbb73b967ada021186f7b46686a2b180ce206d3c279c3f2ad183877a7f"
-url = "https://github.com/fluxcd/flux2/releases/download/v2.8.8/flux_2.8.8_linux_amd64.tar.gz"
+checksum = "sha256:4092b367fd060097976fb7261601f79420ecf7266328417dfd8dfee27de0e6a3"
+url = "https://github.com/fluxcd/flux2/releases/download/v2.9.2/flux_2.9.2_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/fluxcd/flux2/releases/assets/475505387"
 
 [tools.flux2."platforms.linux-x64".provenance.slsa]
-url = "https://github.com/fluxcd/flux2/releases/download/v2.8.8/provenance.intoto.jsonl"
+url = "https://github.com/fluxcd/flux2/releases/download/v2.9.2/provenance.intoto.jsonl"
 
 [tools.flux2."platforms.linux-x64-musl"]
-checksum = "sha256:3791d8fbb73b967ada021186f7b46686a2b180ce206d3c279c3f2ad183877a7f"
-url = "https://github.com/fluxcd/flux2/releases/download/v2.8.8/flux_2.8.8_linux_amd64.tar.gz"
+checksum = "sha256:4092b367fd060097976fb7261601f79420ecf7266328417dfd8dfee27de0e6a3"
+url = "https://github.com/fluxcd/flux2/releases/download/v2.9.2/flux_2.9.2_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/fluxcd/flux2/releases/assets/475505387"
 
 [tools.flux2."platforms.linux-x64-musl".provenance.slsa]
-url = "https://github.com/fluxcd/flux2/releases/download/v2.8.8/provenance.intoto.jsonl"
+url = "https://github.com/fluxcd/flux2/releases/download/v2.9.2/provenance.intoto.jsonl"
 
 [tools.flux2."platforms.macos-arm64"]
-checksum = "sha256:f54bb4d83cfc9563fd3213381d50fe1102215ef904ecf9c38afa183b02c74eb7"
-url = "https://github.com/fluxcd/flux2/releases/download/v2.8.8/flux_2.8.8_darwin_arm64.tar.gz"
+checksum = "sha256:1dd6791738b1c250748c24c24b48e92908881596f999ad8bf10f84763d66fdb3"
+url = "https://github.com/fluxcd/flux2/releases/download/v2.9.2/flux_2.9.2_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/fluxcd/flux2/releases/assets/475505377"
 
 [tools.flux2."platforms.macos-arm64".provenance.slsa]
-url = "https://github.com/fluxcd/flux2/releases/download/v2.8.8/provenance.intoto.jsonl"
+url = "https://github.com/fluxcd/flux2/releases/download/v2.9.2/provenance.intoto.jsonl"
 
 [tools.flux2."platforms.macos-x64"]
-checksum = "sha256:dcff834cd7b78acd22efd182b8a3bc08193cb00e734d62969070c2d888b1ded7"
-url = "https://github.com/fluxcd/flux2/releases/download/v2.8.8/flux_2.8.8_darwin_amd64.tar.gz"
+checksum = "sha256:e4583db32e4f4f4ec195084f0381c704e5104a55a7ec4c1a444396137ecdb161"
+url = "https://github.com/fluxcd/flux2/releases/download/v2.9.2/flux_2.9.2_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/fluxcd/flux2/releases/assets/475505385"
 
 [tools.flux2."platforms.macos-x64".provenance.slsa]
-url = "https://github.com/fluxcd/flux2/releases/download/v2.8.8/provenance.intoto.jsonl"
+url = "https://github.com/fluxcd/flux2/releases/download/v2.9.2/provenance.intoto.jsonl"
 
 [tools.flux2."platforms.windows-x64"]
-checksum = "sha256:78045ff9a4e2a6c05265d7a027694fbaca43f08f782da5c9214f852e06189bf8"
-url = "https://github.com/fluxcd/flux2/releases/download/v2.8.8/flux_2.8.8_windows_amd64.zip"
+checksum = "sha256:eceaddf7782ae5959e37d1d3620a70c68ef834ad1107ba6d9049a58c088a566c"
+url = "https://github.com/fluxcd/flux2/releases/download/v2.9.2/flux_2.9.2_windows_amd64.zip"
+url_api = "https://api.github.com/repos/fluxcd/flux2/releases/assets/475505381"
 
 [tools.flux2."platforms.windows-x64".provenance.slsa]
-url = "https://github.com/fluxcd/flux2/releases/download/v2.8.8/provenance.intoto.jsonl"
+url = "https://github.com/fluxcd/flux2/releases/download/v2.9.2/provenance.intoto.jsonl"
 
 [[tools.go]]
 version = "1.26.5"
