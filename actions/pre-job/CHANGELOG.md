@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.0.5](https://github.com/immich-app/devtools/compare/pre-job-action-v2.0.4...pre-job-action-v2.0.5) (2026-07-24)
+
+
+### Chores
+
+* **deps:** update actions/checkout action to v7 ([#1815](https://github.com/immich-app/devtools/issues/1815)) ([95e12bf](https://github.com/immich-app/devtools/commit/95e12bf34054fc2311103de31789a377966ca3bb))
+* **deps:** update github-actions ([#1668](https://github.com/immich-app/devtools/issues/1668)) ([ddbf697](https://github.com/immich-app/devtools/commit/ddbf697f019c93b07eb6c96e642ae81aa4c12bf5))
+* **deps:** update github-actions ([#1808](https://github.com/immich-app/devtools/issues/1808)) ([766f095](https://github.com/immich-app/devtools/commit/766f095d453ead81aab229d4afcab487a7bb665a))
+
 ## [2.0.4](https://github.com/immich-app/devtools/compare/pre-job-action-v2.0.3...pre-job-action-v2.0.4) (2026-05-05)
 
 
