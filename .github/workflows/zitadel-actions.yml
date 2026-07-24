@@ -50,7 +50,7 @@ jobs:
       - name: Setup Deno
         uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
         with:
-          deno-version: "2.8.3" # keep in sync with .mise/config.toml
+          deno-version: "2.9.3" # keep in sync with .mise/config.toml
 
       - name: Format
         run: deno task fmt
