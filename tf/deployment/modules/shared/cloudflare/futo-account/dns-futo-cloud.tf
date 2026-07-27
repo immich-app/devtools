@@ -45,6 +45,24 @@ resource "cloudflare_dns_record" "futo_cloud_cname_dkim_fm3" {
   proxied = false
 }
 
+resource "cloudflare_dns_record" "futo_cloud_txt_dkim_postmark" {
+  zone_id = cloudflare_zone.futo_cloud.id
+  name    = "20260722131929pm._domainkey.futo.cloud"
+  type    = "TXT"
+  content = "\"k=rsa;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCiWqKH70/oAeOCypulMdz4Ykde1SCWi91/DhRJI+sqcIjvRYl1aWn/8SAjZOUK5pwmqlsUFv4TwZJkra6t3/MWANexho1C36ShE/vohYjh5AclNtsV5x5gKVIP728BKOiupcSTMhH4MXY2tctekHrh/iWZJqKhtQDlyW0fXeFRjQIDAQAB\""
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_dns_record" "futo_cloud_cname_postmark_bounces" {
+  zone_id = cloudflare_zone.futo_cloud.id
+  name    = "pm-bounces.futo.cloud"
+  type    = "CNAME"
+  content = "pm.mtasv.net"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_dns_record" "futo_cloud_txt_spf" {
   zone_id = cloudflare_zone.futo_cloud.id
   name    = "futo.cloud"

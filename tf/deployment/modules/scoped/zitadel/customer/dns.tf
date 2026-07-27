@@ -13,22 +13,20 @@ data "cloudflare_zone" "futo_cloud" {
   }
 }
 
-locals {
-  # CUSTOMER_ZITADEL_DOMAIN is stored as a URL (https://host/); Cloudflare needs
-  # a bare hostname as CNAME content.
-  customer_zitadel_host = trimsuffix(trimprefix(data.onepassword_item.customer_zitadel_domain.password, "https://"), "/")
-}
-
-# Prod only: auth.futo.cloud -> the prod ZITADEL Cloud instance host from
-# CUSTOMER_ZITADEL_DOMAIN. dev/staging use the generated <name>.zitadel.cloud URL
-# directly with no custom domain. DNS-only so ZITADEL terminates TLS.
+# Prod only: auth.futo.cloud -> the prod ZITADEL Cloud instance's base
+# <name>.zitadel.cloud host from CUSTOMER_ZITADEL_BASE_DOMAIN, which is stored as
+# a bare hostname (no scheme) — exactly what a CNAME wants. This is NOT the
+# auth.futo.cloud vanity domain that CUSTOMER_ZITADEL_DOMAIN holds; pointing the
+# record at the vanity domain would make the CNAME reference itself. dev/staging
+# have no custom domain and use the generated URL directly. DNS-only so ZITADEL
+# terminates TLS.
 resource "cloudflare_dns_record" "customer_auth" {
   count = var.env == "prod" ? 1 : 0
 
   zone_id = data.cloudflare_zone.futo_cloud.id
   name    = "auth.futo.cloud"
   type    = "CNAME"
-  content = local.customer_zitadel_host
+  content = data.onepassword_item.customer_zitadel_base_domain.password
   ttl     = 1
   proxied = false
 }

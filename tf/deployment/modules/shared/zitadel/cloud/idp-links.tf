@@ -54,7 +54,7 @@ resource "terraform_data" "idp_link" {
     idp_id           = each.value.idp_id
     external_user_id = each.value.external_user_id
     user_name        = each.value.user_name
-    domain           = "auth.internal.futo.org"
+    domain           = var.futo_zitadel_base_domain
     token            = zitadel_personal_access_token.zitadel_actions.token
   }
 

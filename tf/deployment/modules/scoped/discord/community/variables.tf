@@ -7,6 +7,11 @@ variable "op_connect_token" {
 
 variable "discord_token" {}
 
+variable "futo_op_service_account_token" {
+  description = "1Password service-account token for the FUTO account, used to write the webhook URLs into the yucca/o11y vaults"
+  sensitive   = true
+}
+
 variable "discord_server_id" {}
 
 variable "env" {}

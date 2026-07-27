@@ -53,7 +53,7 @@ resource "zitadel_default_privacy_policy" "default" {
 locals {
   hosted_login_translations_file   = "${path.module}/translations/en.json"
   hosted_login_translations_script = "${path.module}/scripts/set-hosted-login-translations.sh"
-  hosted_login_translations_domain = "auth.internal.futo.org"
+  hosted_login_translations_domain = var.futo_zitadel_base_domain
   hosted_login_translations_locale = "en"
 }
 

@@ -8,6 +8,11 @@ variable "op_connect_token" {
 variable "zitadel_profile_json" {}
 variable "futo_zitadel_profile_json" {}
 
+# The stable <name>.zitadel.cloud base host for the FUTO internal instance. Used
+# for all API connections (provider, hosted-login + idp-link scripts) instead of
+# the auth.internal.futo.org custom domain, which is a mutable alias.
+variable "futo_zitadel_base_domain" {}
+
 variable "users_data_file_path" {
   description = "The path to the JSON file containing user data. This path should be resolvable from the Terragrunt execution directory or be an absolute path."
   type        = string

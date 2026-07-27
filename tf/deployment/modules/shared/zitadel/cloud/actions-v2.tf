@@ -82,7 +82,7 @@ resource "cloudflare_worker_version" "zitadel_actions" {
   }]
 
   bindings = [
-    { name = "ZITADEL_DOMAIN", type = "plain_text", text = "auth.internal.futo.org" },
+    { name = "ZITADEL_DOMAIN", type = "plain_text", text = var.futo_zitadel_base_domain },
     { name = "GITHUB_IDP_ID", type = "plain_text", text = zitadel_idp_github.github.id },
     { name = "GITLAB_IDP_ID", type = "plain_text", text = zitadel_idp_gitlab_self_hosted.gitlab.id },
     { name = "ZITADEL_TOKEN", type = "secret_text", text = zitadel_personal_access_token.zitadel_actions.token },

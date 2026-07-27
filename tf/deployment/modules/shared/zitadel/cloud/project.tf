@@ -32,7 +32,7 @@ locals {
       # redirectUris intentionally empty for now — add the o11y grafana host
       # (https://<host>/login/generic_oauth) once it's finalised
       redirectUris = ["https://grafana.futostatus.com/login/generic_oauth", "https://grafana.staging.futostatus.com/login/generic_oauth"]
-      roles        = [{ key = "GrafanaAdmin", grants_to = ["immich_admin"] }, { key = "Editor", grants_to = ["team", "yucca"] }]
+      roles        = [{ key = "GrafanaAdmin", grants_to = ["immich_admin"] }, { key = "Editor", grants_to = ["team", "yucca"] }, { key = "Viewer", grants_to = ["futo"] }]
     },
     {
       name = "Outline"
@@ -80,9 +80,16 @@ locals {
       redirectUris = ["https://mattermost.futo.tech/signup/openid/complete"]
     },
     {
-      name = "Yucca Internal Tooling"
-      # redirectUris intentionally empty for now — public/PKCE client
-      # (authMethod defaults to NONE); add the callback URL when known
+      name       = "Yucca Internal Tooling"
+      authMethod = "BASIC"
+      redirectUris = [
+        "https://admin.father.fsn.htz.yucca.futo.network/api/auth/oidc/callback",
+        "https://admin.luke.aus.int.yucca.futo.network/api/auth/oidc/callback"
+      ]
+      postLogoutRedirectUris = [
+        "https://admin.father.fsn.htz.yucca.futo.network",
+        "https://admin.luke.aus.int.yucca.futo.network"
+      ]
       roles = [{ key = "Granted", grants_to = ["yucca"] }]
     },
     {

@@ -1,5 +1,7 @@
+# Connect via the stable <name>.zitadel.cloud base domain, not the auth.futo.cloud
+# vanity domain (CUSTOMER_ZITADEL_DOMAIN) which is an alias that could change.
 provider "zitadel" {
-  domain           = data.onepassword_item.customer_zitadel_domain.password
+  domain           = data.onepassword_item.customer_zitadel_base_domain.password
   insecure         = false
   jwt_profile_json = data.onepassword_item.customer_zitadel_profile_json.password
 }

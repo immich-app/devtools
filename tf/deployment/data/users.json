@@ -464,6 +464,16 @@
     ]
   },
   {
+    "github": null,
+    "gitlab": {
+      "username": "mark",
+      "id": 155
+    },
+    "roles": [
+      "futo"
+    ]
+  },
+  {
     "github": {
       "username": "adamantike",
       "id": 3867850
