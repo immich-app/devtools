@@ -1020,7 +1020,10 @@
     ]
   },
   {
-    "github": null,
+    "github": {
+      "username": "xXF4mouZSt4rXx",
+      "id": 50217759
+    },
     "discord": {
       "username": "f4mouzst4r",
       "id": 153435045942657024
