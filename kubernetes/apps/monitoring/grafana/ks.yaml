@@ -18,7 +18,6 @@ spec:
   timeout: 5m
   dependsOn:
     - name: external-secrets-stores
-    - name: zitadel
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

@@ -9,7 +9,6 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
-    - name: zitadel
   path: ./kubernetes/apps/tools/containerssh/secrets
   prune: true
   sourceRef:
