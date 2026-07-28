@@ -12,6 +12,7 @@ locals {
       (contains(user.roles, "support") ? "triage" : null)
     )
     if length(setintersection(toset(user.roles), toset(["contributor", "support", "futo"]))) > 0
+    && !contains(user.roles, "immich_admin")
   }
 
   bots = {
