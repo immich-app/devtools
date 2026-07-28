@@ -93,6 +93,15 @@ locals {
       roles = [{ key = "Granted", grants_to = ["yucca"] }]
     },
     {
+      name = "Survey"
+      roles = [
+        { key = "survey-admin", grants_to = ["immich_admin"] },
+        { key = "survey-editor", grants_to = ["team"] },
+      ]
+      authMethod   = "POST"
+      redirectUris = ["https://survey.immich.app/api/auth/callback"]
+    },
+    {
       name     = "OVHCloud"
       protocol = "saml"
       roles    = [{ key = "ADMIN", grants_to = ["immich_admin", "yucca"] }, { key = "DEFAULT", grants_to = ["team"] }]
