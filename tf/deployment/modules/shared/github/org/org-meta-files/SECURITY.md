@@ -14,7 +14,8 @@ The following are out of scope:
 * Automated scanner output with no demonstrable impact.
 * Login hardening features, specifically rate limiting and MFA: These should be delegated to an OAuth server.
 * Resource exhaustion by an authenticated user through mechanisms that are normally expected to consume significant resources.
-* Installations that don't use our official container images
+* Installations that don't use our official container images.
+* A newly launched Immich instance with IMMICH_ALLOW_SETUP=true (default) and that hasn't been onboarded yet.
 
 ## LLM-assisted reports
 
