@@ -117,8 +117,8 @@ locals {
       redirectUris = [
         "https://survey.pr-*.dev.immich.app/api/auth/callback",
         "https://survey.dev.immich.app/api/auth/callback",
-        "http://localhost:5173/api/auth/callback",
-        "http://localhost:8787/api/auth/callback",
+        "http://localhost:*/api/auth/callback",
+        "http://127.0.0.1:*/api/auth/callback",
       ]
     },
     {
