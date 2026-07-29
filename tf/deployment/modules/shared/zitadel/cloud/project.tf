@@ -7,6 +7,7 @@ locals {
     grantTypes             = ["AUTHORIZATION_CODE"]
     protocol               = "oidc"
     metadataFile           = ""
+    devMode                = false
     # When true, a user is granted every role they match (not just the
     # highest-priority one) — e.g. Outline admins land in Leadership and Team.
     multi_role = false
@@ -102,6 +103,25 @@ locals {
       redirectUris = ["https://survey.immich.app/api/auth/callback"]
     },
     {
+      # Preview/dev counterpart of "Survey". A separate app so the production
+      # one keeps strict redirect validation: dev_mode relaxes it to allow
+      # http and glob patterns, which is what makes the unbounded per-PR
+      # preview hostnames registrable at all.
+      name = "Survey Dev"
+      roles = [
+        { key = "survey-admin", grants_to = ["immich_admin"] },
+        { key = "survey-editor", grants_to = ["team"] },
+      ]
+      authMethod = "POST"
+      devMode    = true
+      redirectUris = [
+        "https://survey.pr-*.dev.immich.app/api/auth/callback",
+        "https://survey.dev.immich.app/api/auth/callback",
+        "http://localhost:*/api/auth/callback",
+        "http://127.0.0.1:*/api/auth/callback",
+      ]
+    },
+    {
       name     = "OVHCloud"
       protocol = "saml"
       roles    = [{ key = "ADMIN", grants_to = ["immich_admin", "yucca"] }, { key = "DEFAULT", grants_to = ["team"] }]
@@ -148,6 +168,7 @@ resource "zitadel_application_oidc" "applications" {
   grant_types               = [for grant_type in each.value.grantTypes : "OIDC_GRANT_TYPE_${grant_type}"]
   app_type                  = "OIDC_APP_TYPE_${each.value.appType}"
   auth_method_type          = "OIDC_AUTH_METHOD_TYPE_${each.value.authMethod}"
+  dev_mode                  = each.value.devMode
 }
 
 resource "onepassword_item" "application_client_id" {
