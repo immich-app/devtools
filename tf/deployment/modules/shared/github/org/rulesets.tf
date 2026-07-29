@@ -69,8 +69,16 @@ resource "github_organization_ruleset" "org_required_checks" {
       required_check {
         context = "Zizmor / zizmor"
       }
-      required_check {
-        context = "Approval Check"
+    }
+
+    pull_request {
+      required_reviewers {
+        reviewer {
+          id   = github_team.employees.id
+          type = "Team"
+        }
+        file_patterns     = ["**"]
+        minimum_approvals = 1
       }
     }
   }
