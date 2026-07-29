@@ -20,6 +20,7 @@ module "o11y-manual-secrets" {
     ]
     scoped = [
       "1PASS_CONNECT_O11Y_READ",
+      "1PASS_CONNECT_O11Y_WRITE",
       "1PASS_TF_SA_O11Y_READ"
     ]
   }
