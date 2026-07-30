@@ -8,7 +8,8 @@ module "shared-manual-secrets" {
       "CLOUDFLARE_API_TOKEN",
       "BUNNY_API_KEY",
       "NETBOX_API_TOKEN",
-      "NETBOX_URL"
+      "NETBOX_URL",
+      "ROOTLY_API_TOKEN"
     ]
     scoped = []
   }
