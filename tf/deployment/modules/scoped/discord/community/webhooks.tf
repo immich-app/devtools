@@ -96,3 +96,38 @@ output "yucca_alerts_dev_victoriametrics_webhook_url" {
   value     = discord_webhook.yucca_alerts_dev_victoriametrics.url
   sensitive = true
 }
+
+resource "discord_webhook" "yucca_alerts_rootly" {
+  name            = "Rootly"
+  channel_id      = discord_text_channel.yucca_alerts.id
+  avatar_data_uri = local.image_data_uris["rootly_128_128.png"]
+}
+
+resource "discord_webhook" "yucca_alerts_staging_rootly" {
+  name            = "Rootly Staging"
+  channel_id      = discord_text_channel.yucca_alerts_staging.id
+  avatar_data_uri = local.image_data_uris["rootly_128_128.png"]
+}
+
+resource "discord_webhook" "yucca_alerts_dev_rootly" {
+  name            = "Rootly Dev"
+  channel_id      = discord_text_channel.yucca_alerts_dev.id
+  avatar_data_uri = local.image_data_uris["rootly_128_128.png"]
+}
+
+locals {
+  o11y_rootly_discord_webhooks = {
+    prod    = discord_webhook.yucca_alerts_rootly.url
+    staging = discord_webhook.yucca_alerts_staging_rootly.url
+    dev     = discord_webhook.yucca_alerts_dev_rootly.url
+  }
+}
+
+resource "onepassword_item" "o11y_rootly_discord_webhook" {
+  for_each = { for env, url in local.o11y_rootly_discord_webhooks : env => url if var.env == "prod" }
+  provider = onepassword.futo
+  vault    = data.onepassword_vault.o11y_tf[each.key].uuid
+  title    = "ROOTLY_DISCORD_WEBHOOK"
+  category = "password"
+  password = each.value
+}
