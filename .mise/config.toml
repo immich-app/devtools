@@ -9,7 +9,7 @@ jq = "1.8.2"
 kubectl = "1.36.3"
 opentofu = "1.11.8"
 terragrunt = "1.0.4"
-usage = "3.5.6"
+usage = "4.1.0"
 uv = "0.11.31"
 yamlfmt = "0.21.0"
 
