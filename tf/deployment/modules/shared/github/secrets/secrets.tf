@@ -448,3 +448,35 @@ resource "github_actions_organization_secret" "FDROID_REPO_TOKEN" {
   plaintext_value = data.onepassword_item.FDROID_REPO_TOKEN.password
   visibility      = "all"
 }
+
+data "github_repository" "yucca_o11y" {
+  full_name = "immich-app/yucca-o11y"
+}
+
+locals {
+  o11y_tf_envs = toset(["dev", "staging", "prod"])
+}
+
+data "onepassword_vault" "o11y_tf" {
+  for_each = local.o11y_tf_envs
+  name     = "o11y_tf_${each.key}"
+}
+
+data "onepassword_item" "OP_TF_O11Y_ENV" {
+  for_each = local.o11y_tf_envs
+  title    = "1PASS_TF_SA_O11Y_READ"
+  vault    = data.onepassword_vault.o11y_tf[each.key].name
+}
+
+resource "github_actions_organization_secret" "OP_TF_O11Y_ENV" {
+  for_each        = local.o11y_tf_envs
+  secret_name     = "OP_TF_O11Y_${upper(each.key)}_ENV"
+  plaintext_value = data.onepassword_item.OP_TF_O11Y_ENV[each.key].password
+  visibility      = "selected"
+}
+
+resource "github_actions_organization_secret_repositories" "OP_TF_O11Y_ENV" {
+  for_each                = local.o11y_tf_envs
+  secret_name             = github_actions_organization_secret.OP_TF_O11Y_ENV[each.key].secret_name
+  selected_repository_ids = [data.github_repository.yucca_o11y.repo_id]
+}
