@@ -29,6 +29,13 @@ jobs:
           private-key: ${{ secrets.PUSH_O_MATIC_APP_KEY }}
           permission-contents: read
 
+      - name: Fetch org zizmor config
+        run: |
+          mkdir -p .github
+          curl -fsSL --retry 3 --no-clobber \
+            https://raw.githubusercontent.com/immich-app/.github/main/zizmor-config.yml \
+            -o .github/zizmor.yml
+
       - name: Run zizmor 🌈
         uses: zizmorcore/zizmor-action@6599ee8b7a49aef6a770f63d261d214911a7ce02 # v0.6.0
         with:
