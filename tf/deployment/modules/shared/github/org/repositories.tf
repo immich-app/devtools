@@ -27,6 +27,12 @@ variable "repositories" {
       require_codeowners = true
     },
     {
+      name               = "core-infra-tf",
+      description        = "OpenTofu/Terragrunt configuration for the Immich and FUTO infrastructure estate",
+      visibility         = "private",
+      require_codeowners = true
+    },
+    {
       name          = "static-pages",
       description   = "Sites and packages for Immich",
       url           = "https://immich.app",
