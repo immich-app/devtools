@@ -1,5 +1,5 @@
 [tools]
-deno = "2.9.3"
+deno = "2.9.4"
 flux2 = "2.9.2"
 go = "1.26.5"
 "go:github.com/cloudnative-pg/cloudnative-pg/cmd/kubectl-cnpg" = "v1.30.0"
