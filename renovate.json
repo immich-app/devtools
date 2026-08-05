@@ -38,13 +38,6 @@
       "groupName": "mise"
     },
     {
-      "matchPackageNames": [
-        "/opentofu/",
-        "/terragrunt/"
-      ],
-      "groupName": "tofu"
-    },
-    {
       "groupName": "immich",
       "minimumReleaseAge": "0",
       "matchPackageNames": [

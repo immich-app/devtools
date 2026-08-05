@@ -7,8 +7,6 @@ go = "1.26.5"
 helm = "4.2.3"
 jq = "1.8.2"
 kubectl = "1.36.3"
-opentofu = "1.11.8"
-terragrunt = "1.0.4"
 usage = "4.1.0"
 uv = "0.11.31"
 yamlfmt = "0.21.0"
@@ -20,36 +18,6 @@ KUBECONFIG = "{{config_root}}/.mise/kube.config"
 # this repo live in the immich account; the FUTO account is reached via service
 # tokens at the provider level, not the op CLI.
 OP_ACCOUNT = "immich.1password.com"
-
-[tasks.tg]
-run = "op run '--env-file={{config_root}}/tf/deployment/.env' -- env -u OP_CONNECT_HOST -u OP_CONNECT_TOKEN -u OP_SERVICE_ACCOUNT_TOKEN -u OP_ACCOUNT -- terragrunt"
-description = "Wrapper for terragrunt, op run resolves secrets then env -u strips op auth vars so they don't conflict with terraform providers"
-dir = "{{cwd}}"
-
-[tasks."tg:fmt"]
-run = "mise run tg hcl format"
-description = "Format terragrunt files"
-
-[tasks.tf]
-run = "mise run tg run --all"
-description = "Wrapper for terragrunt run-all"
-dir = "{{cwd}}"
-
-[tasks."tf:fmt"]
-run = "tofu fmt -recursive tf/"
-description = "Format terraform files"
-
-[tasks."tf:init"]
-run = "mise run tf init -- -reconfigure"
-dir = "{{cwd}}"
-
-[tasks."tf:plan"]
-run = "mise run tf plan"
-dir = "{{cwd}}"
-
-[tasks."tf:apply"]
-run = "mise run tf apply"
-dir = "{{cwd}}"
 
 [tasks."kube:fmt"]
 run = "yamlfmt kubernetes/ templates/kubernetes/"

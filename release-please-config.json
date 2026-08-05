@@ -33,9 +33,7 @@
         ".github/workflows/release-please.yml",
         ".github/workflows/scripts.yml",
         ".github/workflows/shared-pr-require-conventional-commit.yml",
-        ".github/workflows/shared-required-approval.yml",
         ".github/workflows/shared-zizmor.yml",
-        ".github/workflows/terragrunt.yml",
         ".github/workflows/test-use-mise.yml",
         ".github/workflows/test-sticky-comment.yml"
       ]
