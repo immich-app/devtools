@@ -18,10 +18,10 @@ on:
         description: 'Comma-separated list of suffixes to append to the image tag'
         type: string
         default: ''
-      dockerhub-push:
-        description: 'Push to Docker Hub'
-        type: boolean
-        default: false
+      tags:
+        description: 'Tag rules for the image, in docker/metadata-action format'
+        type: string
+        required: true
       build-args:
         description: 'Docker build arguments'
         type: string
@@ -35,20 +35,11 @@ on:
       target:
         description: 'Sets the target stage to build'
         type: string
-      release-tag-type:
-        description: 'The type of release tag to use, either git-tag or semver'
-        type: string
-        default: 'semver'
     secrets:
       GITHUB_APP_TOKEN:
         required: false
-      DOCKERHUB_USERNAME:
-        required: false
-      DOCKERHUB_TOKEN:
-        required: false
 env:
   GHCR_IMAGE: ghcr.io/${{ github.repository_owner }}/${{ inputs.image }}
-  DOCKERHUB_IMAGE: altran1502/${{ inputs.image }}
 
 jobs:
   matrix:
@@ -124,13 +115,6 @@ jobs:
           merge-multiple: true
           github-token: ${{ secrets.GITHUB_APP_TOKEN || github.token }}
 
-      - name: Login to Docker Hub
-        if: ${{ inputs.dockerhub-push }}
-        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
       - name: Login to GHCR
         uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
         with:
@@ -150,22 +134,8 @@ jobs:
           flavor: |
             # Disable latest tag
             latest=false
-          images: |
-            name=${{ env.GHCR_IMAGE }}
-            name=${{ env.DOCKERHUB_IMAGE }},enable=${{ inputs.dockerhub-push }}
-          tags: |
-            # Tag with branch name
-            type=ref,event=branch
-            # Tag with pr-number
-            type=ref,event=pr
-            # Tag with long commit sha hash
-            type=sha,format=long,prefix=commit-
-            # Release version tags
-            type=semver,pattern={{version}},prefix=v,enable=${{ inputs.release-tag-type == 'semver' }}
-            type=semver,pattern={{major}},prefix=v,enable=${{ inputs.release-tag-type == 'semver' }}
-            type=match,pattern=v(\d+),group=1,prefix=v,suffix=-rc,enable=${{ inputs.release-tag-type == 'semver' && github.event.release.prerelease == true }}
-            type=ref,event=tag,enable=${{ inputs.release-tag-type == 'git-tag' }}
-            type=raw,value=release,enable=${{ github.event_name == 'release' && github.event.release.prerelease == false }}
+          images: ${{ env.GHCR_IMAGE }}
+          tags: ${{ inputs.tags }}
 
       - name: Create manifest list and push
         working-directory: ${{ runner.temp }}/digests
