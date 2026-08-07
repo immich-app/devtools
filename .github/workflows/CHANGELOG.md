@@ -1,5 +1,47 @@
 # Changelog
 
+## [4.0.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v3.1.0...multi-runner-build-workflow-v4.0.0) (2026-08-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* explicit tags input on multi-runner-build ([#1902](https://github.com/immich-app/devtools/issues/1902))
+
+### Features
+
+* add customer zitadel staging deployment ([#1739](https://github.com/immich-app/devtools/issues/1739)) ([9c1b9d4](https://github.com/immich-app/devtools/commit/9c1b9d495d72bbde07f137cbd47f9a6c29ac798e))
+* run outline-role-sync as a cloudflare worker ([#1698](https://github.com/immich-app/devtools/issues/1698)) ([2057325](https://github.com/immich-app/devtools/commit/2057325ec6302b71fd9933de980a85b850da74b7))
+* **zizmor:** apply default zizmor config if one doesn't exist ([#1895](https://github.com/immich-app/devtools/issues/1895)) ([bb91133](https://github.com/immich-app/devtools/commit/bb911336ca29b4a2adf37f2f0e057ddca0282168))
+
+
+### Bug Fixes
+
+* **ci:** skip conventional commit validation on merge queue PRs ([#1876](https://github.com/immich-app/devtools/issues/1876)) ([5a869ef](https://github.com/immich-app/devtools/commit/5a869ef9e469733bb0d63c77cd1713c3cef46363))
+* post terragrunt plan comment even when parsing fails ([#1773](https://github.com/immich-app/devtools/issues/1773)) ([e93e230](https://github.com/immich-app/devtools/commit/e93e230cdf7543c73a68e9ef67804eee497b8461))
+* scope zitadel customer tf plan to parent folder ([#1774](https://github.com/immich-app/devtools/issues/1774)) ([91f3931](https://github.com/immich-app/devtools/commit/91f39311fdb889481d3ad68242857298609a3e49))
+* workflows write perm for release-please ([#1823](https://github.com/immich-app/devtools/issues/1823)) ([b547f05](https://github.com/immich-app/devtools/commit/b547f052e7dade551a5d515f1f43772faaeae0f7))
+* **zizmor:** fall back to annotations on private repos ([#1894](https://github.com/immich-app/devtools/issues/1894)) ([203c5d3](https://github.com/immich-app/devtools/commit/203c5d39d83e790e0a0858f6058d82ad7dc2df5d))
+
+
+### Chores
+
+* bump create-workflow-token action to v3 ([#1781](https://github.com/immich-app/devtools/issues/1781)) ([0761c7b](https://github.com/immich-app/devtools/commit/0761c7b9d2b61f3cd6d99c6879883158c76ad1ed))
+* deno ci type checks and linting ([#1694](https://github.com/immich-app/devtools/issues/1694)) ([2a0f12c](https://github.com/immich-app/devtools/commit/2a0f12c4ef714d0cebdf83511bbe57bd4c6dcfaf))
+* **deps:** update 1password/install-cli-action action to v4 ([#1715](https://github.com/immich-app/devtools/issues/1715)) ([6d05d9f](https://github.com/immich-app/devtools/commit/6d05d9fc7d37782c2cd2218ee2a0a3bbfd5c323d))
+* **deps:** update actions/checkout action to v7 ([#1815](https://github.com/immich-app/devtools/issues/1815)) ([95e12bf](https://github.com/immich-app/devtools/commit/95e12bf34054fc2311103de31789a377966ca3bb))
+* **deps:** update actions/setup-node action to v7 ([#1818](https://github.com/immich-app/devtools/issues/1818)) ([1cf0d67](https://github.com/immich-app/devtools/commit/1cf0d6796cb68677499c56b5a7681ccca3ec22dc))
+* **deps:** update astral-sh/setup-uv action to v9 ([#1870](https://github.com/immich-app/devtools/issues/1870)) ([a658b87](https://github.com/immich-app/devtools/commit/a658b876e7b142f2ffe3f553ab79eb6b6ca33788))
+* **deps:** update github-actions ([#1707](https://github.com/immich-app/devtools/issues/1707)) ([54e2822](https://github.com/immich-app/devtools/commit/54e2822201ad112775221039a416e2f81825fcc4))
+* **deps:** update github-actions ([#1808](https://github.com/immich-app/devtools/issues/1808)) ([766f095](https://github.com/immich-app/devtools/commit/766f095d453ead81aab229d4afcab487a7bb665a))
+* **deps:** update github-actions ([#1817](https://github.com/immich-app/devtools/issues/1817)) ([f5b90cb](https://github.com/immich-app/devtools/commit/f5b90cb68cb8b9d3a7bac519fc30b34356df4b0e))
+* **deps:** update github-actions ([#1853](https://github.com/immich-app/devtools/issues/1853)) ([9923e25](https://github.com/immich-app/devtools/commit/9923e254a63e6c1cfae04ac3c597a790a2256eba))
+* **deps:** update github-actions ([#1890](https://github.com/immich-app/devtools/issues/1890)) ([d425fe2](https://github.com/immich-app/devtools/commit/d425fe285c7e61e142c75fdeff85d69af0b4345a))
+* **deps:** update immich-app/devtools action to v3 ([#1717](https://github.com/immich-app/devtools/issues/1717)) ([104fd69](https://github.com/immich-app/devtools/commit/104fd6946967c8937dc30f37108acbaa3d39a4c6))
+* explicit tags input on multi-runner-build ([#1902](https://github.com/immich-app/devtools/issues/1902)) ([0acf193](https://github.com/immich-app/devtools/commit/0acf193530638939c7a4e23b67dbd55d112eb574))
+* remove terraform deployment migrated to core-infra-tf ([#1896](https://github.com/immich-app/devtools/issues/1896)) ([366e589](https://github.com/immich-app/devtools/commit/366e589a7f4092497942175b926f1634f1c81cbf))
+* success-check for terragrunt workflow ([#1775](https://github.com/immich-app/devtools/issues/1775)) ([3fa2802](https://github.com/immich-app/devtools/commit/3fa28029767d6d7cd40d659ed0363f9521c019a4))
+* success-check for test-use-mise workflow ([#1687](https://github.com/immich-app/devtools/issues/1687)) ([807a734](https://github.com/immich-app/devtools/commit/807a734c9c24b6fec68356b0d840fe5aee405dfc))
+
 ## [3.1.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v3.0.0...multi-runner-build-workflow-v3.1.0) (2026-06-16)
 
 
