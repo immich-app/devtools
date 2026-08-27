@@ -38,7 +38,7 @@ spec:
               ENABLE_UPDATES: false
               FILE_STORAGE: local
               FILE_STORAGE_LOCAL_ROOT_DIR: /data
-              FILE_STORAGE_UPLOAD_MAX_SIZE: &upload-limit "26214400"
+              FILE_STORAGE_UPLOAD_MAX_SIZE: &upload-limit "104857600"
               FILE_STORAGE_IMPORT_MAX_SIZE: *upload-limit
               OIDC_SCOPES: "openid profile email"
               OIDC_AUTH_URI: "https://auth.internal.futo.org/oauth/v2/authorize"
