@@ -9,9 +9,9 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "eslint \"src/**/*.ts\" --max-warnings 0",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "pnpm lint --fix",
     "check": "tsc --noEmit",
-    "check:all": "npm run format && npm run lint && npm run check",
+    "check:all": "pnpm format && pnpm lint && pnpm check",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

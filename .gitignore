@@ -145,5 +145,6 @@ terragrunt-debug.tfvars.json
 /.idea/terraform.xml
 /.idea/vcs.xml
 
-scripts/node_modules/
+**/node_modules/
 scripts/dist/
+scripts/tsconfig.tsbuildinfo

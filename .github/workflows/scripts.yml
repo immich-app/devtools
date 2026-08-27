@@ -29,6 +29,9 @@ jobs:
               - 'scripts/**'
           force-filters: |
             - '.github/workflows/scripts.yml'
+            - 'package.json'
+            - 'pnpm-workspace.yaml'
+            - 'pnpm-lock.yaml'
 
   scripts-unit-tests:
     name: Test & Lint Scripts
@@ -37,9 +40,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    defaults:
-      run:
-        working-directory: ./scripts
 
     steps:
       - name: Checkout code
@@ -47,22 +47,22 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup Node
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - name: Setup Mise
+        uses: immich-app/devtools/actions/use-mise@06a9ef925332c91be647d6256642b86b398592c8 # use-mise-action-v3.2.1
         with:
-          node-version-file: './scripts/.nvmrc'
+          github_token: ${{ github.token }}
 
-      - name: Run npm install
-        run: npm ci
+      - name: Install dependencies
+        run: pnpm --filter @immich/scripts install --frozen-lockfile
 
       - name: Run linter
-        run: npm run lint
+        run: pnpm --filter @immich/scripts lint
         if: ${{ !cancelled() }}
 
       - name: Run formatter
-        run: npm run format
+        run: pnpm --filter @immich/scripts format
         if: ${{ !cancelled() }}
 
       - name: Run tsc
-        run: npm run check
+        run: pnpm --filter @immich/scripts check
         if: ${{ !cancelled() }}
