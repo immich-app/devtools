@@ -14,5 +14,6 @@ runs:
       with:
         github_token: ${{ inputs.github_token }}
         working_directory: ${{ inputs.working_directory }}
+        cache_key_prefix: ${{ inputs.working_directory }}
         install_args: "--locked"
         version: 2026.8.2
