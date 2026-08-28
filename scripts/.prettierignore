@@ -10,7 +10,5 @@ node_modules
 coverage
 dist
 
-# Ignore files for PNPM, NPM and YARN
+# Ignore lock files
 pnpm-lock.yaml
-package-lock.json
-yarn.lock

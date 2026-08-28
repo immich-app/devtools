@@ -1,0 +1,8 @@
+{
+  "name": "@immich/devtools",
+  "version": "0.0.0",
+  "description": "Monorepo for Immich devtools",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@11.24.0"
+}
