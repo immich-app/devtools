@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.1.1](https://github.com/immich-app/devtools/compare/pre-job-action-v2.1.0...pre-job-action-v2.1.1) (2026-08-31)
+
+
+### Bug Fixes
+
+* **pre-job:** set paths-filter base on push ([#1919](https://github.com/immich-app/devtools/issues/1919)) ([bd3483e](https://github.com/immich-app/devtools/commit/bd3483e506ea8a89595459e61bccd4fe77e23e80))
+
+
+### Chores
+
+* **deps:** update github-actions ([#1903](https://github.com/immich-app/devtools/issues/1903)) ([2b242f1](https://github.com/immich-app/devtools/commit/2b242f10abf38f94a29e167efa74953bd26cc88a))
+
 ## [2.1.0](https://github.com/immich-app/devtools/compare/pre-job-action-v2.0.4...pre-job-action-v2.1.0) (2026-08-06)
 
 
