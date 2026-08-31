@@ -22,6 +22,9 @@ inputs:
   permission-workflows:
     description: "Access level for workflows. 'read' or 'write'."
     required: false
+  permission-discussions:
+    description: "Access level for discussions. 'read' or 'write'."
+    required: false
 
 outputs:
   token:
@@ -53,6 +56,7 @@ runs:
         permission-issues: ${{ inputs.permission-issues }}
         permission-actions: ${{ inputs.permission-actions }}
         permission-workflows: ${{ inputs.permission-workflows }}
+        permission-discussions: ${{ inputs.permission-discussions }}
 
     - name: Set output
       id: output
