@@ -1,16 +1,16 @@
 [tools]
-deno = "2.9.4"
+deno = "2.9.5"
 flux2 = "2.9.2"
-go = "1.26.5"
+go = "1.27.0"
 "go:github.com/cloudnative-pg/cloudnative-pg/cmd/kubectl-cnpg" = "v1.30.0"
 "go:github.com/home-operations/flate/cmd/flate" = "v0.4.12"
-helm = "4.2.3"
+helm = "4.2.4"
 jq = "1.8.2"
-kubectl = "1.36.3"
-node = "24.19.0"
+kubectl = "1.37.0"
+node = "24.20.0"
 pnpm = "11.24.0"
-usage = "5.0.0"
-uv = "0.12.2"
+usage = "5.1.0"
+uv = "0.12.6"
 yamlfmt = "0.21.0"
 
 [env]
