@@ -1,0 +1,36 @@
+---
+# Rule file for the one-off vmalert replay (backfill of recording rule history).
+# Applied once by flux (ks.yaml: data-pipeline-vmetrics-replay) together with job.yaml; see README.md.
+# MUST be kept in sync with app/vmrule-data-pipeline.yaml if rules change.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: data-pipeline-replay-rules
+  namespace: data
+data:
+  rules.yaml: |
+    groups:
+      - name: data-pipeline.repository
+        interval: 1h
+        rules:
+          - record: immich_data:repository_star_total:max1h
+            expr: |-
+              max by (environment, org_name, repository_name) (max_over_time(immich_data_repository_star_total[1h]))
+          - record: immich_data:repository_issue_open_total:max1h
+            expr: |-
+              max by (environment, org_name, repository_name) (max_over_time(immich_data_repository_issue_open_total[1h]))
+          - record: immich_data:repository_pull_request_open_total:max1h
+            expr: |-
+              max by (environment, org_name, repository_name) (max_over_time(immich_data_repository_pull_request_open_total[1h]))
+          - record: immich_data:repository_pull_request_merged_total:max1h
+            expr: |-
+              max by (environment, org_name, repository_name) (max_over_time(immich_data_repository_pull_request_merged_total[1h]))
+          - record: immich_data:repository_discussion_total:max1h
+            expr: |-
+              max by (environment, org_name, repository_name) (max_over_time(immich_data_repository_discussion_total[1h]))
+          - record: immich_data:repository_reddit_subscriber_total:max1h
+            expr: |-
+              max by (environment) (max_over_time(immich_data_repository_reddit_subscriber_total[1h]))
+          - record: immich_data:repository_discord_member_total:max1h
+            expr: |-
+              max by (environment) (max_over_time(immich_data_repository_discord_member_total[1h]))

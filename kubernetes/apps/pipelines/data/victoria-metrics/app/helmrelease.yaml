@@ -55,7 +55,23 @@ spec:
     alertmanager:
       enabled: false
     vmalert:
-      enabled: false
+      enabled: true
+      spec:
+        # Only evaluate our own recording rules (vmrule-data-pipeline.yaml).
+        selectAllByDefault: false
+        ruleSelector:
+          matchLabels:
+            immich.app/vmrule: data-pipeline
+        extraArgs:
+          # No alertmanager is deployed; vmalert only runs recording rules.
+          notifier.blackhole: "true"
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
     grafana:
       enabled: false
     kubeEtcd:
