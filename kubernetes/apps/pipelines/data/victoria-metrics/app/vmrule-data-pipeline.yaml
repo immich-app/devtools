@@ -1,0 +1,42 @@
+---
+# Recording rules for the data.immich.app charts.
+#
+# The raw immich_data_repository_* GitHub metrics carry the event sender as
+# labels (username, user_id), so e.g. star_total has one series per stargazer
+# (>100k). The site only ever needs the repo-wide maximum, and scanning every
+# series for the full history from 2022 takes 20-30s cold and times out. These
+# rules drop the per-user labels once per hour so the API reads a single series
+# per repository instead. Keep replay/configmap-rules.yaml in sync.
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMRule
+metadata:
+  name: data-pipeline-recording
+  namespace: data
+  labels:
+    immich.app/vmrule: data-pipeline
+spec:
+  groups:
+    - name: data-pipeline.repository
+      interval: 1h
+      rules:
+        - record: immich_data:repository_star_total:max1h
+          expr: |-
+            max by (environment, org_name, repository_name) (max_over_time(immich_data_repository_star_total[1h]))
+        - record: immich_data:repository_issue_open_total:max1h
+          expr: |-
+            max by (environment, org_name, repository_name) (max_over_time(immich_data_repository_issue_open_total[1h]))
+        - record: immich_data:repository_pull_request_open_total:max1h
+          expr: |-
+            max by (environment, org_name, repository_name) (max_over_time(immich_data_repository_pull_request_open_total[1h]))
+        - record: immich_data:repository_pull_request_merged_total:max1h
+          expr: |-
+            max by (environment, org_name, repository_name) (max_over_time(immich_data_repository_pull_request_merged_total[1h]))
+        - record: immich_data:repository_discussion_total:max1h
+          expr: |-
+            max by (environment, org_name, repository_name) (max_over_time(immich_data_repository_discussion_total[1h]))
+        - record: immich_data:repository_reddit_subscriber_total:max1h
+          expr: |-
+            max by (environment) (max_over_time(immich_data_repository_reddit_subscriber_total[1h]))
+        - record: immich_data:repository_discord_member_total:max1h
+          expr: |-
+            max by (environment) (max_over_time(immich_data_repository_discord_member_total[1h]))
