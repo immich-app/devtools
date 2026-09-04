@@ -43,29 +43,6 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: data-pipeline-vmetrics-replay
-  namespace: flux-system
-spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: data-pipeline-vmetrics-replay
-  dependsOn:
-    - name: data-pipeline-vmetrics
-  path: ./kubernetes/apps/pipelines/data/victoria-metrics/replay
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: immich-kubernetes
-  # wait deliberately off: the replay Job can run for a while; flux should
-  # apply it and move on rather than flap on health-check timeouts.
-  wait: false
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
   name: data-pipeline-vmetrics-backup-secrets
   namespace: flux-system
 spec:

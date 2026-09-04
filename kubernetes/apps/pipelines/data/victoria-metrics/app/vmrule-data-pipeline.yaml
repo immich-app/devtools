@@ -6,7 +6,9 @@
 # (>100k). The site only ever needs the repo-wide maximum, and scanning every
 # series for the full history from 2022 takes 20-30s cold and times out. These
 # rules drop the per-user labels once per hour so the API reads a single series
-# per repository instead. Keep replay/configmap-rules.yaml in sync.
+# per repository instead. History was backfilled once with vmalert -replay
+# (see git history for the replay Job); re-replay if rules change or vmalert
+# has an outage.
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMRule
 metadata:
