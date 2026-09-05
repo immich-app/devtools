@@ -30,7 +30,7 @@ spec:
       initContainers:
         - name: replay-base
           # Pinned to chart 0.86.0's vmalert version (Chart.yaml appVersion v1.147.0).
-          image: victoriametrics/vmalert:v1.148.0@sha256:268ab5df69360a236e1382db0dbde44d5c32362b85501f761d61fc25c76f05ce
+          image: victoriametrics/vmalert:v1.151.0@sha256:e519f14c31f4d68015702e684a0fc3f1b4e559aa985d8f4462768f07f55b05c9
           args:
             - -rule=/rules/base.yaml
             - -datasource.url=http://vmsingle-vmetrics:8428
@@ -57,7 +57,7 @@ spec:
               mountPath: /rules
               readOnly: true
         - name: replay-derived
-          image: victoriametrics/vmalert:v1.148.0@sha256:268ab5df69360a236e1382db0dbde44d5c32362b85501f761d61fc25c76f05ce
+          image: victoriametrics/vmalert:v1.151.0@sha256:e519f14c31f4d68015702e684a0fc3f1b4e559aa985d8f4462768f07f55b05c9
           args:
             - -rule=/rules/derived.yaml
             - -datasource.url=http://vmsingle-vmetrics:8428

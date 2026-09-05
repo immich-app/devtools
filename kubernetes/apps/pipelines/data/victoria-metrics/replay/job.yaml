@@ -30,7 +30,7 @@ spec:
       initContainers:
         - name: replay
           # Pinned to chart 0.91.2's vmalert version (Chart.yaml appVersion v1.150.0).
-          image: victoriametrics/vmalert:v1.150.0@sha256:c6e6c1ef6e43c09510dd0aff264bf0ea319c1bdfced1ccc79dad1545950a7989
+          image: victoriametrics/vmalert:v1.151.0@sha256:e519f14c31f4d68015702e684a0fc3f1b4e559aa985d8f4462768f07f55b05c9
           args:
             - -rule=/rules/rules.yaml
             - -datasource.url=http://vmsingle-vmetrics-data:8428
