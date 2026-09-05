@@ -4,6 +4,7 @@ module "domain" {
   app_name = var.app_name
   stage    = var.stage
   env      = var.env
+  domain   = var.domain
 }
 
 data "cloudflare_zone" "domain" {

@@ -24,6 +24,7 @@ module "domain" {
 
   app_name = var.app_name
   env      = var.env
+  domain   = var.domain
 }
 
 resource "cloudflare_web_analytics_site" "analytics" {
