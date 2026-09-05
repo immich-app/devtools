@@ -1,5 +1,18 @@
 # Changelog
 
+## [4.1.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v4.0.0...multi-runner-build-workflow-v4.1.0) (2026-09-05)
+
+
+### Features
+
+* pnpm ([#1917](https://github.com/immich-app/devtools/issues/1917)) ([da72488](https://github.com/immich-app/devtools/commit/da72488709c8933fd3becdc1a3717449b2db7031))
+
+
+### Chores
+
+* **deps:** update github-actions ([#1903](https://github.com/immich-app/devtools/issues/1903)) ([2b242f1](https://github.com/immich-app/devtools/commit/2b242f10abf38f94a29e167efa74953bd26cc88a))
+* **deps:** update github-actions ([#1927](https://github.com/immich-app/devtools/issues/1927)) ([516aca8](https://github.com/immich-app/devtools/commit/516aca8d3db94a14b872bfcf309fbe3b6185ae2f))
+
 ## [4.0.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v3.1.0...multi-runner-build-workflow-v4.0.0) (2026-08-07)
 
 
