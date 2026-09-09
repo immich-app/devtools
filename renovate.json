@@ -34,7 +34,7 @@
     },
     {
       "matchFileNames": [".mise/config.toml"],
-      "matchPackageNames": ["!/flux/"],
+      "matchPackageNames": ["!/flux/", "!pnpm"],
       "groupName": "mise"
     },
     {
