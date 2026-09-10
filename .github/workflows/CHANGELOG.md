@@ -1,5 +1,20 @@
 # Changelog
 
+## [4.1.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v4.0.0...multi-runner-build-workflow-v4.1.0) (2026-09-10)
+
+
+### Features
+
+* pnpm ([#1917](https://github.com/immich-app/devtools/issues/1917)) ([da72488](https://github.com/immich-app/devtools/commit/da72488709c8933fd3becdc1a3717449b2db7031))
+
+
+### Chores
+
+* **deps:** update astral-sh/setup-uv action to v10 ([#1943](https://github.com/immich-app/devtools/issues/1943)) ([6660072](https://github.com/immich-app/devtools/commit/6660072571fa1ada6cf3a8d0dceef89db29f7250))
+* **deps:** update github-actions ([#1903](https://github.com/immich-app/devtools/issues/1903)) ([2b242f1](https://github.com/immich-app/devtools/commit/2b242f10abf38f94a29e167efa74953bd26cc88a))
+* **deps:** update github-actions ([#1927](https://github.com/immich-app/devtools/issues/1927)) ([516aca8](https://github.com/immich-app/devtools/commit/516aca8d3db94a14b872bfcf309fbe3b6185ae2f))
+* **deps:** update home-operations/flate action to v0.6.5 ([#1942](https://github.com/immich-app/devtools/issues/1942)) ([4f30bbe](https://github.com/immich-app/devtools/commit/4f30bbe5be04c85a3b92f645c3d697e502f5f46f))
+
 ## [4.0.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v3.1.0...multi-runner-build-workflow-v4.0.0) (2026-08-07)
 
 
