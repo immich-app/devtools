@@ -4,5 +4,5 @@
   "description": "Monorepo for Immich devtools",
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@11.24.0"
+  "packageManager": "pnpm@12.3.4"
 }
