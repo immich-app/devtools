@@ -16,4 +16,4 @@ runs:
         working_directory: ${{ inputs.working_directory }}
         cache_key_prefix: ${{ inputs.working_directory }}
         install_args: "--locked"
-        version: 2026.8.14
+        version: 2026.9.1
