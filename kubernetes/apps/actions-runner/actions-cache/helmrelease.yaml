@@ -33,7 +33,7 @@ spec:
           main:
             image:
               repository: ghcr.io/falcondev-oss/github-actions-cache-server
-              tag: 9.7.0@sha256:3999b0202ec509f3b2084ef92cc50b408838e0d442b5997dd6dff2d89f4fe7b4
+              tag: 9.8.0@sha256:58bc6ae6fc34606c3b139e259c3c12d9ff23c793a666e8a784f13f6bb9b1aa41
             env:
               API_BASE_URL: 'http://actions-cache.actions-cache.svc.cluster.local:3000'
               CACHE_CLEANUP_OLDER_THAN_DAYS: '30'
