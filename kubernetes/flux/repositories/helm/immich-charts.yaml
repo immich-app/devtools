@@ -7,5 +7,5 @@ spec:
   interval: 1h
   url: oci://ghcr.io/immich-app/immich-charts/immich
   ref:
-    tag: "0.13.1"
-    digest: sha256:b8e890d0d9804759c6b6f3e5f9a850512ca09b9ccc6d137a2f85cbf761981bd1
+    tag: "0.13.2"
+    digest: sha256:bfdfdcc45864cb7fd0c41368b26e0127470c10ea41d981756210899c225266a6
