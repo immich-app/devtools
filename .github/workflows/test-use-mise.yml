@@ -27,6 +27,7 @@ jobs:
               - 'actions/use-mise/**'
           force-filters: |
             - '.github/workflows/test-use-mise.yml'
+            - '.mise/**'
 
   test-use-mise:
     name: Test use-mise (${{ matrix.os }}, ${{ matrix.arch }})
