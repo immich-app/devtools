@@ -1,5 +1,5 @@
 [tools]
-deno = "2.9.6"
+deno = "2.9.7"
 flux2 = "2.9.2"
 go = "1.27.1"
 "go:github.com/cloudnative-pg/cloudnative-pg/cmd/kubectl-cnpg" = "v1.30.0"
@@ -10,7 +10,7 @@ kubectl = "1.37.0"
 node = "24.21.0"
 pnpm = "11.24.0"
 usage = "6.9.1"
-uv = "0.12.15"
+uv = "0.12.17"
 yamlfmt = "0.21.0"
 
 [env]
