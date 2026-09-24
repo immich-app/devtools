@@ -22,7 +22,7 @@ data "cloudflare_zone" "zone" {
 module "domain" {
   source = "../domain"
 
-  app_name = var.app_name
+  app_name = coalesce(var.analytics_app_name, var.app_name)
   env      = var.env
   domain   = var.domain
 }
