@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.2.2](https://github.com/immich-app/devtools/compare/use-mise-action-v3.2.1...use-mise-action-v3.2.2) (2026-09-25)
+
+
+### Bug Fixes
+
+* separate mise caches by workdir ([#1916](https://github.com/immich-app/devtools/issues/1916)) ([81055d9](https://github.com/immich-app/devtools/commit/81055d9b1ec004fff3a0e2ca5b66f27f8490a7a8))
+
+
+### Chores
+
+* **deps:** update github-actions ([#1890](https://github.com/immich-app/devtools/issues/1890)) ([d425fe2](https://github.com/immich-app/devtools/commit/d425fe285c7e61e142c75fdeff85d69af0b4345a))
+* **deps:** update github-actions ([#1903](https://github.com/immich-app/devtools/issues/1903)) ([2b242f1](https://github.com/immich-app/devtools/commit/2b242f10abf38f94a29e167efa74953bd26cc88a))
+* **deps:** update github-actions ([#1927](https://github.com/immich-app/devtools/issues/1927)) ([516aca8](https://github.com/immich-app/devtools/commit/516aca8d3db94a14b872bfcf309fbe3b6185ae2f))
+* **deps:** update github-actions ([#1941](https://github.com/immich-app/devtools/issues/1941)) ([cae68ac](https://github.com/immich-app/devtools/commit/cae68ace441322f10cb2c8616f90baf92fa1d7b1))
+* **deps:** update github-actions ([#1953](https://github.com/immich-app/devtools/issues/1953)) ([c211b6e](https://github.com/immich-app/devtools/commit/c211b6e8f86b356fc9740592368eda71905ff9f6))
+* **deps:** update github-actions ([#1961](https://github.com/immich-app/devtools/issues/1961)) ([bf7b76a](https://github.com/immich-app/devtools/commit/bf7b76a1903337c1e9e9d92174ac3879c7546cc9))
+
 ## [3.2.1](https://github.com/immich-app/devtools/compare/use-mise-action-v3.2.0...use-mise-action-v3.2.1) (2026-07-29)
 
 
