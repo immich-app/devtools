@@ -22,7 +22,7 @@
     "@eslint/js": "^10.0.0",
     "@immich/sdk": "^3.0.0",
     "@types/luxon": "^3.4.2",
-    "@types/node": "^24.13.3",
+    "@types/node": "^24.13.6",
     "@typescript-eslint/eslint-plugin": "^8.24.0",
     "@typescript-eslint/parser": "^8.24.0",
     "eslint": "^10.0.0",
