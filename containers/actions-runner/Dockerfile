@@ -30,6 +30,7 @@ RUN \
         xz-utils \
         ninja-build \
         zstd \
+        libclang-dev \
     && wget https://github.com/mikefarah/yq/releases/download/v4.50.1/yq_linux_amd64 -O /usr/local/bin/yq \
     && chmod +x /usr/local/bin/yq \
     && mkdir -p -m 755 /etc/apt/keyrings \
