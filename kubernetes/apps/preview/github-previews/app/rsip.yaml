@@ -51,3 +51,20 @@ status:
   exportedInputs:
     - tag: v2.0.0
       sha: "0000000000000000000000000000000000000000"
+---
+apiVersion: fluxcd.controlplane.io/v1
+kind: ResourceSetInputProvider
+metadata:
+  name: immich-github-rc
+  namespace: preview
+spec:
+  type: GitHubTag
+  url: https://github.com/immich-app/immich
+  filter:
+    semver: ">=2.0.0-0"
+    includeTag: '-rc\.'
+    limit: 1
+status:
+  exportedInputs:
+    - tag: v3.0.0-rc.0
+      sha: "0000000000000000000000000000000000000000"
