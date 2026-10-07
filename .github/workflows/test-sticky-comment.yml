@@ -45,7 +45,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Mise
-        uses: immich-app/devtools/actions/use-mise@06a9ef925332c91be647d6256642b86b398592c8 # use-mise-action-v3.2.1
+        uses: immich-app/devtools/actions/use-mise@b5d01f97c667b7a5ff8818596d0d12983da32e7e # use-mise-action-v3.2.2
         with:
           github_token: ${{ github.token }}
 

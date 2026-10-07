@@ -88,7 +88,7 @@ jobs:
           persist-credentials: false
           token: ${{ secrets.GITHUB_APP_TOKEN || github.token }}
 
-      - uses: immich-app/devtools/actions/image-build@236702d8cb0c9dd1ff155b73f9be789b1b2cd620 # image-build-action-v0.1.10
+      - uses: immich-app/devtools/actions/image-build@7689e7899d8da24caac2cdbe518a8d89a738f90d # image-build-action-v0.1.11
         with:
           context: ${{ inputs.context }}
           dockerfile: ${{ inputs.dockerfile }}
