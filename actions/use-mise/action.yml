@@ -17,4 +17,5 @@ runs:
         working_directory: ${{ inputs.working_directory }}
         cache_key_prefix: ${{ inputs.working_directory }}
         install_args: "--locked"
+        export_path: false
         version: 2026.10.5
