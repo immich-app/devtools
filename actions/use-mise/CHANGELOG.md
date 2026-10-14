@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.2.3](https://github.com/immich-app/devtools/compare/use-mise-action-v3.2.2...use-mise-action-v3.2.3) (2026-10-14)
+
+
+### Bug Fixes
+
+* only add mise shims to PATH in use-mise ([#2010](https://github.com/immich-app/devtools/issues/2010)) ([557461e](https://github.com/immich-app/devtools/commit/557461ef0d56a3c99d37562571f6fbe983e03ec8))
+
+
+### Chores
+
+* **deps:** update dependency jdx/mise to v2026.10.5 ([#2009](https://github.com/immich-app/devtools/issues/2009)) ([e3092f5](https://github.com/immich-app/devtools/commit/e3092f52f272d663cdbf38390b983486068ecc63))
+* **deps:** update github-actions ([#1996](https://github.com/immich-app/devtools/issues/1996)) ([1b2100d](https://github.com/immich-app/devtools/commit/1b2100d9bd613cce8db5332ad4f765233b5f1df8))
+
 ## [3.2.2](https://github.com/immich-app/devtools/compare/use-mise-action-v3.2.1...use-mise-action-v3.2.2) (2026-10-07)
 
 
