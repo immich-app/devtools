@@ -99,3 +99,20 @@ spec:
           - hosts:
               - *host
             secretName: outline-tls
+      futo:
+        className: nginx
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            return 302 https://outline.immich.cloud$request_uri;
+        hosts:
+          - host: &futo-host "outline.futo.org"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *futo-host
+            secretName: outline-futo-tls
