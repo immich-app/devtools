@@ -1,5 +1,33 @@
 # Changelog
 
+## [4.1.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v4.0.0...multi-runner-build-workflow-v4.1.0) (2026-10-21)
+
+
+### Features
+
+* pnpm ([#1917](https://github.com/immich-app/devtools/issues/1917)) ([da72488](https://github.com/immich-app/devtools/commit/da72488709c8933fd3becdc1a3717449b2db7031))
+
+
+### Bug Fixes
+
+* **multi-runner-build:** allow nested image names in the artifact key ([#2016](https://github.com/immich-app/devtools/issues/2016)) ([e4f343b](https://github.com/immich-app/devtools/commit/e4f343b1a780a71c359629b00abcdf91284f399b))
+* regenerate stale usage lockfile entry and test use-mise on .mise changes ([#1965](https://github.com/immich-app/devtools/issues/1965)) ([4ab8300](https://github.com/immich-app/devtools/commit/4ab830041d01dcc840896f3abbe69cdae19a99c5))
+
+
+### Chores
+
+* **deps:** update astral-sh/setup-uv action to v10 ([#1943](https://github.com/immich-app/devtools/issues/1943)) ([6660072](https://github.com/immich-app/devtools/commit/6660072571fa1ada6cf3a8d0dceef89db29f7250))
+* **deps:** update github-actions ([#1903](https://github.com/immich-app/devtools/issues/1903)) ([2b242f1](https://github.com/immich-app/devtools/commit/2b242f10abf38f94a29e167efa74953bd26cc88a))
+* **deps:** update github-actions ([#1927](https://github.com/immich-app/devtools/issues/1927)) ([516aca8](https://github.com/immich-app/devtools/commit/516aca8d3db94a14b872bfcf309fbe3b6185ae2f))
+* **deps:** update github-actions ([#1941](https://github.com/immich-app/devtools/issues/1941)) ([cae68ac](https://github.com/immich-app/devtools/commit/cae68ace441322f10cb2c8616f90baf92fa1d7b1))
+* **deps:** update github-actions ([#1953](https://github.com/immich-app/devtools/issues/1953)) ([c211b6e](https://github.com/immich-app/devtools/commit/c211b6e8f86b356fc9740592368eda71905ff9f6))
+* **deps:** update github-actions ([#1961](https://github.com/immich-app/devtools/issues/1961)) ([bf7b76a](https://github.com/immich-app/devtools/commit/bf7b76a1903337c1e9e9d92174ac3879c7546cc9))
+* **deps:** update github-actions ([#1975](https://github.com/immich-app/devtools/issues/1975)) ([3fe878f](https://github.com/immich-app/devtools/commit/3fe878f99772fe7d0cf151682e31723a82b86088))
+* **deps:** update github-actions ([#1996](https://github.com/immich-app/devtools/issues/1996)) ([1b2100d](https://github.com/immich-app/devtools/commit/1b2100d9bd613cce8db5332ad4f765233b5f1df8))
+* **deps:** update home-operations/flate action to v0.6.5 ([#1942](https://github.com/immich-app/devtools/issues/1942)) ([4f30bbe](https://github.com/immich-app/devtools/commit/4f30bbe5be04c85a3b92f645c3d697e502f5f46f))
+* **deps:** update immich-app/devtools action to v3.2.2 ([#1993](https://github.com/immich-app/devtools/issues/1993)) ([5e03a7b](https://github.com/immich-app/devtools/commit/5e03a7be98a45c24a204dcb95eaa3e6c0826e35d))
+* **deps:** update zizmorcore/zizmor-action action to v0.7.1 ([#2015](https://github.com/immich-app/devtools/issues/2015)) ([9bed9ed](https://github.com/immich-app/devtools/commit/9bed9edb0dc3e081fde53514d9eb6502862d5c66))
+
 ## [4.0.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v3.1.0...multi-runner-build-workflow-v4.0.0) (2026-08-07)
 
 
