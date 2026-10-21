@@ -73,7 +73,7 @@ jobs:
           suffix_key=$(echo "$SUFFIXES" | tr ',' '-')
           # Nested images (e.g. backups/standalone) carry a "/", which artifact
           # names can't contain.
-          base="${IMAGE//\//-}${suffix_key}-digests"
+          base="${IMAGE//\//%2F}${suffix_key}-digests"
           echo "base=${base}" | tee -a $GITHUB_OUTPUT
 
   build:
