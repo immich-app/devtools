@@ -10,7 +10,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5.1.1
+    - uses: jdx/mise-action@fc42bcc7ddbf51124c30f95a877a0c5168a3bfde # v5.2.1
       with:
         github_token: ${{ inputs.github_token }}
         persist_github_token: true
@@ -18,4 +18,4 @@ runs:
         cache_key_prefix: ${{ inputs.working_directory }}
         install_args: "--locked"
         export_path: false
-        version: 2026.10.5
+        version: 2026.10.14
