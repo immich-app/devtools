@@ -4,6 +4,6 @@
   "actions/use-mise": "3.2.3",
   ".github/workflows": "4.1.0",
   "actions/pre-job": "2.1.1",
-  "actions/create-workflow-token": "3.0.1",
+  "actions/create-workflow-token": "3.0.2",
   "actions/sticky-comment": "1.0.0"
 }
