@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v4.1.0...multi-runner-build-workflow-v4.1.1) (2026-10-30)
+
+
+### Chores
+
+* **github-action:** update github-actions ([#2013](https://github.com/immich-app/devtools/issues/2013)) ([aca40b3](https://github.com/immich-app/devtools/commit/aca40b3328e2fe043b8db9ab630d3e4f7c6c206c))
+
 ## [4.1.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v4.0.0...multi-runner-build-workflow-v4.1.0) (2026-10-21)
 
 
