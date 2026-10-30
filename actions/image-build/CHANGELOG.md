@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.12](https://github.com/immich-app/devtools/compare/image-build-action-v0.1.11...image-build-action-v0.1.12) (2026-10-30)
+
+
+### Chores
+
+* **deps:** update github-actions ([#1996](https://github.com/immich-app/devtools/issues/1996)) ([1b2100d](https://github.com/immich-app/devtools/commit/1b2100d9bd613cce8db5332ad4f765233b5f1df8))
+* **github-action:** update github-actions ([#2013](https://github.com/immich-app/devtools/issues/2013)) ([aca40b3](https://github.com/immich-app/devtools/commit/aca40b3328e2fe043b8db9ab630d3e4f7c6c206c))
+
 ## [0.1.11](https://github.com/immich-app/devtools/compare/image-build-action-v0.1.10...image-build-action-v0.1.11) (2026-10-07)
 
 
