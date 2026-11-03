@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.1.0](https://github.com/immich-app/devtools/compare/create-workflow-token-action-v3.0.1...create-workflow-token-action-v3.1.0) (2026-11-03)
+
+
+### Features
+
+* add permisison-packages ([#2037](https://github.com/immich-app/devtools/issues/2037)) ([5b91ddb](https://github.com/immich-app/devtools/commit/5b91ddb2c43f2da7c4e72a7c6a74c8eb042da595))
+
+
+### Chores
+
+* **github-action:** update github-actions ([#2013](https://github.com/immich-app/devtools/issues/2013)) ([aca40b3](https://github.com/immich-app/devtools/commit/aca40b3328e2fe043b8db9ab630d3e4f7c6c206c))
+
 ## [3.0.1](https://github.com/immich-app/devtools/compare/create-workflow-token-action-v3.0.0...create-workflow-token-action-v3.0.1) (2026-08-31)
 
 
