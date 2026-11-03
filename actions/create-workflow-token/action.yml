@@ -25,6 +25,9 @@ inputs:
   permission-discussions:
     description: "Access level for discussions. 'read' or 'write'."
     required: false
+  permission-packages:
+    description: "Access level for packages. 'read' or 'write'."
+    required: false
 
 outputs:
   token:
@@ -37,7 +40,7 @@ runs:
     - name: Require at least one permission
       shell: bash
       env:
-        PERMISSIONS: '${{ inputs.permission-contents }}${{ inputs.permission-pull-requests }}${{ inputs.permission-issues }}${{ inputs.permission-actions }}'
+        PERMISSIONS: '${{ inputs.permission-contents }}${{ inputs.permission-pull-requests }}${{ inputs.permission-issues }}${{ inputs.permission-actions }}${{ inputs.permission-packages }}'
       run: |
         if [ -z "$PERMISSIONS" ]; then
           echo "::error::create-workflow-token requires at least one permission-* input"
@@ -57,6 +60,7 @@ runs:
         permission-actions: ${{ inputs.permission-actions }}
         permission-workflows: ${{ inputs.permission-workflows }}
         permission-discussions: ${{ inputs.permission-discussions }}
+        permission-packages: ${{ inputs.permission-packages }}
 
     - name: Set output
       id: output
