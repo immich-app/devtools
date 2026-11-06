@@ -12,11 +12,17 @@ import {
   type UserAdminCreateDto,
 } from '@immich/sdk';
 import { DateTime } from 'luxon';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
+import { parseArgs } from 'node:util';
+import { seedBaseLibrary } from './base-library';
 
-const baseUrl = process.argv[2] || process.env.IMMICH_BASE_URL;
-const apiKey = process.argv[3] || process.env.IMMICH_API_KEY;
+const { values: options, positionals } = parseArgs({ allowPositionals: true, options: { base: { type: 'boolean' } } });
+const baseUrl = positionals[0] || process.env.IMMICH_BASE_URL;
+const apiKey = positionals[1] || process.env.IMMICH_API_KEY;
 if (!baseUrl || !apiKey) {
-  console.log('Usage: npx src/seed-demo.ts <baseUrl> <apiKey>');
+  console.log('Usage: pnpm seed-demo [--base] <baseUrl> <apiKey>');
+  console.log('  --base  also upload Flickr30k with made up dates and locations (cached in ~/.cache/immich-seed-demo)');
   process.exit(1);
 }
 
@@ -177,6 +183,10 @@ const createQueryAlbum = async () => {
 };
 
 const main = async () => {
+  if (options.base) {
+    await seedBaseLibrary(join(homedir(), '.cache', 'immich-seed-demo'));
+  }
+
   await upsertUsers();
   await createMonthAlbums();
   await createQueryAlbum();
