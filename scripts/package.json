@@ -29,12 +29,14 @@
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-unicorn": "^77.0.0",
+    "exiftool-vendored": "^39.1.0",
+    "geo-tz": "^8.1.11",
+    "globals": "^17.1.0",
     "luxon": "^3.5.0",
     "prettier": "^3.5.0",
     "prettier-plugin-organize-imports": "^4.1.0",
     "tsx": "^4.19.4",
     "typescript": "^6.0.0",
-    "typescript-eslint": "^8.24.0",
-    "globals": "^17.1.0"
+    "typescript-eslint": "^8.24.0"
   }
 }
