@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.1.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v4.1.0...multi-runner-build-workflow-v4.1.1) (2026-11-13)
+
+
+### Chores
+
+* **github-action:** update action zizmorcore/zizmor-action (v0.7.1 → v0.8.1) ([#2047](https://github.com/immich-app/devtools/issues/2047)) ([9512fc8](https://github.com/immich-app/devtools/commit/9512fc820fef400a694fc8a04a97ec64cfb0749f))
+* **github-action:** update github-actions ([#2013](https://github.com/immich-app/devtools/issues/2013)) ([aca40b3](https://github.com/immich-app/devtools/commit/aca40b3328e2fe043b8db9ab630d3e4f7c6c206c))
+* **github-action:** update github-actions ([#2032](https://github.com/immich-app/devtools/issues/2032)) ([733dee0](https://github.com/immich-app/devtools/commit/733dee0a4468138fb2ecea3b7506b91ab0601cac))
+* **github-action:** update github-actions ([#2048](https://github.com/immich-app/devtools/issues/2048)) ([7dd9ca9](https://github.com/immich-app/devtools/commit/7dd9ca9e962db7c99f4db72a8ca5abce1e0e6365))
+
 ## [4.1.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v4.0.0...multi-runner-build-workflow-v4.1.0) (2026-10-21)
 
 
