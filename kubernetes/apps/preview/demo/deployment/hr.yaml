@@ -46,13 +46,66 @@ spec:
             image:
               tag: release
     server:
+      configMaps:
+        helmet:
+          data:
+            # The bundled server/helmet.json policy in report-only mode, plus
+            # 'report-sample' because GlitchTip keeps little else to tell reports
+            # apart. Helmet's other headers are enforced regardless of reportOnly,
+            # so they are all switched off to leave the demo's behaviour unchanged.
+            helmet.json: |
+              {
+                "contentSecurityPolicy": {
+                  "reportOnly": true,
+                  "directives": {
+                    "default-src": ["'self'"],
+                    "script-src": ["'self'", "'wasm-unsafe-eval'", "https://www.gstatic.com", "'report-sample'"],
+                    "style-src": ["'self'", "'report-sample'"],
+                    "style-src-attr": ["'unsafe-inline'"],
+                    "img-src": ["'self'", "data:", "blob:"],
+                    "media-src": ["'self'", "data:", "blob:"],
+                    "connect-src": [
+                      "'self'",
+                      "blob:",
+                      "https://pay.futo.org",
+                      "https://static.immich.cloud",
+                      "https://tiles.immich.cloud"
+                    ],
+                    "worker-src": ["'self'", "blob:"],
+                    "frame-src": ["'none'"],
+                    "object-src": ["'none'"],
+                    "base-uri": ["'self'"],
+                    "upgrade-insecure-requests": null,
+                    "report-uri": ["https://glitchtip.futostatus.com/api/2/security/?glitchtip_key=2dc0ee139e7b484395d9ea4608a552ee"]
+                  }
+                },
+                "crossOriginOpenerPolicy": false,
+                "crossOriginResourcePolicy": false,
+                "originAgentCluster": false,
+                "referrerPolicy": false,
+                "strictTransportSecurity": false,
+                "xContentTypeOptions": false,
+                "xDnsPrefetchControl": false,
+                "xDownloadOptions": false,
+                "xFrameOptions": false,
+                "xPermittedCrossDomainPolicies": false,
+                "xXssProtection": false
+              }
       controllers:
         main:
           containers:
             main:
+              env:
+                IMMICH_HELMET_FILE: /helmet/helmet.json
               image:
                 pullPolicy: Always
       persistence:
+        helmet:
+          type: configMap
+          identifier: helmet
+          globalMounts:
+            - path: /helmet
+              readOnly: true
         data:
           type: custom
           volumeSpec:
