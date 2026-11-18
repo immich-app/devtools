@@ -39,6 +39,7 @@ spec:
         allow-snippet-annotations: true
         annotations-risk-level: Critical
         worker-shutdown-timeout: "10s"
+        use-http2: "false"
       metrics:
         enabled: false
       updateStrategy:
